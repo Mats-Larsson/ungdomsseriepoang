@@ -29,6 +29,5 @@ internal enum PersonStatus
     DeltarEj = 0,
     EjStart,
     Aktiverad,
-    Godkänd,
-    EjGodkänd
+    Godkänd
 }
