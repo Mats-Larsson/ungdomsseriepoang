@@ -1,29 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using MySql.Data.MySqlClient;
 
 namespace Results.MySql;
 
 internal class DbResultatImpl : IDbResultat
 {
-    private string ConnectionString;
+    private readonly string connectionString;
+    private IList<PersonResultat>? personResultats;
+    private readonly System.Timers.Timer timer;
 
     public DbResultatImpl(string host, int? port, string database, string user, string password)
     {
-        ConnectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
+        connectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
+        // Create a timer with a two second interval.
+        timer = new System.Timers.Timer(TimeSpan.FromSeconds(10).TotalMilliseconds);
+        // Hook up the Elapsed event for the timer. 
+        timer.Elapsed += OnTimedEvent;
+        timer.AutoReset = true;
+        timer.Enabled = true;
     }
 
-    public List<PersonResultat> GetPersonResultats()
+    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
     {
+        try
+        {
+            PersonResultatsLocal();
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
+    }
 
-        using var con = new MySqlConnection(ConnectionString);
+    public IList<PersonResultat> GetPersonResultats()
+    {
+        if (personResultats == null)
+            PersonResultatsLocal();
+        if (personResultats == null)
+            throw new InvalidOperationException();
+
+        return personResultats;
+    }
+
+    private void PersonResultatsLocal()
+    {
+        using var con = new MySqlConnection(connectionString);
         con.Open();
-        
+
         using var cmd = new MySqlCommand(Resource1.PersonResutat, con);
         using var reader = cmd.ExecuteReader();
         var list = new List<PersonResultat>();
@@ -36,30 +67,39 @@ internal class DbResultatImpl : IDbResultat
             var status = ToPersonStatus(reader.GetFieldValue<string>(4), tid);
             list.Add(new PersonResultat(klass, namn, klubb, tid, status));
         }
-        return list;
+
+        personResultats = ImmutableList.Create(list.ToArray());
     }
 
-    private PersonStatus ToPersonStatus(string v, TimeSpan? tid)
+    public event EventHandler? NyaResultat;
+
+    private void NyaResultatFinns()
     {
-        switch (v)
+        OnNyaResultat();
+    }
+
+    protected virtual void OnNyaResultat()
+    {
+        NyaResultat?.Invoke(this, EventArgs.Empty);
+    }
+
+    private static PersonStatus ToPersonStatus(string v, TimeSpan? tid)
+    {
+        return v switch
         {
-            case "walkOver":
-            case "movedUp":
-            case "notParticipating": return PersonStatus.DeltarEj;
-
-            case "notActivated":
-            case "notStarted": return PersonStatus.EjStart;
-
-            case "started":
-            case "disqualified":
-            case "notValid": return PersonStatus.Aktiverad;
-
-            case "finished":
-            case "finishedTimeOk":
-            case "finishedPunchOk":
-            case "passed": return tid.HasValue ?  PersonStatus.Godkänd : PersonStatus.Aktiverad;
-
-            default: throw new InvalidOperationException($"Unexpeted status: {v}");
-        }
+            "walkOver" => PersonStatus.DeltarEj,
+            "movedUp" => PersonStatus.DeltarEj,
+            "notParticipating" => PersonStatus.DeltarEj,
+            "notActivated" => PersonStatus.EjStart,
+            "notStarted" => PersonStatus.EjStart,
+            "started" => PersonStatus.Aktiverad,
+            "disqualified" => PersonStatus.Aktiverad,
+            "notValid" => PersonStatus.Aktiverad,
+            "finished" => tid.HasValue ? PersonStatus.Godkänd : PersonStatus.Aktiverad,
+            "finishedTimeOk" => tid.HasValue ? PersonStatus.Godkänd : PersonStatus.Aktiverad,
+            "finishedPunchOk" => tid.HasValue ? PersonStatus.Godkänd : PersonStatus.Aktiverad,
+            "passed" => tid.HasValue ? PersonStatus.Godkänd : PersonStatus.Aktiverad,
+            _ => throw new InvalidOperationException($"Unexpected status: {v}")
+        };
     }
 }

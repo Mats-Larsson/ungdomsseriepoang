@@ -1,3 +1,4 @@
+using Results;
 using Results.MySql;
 
 namespace ResultsTests
@@ -10,7 +11,7 @@ namespace ResultsTests
         {
             IDbResultat resultat = new DbResultatImpl("NUC", null, "kretstavling2019", "root", "kasby");
 
-            List<PersonResultat> personResultats = resultat.GetPersonResultats();
+            var personResultats = resultat.GetPersonResultats();
         }
     }
 }

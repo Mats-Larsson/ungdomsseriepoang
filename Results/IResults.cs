@@ -10,4 +10,5 @@ namespace Results;
 public interface IResults
 {
     IList<KlubbResultat> GetKlubbResultats();
+    event EventHandler OnNyaResultat;
 }
