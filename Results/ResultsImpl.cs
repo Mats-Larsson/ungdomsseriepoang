@@ -4,31 +4,31 @@ namespace Results;
 
 public class ResultsImpl : IResults
 {
-    private readonly IDbResultat dbResultat;
-    private readonly IList<KlubbResultat> senasteKlubbResultats = ImmutableList<KlubbResultat>.Empty;
+    private readonly IResultSource resultSource;
+    private readonly IList<ClubResult> senasteKlubbResultats = ImmutableList<ClubResult>.Empty;
     private readonly int senasteKlubbResultatsHashCode;
 
-    internal ResultsImpl(IDbResultat dbResultat)
+    internal ResultsImpl(IResultSource resultSource)
     {
-        this.dbResultat = dbResultat;
+        this.resultSource = resultSource;
     }
 
-    public IList<KlubbResultat> GetKlubbResultats()
+    public IList<ClubResult> GetScoreBoard()
     {
         return senasteKlubbResultats;
     }
         
     public event EventHandler? OnNyaResultat;
 
-    private static int CalcHasCode(IList<KlubbResultat> resultats)
+    private static int CalcHasCode(IList<ClubResult> results)
     {
         var hashCode = 0;
 
-        foreach (var resultat in resultats)
+        foreach (var result in results)
         {
             unchecked
             {
-                hashCode += resultat.GetHashCode();
+                hashCode += result.GetHashCode();
             }
         }
         return hashCode;

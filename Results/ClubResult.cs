@@ -1,32 +1,32 @@
 ﻿namespace Results
 {
-    public class KlubbResultat
+    public class ClubResult
     {
         public int Pos { get; }
         public string Team { get; }
-        public int Poäng { get; }
-        public KlubbResultat(int pos, string team, int poäng)
+        public int Points { get; }
+        public ClubResult(int pos, string team, int points)
         {
             Pos = pos;
             Team = team;
-            Poäng = poäng;
+            Points = points;
         }
 
-        private bool Equals(KlubbResultat other)
+        private bool Equals(ClubResult other)
         {
-            return Pos == other.Pos && Team == other.Team && Poäng == other.Poäng;
+            return Pos == other.Pos && Team == other.Team && Points == other.Points;
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == this.GetType() && Equals((KlubbResultat)obj);
+            return obj.GetType() == this.GetType() && Equals((ClubResult)obj);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Pos, Team, Poäng);
+            return HashCode.Combine(Pos, Team, Points);
         }
     }
 }
