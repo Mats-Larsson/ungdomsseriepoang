@@ -23,5 +23,6 @@ internal enum ParticipantStatus
     Ignored = 0,
     NotStarted,
     Started,
+    Preliminary,
     Passed
 }

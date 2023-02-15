@@ -2,6 +2,6 @@
 
 public interface IResults
 {
-    IList<ClubResult> GetScoreBoard();
+    IList<TeamResult> GetScoreBoard();
     event EventHandler OnNyaResultat;
 }

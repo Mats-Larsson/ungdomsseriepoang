@@ -34,8 +34,8 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
-        Assert.AreEqual(new ClubResult(1, "Club A", 0), scoreBoard[0]);
-        Assert.AreEqual(new ClubResult(1, "Club B", 0), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(1, "Club A", 0, false), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(1, "Club B", 0, false), scoreBoard[1]);
     }
 
     [TestMethod]
@@ -64,9 +64,25 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new ClubResult(1, "Club C", 5), scoreBoard[0]);
-        Assert.AreEqual(new ClubResult(2, "Club A", 0), scoreBoard[1]);
-        Assert.AreEqual(new ClubResult(2, "Club B", 0), scoreBoard[2]);
+        Assert.AreEqual(new TeamResult(1, "Club C", 5, false), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
+    }
+
+    [TestMethod]
+    public void TestWithCheckedAndPreliminary()
+    {
+        var participantResults = new List<ParticipantResult>
+        {
+            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", null, ParticipantStatus.Started),
+            new("H10", "Hugo", "Club C", TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
+        };
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -80,9 +96,26 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new ClubResult(1, "Club C", 50), scoreBoard[0]);
-        Assert.AreEqual(new ClubResult(2, "Club B", 5), scoreBoard[1]);
-        Assert.AreEqual(new ClubResult(3, "Club A", 0), scoreBoard[2]);
+        Assert.AreEqual(new TeamResult(1, "Club C", 50, false), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
+    }
+
+    [TestMethod]
+    public void TestWithCheckedPreliminaryAndPassed()
+    {
+        var participantResults = new List<ParticipantResult>
+        {
+            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", null, ParticipantStatus.Started),
+            new("H10", "Hugo", "Club C", TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
+            new("H10", "Hugo", "Club B", TimeSpan.FromMinutes(12), ParticipantStatus.Passed),
+        };
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.AreEqual(new TeamResult(1, "Club B", 51, false), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club C", 50, true), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]

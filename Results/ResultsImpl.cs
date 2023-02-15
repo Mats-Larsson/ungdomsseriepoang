@@ -5,7 +5,7 @@ namespace Results;
 public class ResultsImpl : IResults
 {
     private readonly IResultSource resultSource;
-    private readonly IList<ClubResult> senasteKlubbResultats = ImmutableList<ClubResult>.Empty;
+    private readonly IList<TeamResult> senasteKlubbResultats = ImmutableList<TeamResult>.Empty;
     private readonly int senasteKlubbResultatsHashCode;
 
     internal ResultsImpl(IResultSource resultSource)
@@ -13,14 +13,14 @@ public class ResultsImpl : IResults
         this.resultSource = resultSource;
     }
 
-    public IList<ClubResult> GetScoreBoard()
+    public IList<TeamResult> GetScoreBoard()
     {
         return senasteKlubbResultats;
     }
         
     public event EventHandler? OnNyaResultat;
 
-    private static int CalcHasCode(IList<ClubResult> results)
+    private static int CalcHasCode(IList<TeamResult> results)
     {
         var hashCode = 0;
 

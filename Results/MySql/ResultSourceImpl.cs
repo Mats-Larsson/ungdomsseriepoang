@@ -97,9 +97,10 @@ internal class ResultSourceImpl : IResultSource, IDisposable
             "disqualified" => ParticipantStatus.Started,
             "notValid" => ParticipantStatus.Started,
 
-            "finished" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
-            "finishedTimeOk" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
-            "finishedPunchOk" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
+            "finished" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
+            "finishedTimeOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
+            "finishedPunchOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
+
             "passed" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
             _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")
         };

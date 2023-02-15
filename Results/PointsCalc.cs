@@ -1,5 +1,6 @@
 ﻿using Results.MySql;
 using System.Collections.Immutable;
+using static Results.MySql.ParticipantStatus;
 
 namespace Results
 {
@@ -19,10 +20,10 @@ namespace Results
 
     internal class PointsCalc
     {
-        public List<ClubResult> CalcScoreBoard(IList<ParticipantResult> participant)
+        public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
         {
             var leader = participant
-                .Where(d => d.Status == ParticipantStatus.Passed)
+                .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))
                 .GroupBy(d => d.Class)
                 .Select(g => new { Klass = g.Key, Tid = g.Min(d => d.Time) })
                 .ToImmutableDictionary(g => g.Klass, g => g.Tid);
@@ -31,35 +32,42 @@ namespace Results
             var reportPos = 1;
             var prevPoints = 0;
             return participant
-            .Select(d => new { d.Club, Points = CalcPoints(d.Class, d.Time, d.Status, leader.GetValueOrDefault(d.Class)) })
-            .Where(d => d.Points >= 0)
-            .GroupBy(d => d.Club)
-            .Select(g => new { Club = g.Key, Points = g.Sum(d => d.Points) })
-            .OrderByDescending(kp => kp.Points)
-            .Select(kp =>
-            {
-                if (kp.Points != prevPoints) reportPos = pos;
-                prevPoints = kp.Points;
-                pos++;
-                return new ClubResult(reportPos, kp.Club, kp.Points);
-            })
-            .ToList();
+                .Select(d => new
+                {
+                    d.Club,
+                    Points = CalcPoints(d.Class, d.Time, d.Status, leader.GetValueOrDefault(d.Class)),
+                    IsPreliminary = d.Status == Preliminary
+                })
+                .Where(d => d.Points >= 0)
+                .GroupBy(d => d.Club)
+                .Select(g => new { Club = g.Key, Points = g.Sum(d => d.Points), IsPreliminary = g.Max(d => d.IsPreliminary) })
+                .OrderByDescending(kp => kp.Points)
+                .Select(kp =>
+                {
+                    if (kp.Points != prevPoints) reportPos = pos;
+                    prevPoints = kp.Points;
+                    pos++;
+                    return new TeamResult(reportPos, kp.Club, kp.Points, kp.IsPreliminary);
+                })
+                .ToList();
         }
 
         internal int CalcPoints(string @class, TimeSpan? time, ParticipantStatus status, TimeSpan? bestTime)
         {
-            if (status <= ParticipantStatus.Ignored) return -1;
-            if (status <= ParticipantStatus.NotStarted) return 0;
+            if (status <= Ignored) return -1;
+            if (status <= NotStarted) return 0;
 
             var pointsTemplate = PointsTemplate.Get(@class);
 
-            if (status == ParticipantStatus.Started) return pointsTemplate.NotPassedPoints;
+            if (status == Started) return pointsTemplate.NotPassedPoints;
 
-            if (status != ParticipantStatus.Passed) throw new InvalidOperationException($"Unexpected status: {status}");
-            if (!bestTime.HasValue || !time.HasValue) throw new InvalidOperationException($"Unexpected null time");
+            if (status != Passed && status != Preliminary)
+                throw new InvalidOperationException($"Unexpected status: {status}");
+            if (!bestTime.HasValue || !time.HasValue) 
+                throw new InvalidOperationException($"Unexpected null time");
             var points = pointsTemplate.BasePoints - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, time.Value);
 
-            return Math.Max(points, pointsTemplate.MinePoints);
+            return Math.Max(points, pointsTemplate.MinPoints);
         }
 
         private static int StartedMinutesAfter(TimeSpan bestTime, TimeSpan time)
@@ -73,18 +81,18 @@ namespace Results
     {
         public int BasePoints { get; }
         public int MinuteReduction { get; }
-        public int MinePoints { get; }
+        public int MinPoints { get; }
         public int NotPassedPoints { get; }
 
         private static readonly PointsTemplate DhTemplate = new(50, 2, 15, 5);
-        private static readonly PointsTemplate UTemplate  = new(40, 2, 10, 5);
-        private static readonly PointsTemplate InskTemplate  = new(10, 0, 10, 5);
+        private static readonly PointsTemplate UTemplate = new(40, 2, 10, 5);
+        private static readonly PointsTemplate InskTemplate = new(10, 0, 10, 5);
 
-        private PointsTemplate(int basePoints, int minuteReduction, int minePoints, int notPassedPoints)
+        private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints)
         {
             BasePoints = basePoints;
             MinuteReduction = minuteReduction;
-            MinePoints = minePoints;
+            MinPoints = minPoints;
             NotPassedPoints = notPassedPoints;
         }
 
