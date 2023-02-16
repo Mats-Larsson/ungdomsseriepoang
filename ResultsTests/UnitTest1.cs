@@ -1,3 +1,4 @@
+using Results;
 using Results.MySql;
 
 namespace ResultsTests
@@ -8,9 +9,9 @@ namespace ResultsTests
         [TestMethod]
         public void TestMethod1()
         {
-            IDbResultat resultat = new DbResultatImpl("NUC", null, "kretstavling2019", "root", "kasby");
+            IResultSource resultat = new ResultSourceImpl("NUC", null, "kretstavling2019", "root", "kasby");
 
-            List<PersonResultat> personResultats = resultat.GetPersonResultats();
+            var personResultats = resultat.GetParticipantResults();
         }
     }
 }

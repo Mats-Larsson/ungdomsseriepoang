@@ -1,13 +1,7 @@
-﻿using Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Results;
+﻿namespace Results;
 
 public interface IResults
 {
-    IList<KlubbResultat> GetKlubbResultats();
+    IList<TeamResult> GetScoreBoard();
+    event EventHandler OnNyaResultat;
 }

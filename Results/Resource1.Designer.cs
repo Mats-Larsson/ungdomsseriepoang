@@ -71,11 +71,11 @@ namespace Results {
         ///left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId
         ///left join	results			r	on	e.entryId = r.entryId
         ///left join	persons			p	on	p.personId = e.competitorId
-        ///left join	organisations	o	on	o.organisationId = p.defaultOrganisati [rest of string was truncated]&quot;;.
+        ///left join	organisations	o	on	o.organisationId = p.default [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string PersonResutat {
+        internal static string ParticipantResultSql {
             get {
-                return ResourceManager.GetString("PersonResutat", resourceCulture);
+                return ResourceManager.GetString("ParticipantResultSql", resourceCulture);
             }
         }
     }
