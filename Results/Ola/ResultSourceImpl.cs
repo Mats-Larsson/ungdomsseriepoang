@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Timers;
 using MySql.Data.MySqlClient;
+using Results.Model;
 
-namespace Results.MySql;
+namespace Results.Ola;
 
 internal class ResultSourceImpl : IResultSource, IDisposable
 {

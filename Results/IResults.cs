@@ -1,4 +1,6 @@
-﻿namespace Results;
+﻿using Results.Contract;
+
+namespace Results;
 
 public interface IResults
 {

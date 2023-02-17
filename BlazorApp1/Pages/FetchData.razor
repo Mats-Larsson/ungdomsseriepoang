@@ -3,19 +3,38 @@
 <PageTitle>Weather forecast</PageTitle>
 
 @using BlazorApp1.Data
+@using Results.Contract
 @inject WeatherForecastService ForecastService
-
-<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from a service.</p>
+@inject ResultService ResultService;
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
-    <table class="table">
+    <table class="table" style="font-size: large">
+        <thead>
+        <tr>
+            <th>Placering</th>
+            <th>Lag</th>
+            <th>Poäng</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var teamResult in teamResults ?? Array.Empty<TeamResult>())
+        {
+                <tr style="@(teamResult.IsPreliminary ? "font-style: italic" : "")">
+                <td>@teamResult.Pos</td>
+                <td>@teamResult.Team</td>
+                <td>@teamResult.Points</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+@*    <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
@@ -36,13 +55,18 @@ else
             }
         </tbody>
     </table>
+*@
 }
 
 @code {
     private WeatherForecast[]? forecasts;
+    private TeamResult[]? teamResults;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        teamResults = await ResultService.GetTeamResultsAsync();
     }
+
+
 }

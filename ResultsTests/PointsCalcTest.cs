@@ -1,5 +1,7 @@
 ﻿using Results;
-using Results.MySql;
+using Results.Contract;
+using Results.Model;
+using Results.Simulator;
 
 namespace ResultsTests;
 
@@ -11,7 +13,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithSimulatorResults()
     {
-        var participantResults = (new ResultSourceSimulator() as IResultSource).GetParticipantResults();
+        var participantResults = (new ResultSourceSimulator()).GetParticipantResults();
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
     }

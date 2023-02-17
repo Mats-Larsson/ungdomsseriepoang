@@ -1,5 +1,5 @@
 using Results;
-using Results.MySql;
+using Results.Ola;
 
 namespace ResultsTests
 {

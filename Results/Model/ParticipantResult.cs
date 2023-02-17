@@ -1,12 +1,12 @@
-﻿namespace Results.MySql;
+﻿namespace Results.Model;
 
 internal class ParticipantResult
 {
     public string Class { get; }
     public string Name { get; }
     public string Club { get; }
-    public TimeSpan? Time { get; }
-    public ParticipantStatus Status { get; }
+    public TimeSpan? Time { get; internal set; }
+    public ParticipantStatus Status { get; internal set; }
 
     public ParticipantResult(string @class, string name, string club, TimeSpan? time, ParticipantStatus status)
     {
