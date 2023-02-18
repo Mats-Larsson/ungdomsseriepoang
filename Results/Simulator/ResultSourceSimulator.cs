@@ -20,6 +20,11 @@ internal class ResultSourceSimulator : IResultSource, IDisposable
         timer.Enabled = true;
     }
 
+    public IList<ParticipantResult> GetParticipantResults()
+    {
+        return participantResults.ToArray();
+    }
+
     private ParticipantResult[] InitParticipantResults()
     {
         return TestData.TemplateParticipantResults
@@ -47,13 +52,6 @@ internal class ResultSourceSimulator : IResultSource, IDisposable
 
         }
     }
-
-    public IList<ParticipantResult> GetParticipantResults()
-    {
-        return participantResults.ToArray();
-    }
-
-    public event EventHandler? NyaResult;
 
     public void Dispose()
     {

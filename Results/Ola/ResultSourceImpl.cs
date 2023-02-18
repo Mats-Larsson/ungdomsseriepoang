@@ -1,50 +1,19 @@
 ﻿using System.Collections.Immutable;
-using System.Timers;
 using MySql.Data.MySqlClient;
 using Results.Model;
 
 namespace Results.Ola;
 
-internal class ResultSourceImpl : IResultSource, IDisposable
+internal class ResultSourceImpl : IResultSource
 {
     private readonly string connectionString;
-    private IList<ParticipantResult>? participantResults;
-    private readonly System.Timers.Timer timer;
 
     public ResultSourceImpl(string host, int? port, string database, string user, string password)
     {
         connectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
-        // Create a timer with a two second interval.
-        timer = new System.Timers.Timer(TimeSpan.FromSeconds(10).TotalMilliseconds);
-        // Hook up the Elapsed event for the timer. 
-        timer.Elapsed += OnTimedEvent;
-        timer.AutoReset = true;
-        timer.Enabled = true;
-    }
-
-    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
-    {
-        try
-        {
-            ParticipantResultsLocal();
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(exception);
-        }
     }
 
     public IList<ParticipantResult> GetParticipantResults()
-    {
-        if (participantResults == null)
-            ParticipantResultsLocal();
-        if (participantResults == null)
-            throw new InvalidOperationException();
-
-        return participantResults;
-    }
-
-    private void ParticipantResultsLocal()
     {
         using var con = new MySqlConnection(connectionString);
         con.Open();
@@ -63,24 +32,7 @@ internal class ResultSourceImpl : IResultSource, IDisposable
             list.Add(new ParticipantResult(@class, name, club, time, status));
         }
 
-        participantResults = ImmutableList.Create(list.ToArray());
-    }
-
-    public event EventHandler? NyaResult;
-
-    private void ThereAreNewResults()
-    {
-        OnNewResults();
-    }
-
-    public void Dispose()
-    {
-        timer.Dispose();
-    }
-
-    private void OnNewResults()
-    {
-        NyaResult?.Invoke(this, EventArgs.Empty);
+        return ImmutableList.Create(list.ToArray());
     }
 
     private static ParticipantStatus ToParticipantStatus(string olaStatus, TimeSpan? time)

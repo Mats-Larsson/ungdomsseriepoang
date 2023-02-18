@@ -11,8 +11,16 @@ public class ResultService
     public ResultService()
     {
         resultsource = new ResultsImpl();
+
+        resultsource.OnNyaResultat += Resultsource_OnNyaResultat;
     }
-public Task<TeamResult[]> GetTeamResultsAsync()
+
+    private void Resultsource_OnNyaResultat(object? sender, EventArgs e)
+    {
+        Console.Out.WriteLine("Event");
+    }
+
+    public Task<TeamResult[]> GetTeamResultsAsync()
     {
         return Task.FromResult(resultsource.GetScoreBoard().ToArray());
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Timers;
 using Results.Contract;
 using Results.Simulator;
 
@@ -6,10 +7,12 @@ namespace Results;
 
 public class ResultsImpl : IResults
 {
+    private IList<TeamResult> senasteKlubbResultats = ImmutableList<TeamResult>.Empty;
+    private int senasteKlubbResultatsHashCode;
+
     private readonly IResultSource resultSource;
     private readonly PointsCalc pointsCalc;
-    private readonly IList<TeamResult> senasteKlubbResultats = ImmutableList<TeamResult>.Empty;
-    private readonly int senasteKlubbResultatsHashCode;
+    private readonly System.Timers.Timer timer;
 
     public ResultsImpl() : this(new ResultSourceSimulator()) { }
 
@@ -18,12 +21,37 @@ public class ResultsImpl : IResults
         this.resultSource = resultSource;
         this.pointsCalc = new PointsCalc();
 
-        senasteKlubbResultats = pointsCalc.CalcScoreBoard(resultSource.GetParticipantResults());
+
+        timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
+        timer.Elapsed += OnTimedEvent;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
+    {
+        try
+        {
+            var klubbResultats = pointsCalc.CalcScoreBoard(resultSource.GetParticipantResults());
+            var klubbResultatsHashCode = CalcHasCode(klubbResultats);
+
+            if (klubbResultatsHashCode != senasteKlubbResultatsHashCode)
+            {
+                senasteKlubbResultats = klubbResultats;
+                senasteKlubbResultatsHashCode = klubbResultatsHashCode;
+
+                OnNyaResultat?.Invoke(this, new EventArgs());
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
     }
 
     public IList<TeamResult> GetScoreBoard()
     {
-        return pointsCalc.CalcScoreBoard(resultSource.GetParticipantResults());
+        return senasteKlubbResultats;
     }
         
     public event EventHandler? OnNyaResultat;
@@ -41,4 +69,9 @@ public class ResultsImpl : IResults
         }
         return hashCode;
     }
+    public void Dispose()
+    {
+        timer.Dispose();
+    }
+
 }
