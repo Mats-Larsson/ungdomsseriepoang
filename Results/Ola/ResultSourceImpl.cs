@@ -27,9 +27,9 @@ internal class ResultSourceImpl : IResultSource
             var name = reader.GetFieldValue<string>(1);
             var club = reader.GetFieldValue<string>(2);
             var time = reader.IsDBNull(3) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(3));
-            var status = ToParticipantStatus(reader.GetFieldValue<string>(4), time);
+            var olaStatus = reader.GetFieldValue<string>(4);
 
-            list.Add(new ParticipantResult(@class, name, club, time, status));
+            list.Add(new ParticipantResult(@class, name, club, time, ToParticipantStatus(olaStatus, time)));
         }
 
         return ImmutableList.Create(list.ToArray());

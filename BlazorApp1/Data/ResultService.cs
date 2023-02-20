@@ -17,11 +17,13 @@ public class ResultService
 
     private void Resultsource_OnNyaResultat(object? sender, EventArgs e)
     {
-        Console.Out.WriteLine("Event");
+        NewResutls?.Invoke(this, new EventArgs());
     }
 
     public Task<TeamResult[]> GetTeamResultsAsync()
     {
         return Task.FromResult(resultsource.GetScoreBoard().ToArray());
     }
+
+    public event EventHandler? NewResutls;
 }
