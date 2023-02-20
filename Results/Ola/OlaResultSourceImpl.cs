@@ -43,7 +43,7 @@ internal class OlaResultSourceImpl : IResultSource
             "movedUp" => ParticipantStatus.Ignored,
             "notParticipating" => ParticipantStatus.Ignored,
 
-            "notActivated" => ParticipantStatus.NotStarted,
+            "notActivated" => ParticipantStatus.NotActivated,
             "notStarted" => ParticipantStatus.NotStarted,
 
             "started" => ParticipantStatus.Started,

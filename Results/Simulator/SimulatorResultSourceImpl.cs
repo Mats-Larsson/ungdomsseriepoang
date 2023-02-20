@@ -50,7 +50,7 @@ internal class SimultatedParticipent : ParticipantResult
     public Task? Task { get; internal set; }
 
     public SimultatedParticipent(SimulatorResultSourceImpl simulator, ParticipantResult pr)
-        : base(pr.Class, pr.Name, pr.Club, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotStarted)
+        : base(pr.Class, pr.Name, pr.Club, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated)
     {
         this.simulator = simulator;
         startTime = TimeSpan.FromMinutes(Random.Shared.Next(0, 60)) / simulator.SpeedMultiplier;
@@ -60,11 +60,13 @@ internal class SimultatedParticipent : ParticipantResult
 
     public async Task RunAsync()
     {
-        while (targetStatus != ParticipantStatus.NotStarted && !simulator.CancellationToken.IsCancellationRequested)
+        while (Status != targetStatus && !simulator.CancellationToken.IsCancellationRequested)
         {
             switch (Status)
             {
-                case ParticipantStatus.NotStarted:
+                case ParticipantStatus.NotActivated:
+                    if (targetStatus == ParticipantStatus.NotStarted)
+                        goto SimulationDone;
                     await SimulatedDelay(startTime);
                     Status = ParticipantStatus.Started;
                     break;
