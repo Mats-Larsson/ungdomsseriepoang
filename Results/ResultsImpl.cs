@@ -14,7 +14,7 @@ public class ResultsImpl : IResults
     private readonly PointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
 
-    public ResultsImpl() : this(new ResultSourceSimulator()) { }
+    public ResultsImpl() : this(new SimulatorResultSourceImpl()) { }
 
     private ResultsImpl(IResultSource resultSource)
     {

@@ -16,6 +16,8 @@ internal class ParticipantResult
         Time = time;
         Status = status;
     }
+
+    public ParticipantResult(ParticipantResult pr) : this(pr.Club, pr.Name, pr.Club, pr.Time, pr.Status) { }
 }
 
 internal enum ParticipantStatus
