@@ -1,27 +1,26 @@
 ﻿using Results;
 using Results.Contract;
-using Results.Simulator;
 
 namespace BlazorApp1.Data;
 
 public class ResultService
 {
-    private IResults resultsource;
+    private readonly IResults resultSource;
 
     public ResultService()
     {
-        resultsource = new ResultsImpl();
+        resultSource = new ResultsImpl();
 
-        resultsource.OnNyaResultat += Resultsource_OnNyaResultat;
+        resultSource.OnNewResults += ResultSource_OnNewResults;
     }
 
-    private void Resultsource_OnNyaResultat(object? sender, EventArgs e)
+    private void ResultSource_OnNewResults(object? sender, EventArgs e)
     {
         Console.Out.WriteLine("Event");
     }
 
     public Task<TeamResult[]> GetTeamResultsAsync()
     {
-        return Task.FromResult(resultsource.GetScoreBoard().ToArray());
+        return Task.FromResult(resultSource.GetScoreBoard().ToArray());
     }
 }

@@ -40,7 +40,7 @@ public class ResultsImpl : IResults
                 senasteKlubbResultats = klubbResultats;
                 senasteKlubbResultatsHashCode = klubbResultatsHashCode;
 
-                OnNyaResultat?.Invoke(this, new EventArgs());
+                OnNewResults?.Invoke(this, new EventArgs());
             }
         }
         catch (Exception exception)
@@ -54,7 +54,7 @@ public class ResultsImpl : IResults
         return senasteKlubbResultats;
     }
         
-    public event EventHandler? OnNyaResultat;
+    public event EventHandler? OnNewResults;
 
     private static int CalcHasCode(IList<TeamResult> results)
     {
