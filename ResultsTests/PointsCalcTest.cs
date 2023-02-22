@@ -13,9 +13,9 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithSimulatorResults()
     {
-        var participantResults = (new ResultSourceSimulator()).GetParticipantResults();
+        var participantResults = (new SimulatorResultSource()).GetParticipantResults();
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
-        Assert.AreEqual(2, scoreBoard.Count);
+        Assert.AreEqual(4, scoreBoard.Count);
     }
 
     [TestMethod]

@@ -12,18 +12,16 @@ public class ResultService
     {
         resultsource = new ResultsImpl();
 
-        resultsource.OnNyaResultat += Resultsource_OnNyaResultat;
+        resultsource.OnNewResults += Resultsource_OnNewResults;
     }
 
-    private void Resultsource_OnNyaResultat(object? sender, EventArgs e)
+    private void Resultsource_OnNewResults(object? sender, EventArgs e)
     {
-        NewResutls?.Invoke(this, new EventArgs());
+        Console.Out.WriteLine("Event");
     }
 
     public Task<TeamResult[]> GetTeamResultsAsync()
     {
-        return Task.FromResult(resultsource.GetScoreBoard().ToArray());
+        return Task.FromResult(resultsource.GetScoreBoard().TeamResults.ToArray());
     }
-
-    public event EventHandler? NewResutls;
 }
