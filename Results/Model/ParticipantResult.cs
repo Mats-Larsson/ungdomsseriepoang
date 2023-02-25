@@ -24,8 +24,9 @@ internal enum ParticipantStatus
 {
     Ignored = 0,
     NotActivated,
-    NotStarted,
     Started,
     Preliminary,
-    Passed
+    Passed,
+    NotValid,
+    NotStarted
 }

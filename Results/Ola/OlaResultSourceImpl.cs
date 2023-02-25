@@ -44,17 +44,18 @@ internal class OlaResultSourceImpl : IResultSource
             "notParticipating" => ParticipantStatus.Ignored,
 
             "notActivated" => ParticipantStatus.NotActivated,
-            "notStarted" => ParticipantStatus.NotStarted,
 
             "started" => ParticipantStatus.Started,
-            "disqualified" => ParticipantStatus.Started,
-            "notValid" => ParticipantStatus.Started,
 
             "finished" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
             "finishedTimeOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
             "finishedPunchOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
 
             "passed" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
+            "disqualified" => ParticipantStatus.NotValid,
+            "notValid" => ParticipantStatus.NotValid,
+            "notStarted" => ParticipantStatus.NotStarted,
+
             _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")
         };
     }
