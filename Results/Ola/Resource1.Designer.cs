@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Results {
+namespace Results.Ola {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Results {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Results.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Results.Ola.Resource1", typeof(Resource1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -64,14 +64,15 @@ namespace Results {
         ///   Looks up a localized string similar to select		ec.shortName								Klass,
         ///			concat_ws(&apos; &apos;, p.firstName, p.familyName)	Namn,
         ///			o.shortName									Klubb,
-        ///			case when r.runnerStatus = &apos;passed&apos; then sec_to_time(r.totalTime/100) else null end 
-        ///														Tid,
+        ///            time(r.startTime)							StartTid,
+        ///			sec_to_time(r.totalTime/100)				Tid,
         ///			r.runnerStatus								&quot;Status&quot;
         ///from		eventclasses	ec
         ///left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId
         ///left join	results			r	on	e.entryId = r.entryId
         ///left join	persons			p	on	p.personId = e.competitorId
-        ///left join	organisations	o	on	o.organisationId = p.default [rest of string was truncated]&quot;;.
+        ///left join	organisations	o	on	o.organisationId = p.defaultOrganisationId
+        ///where		e.eventId [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParticipantResultSql {
             get {

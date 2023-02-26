@@ -1,8 +1,8 @@
 select		ec.shortName								Klass,
 			concat_ws(' ', p.firstName, p.familyName)	Namn,
 			o.shortName									Klubb,
-			case when r.runnerStatus = 'passed' then sec_to_time(r.totalTime/100) else null end 
-														Tid,
+            time(r.startTime)							StartTid,
+			sec_to_time(r.totalTime/100)				Tid,
 			r.runnerStatus								"Status"
 from		eventclasses	ec
 left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId

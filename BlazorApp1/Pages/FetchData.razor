@@ -1,13 +1,12 @@
 ﻿@page "/fetchdata"
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Resulta</PageTitle>
 
 @using BlazorApp1.Data
 @using Results.Contract
-@inject WeatherForecastService ForecastService
 @inject ResultService ResultServiceX;
 
-@if (teamResults == null)
+@if (result?.TeamResults == null)
 {
     <p>
         <em>Loading...</em>
@@ -24,7 +23,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var teamResult in teamResults ?? Array.Empty<TeamResult>())
+            @foreach (var teamResult in result.TeamResults ?? Array.Empty<TeamResult>())
         {
                 <tr style="@(teamResult.IsPreliminary ? "font-style: italic" : "")">
                 <td>@teamResult.Pos</td>
@@ -34,36 +33,35 @@ else
         }
         </tbody>
     </table>
-@*    <table class="table">
+    <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Ej aktiverade</th>
+                <th>Startade</th>
+                <th>Godkända</th>
+                <th>Ej godkända</th>
+                <th>Ej star</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
+            <tr>
+                <td>@result.Statistics.NumNotActivated</td>
+                <td>@result.Statistics.NumActivated</td>
+                <td>@result.Statistics.NumPassed</td>
+                <td>@result.Statistics.NumNotValid</td>
+                <td>@result.Statistics.NumNotStarted</td>
+            </tr>
         </tbody>
     </table>
-*@
+
 }
 
 @code {
-    private TeamResult[]? teamResults;
+    private Result? result;
 
     protected override async Task OnInitializedAsync()
     {
-        teamResults = await ResultServiceX.GetTeamResultsAsync();
+        result = await ResultServiceX.GetTeamResultsAsync();
 
         //ResultServiceX.NewResutls += ResultService_OnNewResults;
     }

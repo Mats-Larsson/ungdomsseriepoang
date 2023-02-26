@@ -26,10 +26,11 @@ internal class OlaResultSourceImpl : IResultSource
             var @class = reader.GetFieldValue<string>(0);
             var name = reader.GetFieldValue<string>(1);
             var club = reader.GetFieldValue<string>(2);
-            var time = reader.IsDBNull(3) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(3));
-            var olaStatus = reader.GetFieldValue<string>(4);
+            var startTime = reader.IsDBNull(3) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(3));
+            var time = reader.IsDBNull(4) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(4));
+            var olaStatus = reader.GetFieldValue<string>(5);
 
-            list.Add(new ParticipantResult(@class, name, club, time, ToParticipantStatus(olaStatus, time)));
+            list.Add(new ParticipantResult(@class, name, club, startTime, time, ToParticipantStatus(olaStatus, time)));
         }
 
         return ImmutableList.Create(list.ToArray());

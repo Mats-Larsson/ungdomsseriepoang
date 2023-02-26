@@ -13,7 +13,7 @@ namespace ResultsTests
         [TestMethod]
         public void TestWithSimulator()
         {
-            var results = new ResultsImpl();
+            var results = new ResultService();
             var teamResults = results.GetScoreBoard();
         }
     }

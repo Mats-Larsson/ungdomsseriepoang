@@ -2,7 +2,7 @@
 
 namespace Results;
 
-public interface IResults
+public interface IResultService
 {
     Result GetScoreBoard();
     event EventHandler OnNewResults;

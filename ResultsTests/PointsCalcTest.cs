@@ -31,8 +31,8 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.NotStarted),
+            new("H10", "Adam", "Club A", null, null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
@@ -45,9 +45,9 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.NotStarted),
-            new("H10", "Hugo", "Club C", null, ParticipantStatus.Ignored),
+            new("H10", "Adam", "Club A", null, null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
+            new("H10", "Hugo", "Club C", null, null, ParticipantStatus.Ignored),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
@@ -60,9 +60,9 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.NotStarted),
-            new("H10", "Hugo", "Club C", null, ParticipantStatus.Started),
+            new("H10", "Adam", "Club A", null, null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", null, null, ParticipantStatus.NotStarted),
+            new("H10", "Hugo", "Club C", null, null, ParticipantStatus.Started),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -76,9 +76,9 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
+            new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.Started),
+            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -92,9 +92,9 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromMinutes(10), ParticipantStatus.Passed),
+            new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.Started),
+            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Passed),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -108,10 +108,10 @@ public class PointsCalcTest
     {
         var participantResults = new List<ParticipantResult>
         {
-            new("H10", "Adam", "Club A", null, ParticipantStatus.NotStarted),
-            new("H10", "Rory", "Club B", null, ParticipantStatus.Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
-            new("H10", "Hugo", "Club B", TimeSpan.FromMinutes(12), ParticipantStatus.Passed),
+            new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.Started),
+            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
+            new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), ParticipantStatus.Passed),
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
