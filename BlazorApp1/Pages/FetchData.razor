@@ -5,7 +5,7 @@
 @using BlazorApp1.Data
 @using Results.Contract
 @inject WeatherForecastService ForecastService
-@inject ResultService ResultService;
+@inject ResultService ResultServiceX;
 
 @if (teamResults == null)
 {
@@ -63,9 +63,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        teamResults = await ResultService.GetTeamResultsAsync();
+        teamResults = await ResultServiceX.GetTeamResultsAsync();
 
-        ResultService.NewResutls += ResultService_OnNewResults;
+        //ResultServiceX.NewResutls += ResultService_OnNewResults;
     }
 
     protected override void OnParametersSet()
