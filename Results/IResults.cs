@@ -4,6 +4,6 @@ namespace Results;
 
 public interface IResults
 {
-    IList<TeamResult> GetScoreBoard();
+    Result GetScoreBoard();
     event EventHandler OnNewResults;
 }

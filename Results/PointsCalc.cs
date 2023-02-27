@@ -56,11 +56,13 @@ namespace Results
         internal int CalcPoints(string @class, TimeSpan? time, ParticipantStatus status, TimeSpan? bestTime)
         {
             if (status <= Ignored) return -1;
-            if (status <= NotStarted) return 0;
+            if (status == NotStarted) return 0;
+            if (status == NotActivated) return 0;
 
             var pointsTemplate = PointsTemplate.Get(@class);
 
             if (status == Started) return pointsTemplate.NotPassedPoints;
+            if (status == NotValid) return pointsTemplate.NotPassedPoints;
 
             if (status != Passed && status != Preliminary)
                 throw new InvalidOperationException($"Unexpected status: {status}");

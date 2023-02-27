@@ -7,7 +7,7 @@
 @inject WeatherForecastService ForecastService
 @inject ResultService ResultService;
 
-@if (forecasts == null)
+@if (teamResults == null)
 {
     <p>
         <em>Loading...</em>
@@ -59,14 +59,22 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
     private TeamResult[]? teamResults;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
         teamResults = await ResultService.GetTeamResultsAsync();
+
+        ResultService.NewResutls += ResultService_OnNewResults;
     }
 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
 
+    private void ResultService_OnNewResults(object? sender, EventArgs e)
+    {
+        InvokeAsync(() => this.StateHasChanged());
+    }
 }

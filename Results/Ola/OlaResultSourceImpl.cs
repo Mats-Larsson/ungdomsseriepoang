@@ -4,11 +4,11 @@ using Results.Model;
 
 namespace Results.Ola;
 
-internal class ResultSourceImpl : IResultSource
+internal class OlaResultSourceImpl : IResultSource
 {
     private readonly string connectionString;
 
-    public ResultSourceImpl(string host, int? port, string database, string user, string password)
+    public OlaResultSourceImpl(string host, int? port, string database, string user, string password)
     {
         connectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
     }
@@ -27,9 +27,9 @@ internal class ResultSourceImpl : IResultSource
             var name = reader.GetFieldValue<string>(1);
             var club = reader.GetFieldValue<string>(2);
             var time = reader.IsDBNull(3) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(3));
-            var status = ToParticipantStatus(reader.GetFieldValue<string>(4), time);
+            var olaStatus = reader.GetFieldValue<string>(4);
 
-            list.Add(new ParticipantResult(@class, name, club, time, status));
+            list.Add(new ParticipantResult(@class, name, club, time, ToParticipantStatus(olaStatus, time)));
         }
 
         return ImmutableList.Create(list.ToArray());
@@ -43,18 +43,19 @@ internal class ResultSourceImpl : IResultSource
             "movedUp" => ParticipantStatus.Ignored,
             "notParticipating" => ParticipantStatus.Ignored,
 
-            "notActivated" => ParticipantStatus.NotStarted,
-            "notStarted" => ParticipantStatus.NotStarted,
+            "notActivated" => ParticipantStatus.NotActivated,
 
             "started" => ParticipantStatus.Started,
-            "disqualified" => ParticipantStatus.Started,
-            "notValid" => ParticipantStatus.Started,
 
             "finished" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
             "finishedTimeOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
             "finishedPunchOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
 
             "passed" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
+            "disqualified" => ParticipantStatus.NotValid,
+            "notValid" => ParticipantStatus.NotValid,
+            "notStarted" => ParticipantStatus.NotStarted,
+
             _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")
         };
     }

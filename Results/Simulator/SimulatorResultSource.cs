@@ -3,13 +3,13 @@ using Results.Model;
 
 namespace Results.Simulator;
 
-internal class ResultSourceSimulator : IResultSource, IDisposable
+internal class SimulatorResultSource : IResultSource, IDisposable
 {
     private readonly System.Timers.Timer timer;
 
     private readonly ParticipantResult[] participantResults;
 
-    public ResultSourceSimulator()
+    public SimulatorResultSource()
     {
         participantResults = InitParticipantResults();
 

@@ -21,8 +21,10 @@ internal class ParticipantResult
 internal enum ParticipantStatus
 {
     Ignored = 0,
-    NotStarted,
+    NotActivated,
     Started,
     Preliminary,
-    Passed
+    Passed,
+    NotValid,
+    NotStarted
 }
