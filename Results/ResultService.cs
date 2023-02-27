@@ -10,10 +10,11 @@ public class ResultService : IResultService
 {
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
     private int latestTeamResultsHash;
-    private Statistics latestStatistics = new Statistics(0, 0, 0, 0, 0);
+    private Statistics latestStatistics = new(0, 0, 0, 0, 0, 0);
     private readonly IResultSource resultSource;
     private readonly ITimeService timeService;
     private readonly PointsCalc pointsCalc;
+    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
 
     public ResultService() : this(new SimulatorResultSourceImpl(), new TimeService()) { }
@@ -34,8 +35,8 @@ public class ResultService : IResultService
     {
         try
         {
-            IList<Model.ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
+            IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
+            var teamResults = PointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)
@@ -44,7 +45,7 @@ public class ResultService : IResultService
                 latestTeamResultsHash = teamResultsHash;
                 latestStatistics = GetStatistics(participantResults);
 
-                OnNewResults?.Invoke(this, new EventArgs());
+                OnNewResults?.Invoke(this, EventArgs.Empty);
             }
         }
         catch (Exception exception)
@@ -66,6 +67,7 @@ public class ResultService : IResultService
             {
                 case ParticipantStatus.Ignored: break;
                 case ParticipantStatus.NotActivated: statistics.IncNumNotActivated(); break;
+                case ParticipantStatus.Activated: statistics.IncNumActivated(); break;
                 case ParticipantStatus.Started: statistics.IncNumStarted(); break;
                 case ParticipantStatus.Preliminary: statistics.IncNumStarted(); break;
                 case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
@@ -79,9 +81,8 @@ public class ResultService : IResultService
 
     private bool HasNotShownUpAtExpectedStatTime(ParticipantResult pr)
     {
-        return pr.Status == ParticipantStatus.NotActivated 
-                         && pr.StartTime.HasValue 
-                         && pr.StartTime < timeService.TimeOfDay.Add(Configuration.TIME_UNTIL_NOT_STATED);
+        return pr is { Status: ParticipantStatus.NotActivated, StartTime: { } } 
+               && pr.StartTime < timeService.TimeOfDay.Add(Configuration.TimeUntilNotStated);
     }
 
     public Result GetScoreBoard()
@@ -105,9 +106,4 @@ public class ResultService : IResultService
         }
         return hashCode;
     }
-    public void Dispose()
-    {
-        timer.Dispose();
-    }
-
 }

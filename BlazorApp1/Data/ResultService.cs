@@ -5,22 +5,22 @@ namespace BlazorApp1.Data;
 
 public class ResultService
 {
-    private IResultService resultsource;
+    private readonly IResultService resultService;
 
     public ResultService()
     {
-        resultsource = new Results.ResultService();
+        resultService = new Results.ResultService();
 
-        resultsource.OnNewResults += Resultsource_OnNewResults;
+        resultService.OnNewResults += ResultService_OnNewResults;
     }
 
-    private void Resultsource_OnNewResults(object? sender, EventArgs e)
+    private static void ResultService_OnNewResults(object? sender, EventArgs e)
     {
         Console.Out.WriteLine("Event");
     }
 
     public Task<Result> GetTeamResultsAsync()
     {
-        return Task.FromResult(resultsource.GetScoreBoard());
+        return Task.FromResult(resultService.GetScoreBoard());
     }
 }

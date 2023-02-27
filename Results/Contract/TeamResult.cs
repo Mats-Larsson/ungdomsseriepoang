@@ -21,18 +21,19 @@ public class TeamResult
 
     private bool Equals(TeamResult other)
     {
-        return Pos == other.Pos && Team == other.Team && Points == other.Points;
+        return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary;
     }
 
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((TeamResult)obj);
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((TeamResult)obj);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Pos, Team, Points);
+        return HashCode.Combine(Pos, Team, Points, IsPreliminary);
     }
 }

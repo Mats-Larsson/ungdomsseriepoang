@@ -1,7 +1,6 @@
 ﻿namespace Results;
 
-internal class Configuration
+internal static class Configuration
 {
-    public static readonly TimeSpan TIME_UNTIL_NOT_STATED = TimeSpan.FromMinutes(10);
-
+    public static readonly TimeSpan TimeUntilNotStated = TimeSpan.FromMinutes(10);
 }

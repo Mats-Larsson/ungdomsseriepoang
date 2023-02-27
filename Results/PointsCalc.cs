@@ -5,6 +5,7 @@ using static Results.Model.ParticipantStatus;
 
 namespace Results
 {
+    // ReSharper disable CommentTypo
     // Kretstävlingar och regiontävlingen
     // 50 poäng till segraren i respektive huvudklass oavsett tid, därefter 2 poängs avdrag per påbörjad minut efter segrartiden.
 
@@ -18,10 +19,11 @@ namespace Results
 
     //Exempel på poängberäkning
     //Segrartiden i D10 är 17.45. Segraren får då 50 poäng.Alla som har tider mellan 17.46-18.45 får 48 poäng.Alla som har tider mellan 18.46-19.45 får 46 poäng osv.
+    // ReSharper restore CommentTypo
 
     internal class PointsCalc
     {
-        public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
+        public static List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
         {
             var leader = participant
                 .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))
@@ -53,7 +55,7 @@ namespace Results
                 .ToList();
         }
 
-        internal int CalcPoints(string @class, TimeSpan? time, ParticipantStatus status, TimeSpan? bestTime)
+        internal static int CalcPoints(string @class, TimeSpan? time, ParticipantStatus status, TimeSpan? bestTime)
         {
             if (status <= Ignored) return -1;
             if (status == NotStarted) return 0;
@@ -61,6 +63,7 @@ namespace Results
 
             var pointsTemplate = PointsTemplate.Get(@class);
 
+            if (status == Activated) return pointsTemplate.NotPassedPoints;
             if (status == Started) return pointsTemplate.NotPassedPoints;
             if (status == NotValid) return pointsTemplate.NotPassedPoints;
 

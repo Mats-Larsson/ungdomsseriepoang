@@ -1,6 +1,6 @@
 ﻿@page "/fetchdata"
 
-<PageTitle>Resulta</PageTitle>
+<PageTitle>Results</PageTitle>
 
 @using BlazorApp1.Data
 @using Results.Contract
@@ -14,6 +14,7 @@
 }
 else
 {
+    @* ReSharper disable MarkupTextTypo *@
     <table class="table" style="font-size: large">
         <thead>
         <tr>
@@ -23,7 +24,7 @@ else
         </tr>
         </thead>
         <tbody>
-            @foreach (var teamResult in result.TeamResults ?? Array.Empty<TeamResult>())
+            @foreach (var teamResult in result.TeamResults)
         {
                 <tr style="@(teamResult.IsPreliminary ? "font-style: italic" : "")">
                 <td>@teamResult.Pos</td>
@@ -37,8 +38,8 @@ else
         <thead>
             <tr>
                 <th>Ej aktiverade</th>
-                <th>Startade</th>
-                <th>Godkända</th>
+                <th>Checkade/Startade</th>
+                <th>Preliminära/Godkända</th>
                 <th>Ej godkända</th>
                 <th>Ej star</th>
             </tr>
@@ -46,13 +47,14 @@ else
         <tbody>
             <tr>
                 <td>@result.Statistics.NumNotActivated</td>
-                <td>@result.Statistics.NumActivated</td>
+                <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
                 <td>@result.Statistics.NumPassed</td>
                 <td>@result.Statistics.NumNotValid</td>
                 <td>@result.Statistics.NumNotStarted</td>
             </tr>
         </tbody>
     </table>
+    @* ReSharper restore MarkupTextTypo *@
 
 }
 
@@ -63,7 +65,7 @@ else
     {
         result = await ResultServiceX.GetTeamResultsAsync();
 
-        //ResultServiceX.NewResutls += ResultService_OnNewResults;
+        //ResultServiceX.NewResults += ResultService_OnNewResults;
     }
 
     protected override void OnParametersSet()
@@ -73,6 +75,6 @@ else
 
     private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
-        InvokeAsync(() => this.StateHasChanged());
+        InvokeAsync(this.StateHasChanged);
     }
 }

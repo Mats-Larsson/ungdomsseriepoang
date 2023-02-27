@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Results.Contract
+﻿namespace Results.Contract
 {
     public class Statistics
     {
@@ -16,13 +10,14 @@ namespace Results.Contract
         public int NumNotStarted { get; private set; }
 
         public Statistics() { }        
-        public Statistics(int numNotActivated, int numActivated, int numStarted, int numPassed, int numNotValid)
+        public Statistics(int numNotActivated, int numActivated, int numStarted, int numPassed, int numNotValid, int numNotStarted)
         {
             NumNotActivated = numNotActivated;
             NumActivated = numActivated;
             NumStarted = numStarted;
             NumPassed = numPassed;
             NumNotValid = numNotValid;
+            NumNotStarted = numNotStarted;
         }
 
         internal void IncNumNotActivated() { NumNotActivated++; }

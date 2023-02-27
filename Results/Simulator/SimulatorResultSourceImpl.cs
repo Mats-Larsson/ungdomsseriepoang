@@ -4,20 +4,20 @@ namespace Results.Simulator;
 
 internal class SimulatorResultSourceImpl : IResultSource, IDisposable
 {
-    private readonly SimultatedParticipent[] simultatedParticipents;
+    private readonly SimulatedParticipant[] simulatedParticipants;
     private readonly CancellationTokenSource source = new();
-    public int SpeedMultiplier { get; private set; }
-    public CancellationToken CancellationToken { get; private set; }
+    public int SpeedMultiplier { get; }
+    public CancellationToken CancellationToken { get; }
 
     public SimulatorResultSourceImpl()
     {
         SpeedMultiplier = 10;
-        simultatedParticipents = TestData.TemplateParticipantResults
-            .Select(r => new SimultatedParticipent(this, r))
+        simulatedParticipants = TestData.TemplateParticipantResults
+            .Select(r => new SimulatedParticipant(this, r))
             .ToArray();
         CancellationToken = source.Token;
 
-        foreach (var pr in simultatedParticipents)
+        foreach (var pr in simulatedParticipants)
         {
             pr.Task = pr.RunAsync();
         }
@@ -25,10 +25,10 @@ internal class SimulatorResultSourceImpl : IResultSource, IDisposable
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return simultatedParticipents;
+        return simulatedParticipants.Cast<ParticipantResult>().ToList();
     }
 
-    public string Status => $"{simultatedParticipents.Count(pr => pr.Task?.Status == TaskStatus.RanToCompletion)} / {simultatedParticipents.Length} ";
+    public string Status => $"{simulatedParticipants.Count(pr => pr.Task?.Status == TaskStatus.RanToCompletion)} / {simulatedParticipants.Length} ";
 
     public void Dispose()
     {

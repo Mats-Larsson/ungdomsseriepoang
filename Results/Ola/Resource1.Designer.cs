@@ -72,7 +72,7 @@ namespace Results.Ola {
         ///left join	results			r	on	e.entryId = r.entryId
         ///left join	persons			p	on	p.personId = e.competitorId
         ///left join	organisations	o	on	o.organisationId = p.defaultOrganisationId
-        ///where		e.eventId [rest of string was truncated]&quot;;.
+        ///where [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParticipantResultSql {
             get {

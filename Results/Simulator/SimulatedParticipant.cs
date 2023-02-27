@@ -1,23 +1,18 @@
 ﻿using Results.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Results.Simulator
 {
-    internal class SimultatedParticipent : ParticipantResult
+    internal class SimulatedParticipant : ParticipantResult
     {
         private readonly TimeSpan startTime;
         private readonly TimeSpan targetTime;
         private readonly ParticipantStatus targetStatus;
         private readonly SimulatorResultSourceImpl simulator;
 
-        public bool SimulationDone { get; private set; } = false;
+        public bool SimulationDone { get; private set; }
         public Task? Task { get; internal set; }
 
-        public SimultatedParticipent(SimulatorResultSourceImpl simulator, ParticipantResult pr)
+        public SimulatedParticipant(SimulatorResultSourceImpl simulator, ParticipantResult pr)
             : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated)
         {
             this.simulator = simulator;
@@ -50,7 +45,7 @@ namespace Results.Simulator
                         goto SimulationDone;
                 }
             }
-        SimulationDone:
+            SimulationDone:
             SimulationDone = true;
         }
 
