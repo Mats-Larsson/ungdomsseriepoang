@@ -3,7 +3,7 @@
 namespace ResultsTests
 {
     [TestClass]
-    public class ResultsImplTest
+    public class ResultsTest
     {
         [TestMethod]
         public void TestWithSimulator()

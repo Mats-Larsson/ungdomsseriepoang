@@ -23,7 +23,9 @@ namespace Results
 
     internal class PointsCalc
     {
-        public static List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
+#pragma warning disable CA1822 // Mark members as static
+        public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
+#pragma warning restore CA1822 // Mark members as static
         {
             var leader = participant
                 .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))

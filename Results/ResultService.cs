@@ -17,7 +17,7 @@ public class ResultService : IResultService
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
 
-    public ResultService() : this(new SimulatorResultSourceImpl(), new TimeService()) { }
+    public ResultService() : this(new SimulatorResultSource(), new TimeService()) { }
 
     private ResultService(IResultSource resultSource, ITimeService timeService)
     {
@@ -36,7 +36,7 @@ public class ResultService : IResultService
         try
         {
             IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = PointsCalc.CalcScoreBoard(participantResults);
+            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)

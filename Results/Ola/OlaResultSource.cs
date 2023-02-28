@@ -4,11 +4,11 @@ using Results.Model;
 
 namespace Results.Ola;
 
-internal class OlaResultSourceImpl : IResultSource
+internal class OlaResultSource : IResultSource
 {
     private readonly string connectionString;
 
-    public OlaResultSourceImpl(string host, int? port, string database, string user, string password)
+    public OlaResultSource(string host, int? port, string database, string user, string password)
     {
         connectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
     }

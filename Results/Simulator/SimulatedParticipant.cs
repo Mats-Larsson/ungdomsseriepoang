@@ -7,12 +7,12 @@ namespace Results.Simulator
         private readonly TimeSpan startTime;
         private readonly TimeSpan targetTime;
         private readonly ParticipantStatus targetStatus;
-        private readonly SimulatorResultSourceImpl simulator;
+        private readonly SimulatorResultSource simulator;
 
         public bool SimulationDone { get; private set; }
         public Task? Task { get; internal set; }
 
-        public SimulatedParticipant(SimulatorResultSourceImpl simulator, ParticipantResult pr)
+        public SimulatedParticipant(SimulatorResultSource simulator, ParticipantResult pr)
             : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated)
         {
             this.simulator = simulator;

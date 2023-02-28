@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup>
+		<Deterministic>true</Deterministic>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<CodeAnalysisRuleSet>..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+</Project>

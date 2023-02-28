@@ -9,7 +9,7 @@ namespace ResultsTests
         [TestMethod]
         public void TestMethod1()
         {
-            IResultSource resultSource = new OlaResultSourceImpl("NUC", null, "kretstavling2019", "root", "kasby");
+            IResultSource resultSource = new OlaResultSource("NUC", null, "kretstavling2019", "root", "kasby");
 
             var participantResults = resultSource.GetParticipantResults();
         }
