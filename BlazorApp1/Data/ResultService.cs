@@ -1,5 +1,4 @@
-﻿using Results;
-using Results.Contract;
+﻿using Results.Contract;
 
 namespace BlazorApp1.Data;
 

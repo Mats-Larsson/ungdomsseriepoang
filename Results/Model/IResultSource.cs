@@ -1,11 +1,9 @@
-﻿using Results.Model;
-
-namespace Results
+﻿namespace Results.Model
 {
     internal interface IResultSource
     {
         IList<ParticipantResult> GetParticipantResults();
-        TimeSpan CurrentTimeOfDay { get; }  
+        TimeSpan CurrentTimeOfDay { get; }
 
     }
 }

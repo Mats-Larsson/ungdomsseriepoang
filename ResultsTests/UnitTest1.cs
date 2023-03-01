@@ -1,4 +1,4 @@
-using Results;
+using Results.Model;
 using Results.Ola;
 
 namespace ResultsTests

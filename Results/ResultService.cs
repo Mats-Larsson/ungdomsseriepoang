@@ -12,17 +12,15 @@ public class ResultService : IResultService
     private int latestTeamResultsHash;
     private Statistics latestStatistics = new(0, 0, 0, 0, 0, 0);
     private readonly IResultSource resultSource;
-    private readonly ITimeService timeService;
     private readonly PointsCalc pointsCalc;
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
 
-    public ResultService() : this(new SimulatorResultSource(), new TimeService()) { }
+    public ResultService() : this(new SimulatorResultSource()) { }
 
-    private ResultService(IResultSource resultSource, ITimeService timeService)
+    private ResultService(IResultSource resultSource)
     {
         this.resultSource = resultSource;
-        this.timeService = timeService;
         this.pointsCalc = new PointsCalc();
 
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
