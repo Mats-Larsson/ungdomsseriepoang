@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ResultService>();
+builder.Services.AddSingleton<Results.ResultService>();
 
 var app = builder.Build();
 

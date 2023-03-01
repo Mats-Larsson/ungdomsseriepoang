@@ -30,16 +30,17 @@ namespace Results.Simulator
                     case ParticipantStatus.NotActivated:
                         if (targetStatus == ParticipantStatus.NotStarted)
                             goto SimulationDone;
-                        await SimulatedDelay(startTime!.Value);
+                        await SimulatedDelay(startTime!.Value).ConfigureAwait(false);
                         Status = ParticipantStatus.Started;
                         break;
+                    // TODO: Hantera även Checkad
                     case ParticipantStatus.Started:
-                        await SimulatedDelay(targetTime);
+                        await SimulatedDelay(targetTime).ConfigureAwait(false);
                         Status = ParticipantStatus.Preliminary;
                         Time = targetTime;
                         break;
                     case ParticipantStatus.Preliminary:
-                        await SimulatedDelay(TimeSpan.FromSeconds(30));
+                        await SimulatedDelay(TimeSpan.FromSeconds(30)).ConfigureAwait(false);
                         Time = targetStatus == ParticipantStatus.Passed ? targetTime : null;
                         Status = targetStatus;
                         goto SimulationDone;

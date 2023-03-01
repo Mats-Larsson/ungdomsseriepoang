@@ -6,21 +6,23 @@ using Results.Simulator;
 
 namespace Results;
 
-public class ResultService : IResultService
+public class ResultService : IResultService, IDisposable
 {
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
     private int latestTeamResultsHash;
-    private Statistics latestStatistics = new(0, 0, 0, 0, 0, 0);
+    private Statistics latestStatistics = new();
     private readonly IResultSource resultSource;
+    private readonly Configuration configuration;
     private readonly PointsCalc pointsCalc;
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
 
-    public ResultService() : this(new SimulatorResultSource()) { }
+    public ResultService() : this(new SimulatorResultSource(), new Configuration()) { }
 
-    private ResultService(IResultSource resultSource)
+    private ResultService(IResultSource resultSource, Configuration configuration)
     {
         this.resultSource = resultSource;
+        this.configuration = configuration;
         this.pointsCalc = new PointsCalc();
 
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
@@ -52,12 +54,13 @@ public class ResultService : IResultService
         }
     }
 
-    private Statistics GetStatistics(IList<ParticipantResult> participantResults)
+    private Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults)
     {
         var statistics = new Statistics();
         foreach (var pr in participantResults)
         {
-            ParticipantStatus status = pr.Status;
+            var status = pr.Status;
+            statistics.CurrentTimeOfDay = resultSource.CurrentTimeOfDay;
             if (HasNotShownUpAtExpectedStatTime(pr))
                 status = ParticipantStatus.NotStarted;
 
@@ -67,7 +70,7 @@ public class ResultService : IResultService
                 case ParticipantStatus.NotActivated: statistics.IncNumNotActivated(); break;
                 case ParticipantStatus.Activated: statistics.IncNumActivated(); break;
                 case ParticipantStatus.Started: statistics.IncNumStarted(); break;
-                case ParticipantStatus.Preliminary: statistics.IncNumStarted(); break;
+                case ParticipantStatus.Preliminary: statistics.IncNumPreliminary(); break;
                 case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
                 case ParticipantStatus.NotValid: statistics.IncNumNotValid(); break;
                 case ParticipantStatus.NotStarted: statistics.IncNumNotStarted(); break;
@@ -79,8 +82,9 @@ public class ResultService : IResultService
 
     private bool HasNotShownUpAtExpectedStatTime(ParticipantResult pr)
     {
-        return pr is { Status: ParticipantStatus.NotActivated, StartTime: { } } 
-               && pr.StartTime < resultSource.CurrentTimeOfDay.Add(Configuration.TimeUntilNotStated);
+        return pr.Status == ParticipantStatus.NotActivated
+               && pr.StartTime > TimeSpan.Zero 
+               && pr.StartTime < resultSource.CurrentTimeOfDay.Add(configuration.TimeUntilNotStated);
     }
 
     public Result GetScoreBoard()
@@ -103,5 +107,10 @@ public class ResultService : IResultService
             }
         }
         return hashCode;
+    }
+
+    public void Dispose()
+    {
+        timer.Dispose();
     }
 }

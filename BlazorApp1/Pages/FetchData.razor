@@ -24,9 +24,9 @@ else
         </tr>
         </thead>
         <tbody>
-            @foreach (var teamResult in result.TeamResults)
+        @foreach (var teamResult in result.TeamResults)
         {
-                <tr style="@(teamResult.IsPreliminary ? "font-style: italic" : "")">
+            <tr style="@(teamResult.IsPreliminary ? "font-style: italic" : "")">
                 <td>@teamResult.Pos</td>
                 <td>@teamResult.Team</td>
                 <td>@teamResult.Points</td>
@@ -36,26 +36,29 @@ else
     </table>
     <table class="table">
         <thead>
-            <tr>
-                <th>Ej aktiverade</th>
-                <th>Checkade/Startade</th>
-                <th>Preliminära/Godkända</th>
-                <th>Ej godkända</th>
-                <th>Ej star</th>
-            </tr>
+        <tr>
+            <th>Senasta ändrad</th>
+            <th>Ej aktiverade</th>
+            <th>Checkade/Startade</th>
+            <th>Preliminära</th>
+            <th>Godkända</th>
+            <th>Ej godkända</th>
+            <th>Ej start</th>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>@result.Statistics.NumNotActivated</td>
-                <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
-                <td>@result.Statistics.NumPassed</td>
-                <td>@result.Statistics.NumNotValid</td>
-                <td>@result.Statistics.NumNotStarted</td>
-            </tr>
+        <tr>
+            <td>@result.Statistics.CurrentTimeOfDay</td>
+            <td>@result.Statistics.NumNotActivated</td>
+            <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
+            <td>@result.Statistics.NumPreliminary</td>
+            <td>@result.Statistics.NumPassed</td>
+            <td>@result.Statistics.NumNotValid</td>
+            <td>@result.Statistics.NumNotStarted</td>
+        </tr>
         </tbody>
     </table>
     @* ReSharper restore MarkupTextTypo *@
-
 }
 
 @code {
@@ -65,7 +68,7 @@ else
     {
         result = await ResultServiceX.GetTeamResultsAsync();
 
-        //ResultServiceX.NewResults += ResultService_OnNewResults;
+    //ResultServiceX.NewResults += ResultService_OnNewResults;
     }
 
     protected override void OnParametersSet()
@@ -77,4 +80,5 @@ else
     {
         InvokeAsync(this.StateHasChanged);
     }
+
 }

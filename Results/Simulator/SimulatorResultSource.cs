@@ -43,8 +43,8 @@ internal class SimulatorResultSource : IResultSource, IDisposable
         currentTimeOfDay = ZeroTime;
         while (currentTimeOfDay <= MaxTime)
         {
-            currentTimeOfDay = currentTimeOfDay.Add(TimeSpan.FromSeconds(1).Divide(SpeedMultiplier));
-            await Task.Delay(TimeSpan.FromSeconds(1), CancellationToken);
+            currentTimeOfDay = currentTimeOfDay.Add(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(1).Divide(SpeedMultiplier), CancellationToken).ConfigureAwait(false);
         }
     }
 

@@ -865,7 +865,6 @@
     <Rule Id="CA5391" Action="Warning" />
     <Rule Id="CA5392" Action="Warning" />
     <Rule Id="CA5393" Action="Warning" />
-    <Rule Id="CA5394" Action="Warning" />
     <Rule Id="CA5395" Action="Warning" />
     <Rule Id="CA5396" Action="Warning" />
     <Rule Id="CA5398" Action="Warning" />
