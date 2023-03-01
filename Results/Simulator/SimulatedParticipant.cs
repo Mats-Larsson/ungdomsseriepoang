@@ -4,19 +4,19 @@ namespace Results.Simulator
 {
     internal class SimulatedParticipant : ParticipantResult
     {
-        private readonly TimeSpan startTime;
+        private readonly TimeSpan? startTime;
         private readonly TimeSpan targetTime;
         private readonly ParticipantStatus targetStatus;
         private readonly SimulatorResultSource simulator;
 
-        public bool SimulationDone { get; private set; }
+        internal bool SimulationDone { get; private set; }
         public Task? Task { get; internal set; }
 
         public SimulatedParticipant(SimulatorResultSource simulator, ParticipantResult pr)
             : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated)
         {
             this.simulator = simulator;
-            startTime = TimeSpan.FromMinutes(Random.Shared.Next(0, 60)) / simulator.SpeedMultiplier;
+            startTime = pr.StartTime.HasValue ? (pr.StartTime - simulator.ZeroTime)/ simulator.SpeedMultiplier : null;
             targetTime = pr.Time ?? TimeSpan.FromSeconds(10 * 60 + Random.Shared.Next(0, 30 * 60)) / simulator.SpeedMultiplier;
             targetStatus = pr.Status;
         }
@@ -30,7 +30,7 @@ namespace Results.Simulator
                     case ParticipantStatus.NotActivated:
                         if (targetStatus == ParticipantStatus.NotStarted)
                             goto SimulationDone;
-                        await SimulatedDelay(startTime);
+                        await SimulatedDelay(startTime!.Value);
                         Status = ParticipantStatus.Started;
                         break;
                     case ParticipantStatus.Started:

@@ -2,6 +2,6 @@
 {
     public class TimeService : ITimeService
     {
-        public TimeSpan TimeOfDay => DateTime.Now - DateTime.Now.Date;
+        public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
     }
 }

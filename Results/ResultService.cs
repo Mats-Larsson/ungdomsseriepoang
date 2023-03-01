@@ -82,7 +82,7 @@ public class ResultService : IResultService
     private bool HasNotShownUpAtExpectedStatTime(ParticipantResult pr)
     {
         return pr is { Status: ParticipantStatus.NotActivated, StartTime: { } } 
-               && pr.StartTime < timeService.TimeOfDay.Add(Configuration.TimeUntilNotStated);
+               && pr.StartTime < resultSource.CurrentTimeOfDay.Add(Configuration.TimeUntilNotStated);
     }
 
     public Result GetScoreBoard()

@@ -36,6 +36,8 @@ internal class OlaResultSource : IResultSource
         return ImmutableList.Create(list.ToArray());
     }
 
+    public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
+
     private static ParticipantStatus ToParticipantStatus(string olaStatus, TimeSpan? time)
     {
         return olaStatus switch
