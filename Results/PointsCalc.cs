@@ -67,6 +67,7 @@ internal class PointsCalc
 
         var pointsTemplate = PointsTemplate.Get(@class);
 
+        // TODO: Started om Activated och starttiden har passerats
         if (status == Activated) return pointsTemplate.NotPassedPoints;
         if (status == Started) return pointsTemplate.NotPassedPoints;
         if (status == NotValid) return pointsTemplate.NotPassedPoints;

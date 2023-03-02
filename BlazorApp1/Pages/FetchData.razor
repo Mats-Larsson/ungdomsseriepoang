@@ -17,7 +17,7 @@ else
     @* ReSharper disable MarkupTextTypo *@
 
     <div>
-        <div>
+        <div style="-webkit-column-count: 2; column-count: 2">
             <table class="table" style="font-size: large">
                 <thead>
                 <tr>
@@ -54,9 +54,7 @@ else
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        @result.Statistics.LastUpdatedTimeOfDay<br/>@result.Statistics.LastChangedTimeOfDay
-                    </td>
+                    <td>@result.Statistics.LastUpdatedTimeOfDay<br/>@result.Statistics.LastChangedTimeOfDay</td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
                     <td>@result.Statistics.NumPreliminary</td>
