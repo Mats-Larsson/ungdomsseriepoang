@@ -6,7 +6,46 @@ namespace Results.Simulator
     {
         internal static readonly TimeSpan ZeroTime = TimeSpan.FromHours(18.5);
 
+        static TestData()
+        {
+            var clubIndex = 0;
+            foreach (var participantResult in TemplateParticipantResults)
+            {
+                participantResult.Club = Clubs[clubIndex++ % Clubs.Length];
+            }
+        }
+
         // ReSharper disable StringLiteralTypo
+        private static readonly string[] Clubs = {
+            "Snättringe SK",
+            "Tullinge SK",
+            "Järfälla OK",
+            "Tumba-Mälarhöjden OK",
+            "Sundbybergs IK",
+            "OK Ravinen",
+            "Järla Orientering",
+            "Täby OK",
+            "Skogsluffarnas OK",
+            "IFK Lidingö SOK",
+            "Attunda OK",
+            "OK Södertörn",
+            "Söders-Tyresö",
+            "Väsby OK",
+            "Skarpnäcks OL",
+            "OK Älvsjö-Örby",
+            "Waxholms OK",
+            "IFK Enskede",
+            "Mälarö SOK",
+            "Bromma-Vällingby SOK",
+            "Haninge SOK",
+            "Gustavsbergs OK",
+            "OK Österåker",
+            "Hellas Orientering",
+            "Enebybergs IF",
+            "Solna OK",
+            "Nynäshamns OK"
+        };
+
         internal static readonly SimulatorParticipantResult[] TemplateParticipantResults =
         {
             new("D16", "Sofia Lindhagen", "IFK Enskede", T("18:34:00.000"), T("00:00:00"), "notStarted"),

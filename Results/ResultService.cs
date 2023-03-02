@@ -60,7 +60,7 @@ public class ResultService : IResultService, IDisposable
         foreach (var pr in participantResults)
         {
             var status = pr.Status;
-            statistics.CurrentTimeOfDay = resultSource.CurrentTimeOfDay;
+            statistics.LastChangedTimeOfDay = resultSource.CurrentTimeOfDay;
             if (HasNotShownUpAtExpectedStatTime(pr))
                 status = ParticipantStatus.NotStarted;
 
@@ -89,6 +89,7 @@ public class ResultService : IResultService, IDisposable
 
     public Result GetScoreBoard()
     {
+        latestStatistics.LastUpdatedTimeOfDay = resultSource.CurrentTimeOfDay;
         var result = new Result(latestTeamResults, latestStatistics);
         return result;
     }

@@ -36,6 +36,7 @@ internal class OlaResultSource : IResultSource
         return ImmutableList.Create(list.ToArray());
     }
 
+    // TODO: Hämta från OLA
     public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
 
     private static ParticipantStatus ToParticipantStatus(string olaStatus, TimeSpan? time)

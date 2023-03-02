@@ -2,7 +2,8 @@
 {
     public class Statistics
     {
-        public TimeSpan CurrentTimeOfDay { get; internal set; }
+        public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
+        public TimeSpan LastChangedTimeOfDay { get; internal set; }
         public int NumNotActivated { get; private set; }
         public int NumActivated { get; private set; }
         public int NumStarted { get; private set; }

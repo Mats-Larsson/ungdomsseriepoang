@@ -4,7 +4,7 @@ internal class ParticipantResult
 {
     public string Class { get; }
     public string Name { get; }
-    public string Club { get; }
+    public string Club { get; internal set; }
     public TimeSpan? StartTime { get; }
     public TimeSpan? Time { get; internal set; }
     public ParticipantStatus Status { get; internal set; }
