@@ -15,7 +15,7 @@ public class PointsCalcTest
     {
         var participantResults = (new SimulatorResultSource()).GetParticipantResults();
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
-        Assert.AreEqual(4, scoreBoard.Count);
+        Assert.AreEqual(27, scoreBoard.Count);
     }
 
     [TestMethod]
