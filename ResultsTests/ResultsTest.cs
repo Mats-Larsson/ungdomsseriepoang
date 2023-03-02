@@ -1,4 +1,5 @@
 ﻿using Results;
+using Results.Contract;
 
 namespace ResultsTests
 {
@@ -8,7 +9,7 @@ namespace ResultsTests
         [TestMethod]
         public void TestWithSimulator()
         {
-            var results = new ResultService();
+            using var results = new ResultService(ResultSource.Simulator);
             var teamResults = results.GetScoreBoard();
         }
     }

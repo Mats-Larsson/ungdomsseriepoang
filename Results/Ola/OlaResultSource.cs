@@ -18,7 +18,9 @@ internal class OlaResultSource : IResultSource
         using var con = new MySqlConnection(connectionString);
         con.Open();
 
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
         using var cmd = new MySqlCommand(Resource1.ParticipantResultSql, con);
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
         using var reader = cmd.ExecuteReader();
         var list = new List<ParticipantResult>();
         while (reader.Read())
@@ -62,5 +64,10 @@ internal class OlaResultSource : IResultSource
 
             _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")
         };
+    }
+
+    public void Dispose()
+    {
+        // Nothing to dispose
     }
 }

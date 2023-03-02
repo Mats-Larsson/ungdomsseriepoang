@@ -6,9 +6,9 @@ public class ResultService
 {
     private readonly IResultService resultService;
 
-    public ResultService()
+    public ResultService(IResultService resultService)
     {
-        resultService = new Results.ResultService();
+        this.resultService = resultService;
 
         resultService.OnNewResults += ResultService_OnNewResults;
     }

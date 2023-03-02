@@ -2,11 +2,12 @@
 using System.Timers;
 using Results.Contract;
 using Results.Model;
+using Results.Ola;
 using Results.Simulator;
 
 namespace Results;
 
-public class ResultService : IResultService, IDisposable
+public sealed class ResultService : IResultService, IDisposable
 {
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
     private int latestTeamResultsHash;
@@ -17,12 +18,16 @@ public class ResultService : IResultService, IDisposable
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
 
-    public ResultService() : this(new SimulatorResultSource(), new Configuration()) { }
-
-    private ResultService(IResultSource resultSource, Configuration configuration)
+    public ResultService(ResultSource resultSource)
     {
-        this.resultSource = resultSource;
-        this.configuration = configuration;
+        switch (resultSource)
+        {
+            case ResultSource.OlaDatabase: this.resultSource = new OlaResultSource("NUC", null, "kretstavling2019", "root", "kasby"); break;
+            case ResultSource.Simulator:   this.resultSource = new SimulatorResultSource(); break;
+
+        }
+
+        this.configuration = new Configuration();
         this.pointsCalc = new PointsCalc();
 
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
@@ -113,5 +118,6 @@ public class ResultService : IResultService, IDisposable
     public void Dispose()
     {
         timer.Dispose();
+        resultSource.Dispose();
     }
 }

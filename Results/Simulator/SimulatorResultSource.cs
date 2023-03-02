@@ -2,7 +2,7 @@
 
 namespace Results.Simulator;
 
-internal class SimulatorResultSource : IResultSource, IDisposable
+internal class SimulatorResultSource : IResultSource
 {
     private readonly SimulatedParticipant[] simulatedParticipants;
     private readonly CancellationTokenSource cancellationTokenSource = new();

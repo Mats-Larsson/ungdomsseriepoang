@@ -1,4 +1,5 @@
 using BlazorApp1.Data;
+using Results.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ResultService>();
-builder.Services.AddSingleton<Results.ResultService>();
+builder.Services.AddSingleton<IResultService, Results.ResultService>(serviceProvider => new Results.ResultService(ResultSource.Simulator));
 
 var app = builder.Build();
 
