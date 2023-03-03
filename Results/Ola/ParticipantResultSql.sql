@@ -9,7 +9,7 @@ left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId
 left join	results			r	on	e.entryId = r.entryId
 left join	persons			p	on	p.personId = e.competitorId
 left join	organisations	o	on	o.organisationId = p.defaultOrganisationId
-where		e.eventId = 1
+where		e.eventId = @EventId
 order by	5, ec.sequence, 
 			case	when r.runnerStatus = 'passed' 		then r.totalTime 
 					when r.runnerStatus = 'notStarted'	then 10000002

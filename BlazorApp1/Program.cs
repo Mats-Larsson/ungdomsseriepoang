@@ -3,11 +3,15 @@ using Results.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var resultsConfiguration = new Results.Configuration();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<ResultService>();
-builder.Services.AddSingleton<IResultService, Results.ResultService>(serviceProvider => new Results.ResultService(ResultSource.Simulator));
+builder.Services.AddSingleton<IResultService, Results.ResultService>();
 
 var app = builder.Build();
 

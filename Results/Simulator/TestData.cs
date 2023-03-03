@@ -8,10 +8,9 @@ namespace Results.Simulator
 
         static TestData()
         {
-            var clubIndex = 0;
             foreach (var participantResult in TemplateParticipantResults)
             {
-                participantResult.Club = Clubs[clubIndex++ % Clubs.Length];
+                participantResult.Club = Clubs[Random.Shared.Next(0, Clubs.Length)];
             }
         }
 

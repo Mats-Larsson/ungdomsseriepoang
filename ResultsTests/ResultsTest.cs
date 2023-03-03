@@ -9,7 +9,8 @@ namespace ResultsTests
         [TestMethod]
         public void TestWithSimulator()
         {
-            using var results = new ResultService(ResultSource.Simulator);
+            var configuration = new Configuration(ResultSource.Simulator);
+            using var results = new ResultService(configuration);
             var teamResults = results.GetScoreBoard();
         }
     }

@@ -1,3 +1,4 @@
+using Results;
 using Results.Model;
 using Results.Ola;
 
@@ -9,7 +10,7 @@ namespace ResultsTests
         [TestMethod]
         public void TestMethod1()
         {
-            IResultSource resultSource = new OlaResultSource("NUC", null, "kretstavling2019", "root", "kasby");
+            using IResultSource resultSource = new OlaResultSource(new Configuration());
 
             var participantResults = resultSource.GetParticipantResults();
         }

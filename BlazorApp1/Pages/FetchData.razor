@@ -87,16 +87,13 @@ else
     {
         result = await ResultServiceX.GetTeamResultsAsync();
 
-    //ResultServiceX.NewResults += ResultService_OnNewResults;
+    ResultServiceX.OnNewResults += ResultService_OnNewResults;
     }
 
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-    }
-
+    
     private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
+        result = ResultServiceX.GetTeamResultsAsync().Result;
         InvokeAsync(this.StateHasChanged);
     }
 

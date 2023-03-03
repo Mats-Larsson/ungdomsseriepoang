@@ -12,20 +12,21 @@ public sealed class ResultService : IResultService, IDisposable
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
     private int latestTeamResultsHash;
     private Statistics latestStatistics = new();
-    private readonly IResultSource resultSource;
     private readonly Configuration configuration;
     private readonly PointsCalc pointsCalc;
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
+    private readonly IResultSource resultSource;
 
-    public ResultService(ResultSource resultSource)
+    public ResultService(Configuration configuration)
     {
-        switch (resultSource)
+        this.configuration = configuration;
+        this.resultSource = configuration.ResultSource switch
         {
-            case ResultSource.OlaDatabase: this.resultSource = new OlaResultSource("NUC", null, "kretstavling2019", "root", "kasby"); break;
-            case ResultSource.Simulator:   this.resultSource = new SimulatorResultSource(); break;
-
-        }
+            ResultSource.OlaDatabase => new OlaResultSource(configuration),
+            ResultSource.Simulator => new SimulatorResultSource(configuration),
+            _ => throw new ArgumentException($"Unknown {nameof(resultSource)}: {resultSource}")
+        };
 
         this.configuration = new Configuration();
         this.pointsCalc = new PointsCalc();

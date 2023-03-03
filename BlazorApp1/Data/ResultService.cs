@@ -13,13 +13,15 @@ public class ResultService
         resultService.OnNewResults += ResultService_OnNewResults;
     }
 
-    private static void ResultService_OnNewResults(object? sender, EventArgs e)
+    private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
-        Console.Out.WriteLine("Event");
+        OnNewResults?.Invoke(sender, e);
     }
 
     public Task<Result> GetTeamResultsAsync()
     {
         return Task.FromResult(resultService.GetScoreBoard());
     }
+
+    public event EventHandler OnNewResults;
 }

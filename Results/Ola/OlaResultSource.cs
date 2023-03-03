@@ -6,11 +6,17 @@ namespace Results.Ola;
 
 internal class OlaResultSource : IResultSource
 {
+    private readonly Configuration configuration;
     private readonly string connectionString;
 
-    public OlaResultSource(string host, int? port, string database, string user, string password)
+    public OlaResultSource(Configuration configuration)
     {
-        connectionString = $"server={host};port={port ?? 3306};userid={user};password={password};database={database}";
+        this.configuration = configuration;
+        connectionString = $"server={configuration.OlaMySqlHost};" +
+                           $"port={configuration.OlaMySqlPort ?? 3306};" +
+                           $"userid={configuration.OlaMySqlUser};" +
+                           $"password={configuration.OlaMySqlPassword};" +
+                           $"database={configuration.OlaMySqlDatabase}";
     }
 
     public IList<ParticipantResult> GetParticipantResults()
@@ -20,6 +26,7 @@ internal class OlaResultSource : IResultSource
 
 #pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
         using var cmd = new MySqlCommand(Resource1.ParticipantResultSql, con);
+        cmd.Parameters.AddWithValue("@EventId", configuration.OlaEventId);
 #pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
         using var reader = cmd.ExecuteReader();
         var list = new List<ParticipantResult>();

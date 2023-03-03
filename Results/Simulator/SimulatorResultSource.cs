@@ -4,6 +4,7 @@ namespace Results.Simulator;
 
 internal class SimulatorResultSource : IResultSource
 {
+    private readonly Configuration configuration;
     private readonly SimulatedParticipant[] simulatedParticipants;
     private readonly CancellationTokenSource cancellationTokenSource = new();
     private TimeSpan currentTimeOfDay = TimeSpan.Zero;
@@ -14,8 +15,11 @@ internal class SimulatorResultSource : IResultSource
     public TimeSpan ZeroTime { get; }
     public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
 
-    public SimulatorResultSource()
+    public SimulatorResultSource(Configuration configuration)
     {
+        this.configuration = configuration;
+        SpeedMultiplier = this.configuration.SpeedMultiplier;
+
         MinTime = TestData.TemplateParticipantResults
             .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)
             .Min(p => p.StartTime!.Value);
@@ -24,7 +28,6 @@ internal class SimulatorResultSource : IResultSource
             .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
         ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
 
-        SpeedMultiplier = 10;
         simulatedParticipants = TestData.TemplateParticipantResults
             .Select(r => new SimulatedParticipant(this, r))
             .ToArray();
