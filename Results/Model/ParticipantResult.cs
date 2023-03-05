@@ -8,8 +8,9 @@ internal class ParticipantResult
     public TimeSpan? StartTime { get; }
     public TimeSpan? Time { get; internal set; }
     public ParticipantStatus Status { get; internal set; }
+    public bool IsExtraPartisipant { get; }
 
-    public ParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status)
+    public ParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, bool isExtraPartisipant = false)
     {
         Class = @class;
         Name = name;
@@ -17,5 +18,6 @@ internal class ParticipantResult
         StartTime = startTime;
         Time = time;
         Status = status;
+        IsExtraPartisipant = isExtraPartisipant;
     }
 }

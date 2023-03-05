@@ -13,7 +13,7 @@ namespace Results.Simulator
         public Task? Task { get; internal set; }
 
         public SimulatedParticipant(SimulatorResultSource simulator, ParticipantResult pr)
-            : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated)
+            : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated, pr.IsExtraPartisipant)
         {
             this.simulator = simulator;
             startTime = pr.StartTime.HasValue ? (pr.StartTime - simulator.ZeroTime)/ simulator.SpeedMultiplier : null;
@@ -33,7 +33,7 @@ namespace Results.Simulator
                         await SimulatedDelay(startTime!.Value).ConfigureAwait(false);
                         Status = ParticipantStatus.Started;
                         break;
-                    // TODO: Hantera även Checkad
+                    // TODO: Hantera även Checkad. Är nog samma som Started i OLA.
                     case ParticipantStatus.Started:
                         await SimulatedDelay(targetTime).ConfigureAwait(false);
                         Status = ParticipantStatus.Preliminary;

@@ -5,6 +5,7 @@ namespace BlazorApp1.Data;
 public class ResultService
 {
     private readonly IResultService resultService;
+    public event EventHandler? OnNewResults;
 
     public ResultService(IResultService resultService)
     {
@@ -13,15 +14,15 @@ public class ResultService
         resultService.OnNewResults += ResultService_OnNewResults;
     }
 
-    private void ResultService_OnNewResults(object? sender, EventArgs e)
-    {
-        OnNewResults?.Invoke(sender, e);
-    }
 
     public Task<Result> GetTeamResultsAsync()
     {
         return Task.FromResult(resultService.GetScoreBoard());
     }
 
-    public event EventHandler OnNewResults;
+
+    private void ResultService_OnNewResults(object? sender, EventArgs e)
+    {
+        OnNewResults?.Invoke(sender, e);
+    }
 }

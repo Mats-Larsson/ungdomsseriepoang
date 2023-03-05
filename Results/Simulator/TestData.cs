@@ -216,7 +216,8 @@ namespace Results.Simulator
 
 internal class SimulatorParticipantResult : ParticipantResult
 {
-    public SimulatorParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, String olaStatus) : base(@class, name, club, startTime, time, TranslateStatus(olaStatus, time))
+    public SimulatorParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, string olaStatus) 
+        : base(@class, name, club, startTime, time, TranslateStatus(olaStatus, time))
     {
     }
 

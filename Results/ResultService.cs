@@ -42,7 +42,7 @@ public sealed class ResultService : IResultService, IDisposable
         try
         {
             IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
+            var teamResults = pointsCalc.CalcScoreBoard(participantResults, resultSource.CurrentTimeOfDay);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)

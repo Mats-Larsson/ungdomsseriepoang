@@ -4,7 +4,7 @@
 
 @using BlazorApp1.Data
 @using Results.Contract
-@inject ResultService ResultServiceX;
+@inject ResultService ResultService;
 
 @if (result?.TeamResults == null)
 {
@@ -51,7 +51,7 @@ else
             <table class="table" style="border-top: solid">
                 <thead>
                 <tr>
-                    <th>Senast kollad<br/>Senasta ändrad</th>
+                    <th>Senast kollad / Senasta ändrad</th>
                     <th>Ej aktiverade</th>
                     <th>Checkade/Startade</th>
                     <th>Preliminära</th>
@@ -63,7 +63,7 @@ else
                 <tbody>
                 <tr>
                     <td>
-                        @result.Statistics.LastUpdatedTimeOfDay<br/>@result.Statistics.LastChangedTimeOfDay
+                        @result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay
                     </td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
@@ -85,15 +85,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        result = await ResultServiceX.GetTeamResultsAsync();
+        result = await ResultService.GetTeamResultsAsync();
 
-    ResultServiceX.OnNewResults += ResultService_OnNewResults;
+    ResultService.OnNewResults += ResultService_OnNewResults;
     }
 
     
     private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
-        result = ResultServiceX.GetTeamResultsAsync().Result;
+        result = ResultService.GetTeamResultsAsync().Result;
         InvokeAsync(this.StateHasChanged);
     }
 

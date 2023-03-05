@@ -10,4 +10,12 @@
     <ProjectReference Include="..\Results\Results.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\mats\source\repos\ungdomsseriepoang\BlazorApp1\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\mats\source\repos\ungdomsseriepoang\BlazorApp1\.editorconfig" />
+  </ItemGroup>
+
 </Project>
