@@ -1,5 +1,7 @@
 using BlazorApp1.Data;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Results.Contract;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,5 +30,14 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+app.MapPost("/meos", (HttpRequest request) =>
+{
+    using var v = new StreamReader(request.Body);
+    Console.WriteLine(v.ReadToEndAsync().Result);
+    
+    return "<?xml version=\"1.0\"?><MOPStatus status=\"OK\"></MOPStatus>";
+
+} );
 
 app.Run();
