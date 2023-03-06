@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Timers;
 using Results.Contract;
+using Results.Meos;
 using Results.Model;
 using Results.Ola;
 using Results.Simulator;
@@ -20,11 +21,13 @@ public sealed class ResultService : IResultService, IDisposable
 
     public ResultService(Configuration configuration)
     {
-        this.configuration = configuration;
-        this.resultSource = configuration.ResultSource switch
+        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
+        resultSource = configuration!.ResultSource switch
         {
             ResultSource.OlaDatabase => new OlaResultSource(configuration),
             ResultSource.Simulator => new SimulatorResultSource(configuration),
+            ResultSource.Meos => new MeosResultSource(),
             _ => throw new ArgumentException($"Unknown {nameof(resultSource)}: {resultSource}")
         };
 
@@ -101,6 +104,10 @@ public sealed class ResultService : IResultService, IDisposable
     }
 
     public event EventHandler? OnNewResults;
+    public Task<string> NewResultPostAsync(Stream body)
+    {
+        return resultSource.NewResultPostAsync(body);
+    }
 
     private static int CalcHasCode(IList<TeamResult> results)
     {

@@ -4,6 +4,6 @@
     {
         IList<ParticipantResult> GetParticipantResults();
         TimeSpan CurrentTimeOfDay { get; }
-
+        Task<string> NewResultPostAsync(Stream body);
     }
 }

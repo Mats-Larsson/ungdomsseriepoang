@@ -5,7 +5,10 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var resultsConfiguration = new Results.Configuration();
+var resultsConfiguration = new Results.Configuration
+{
+    ResultSource = ResultSource.Meos
+};
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -23,21 +26,16 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
-app.MapPost("/meos", (HttpRequest request) =>
+app.MapPost("/meos", async (HttpRequest request) =>
 {
-    using var v = new StreamReader(request.Body);
-    Console.WriteLine(v.ReadToEndAsync().Result);
-    
-    return "<?xml version=\"1.0\"?><MOPStatus status=\"OK\"></MOPStatus>";
-
+    var resultService = app.Services.GetService<IResultService>()!;
+    return await resultService.NewResultPostAsync(request.Body).ConfigureAwait(false);
 } );
 
 app.Run();

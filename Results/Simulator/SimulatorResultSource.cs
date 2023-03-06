@@ -14,6 +14,10 @@ internal class SimulatorResultSource : IResultSource
     public TimeSpan MaxTime { get; }
     public TimeSpan ZeroTime { get; }
     public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+    public Task<string> NewResultPostAsync(Stream body)
+    {
+        throw new NotImplementedException();
+    }
 
     public SimulatorResultSource(Configuration configuration)
     {

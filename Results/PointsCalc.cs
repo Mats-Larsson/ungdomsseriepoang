@@ -77,7 +77,7 @@ internal class PointsCalc
             throw new InvalidOperationException($"Unexpected null time");
         var points = pointsTemplate.BasePoints 
             - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, pr.Time.Value) 
-            - (pr.IsExtraPartisipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
+            - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
 
         return Math.Max(points, pointsTemplate.MinPoints);
     }

@@ -33,6 +33,10 @@ internal class OlaResultSource : IResultSource
 
     // TODO: Hämta från OLA
     public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
+    public Task<string> NewResultPostAsync(Stream body)
+    {
+        throw new NotImplementedException();
+    }
 
     private IList<OlaParticipantResult> GetFromOlaDb()
     {

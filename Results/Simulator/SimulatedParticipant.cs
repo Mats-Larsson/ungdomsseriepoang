@@ -13,7 +13,7 @@ namespace Results.Simulator
         public Task? Task { get; internal set; }
 
         public SimulatedParticipant(SimulatorResultSource simulator, ParticipantResult pr)
-            : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated, pr.IsExtraPartisipant)
+            : base(pr.Class, pr.Name, pr.Club, pr.StartTime, null, pr.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotActivated, pr.IsExtraParticipant)
         {
             this.simulator = simulator;
             startTime = pr.StartTime.HasValue ? (pr.StartTime - simulator.ZeroTime)/ simulator.SpeedMultiplier : null;
