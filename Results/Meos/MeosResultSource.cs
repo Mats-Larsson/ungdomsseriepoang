@@ -39,7 +39,6 @@ internal class MeosResultSource : IResultSource
         UpdateParticipants(doc);
 
 
-
         return MopStatus("OK");
     }
 
@@ -73,6 +72,7 @@ internal class MeosResultSource : IResultSource
             );
             participantResults[id] = meosParticipantResult;
         }
+
         participantResults[0] = new MeosParticipantResult("???", "???", "???", null, null, ParticipantStatus.Ignored);
     }
 
@@ -105,6 +105,7 @@ internal class MeosResultSource : IResultSource
             _ => ParticipantStatus.NotValid
         };
     }
+
     private static TimeSpan? ToTimeSpan(string? value)
     {
         if (value == null) return null;
@@ -123,23 +124,28 @@ internal class MeosResultSource : IResultSource
     {
         var orgs = doc.Root!
             .Elements(MopNs + "org")
-            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Value);
+            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
         foreach (var org in orgs)
         {
-            clubs[org.Key] = org.Value;
+            if (org.Value == null)
+                clubs.Remove(org.Key);
+            else
+                clubs[org.Key] = org.Value;
         }
-
         clubs[0] = "???";
     }
 
     private void UpdateClasses(XDocument doc)
     {
-        var classes = doc.Root!
+        var pairs = doc.Root!
             .Elements(MopNs + "cls")
-            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Value);
-        foreach (var cls in classes)
+            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
+        foreach (var cls in pairs)
         {
-            this.classes[cls.Key] = cls.Value;
+            if (cls.Value == null)
+                classes.Remove(cls.Key);
+            else
+                classes[cls.Key] = cls.Value;
         }
 
         this.classes[0] = "???";

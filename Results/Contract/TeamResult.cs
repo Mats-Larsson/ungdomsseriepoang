@@ -24,6 +24,7 @@ public class TeamResult
         return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary;
     }
 
+#pragma warning disable IDE0041 // Use 'is null' check
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
@@ -31,6 +32,7 @@ public class TeamResult
         if (obj.GetType() != this.GetType()) return false;
         return Equals((TeamResult)obj);
     }
+#pragma warning restore IDE0041 // Use 'is null' check
 
     public override int GetHashCode()
     {

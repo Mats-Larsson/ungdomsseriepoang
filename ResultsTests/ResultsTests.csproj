@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <AnalysisLevel>6.0-all</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
 
   <ItemGroup>

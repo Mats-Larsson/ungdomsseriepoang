@@ -7,6 +7,10 @@
 		<AnalysisLevel>6.0-all</AnalysisLevel>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <CodeAnalysisRuleSet />
+	</PropertyGroup>
+
 	<ItemGroup>
 	  <None Remove="Ola\ParticipantResultSql.sql" />
 	</ItemGroup>
