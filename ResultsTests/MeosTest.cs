@@ -35,7 +35,7 @@ namespace ResultsTests
         {
             using var meosResultSource = new MeosResultSource();
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(Message));
-            var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream).ConfigureAwait(false);
+            var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
         }
     }
 }

@@ -4,5 +4,5 @@ public interface IResultService
 {
     Result GetScoreBoard();
     event EventHandler OnNewResults;
-    Task<string> NewResultPostAsync(Stream body);
+    Task<string> NewResultPostAsync(Stream body, DateTime now);
 }

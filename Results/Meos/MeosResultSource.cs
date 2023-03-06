@@ -15,19 +15,20 @@ internal class MeosResultSource : IResultSource
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
+    private DateTime timestamp = DateTime.Now;
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return participantResults.Cast<ParticipantResult>().ToList();
+        return participantResults.Values.Cast<ParticipantResult>().ToList();
     }
 
-    public TimeSpan CurrentTimeOfDay { get; }
+    public TimeSpan CurrentTimeOfDay => timestamp.TimeOfDay;
 
-    public async Task<string> NewResultPostAsync(Stream body)
+    public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false)!;
-
-        if (doc.Root?.Name.LocalName == "MOPDiff")
+        Console.WriteLine($"{doc.Root?.Name.LocalName} {doc.Root?.Elements().Count()}");
+        if (doc.Root?.Name.LocalName == "MOPComplete")
         {
             classes.Clear();
             clubs.Clear();
@@ -38,16 +39,49 @@ internal class MeosResultSource : IResultSource
         UpdateClubs(doc);
         UpdateParticipants(doc);
 
-
         return MopStatus("OK");
     }
 
-    private void UpdateParticipants(XDocument doc)
+    private void UpdateClasses(XDocument doc)
     {
-        var meosParticipants = doc.Root!.Elements(MopNs + "cmp")
+        var pairs = doc.Root!
+            .Elements(MopNs + "cls")
+            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
+        foreach (var (id, value) in pairs)
+        {
+            if (value == null)
+                classes.Remove(id);
+            else
+                classes[id] = value;
+        }
+        classes[0] = "???";
+    }
+
+    private void UpdateClubs(XDocument doc)
+    {
+        var orgs = doc.Root!
+            .Elements(MopNs + "org")
+            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
+        foreach (var (id, value) in orgs)
+        {
+            if (value == null)
+                clubs.Remove(id);
+            else
+                clubs[id] = value;
+        }
+        clubs[0] = "???";
+    }
+
+    private void UpdateParticipants(XDocument doc)
+    {// e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
+        var meosParticipants = doc.Root!
+            .Elements(MopNs + "cmp")
             .ToDictionary(cmp => int.Parse(cmp.Attribute("id")!.Value), cmp =>
             {
+                if (cmp.Attribute("delete")?.Value == "true") return null;
+
                 var @base = cmp.Element(MopNs + "base");
+                if (@base == null) return null;
                 return new
                 {
                     IsActivated = cmp.Attribute("competing")?.Value == "true",
@@ -61,6 +95,11 @@ internal class MeosResultSource : IResultSource
             });
         foreach (var (id, value) in meosParticipants)
         {
+            if (value == null)
+            {
+                participantResults.Remove(id);
+                continue;
+            }
             var meosParticipantResult = new MeosParticipantResult(
                 classes[value.ClsId],
                 value.Name,
@@ -111,6 +150,8 @@ internal class MeosResultSource : IResultSource
         if (value == null) return null;
 
         var intValue = int.Parse(value);
+        if (intValue == -1) return null;
+
         return TimeSpan.FromMilliseconds(intValue * 100);
     }
 
@@ -118,37 +159,6 @@ internal class MeosResultSource : IResultSource
     {
         if (string.IsNullOrEmpty(value)) return null;
         return int.Parse(value);
-    }
-
-    private void UpdateClubs(XDocument doc)
-    {
-        var orgs = doc.Root!
-            .Elements(MopNs + "org")
-            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
-        foreach (var org in orgs)
-        {
-            if (org.Value == null)
-                clubs.Remove(org.Key);
-            else
-                clubs[org.Key] = org.Value;
-        }
-        clubs[0] = "???";
-    }
-
-    private void UpdateClasses(XDocument doc)
-    {
-        var pairs = doc.Root!
-            .Elements(MopNs + "cls")
-            .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
-        foreach (var cls in pairs)
-        {
-            if (cls.Value == null)
-                classes.Remove(cls.Key);
-            else
-                classes[cls.Key] = cls.Value;
-        }
-
-        this.classes[0] = "???";
     }
 
     private static string MopStatus(string status)

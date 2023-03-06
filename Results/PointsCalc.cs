@@ -100,6 +100,7 @@ internal class PointsTemplate
     private static readonly PointsTemplate DhTemplate = new(50, 2, 15, 5);
     private static readonly PointsTemplate UTemplate = new(40, 2, 10, 5, 10);
     private static readonly PointsTemplate InskTemplate = new(10, 0, 10, 5);
+    private static readonly PointsTemplate UnknownTemplate = new(0, 0, 0, 0);
 
     private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraPaticipantsReduction = 0)
     {
@@ -119,7 +120,7 @@ internal class PointsTemplate
             'U' => UTemplate,
             'I' => InskTemplate,
             // ReSharper disable once LocalizableElement
-            _ => throw new ArgumentOutOfRangeException(nameof(@class), $"Unknown: {@class}")
+            _ => UnknownTemplate
         };
     }
 }

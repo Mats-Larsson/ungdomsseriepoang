@@ -104,9 +104,9 @@ public sealed class ResultService : IResultService, IDisposable
     }
 
     public event EventHandler? OnNewResults;
-    public Task<string> NewResultPostAsync(Stream body)
+    public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        return resultSource.NewResultPostAsync(body);
+        return resultSource.NewResultPostAsync(body, timestamp);
     }
 
     private static int CalcHasCode(IList<TeamResult> results)

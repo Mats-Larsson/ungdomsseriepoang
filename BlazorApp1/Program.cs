@@ -1,4 +1,5 @@
 using BlazorApp1.Data;
+using Microsoft.AspNetCore.Server.HttpSys;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Results.Contract;
 using System;
@@ -35,7 +36,7 @@ app.MapFallbackToPage("/_Host");
 app.MapPost("/meos", async (HttpRequest request) =>
 {
     var resultService = app.Services.GetService<IResultService>()!;
-    return await resultService.NewResultPostAsync(request.Body).ConfigureAwait(false);
+    return await resultService.NewResultPostAsync(request.Body, DateTime.Now).ConfigureAwait(false);
 } );
 
 app.Run();
