@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
+using Moq;
 using Results.Meos;
 using static Results.Meos.MeosResultSource;
 
@@ -12,6 +15,7 @@ namespace ResultsTests
     [TestClass]
     public class MeosTest
     {
+        private readonly ILogger loggerMock = Mock.Of<ILogger>();
 
         private static readonly string Message =
             new XElement(MopNs + "MOPComplete",
@@ -33,9 +37,10 @@ namespace ResultsTests
         [TestMethod]
         public async Task TestMethod1()
         {
-            using var meosResultSource = new MeosResultSource();
+            using var meosResultSource = new MeosResultSource(loggerMock);
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(Message));
             var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
+            IList<Results.Model.ParticipantResult> participantResults = meosResultSource.GetParticipantResults();
         }
     }
 }

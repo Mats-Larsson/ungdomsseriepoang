@@ -1,6 +1,6 @@
 ﻿namespace Results.Model
 {
-    internal interface IResultSource : IDisposable
+    public interface IResultSource : IDisposable
     {
         IList<ParticipantResult> GetParticipantResults();
         TimeSpan CurrentTimeOfDay { get; }

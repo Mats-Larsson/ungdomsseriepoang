@@ -1,6 +1,6 @@
 ﻿namespace Results.Model;
 
-internal enum ParticipantStatus
+public enum ParticipantStatus
 {
     Ignored = 0,
     NotActivated,

@@ -2,6 +2,9 @@ using BlazorApp1.Data;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Results.Contract;
+using Results.Meos;
+using Results.Model;
+using Results.Simulator;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +25,27 @@ builder.Host.ConfigureLogging(logging =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddConsole());
 
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<ResultService>();
 builder.Services.AddSingleton<IResultService, Results.ResultService>();
+
+builder.Services.AddSingleton<IResultSource>();
+
+####
+switch (resultsConfiguration.ResultSource)
+{
+    case ResultSource.Meos:
+        builder.Services.AddSingleton<IResultSource, MeosResultSource>();
+        break;
+    case ResultSource.OlaDatabase:
+        builder.Services.AddSingleton<IResultSource, MeosResultSource>();
+        break;
+    case ResultSource.Simulator:
+        builder.Services.AddSingleton<IResultSource,SimulatorResultSource>();
+        break;
+    default: throw new NotImplementedException(resultsConfiguration.ResultSource.ToString());
+}
 
 var app = builder.Build();
 

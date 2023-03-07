@@ -2,7 +2,7 @@
 
 namespace Results.Simulator;
 
-internal class SimulatorResultSource : IResultSource
+public sealed class SimulatorResultSource : IResultSource
 {
     private readonly Configuration configuration;
     private readonly SimulatedParticipant[] simulatedParticipants;

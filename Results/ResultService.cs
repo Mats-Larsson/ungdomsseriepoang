@@ -21,7 +21,7 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
 
-    public ResultService(Configuration configuration, ILogger<ResultService> logger)
+    public ResultService(Configuration configuration, ILogger logger)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.logger = logger;
@@ -30,7 +30,7 @@ public sealed class ResultService : IResultService, IDisposable
         {
             ResultSource.OlaDatabase => new OlaResultSource(configuration),
             ResultSource.Simulator => new SimulatorResultSource(configuration),
-            ResultSource.Meos => new MeosResultSource(),
+            ResultSource.Meos => new MeosResultSource(logger),
             _ => throw new ArgumentException($"Unknown {nameof(resultSource)}: {resultSource}")
         };
 

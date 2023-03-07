@@ -6,7 +6,7 @@ using Results.Model;
 
 namespace Results.Ola;
 
-internal class OlaResultSource : IResultSource
+public sealed class OlaResultSource : IResultSource
 {
     private readonly Configuration configuration;
     private readonly string connectionString;

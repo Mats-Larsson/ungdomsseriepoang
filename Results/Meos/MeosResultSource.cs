@@ -1,20 +1,32 @@
-﻿using System.Xml.Linq;
+﻿using System.Net.Sockets;
+using System.Xml.Linq;
+using Microsoft.Extensions.Logging;
 using Results.Model;
 
 namespace Results.Meos;
 
-internal class MeosResultSource : IResultSource
+public sealed class MeosResultSource : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
+    private DateTime timestamp = DateTime.Now;
 
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
-    private DateTime timestamp = DateTime.Now;
+    private readonly ILogger logger;
+
+    public MeosResultSource(ILogger logger)
+    {
+        this.logger = logger;
+    }
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return participantResults.Values.Cast<ParticipantResult>().ToList();
+        return participantResults
+            .Where(item => item.Key > 0)
+            .Select(item => item.Value)
+            .Cast<ParticipantResult>()
+            .ToList();
     }
 
     public TimeSpan CurrentTimeOfDay => timestamp.TimeOfDay;
@@ -24,7 +36,8 @@ internal class MeosResultSource : IResultSource
         this.timestamp = timestamp;
 
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
-        Console.WriteLine($"{doc.Root?.Name.LocalName} {doc.Root?.Elements().Count()}");
+        string message = $"{doc.Root?.Name.LocalName} {doc.Root?.Elements().Count()}";
+        logger.LogInformation(message);
         if (doc.Root?.Name.LocalName == "MOPComplete")
         {
             classes.Clear();

@@ -1,6 +1,6 @@
 ﻿namespace Results.Model;
 
-internal class ParticipantResult
+public class ParticipantResult
 {
     public string Class { get; }
     public string Name { get; }
