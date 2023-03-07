@@ -1,4 +1,5 @@
-﻿using Results;
+﻿using Microsoft.Extensions.Logging;
+using Results;
 using Results.Contract;
 
 namespace ResultsTests
@@ -10,7 +11,7 @@ namespace ResultsTests
         public void TestWithSimulator()
         {
             var configuration = new Configuration(ResultSource.Simulator);
-            using var results = new ResultService(configuration);
+            using var results = new ResultService(configuration, new Logger<ResultService>(new LoggerFactory()));
             var teamResults = results.GetScoreBoard();
         }
     }

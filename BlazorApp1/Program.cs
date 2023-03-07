@@ -11,9 +11,18 @@ var resultsConfiguration = new Results.Configuration
     ResultSource = ResultSource.Meos
 };
 
+// Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddDebug();
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddConsole());
 
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<ResultService>();

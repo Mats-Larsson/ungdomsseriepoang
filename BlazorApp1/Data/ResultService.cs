@@ -9,7 +9,7 @@ public class ResultService
 
     public ResultService(IResultService resultService)
     {
-        this.resultService = resultService;
+        this.resultService = resultService ?? throw new ArgumentNullException(nameof(resultService));
 
         resultService.OnNewResults += ResultService_OnNewResults;
     }

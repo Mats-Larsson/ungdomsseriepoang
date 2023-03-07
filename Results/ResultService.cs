@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Timers;
+using Microsoft.Extensions.Logging;
 using Results.Contract;
 using Results.Meos;
 using Results.Model;
@@ -14,14 +15,16 @@ public sealed class ResultService : IResultService, IDisposable
     private int latestTeamResultsHash;
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
+    private readonly ILogger logger;
     private readonly PointsCalc pointsCalc;
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
 
-    public ResultService(Configuration configuration)
+    public ResultService(Configuration configuration, ILogger<ResultService> logger)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        this.logger = logger;
 
         resultSource = configuration!.ResultSource switch
         {
@@ -57,9 +60,9 @@ public sealed class ResultService : IResultService, IDisposable
                 OnNewResults?.Invoke(this, EventArgs.Empty);
             }
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            Console.WriteLine(exception);
+            logger.LogError(ex, $"{nameof(OnTimedEvent)}");
         }
     }
 

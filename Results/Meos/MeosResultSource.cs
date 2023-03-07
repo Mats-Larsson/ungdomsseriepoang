@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Diagnostics;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using Org.BouncyCastle.Asn1.Ocsp;
+﻿using System.Xml.Linq;
 using Results.Model;
 
 namespace Results.Meos;
@@ -26,7 +21,9 @@ internal class MeosResultSource : IResultSource
 
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false)!;
+        this.timestamp = timestamp;
+
+        var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
         Console.WriteLine($"{doc.Root?.Name.LocalName} {doc.Root?.Elements().Count()}");
         if (doc.Root?.Name.LocalName == "MOPComplete")
         {

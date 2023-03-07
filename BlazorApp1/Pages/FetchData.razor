@@ -4,6 +4,7 @@
 
 @using BlazorApp1.Data
 @using Results.Contract
+@using System.Globalization
 @inject ResultService ResultService;
 
 @if (result?.TeamResults == null)
@@ -63,6 +64,7 @@ else
                 <tbody>
                 <tr>
                     <td>
+                        @* TODO: Ta bort delar av sekund*@
                         @result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay
                     </td>
                     <td>@result.Statistics.NumNotActivated</td>
