@@ -15,26 +15,18 @@ public sealed class ResultService : IResultService, IDisposable
     private int latestTeamResultsHash;
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
-    private readonly ILogger logger;
+    private readonly ILogger<ResultService> logger;
     private readonly PointsCalc pointsCalc;
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
 
-    public ResultService(Configuration configuration, ILogger logger)
+    public ResultService(Configuration configuration, IResultSource resultSource , ILogger<ResultService> logger)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        this.logger = logger;
+        this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        resultSource = configuration!.ResultSource switch
-        {
-            ResultSource.OlaDatabase => new OlaResultSource(configuration),
-            ResultSource.Simulator => new SimulatorResultSource(configuration),
-            ResultSource.Meos => new MeosResultSource(logger),
-            _ => throw new ArgumentException($"Unknown {nameof(resultSource)}: {resultSource}")
-        };
-
-        this.configuration = new Configuration();
         this.pointsCalc = new PointsCalc();
 
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);

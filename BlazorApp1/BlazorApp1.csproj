@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\mats\source\repos\ungdomsseriepoang\BlazorApp1\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="appsettings.Debug.json">
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>
@@ -33,7 +29,6 @@
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>
     </None>
-    <None Include="C:\Users\mats\source\repos\ungdomsseriepoang\BlazorApp1\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

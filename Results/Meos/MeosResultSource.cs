@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 using Results.Model;
 
@@ -13,9 +12,9 @@ public sealed class MeosResultSource : IResultSource
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
-    private readonly ILogger logger;
+    private readonly ILogger<MeosResultSource> logger;
 
-    public MeosResultSource(ILogger logger)
+    public MeosResultSource(ILogger<MeosResultSource> logger)
     {
         this.logger = logger;
     }
@@ -36,8 +35,7 @@ public sealed class MeosResultSource : IResultSource
         this.timestamp = timestamp;
 
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
-        string message = $"{doc.Root?.Name.LocalName} {doc.Root?.Elements().Count()}";
-        logger.LogInformation(message);
+        logger.LogInformation("{Name} {Count}", doc.Root?.Name.LocalName, doc.Root?.Elements().Count());
         if (doc.Root?.Name.LocalName == "MOPComplete")
         {
             classes.Clear();

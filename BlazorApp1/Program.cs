@@ -6,6 +6,7 @@ using Results.Meos;
 using Results.Model;
 using Results.Simulator;
 using System;
+using Results.Ola;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,22 +31,17 @@ builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<ResultService>();
 builder.Services.AddSingleton<IResultService, Results.ResultService>();
 
-builder.Services.AddSingleton<IResultSource>();
+builder.Services.AddSingleton<MeosResultSource>();
+builder.Services.AddSingleton<OlaResultSource>();
+builder.Services.AddSingleton<SimulatorResultSource>();
 
-####
-switch (resultsConfiguration.ResultSource)
+builder.Services.AddSingleton<IResultSource>(provider => resultsConfiguration.ResultSource switch
 {
-    case ResultSource.Meos:
-        builder.Services.AddSingleton<IResultSource, MeosResultSource>();
-        break;
-    case ResultSource.OlaDatabase:
-        builder.Services.AddSingleton<IResultSource, MeosResultSource>();
-        break;
-    case ResultSource.Simulator:
-        builder.Services.AddSingleton<IResultSource,SimulatorResultSource>();
-        break;
-    default: throw new NotImplementedException(resultsConfiguration.ResultSource.ToString());
-}
+    ResultSource.Meos => provider.GetService<MeosResultSource>()! as IResultSource,
+    ResultSource.OlaDatabase => provider.GetService<OlaResultSource>()! as IResultSource,
+    ResultSource.Simulator => provider.GetService<SimulatorResultSource>()! as IResultSource,
+    _ => throw new NotImplementedException(resultsConfiguration.ResultSource.ToString())
+});
 
 var app = builder.Build();
 
@@ -65,6 +61,6 @@ app.MapPost("/meos", async (HttpRequest request) =>
 {
     var resultService = app.Services.GetService<IResultService>()!;
     return await resultService.NewResultPostAsync(request.Body, DateTime.Now).ConfigureAwait(false);
-} );
+});
 
 app.Run();

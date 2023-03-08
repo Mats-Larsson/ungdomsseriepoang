@@ -15,7 +15,7 @@ namespace ResultsTests
     [TestClass]
     public class MeosTest
     {
-        private readonly ILogger loggerMock = Mock.Of<ILogger>();
+        private readonly ILogger<MeosResultSource> loggerMock = Mock.Of<ILogger<MeosResultSource>>();
 
         private static readonly string Message =
             new XElement(MopNs + "MOPComplete",

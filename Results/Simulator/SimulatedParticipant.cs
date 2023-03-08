@@ -23,7 +23,7 @@ namespace Results.Simulator
 
         public async Task RunAsync()
         {
-            while (Status != targetStatus && !simulator.CancellationToken.IsCancellationRequested)
+            while (Status != targetStatus && !simulator.TokenSource.IsCancellationRequested)
             {
                 switch (Status)
                 {
@@ -52,7 +52,7 @@ namespace Results.Simulator
 
         private Task SimulatedDelay(TimeSpan timeSpan)
         {
-            return Task.Delay(timeSpan / simulator.SpeedMultiplier).WaitAsync(simulator.CancellationToken);
+            return Task.Delay(timeSpan / simulator.SpeedMultiplier).WaitAsync(simulator.TokenSource.Token);
         }
     }
 }
