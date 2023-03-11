@@ -13,9 +13,10 @@ public sealed class OlaResultSource : IResultSource
 
     public OlaResultSource(Configuration configuration)
     {
-        this.configuration = configuration;
+        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
         connectionString = $"server={configuration.OlaMySqlHost};" +
-                           $"port={configuration.OlaMySqlPort ?? 3306};" +
+                           $"port={configuration.OlaMySqlPort};" +
                            $"userid={configuration.OlaMySqlUser};" +
                            $"password={configuration.OlaMySqlPassword};" +
                            $"database={configuration.OlaMySqlDatabase}";

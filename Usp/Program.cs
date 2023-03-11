@@ -1,19 +1,22 @@
-using BlazorApp1.Data;
-using Microsoft.AspNetCore.Server.HttpSys;
-using Org.BouncyCastle.Asn1.Ocsp;
+using Usp.Data;
 using Results.Contract;
 using Results.Meos;
 using Results.Model;
 using Results.Simulator;
-using System;
 using Results.Ola;
+using Usp;
+
+var options = Options.Parse(args);
+if (options == null)
+{
+    Console.Error.WriteLine(Options.HelpText?.ToString());
+    // TODO: Set exit code != 0
+    return;
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
-var resultsConfiguration = new Results.Configuration
-{
-    ResultSource = ResultSource.Meos
-};
+var resultsConfiguration = options.CreateConfiguration();
 
 // Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
 builder.Host.ConfigureLogging(logging =>
@@ -22,6 +25,9 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddConsole();
     logging.AddDebug();
 });
+
+var url = $"http://localhost:{options.ListenerPort}";
+builder.WebHost.UseUrls(url);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -35,12 +41,12 @@ builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
 
-builder.Services.AddSingleton<IResultSource>(provider => resultsConfiguration.ResultSource switch
+builder.Services.AddSingleton<IResultSource>(provider => 
 {
-    ResultSource.Meos => provider.GetService<MeosResultSource>()! as IResultSource,
-    ResultSource.OlaDatabase => provider.GetService<OlaResultSource>()! as IResultSource,
-    ResultSource.Simulator => provider.GetService<SimulatorResultSource>()! as IResultSource,
-    _ => throw new NotImplementedException(resultsConfiguration.ResultSource.ToString())
+    if (options.UseMeos) return provider.GetService<MeosResultSource>()!;
+    if (options.UseOla) return provider.GetService<OlaResultSource>()!;
+    if (options.UseSimulator) return provider.GetService<SimulatorResultSource>()!;
+    throw new NotImplementedException();
 });
 
 var app = builder.Build();

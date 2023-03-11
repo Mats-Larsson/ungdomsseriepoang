@@ -1,6 +1,6 @@
 ﻿using Results.Contract;
 
-namespace BlazorApp1.Data;
+namespace Usp.Data;
 
 public class ResultService
 {

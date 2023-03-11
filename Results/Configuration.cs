@@ -7,7 +7,7 @@ public class Configuration
     public ResultSource ResultSource { get; set; } = ResultSource.Simulator;
 
     public string? OlaMySqlHost { get; set; } = "NUC";
-    public int? OlaMySqlPort { get; set; }
+    public int OlaMySqlPort { get; set; }
     public string? OlaMySqlDatabase { get; set; } = "kretstavling2019";
     public string? OlaMySqlUser { get; set; } = "root";
     public string? OlaMySqlPassword { get; set; } = "kasby";

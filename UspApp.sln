@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{93359F55-FDC3-4115-8F06-9D773619CA29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Usp", "Usp\Usp.csproj", "{93359F55-FDC3-4115-8F06-9D773619CA29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Results", "Results\Results.csproj", "{A1341460-3601-46D3-A53B-2B03874DCE83}"
 EndProject
@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		Poängberäkning.xlsm = Poängberäkning.xlsm
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UspTests", "UspTests\UspTests.csproj", "{66257623-0747-47FD-A26D-A043CF8BA5BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F83B0D69-436B-4781-A014-2EE1D7A7FA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F83B0D69-436B-4781-A014-2EE1D7A7FA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F83B0D69-436B-4781-A014-2EE1D7A7FA67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66257623-0747-47FD-A26D-A043CF8BA5BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66257623-0747-47FD-A26D-A043CF8BA5BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66257623-0747-47FD-A26D-A043CF8BA5BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66257623-0747-47FD-A26D-A043CF8BA5BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
