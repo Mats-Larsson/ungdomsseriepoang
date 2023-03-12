@@ -47,7 +47,7 @@ public sealed class ResultService : IResultService, IDisposable
             {
                 latestTeamResults = teamResults;
                 latestTeamResultsHash = teamResultsHash;
-                latestStatistics = GetStatistics(participantResults);
+                latestStatistics = GetStatistics(participantResults, resultSource.CurrentTimeOfDay);
 
                 OnNewResults?.Invoke(this, EventArgs.Empty);
             }
@@ -58,16 +58,22 @@ public sealed class ResultService : IResultService, IDisposable
         }
     }
 
-    private Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults)
+    private Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan? currentTimeOfDay)
     {
         var statistics = new Statistics();
+
+        var notStartedCutOff = resultSource.CurrentTimeOfDay.Add(configuration.TimeUntilNotStated);
         foreach (var pr in participantResults)
         {
             var status = pr.Status;
-            statistics.LastChangedTimeOfDay = resultSource.CurrentTimeOfDay;
-            if (HasNotShownUpAtExpectedStatTime(pr))
-                status = ParticipantStatus.NotStarted;
+            var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
 
+            if (pr.Status == ParticipantStatus.NotActivated && pr.StartTime < notStartedCutOff) 
+                status = ParticipantStatus.NotStarted;
+            else if (status == ParticipantStatus.Activated && currentTimeOfDay > pr.StartTime)
+                status = ParticipantStatus.Started;
+
+            statistics.LastChangedTimeOfDay = resultSource.CurrentTimeOfDay;
             switch (status)
             {
                 case ParticipantStatus.Ignored: break;
@@ -82,13 +88,6 @@ public sealed class ResultService : IResultService, IDisposable
             }
         }
         return statistics;
-    }
-
-    private bool HasNotShownUpAtExpectedStatTime(ParticipantResult pr)
-    {
-        return pr.Status == ParticipantStatus.NotActivated
-               && pr.StartTime > TimeSpan.Zero 
-               && pr.StartTime < resultSource.CurrentTimeOfDay.Add(configuration.TimeUntilNotStated);
     }
 
     public Result GetScoreBoard()
