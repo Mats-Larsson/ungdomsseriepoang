@@ -2,10 +2,12 @@
 
 <PageTitle>Results</PageTitle>
 
+@using Microsoft.AspNetCore.WebUtilities;
 @using Usp.Data
 @using Results.Contract
 @using System.Globalization
 @inject ResultService ResultService;
+@inject NavigationManager NavManager
 
 @if (result?.TeamResults == null)
 {
@@ -19,8 +21,8 @@ else
 
     <div style="height: 98vh">
 
-        <div style="-webkit-column-count: 2; column-count: 2">
-            <table class="table" style="font-size: large">
+        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+            <table class="table" style="font-size: @fontSize">
                 <thead>
                 <tr>
                         <th style="width: 20%; text-align: right">Placering</th>
@@ -31,8 +33,8 @@ else
             </table>
         </div>
 
-        <div style="-webkit-column-count: 2; column-count: 2">
-            <table class="table" style="font-size: large">
+        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+            <table class="table" style="font-size: @fontSize">
                 <tbody>
                 @foreach (var teamResult in result.TeamResults)
                 {
@@ -48,7 +50,7 @@ else
 
         <hr/>
 
-        <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: large; text-align: center">
+        <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: @fontSize; text-align: center">
             <table class="table" style="border-top: solid">
                 <thead>
                 <tr>
@@ -63,10 +65,8 @@ else
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        @* TODO: Ta bort delar av sekund*@
-                        @result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay
-                    </td>
+                    @* TODO: Ta bort delar av sekund*@
+                    <td>@result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay</td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
                     <td>@result.Statistics.NumPreliminary</td>
@@ -84,19 +84,37 @@ else
 
 @code {
     private Result? result;
+    private int columns = 2;
+    private string fontSize = "1vw";
 
     protected override async Task OnInitializedAsync()
     {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        columns = GetFirstOrDefault(uri, "columns", 2);
+        fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetFirstOrDefault(uri, "fontsize", 100.0) / 100.0);
+
         result = await ResultService.GetTeamResultsAsync();
 
-    ResultService.OnNewResults += ResultService_OnNewResults;
+        ResultService.OnNewResults += ResultService_OnNewResults;
     }
 
-    
+
     private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
         result = ResultService.GetTeamResultsAsync().Result;
         InvokeAsync(this.StateHasChanged);
+    }
+
+    private T GetFirstOrDefault<T>(Uri uri, string name, T defaultValue)
+    {
+        var stringValues = QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault(name);
+        if (!stringValues.Any()) return defaultValue;
+        if (stringValues[0] == null) return defaultValue;
+        string stringValue = stringValues[0]!;
+        var convertedValue = Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
+        if (convertedValue == null) return defaultValue;
+
+        return (T) (convertedValue! ?? defaultValue);
     }
 
 }
