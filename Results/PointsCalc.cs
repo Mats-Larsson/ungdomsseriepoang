@@ -25,7 +25,7 @@ namespace Results;
 internal class PointsCalc
 {
 #pragma warning disable CA1822 // Mark members as static
-    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant, TimeSpan currentTimeOfDay)
+    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
 #pragma warning restore CA1822 // Mark members as static
     {
         var leaderByClass = participant
@@ -41,7 +41,7 @@ internal class PointsCalc
             .Select(pr => new
             {
                 pr.Club,
-                Points = CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class), currentTimeOfDay),
+                Points = CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class)),
                 IsPreliminary = pr.Status == Preliminary
             })
             .Where(pr => pr.Points >= 0)
@@ -58,7 +58,7 @@ internal class PointsCalc
             .ToList();
     }
 
-    internal static int CalcPoints(ParticipantResult pr, TimeSpan? bestTime, TimeSpan currentTimeOfDay)
+    internal static int CalcPoints(ParticipantResult pr, TimeSpan? bestTime)
     {
         if (pr.Status <= Ignored) return -1;
         if (pr.Status == NotStarted) return 0;

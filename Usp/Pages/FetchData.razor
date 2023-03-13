@@ -20,44 +20,39 @@ else
     @* ReSharper disable MarkupTextTypo *@
 
     <div style="height: 98vh">
-        <div>
-            <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
-                <table class="table" style="font-size: @fontSize">
-                    <thead>
+
+        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+            <table class="table" style="font-size: @fontSize">
+                <thead>
                     <tr>
-                        <th style="width: 20%; text-align: right">Placering</th>
-                        <th style="width: 70%">Lag</th>
+                        <th style="width: 10%; text-align: right">Pos</th>
+                        <th style="width: 80%">Lag</th>
                         <th style="width: 10%; text-align: right">Poäng</th>
                     </tr>
-                    </thead>
-                </table>
-            </div>
-
-            <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
-                <table class="table" style="font-size: @fontSize">
-                    <tbody>
-                    @foreach (var teamResult in result.TeamResults)
-                    {
-                        <tr>
-                            <td style="width: 20%; text-align: right">@teamResult.Pos</td>
-                            <td style="width: 70%">@teamResult.Team</td>
-                            <td style="width: 10%; text-align: right">@teamResult.Points</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                @foreach (var teamResult in result.TeamResults)
+                {
+                    <tr>
+                        <td style="width: 10%; text-align: right">@teamResult.Pos</td>
+                        <td style="width: 80%">@teamResult.Team</td>
+                        <td style="width: 10%; text-align: right">@teamResult.Points</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
 
-        <div style="bottom: 0; left: 0; right: 0; position: absolute; font-size: 1.5vw; text-align: center">
+        <hr/>
+
+        <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: 1.5vw; text-align: center">
             <table class="table" style="border-top: solid">
                 <thead>
                 <tr>
                     <th>Senast kollad / Senasta ändrad</th>
                     <th>Ej aktiverade</th>
                     <th>Checkade/Startade</th>
-                    <th>Preliminära</th>
-                    <th>Godkända</th>
+                    <th>Preliminära/Godkända</th>
                     <th>Ej godkända</th>
                     <th>Ej start</th>
                 </tr>
@@ -68,8 +63,7 @@ else
                     <td>@result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay</td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
-                    <td>@result.Statistics.NumPreliminary</td>
-                    <td>@result.Statistics.NumPassed</td>
+                    <td>@(result.Statistics.NumPreliminary + @result.Statistics.NumPassed)</td>
                     <td>@result.Statistics.NumNotValid</td>
                     <td>@result.Statistics.NumNotStarted</td>
                 </tr>

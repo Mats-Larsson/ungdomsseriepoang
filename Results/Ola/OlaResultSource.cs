@@ -44,10 +44,9 @@ public sealed class OlaResultSource : IResultSource
         using var con = new MySqlConnection(connectionString);
         con.Open();
 
-#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
         using var cmd = new MySqlCommand(Resource1.ParticipantResultSql, con);
         cmd.Parameters.AddWithValue("@EventId", configuration.OlaEventId);
-#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
+
         using var reader = cmd.ExecuteReader();
         var list = new List<OlaParticipantResult>();
         while (reader.Read())

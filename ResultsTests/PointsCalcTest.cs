@@ -16,7 +16,7 @@ public class PointsCalcTest
         var configuration = new Configuration(ResultSource.Simulator);
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var participantResults = simulatorResultSource.GetParticipantResults();
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, simulatorResultSource.CurrentTimeOfDay);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(27, scoreBoard.Count);
     }
 
@@ -24,7 +24,7 @@ public class PointsCalcTest
     public void TestWithNoResults()
     {
         var participantResults = new List<ParticipantResult>();
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(0, scoreBoard.Count);
     }
 
@@ -36,7 +36,7 @@ public class PointsCalcTest
             new("H10", "Adam", "Club A", null, null, ParticipantStatus.NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club A", 0, false), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(1, "Club B", 0, false), scoreBoard[1]);
@@ -51,7 +51,7 @@ public class PointsCalcTest
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.NotStarted),
             new("H10", "Hugo", "Club C", null, null, ParticipantStatus.Ignored),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(0, scoreBoard[0].Points);
         Assert.AreEqual(0, scoreBoard[1].Points);
@@ -66,7 +66,7 @@ public class PointsCalcTest
             new("H10", "Rory", "Club B", null, null, ParticipantStatus.NotStarted),
             new("H10", "Hugo", "Club C", null, null, ParticipantStatus.Started),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club C", 5, false), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
@@ -82,7 +82,7 @@ public class PointsCalcTest
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.Started),
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
@@ -98,7 +98,7 @@ public class PointsCalcTest
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, ParticipantStatus.Started),
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Passed),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club C", 50, false), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
@@ -115,7 +115,7 @@ public class PointsCalcTest
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), ParticipantStatus.Preliminary),
             new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), ParticipantStatus.Passed),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club B", 51, false), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(2, "Club C", 50, true), scoreBoard[1]);
@@ -134,7 +134,7 @@ public class PointsCalcTest
             new("U4", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), ParticipantStatus.Passed, true),
             new("U4", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(99), ParticipantStatus.Passed, true)
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults, TimeSpan.Zero);
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club B", 75, false), scoreBoard[0]);
         Assert.AreEqual(new TeamResult(2, "Club C", 60, false), scoreBoard[1]);
@@ -165,15 +165,15 @@ public class PointsCalcTest
         Assert.AreEqual(10, CalcPoints("Insk", "00:12:30", "00:10:30"));
 
         //Patrull
-        Assert.AreEqual(30, CalcPoints("U1", "00:12:30", "00:12:30", null, true));
-        Assert.AreEqual(28, CalcPoints("U1", "00:13:30", "00:12:30", null, true));
-        Assert.AreEqual(10, CalcPoints("U1", "00:59:30", "00:12:30", null, true));
+        Assert.AreEqual(30, CalcPoints("U1", "00:12:30", "00:12:30", true));
+        Assert.AreEqual(28, CalcPoints("U1", "00:13:30", "00:12:30", true));
+        Assert.AreEqual(10, CalcPoints("U1", "00:59:30", "00:12:30", true));
     }
 
-    private static int CalcPoints(string @class, string time, string bestTime, TimeSpan? currentTimeOfDay = null, bool isExtraPartisipant = false)
+    private static int CalcPoints(string @class, string time, string bestTime, bool isExtraPartisipant = false)
     {
         var participantResult = new ParticipantResult( @class, "", "", TimeSpan.Zero, TimeSpan.Parse(time), ParticipantStatus.Passed, isExtraPartisipant);
 
-        return PointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime), currentTimeOfDay ?? TimeSpan.Zero);
+        return PointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
     }
 }

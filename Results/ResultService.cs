@@ -27,7 +27,7 @@ public sealed class ResultService : IResultService, IDisposable
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        this.pointsCalc = new PointsCalc();
+        pointsCalc = new PointsCalc();
 
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
         timer.Elapsed += OnTimedEvent;
@@ -40,7 +40,7 @@ public sealed class ResultService : IResultService, IDisposable
         try
         {
             IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults, resultSource.CurrentTimeOfDay);
+            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)

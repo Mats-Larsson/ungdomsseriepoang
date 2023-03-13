@@ -21,7 +21,7 @@ public sealed class SimulatorResultSource : IResultSource
 
     public SimulatorResultSource(Configuration configuration)
     {
-        this.configuration = configuration;
+        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         testData = new TestData(configuration.NumTeams);
 
         SpeedMultiplier = this.configuration.SpeedMultiplier;
