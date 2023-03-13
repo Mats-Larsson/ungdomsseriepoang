@@ -20,37 +20,36 @@ else
     @* ReSharper disable MarkupTextTypo *@
 
     <div style="height: 98vh">
-
-        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
-            <table class="table" style="font-size: @fontSize">
-                <thead>
-                <tr>
-                        <th style="width: 20%; text-align: right">Placering</th>
-                    <th style="width: 70%">Lag</th>
-                        <th style="width: 10%; text-align: right">Poäng</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-
-        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
-            <table class="table" style="font-size: @fontSize">
-                <tbody>
-                @foreach (var teamResult in result.TeamResults)
-                {
+        <div>
+            <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+                <table class="table" style="font-size: @fontSize">
+                    <thead>
                     <tr>
-                        <td style="width: 20%; text-align: right">@teamResult.Pos</td>
-                        <td style="width: 70%">@teamResult.Team</td>
-                        <td style="width: 10%; text-align: right">@teamResult.Points</td>
+                        <th style="width: 20%; text-align: right">Placering</th>
+                        <th style="width: 70%">Lag</th>
+                        <th style="width: 10%; text-align: right">Poäng</th>
                     </tr>
-                }
-                </tbody>
-            </table>
+                    </thead>
+                </table>
+            </div>
+
+            <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+                <table class="table" style="font-size: @fontSize">
+                    <tbody>
+                    @foreach (var teamResult in result.TeamResults)
+                    {
+                        <tr>
+                            <td style="width: 20%; text-align: right">@teamResult.Pos</td>
+                            <td style="width: 70%">@teamResult.Team</td>
+                            <td style="width: 10%; text-align: right">@teamResult.Points</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <hr/>
-
-        <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: @fontSize; text-align: center">
+        <div style="bottom: 0; left: 0; right: 0; position: absolute; font-size: 1.5vw; text-align: center">
             <table class="table" style="border-top: solid">
                 <thead>
                 <tr>
@@ -109,12 +108,11 @@ else
     {
         var stringValues = QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault(name);
         if (!stringValues.Any()) return defaultValue;
-        if (stringValues[0] == null) return defaultValue;
-        string stringValue = stringValues[0]!;
+        var stringValue = stringValues[0];
+        if (stringValue == null) return defaultValue;
         var convertedValue = Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
-        if (convertedValue == null) return defaultValue;
-
-        return (T) (convertedValue! ?? defaultValue);
+        return (T)convertedValue;
     }
 
 }
+

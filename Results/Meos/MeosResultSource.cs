@@ -7,12 +7,13 @@ namespace Results.Meos;
 public sealed class MeosResultSource : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
-    private DateTime timestamp = DateTime.Now;
 
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
     private readonly ILogger<MeosResultSource> logger;
+
+    public TimeSpan CurrentTimeOfDay { get; private set; } = DateTime.Now.TimeOfDay;
 
     public MeosResultSource(ILogger<MeosResultSource> logger)
     {
@@ -28,11 +29,9 @@ public sealed class MeosResultSource : IResultSource
             .ToList();
     }
 
-    public TimeSpan CurrentTimeOfDay => timestamp.TimeOfDay;
-
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        this.timestamp = timestamp;
+        CurrentTimeOfDay = timestamp.TimeOfDay;
 
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
         logger.LogInformation("{Name} {Count}", doc.Root?.Name.LocalName, doc.Root?.Elements().Count());
@@ -93,12 +92,12 @@ public sealed class MeosResultSource : IResultSource
                 return new
                 {
                     IsActivated = cmp.Attribute("competing")?.Value == "true",
-                    OrgId = ToInt(@base?.Attribute("org")?.Value) ?? 0,
-                    ClsId = ToInt(@base?.Attribute("cls")?.Value) ?? 0,
-                    Name = @base?.Value ?? "",
-                    StartTime = ToTimeSpan(@base?.Attribute("st")?.Value),
-                    Time = ToTimeSpan(@base?.Attribute("rt")?.Value),
-                    Stat = ToInt(@base?.Attribute("stat")?.Value) ?? 0
+                    OrgId = ToInt(@base.Attribute("org")?.Value) ?? 0,
+                    ClsId = ToInt(@base.Attribute("cls")?.Value) ?? 0,
+                    Name = @base.Value,
+                    StartTime = ToTimeSpan(@base.Attribute("st")?.Value),
+                    Time = ToTimeSpan(@base.Attribute("rt")?.Value),
+                    Stat = ToInt(@base.Attribute("stat")?.Value) ?? 0
                 };
             });
         foreach (var (id, value) in meosParticipants)

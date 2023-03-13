@@ -1,16 +1,15 @@
-﻿using Results.Model;
-
-namespace Results.Simulator
+﻿namespace Results.Simulator
 {
-    internal static class TestData
+    internal class TestData
     {
         internal static readonly TimeSpan ZeroTime = TimeSpan.FromHours(18.5);
 
-        static TestData()
+        public TestData(int numTeams)
         {
+            var maxTeams = Math.Min(numTeams, Clubs.Length);
             foreach (var participantResult in TemplateParticipantResults)
             {
-                participantResult.Club = Clubs[Random.Shared.Next(0, Clubs.Length)];
+                participantResult.Club = Clubs[Random.Shared.Next(0, maxTeams)];
             }
         }
 
@@ -45,7 +44,7 @@ namespace Results.Simulator
             "Nynäshamns OK"
         };
 
-        internal static readonly SimulatorParticipantResult[] TemplateParticipantResults =
+        internal readonly SimulatorParticipantResult[] TemplateParticipantResults =
         {
             new("D16", "Sofia Lindhagen", "IFK Enskede", T("18:34:00.000"), T("00:00:00"), "notStarted"),
             new("D16K", "Lilly Christie", "Snättringe SK", T("18:32:00.000"), T("00:00:00"), "notValid"),
@@ -211,38 +210,5 @@ namespace Results.Simulator
         };
 
         private static TimeSpan T(string time) => TimeSpan.Parse(time);
-    }
-}
-
-internal class SimulatorParticipantResult : ParticipantResult
-{
-    public SimulatorParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, string olaStatus) 
-        : base(@class, name, club, startTime, time, TranslateStatus(olaStatus, time))
-    {
-    }
-
-    private static ParticipantStatus TranslateStatus(string olaStatus, TimeSpan? time)
-    {
-        return olaStatus switch
-        {
-            "walkOver" => ParticipantStatus.Ignored,
-            "movedUp" => ParticipantStatus.Ignored,
-            "notParticipating" => ParticipantStatus.Ignored,
-
-            "notActivated" => ParticipantStatus.NotActivated,
-
-            "started" => ParticipantStatus.Started,
-
-            "finished" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
-            "finishedTimeOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
-            "finishedPunchOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
-
-            "passed" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
-            "disqualified" => ParticipantStatus.NotValid,
-            "notValid" => ParticipantStatus.NotValid,
-            "notStarted" => ParticipantStatus.NotStarted,
-
-            _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")
-        };
     }
 }

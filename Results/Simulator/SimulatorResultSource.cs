@@ -6,6 +6,7 @@ public sealed class SimulatorResultSource : IResultSource
 {
     private readonly Configuration configuration;
     private readonly SimulatedParticipant[] simulatedParticipants;
+    private readonly TestData testData;
     internal CancellationTokenSource TokenSource { get; } = new();
     private TimeSpan currentTimeOfDay = TimeSpan.Zero;
     public int SpeedMultiplier { get; }
@@ -21,17 +22,19 @@ public sealed class SimulatorResultSource : IResultSource
     public SimulatorResultSource(Configuration configuration)
     {
         this.configuration = configuration;
+        testData = new TestData(configuration.NumTeams);
+
         SpeedMultiplier = this.configuration.SpeedMultiplier;
 
-        MinTime = TestData.TemplateParticipantResults
+        MinTime = testData.TemplateParticipantResults
             .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)
             .Min(p => p.StartTime!.Value);
-        MaxTime = TestData.TemplateParticipantResults
+        MaxTime = testData.TemplateParticipantResults
             .Where(p => p.StartTime.HasValue && p.Time.HasValue && p.Status != ParticipantStatus.Ignored)
             .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
         ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
 
-        simulatedParticipants = TestData.TemplateParticipantResults
+        simulatedParticipants = testData.TemplateParticipantResults
             .Select(r => new SimulatedParticipant(this, r))
             .ToArray();
 

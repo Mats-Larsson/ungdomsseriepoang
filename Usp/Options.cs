@@ -31,6 +31,9 @@ public class Options
     [Option("speed", Group = "Sim", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
     public int Speed { get; set; }
 
+    [Option("numteams", Group = "Sim", Default = 27, HelpText = "Number of teams to show in simulation.")]
+    public int NumTeams { get; set; }
+
     // MeOS options
     // Not yet
 
@@ -89,6 +92,7 @@ public class Options
 
             TimeUntilNotStated = value.TimeUntilNotStated,
             SpeedMultiplier = value.Speed,
+            NumTeams = value.NumTeams,
 
             OlaMySqlHost = value.Host,
             OlaMySqlPort = value.Port,

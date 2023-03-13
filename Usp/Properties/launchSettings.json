@@ -2,6 +2,7 @@
   "profiles": {
     "Usp": {
       "commandName": "Project",
+      "commandLineArgs": "--numteams 4",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

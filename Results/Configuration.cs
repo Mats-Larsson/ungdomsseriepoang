@@ -15,6 +15,7 @@ public class Configuration
 
     public TimeSpan TimeUntilNotStated { get; set; } = TimeSpan.FromMinutes(10);
     public int SpeedMultiplier { get; set; } = 10;
+    public int NumTeams { get; set; }
 
     public Configuration()
     {
