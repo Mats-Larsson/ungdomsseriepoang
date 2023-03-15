@@ -1,5 +1,6 @@
 ﻿namespace Results.Simulator
 {
+    // ReSharper disable StringLiteralTypo
     internal class TestData
     {
         internal static readonly TimeSpan ZeroTime = TimeSpan.FromHours(18.5);
@@ -9,39 +10,73 @@
             var maxTeams = Math.Min(numTeams, Clubs.Length);
             foreach (var participantResult in TemplateParticipantResults)
             {
-                participantResult.Club = Clubs[Random.Shared.Next(0, maxTeams)];
+                participantResult.Club = Clubs[Random.Shared.Next(0, maxTeams)].Name;
             }
         }
 
-        // ReSharper disable StringLiteralTypo
-        private static readonly string[] Clubs = {
-            "Snättringe SK",
-            "Tullinge SK",
-            "Järfälla OK",
-            "Tumba-Mälarhöjden OK",
-            "Sundbybergs IK",
-            "OK Ravinen",
-            "Järla Orientering",
-            "Täby OK",
-            "Skogsluffarnas OK",
-            "IFK Lidingö SOK",
-            "Attunda OK",
-            "OK Södertörn",
-            "Söders-Tyresö",
-            "Väsby OK",
-            "Skarpnäcks OL",
-            "OK Älvsjö-Örby",
-            "Waxholms OK",
-            "IFK Enskede",
-            "Mälarö SOK",
-            "Bromma-Vällingby SOK",
-            "Haninge SOK",
-            "Gustavsbergs OK",
-            "OK Österåker",
-            "Hellas Orientering",
-            "Enebybergs IF",
-            "Solna OK",
-            "Nynäshamns OK"
+        class Club
+        {
+            public string Name { get; }
+            public int NumParticipants { get; }
+
+            public Club(string name, int numParticipants)
+            {
+                Name = name;
+                NumParticipants = numParticipants;
+            }
+        }
+        private static readonly Club[] Clubs = {
+            new("Attunda OK", 20),
+            new("Bromma-Vällingby SOK", 13),
+            new("Gustavsbergs OK", 9),
+            new("Haninge SOK", 15),
+            new("Hellas Orientering", 7),
+            new("IFK Enskede", 16),
+            new("IFK Lidingö SOK", 20),
+            new("Järfälla OK", 54),
+            new("Järla Orientering", 32),
+            new("Mälarö SOK", 10),
+            new("OK Ravinen", 56),
+            new("OK Södertörn", 40),
+            new("OK Älvsjö-Örby", 20),
+            new("Skarpnäcks OL", 33),
+            new("Skogsluffarnas OK", 57),
+            new("Snättringe SK", 79),
+            new("Sundbybergs IK", 32),
+            new("Söders-Tyresö", 28),
+            new("Södertälje-Nykvarn OF", 3),
+            new("Tullinge SK", 65),
+            new("Tumba-Mälarhöjden OK", 57),
+            new("Täby OK", 27),
+            new("Väsby OK", 26),
+            new("Waxholms OK", 20),
+        };
+
+        class Clazz 
+        {
+            public Clazz(string @class, TimeSpan bestTime, double registered,double started, double notValid)
+            {
+                
+            }
+        }
+
+        private static readonly Clazz[] Classes =
+        {
+            new("D16", TimeSpan.FromMinutes(10.25), 0.051075268817204, 0.868421052631579, 0.0263157894736842),
+            new("H16", TimeSpan.FromMinutes(10.80), 0.076612903225806, 0.842105263157895, 0.0350877192982456),
+            new("D14", TimeSpan.FromMinutes(09.60), 0.088709677419354, 0.893939393939394, 0.0303030303030303),
+            new("H14", TimeSpan.FromMinutes(09.47), 0.106182795698925, 0.962025316455696, 0.0379746835443038),
+            new("D12", TimeSpan.FromMinutes(09.34), 0.087365591397849, 0.923076923076923, 0.0461538461538462),
+            new("H12", TimeSpan.FromMinutes(08.27), 0.126344086021505, 0.904255319148936, 0.0319148936170213),
+            new("D10", TimeSpan.FromMinutes(09.10), 0.059139784946236, 0.863636363636364, 0),
+            new("H10", TimeSpan.FromMinutes(08.30), 0.073924731182795, 0.945454545454545, 0.0181818181818182),
+            new("Ins", TimeSpan.FromMinutes(0),     0.075268817204301, 0.928571428571429, 0),
+            new("U1D", TimeSpan.FromMinutes(09.74), 0.029569892473118, 0.863636363636364, 0.0454545454545455),
+            new("U1H", TimeSpan.FromMinutes(10.05), 0.049731182795698, 0.864864864864865, 0.0810810810810811),
+            new("U2D", TimeSpan.FromMinutes(12.35), 0.073924731182795, 0.872727272727273, 0.0363636363636364),
+            new("U2H", TimeSpan.FromMinutes(13.21), 0.068548387096774, 0.941176470588235, 0.0196078431372549),
+            new( "U3", TimeSpan.FromMinutes(13.96), 0.025537634408602, 0.736842105263158, 0.0526315789473684),
+            new( "U4", TimeSpan.FromMinutes(12.10), 0.008064516129032, 0.666666666666667, 0),
         };
 
         internal readonly SimulatorParticipantResult[] TemplateParticipantResults =
