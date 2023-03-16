@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Usp.Data;
 using Results.Contract;
 using Results.Meos;
@@ -11,8 +10,8 @@ var options = Options.Parse(args);
 if (options == null)
 {
     Console.Error.WriteLine(Options.HelpText?.ToString());
-
-    Environment.Exit(1);
+    // TODO: Set exit code != 0
+    return;
 }
 
 var builder = WebApplication.CreateBuilder(args);
