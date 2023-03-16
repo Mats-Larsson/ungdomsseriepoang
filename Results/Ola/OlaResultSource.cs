@@ -1,7 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Data.SqlTypes;
-using System.Net.NetworkInformation;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using Results.Model;
 
 namespace Results.Ola;
@@ -36,7 +33,7 @@ public sealed class OlaResultSource : IResultSource
     public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException();
     }
 
     private IList<OlaParticipantResult> GetFromOlaDb()
@@ -89,7 +86,9 @@ public sealed class OlaResultSource : IResultSource
         };
     }
 
+    // ReSharper disable CommentTypo
     // TODO: Klarar endast patruller med två deltagare, med 100% säkerhet. Detta är även en begränsning i Eventor, samt till viss del i OLA.
+    // ReSharper restore CommentTypo
     internal static ISet<int> GetExtraParticipants(IList<OlaParticipantResult> list)
     {
         var linked = list
@@ -105,7 +104,7 @@ public sealed class OlaResultSource : IResultSource
             })
             //.Where(opr => opr.Id2Status >= ParticipantStatus.Activated)
             .Select(ops => new { Id1 = ops.Opr.Id, Id1Status = ops.Opr.Status, ops.Id2, ops.Id2Status })
-            .ToHashSet()!;
+            .ToHashSet();
 
         // Make sure all are double linked
         foreach (var pair in linked.ToList())
@@ -152,10 +151,10 @@ internal class OlaParticipantResult
 {
     public string Class { get; }
     public string Name { get; }
-    public string Club { get; internal set; }
+    public string Club { get; }
     public TimeSpan? StartTime { get; }
-    public TimeSpan? Time { get; internal set; }
-    public ParticipantStatus Status { get; internal set; }
+    public TimeSpan? Time { get; }
+    public ParticipantStatus Status { get; }
     public int Id { get; }
     public int? TogetherWithId { get; }
 

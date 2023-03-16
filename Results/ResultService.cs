@@ -2,12 +2,14 @@
 using System.Timers;
 using Microsoft.Extensions.Logging;
 using Results.Contract;
-using Results.Meos;
 using Results.Model;
-using Results.Ola;
-using Results.Simulator;
 
 namespace Results;
+
+// ReSharper disable CommentTypo
+// TODO: Lägg till baspoäng
+// TODO: Lägg till export av resultat per klubb och per löpare
+// ReSharper restore CommentTypo
 
 public sealed class ResultService : IResultService, IDisposable
 {
@@ -68,7 +70,7 @@ public sealed class ResultService : IResultService, IDisposable
             var status = pr.Status;
             var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
 
-            if (pr.Status == ParticipantStatus.NotActivated && pr.StartTime < notStartedCutOff) 
+            if (pr.Status == ParticipantStatus.NotActivated && startTime < notStartedCutOff) 
                 status = ParticipantStatus.NotStarted;
             else if (status == ParticipantStatus.Activated && currentTimeOfDay > pr.StartTime)
                 status = ParticipantStatus.Started;
@@ -84,7 +86,7 @@ public sealed class ResultService : IResultService, IDisposable
                 case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
                 case ParticipantStatus.NotValid: statistics.IncNumNotValid(); break;
                 case ParticipantStatus.NotStarted: statistics.IncNumNotStarted(); break;
-                default: throw new NotImplementedException();
+                default: throw new InvalidOperationException($"Unexpected: {status}");
             }
         }
         return statistics;
