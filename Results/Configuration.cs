@@ -4,18 +4,18 @@ namespace Results;
 
 public class Configuration
 {
-    public ResultSource ResultSource { get; set; } = ResultSource.Simulator;
+    public ResultSource ResultSource { get; set; }
 
-    public string? OlaMySqlHost { get; set; } = "NUC";
-    public int OlaMySqlPort { get; set; }
-    public string? OlaMySqlDatabase { get; set; } = "kretstavling2019";
-    public string? OlaMySqlUser { get; set; } = "root";
-    public string? OlaMySqlPassword { get; set; } = "kasby";
-    public int? OlaEventId { get; set; } = 1;
+    public string? OlaMySqlHost { get; init; }
+    public int OlaMySqlPort { get; init; }
+    public string? OlaMySqlDatabase { get; init; }
+    public string? OlaMySqlUser { get; init; }
+    public string? OlaMySqlPassword { get; init; }
+    public int? OlaEventId { get; init; }
 
-    public TimeSpan TimeUntilNotStated { get; set; } = TimeSpan.FromMinutes(10);
-    public int SpeedMultiplier { get; set; } = 10;
-    public int NumTeams { get; set; }
+    public TimeSpan TimeUntilNotStated { get; init; }
+    public int SpeedMultiplier { get; init; }
+    public int NumTeams { get; init; }
 
     public Configuration()
     {

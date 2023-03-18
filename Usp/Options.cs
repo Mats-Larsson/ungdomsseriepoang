@@ -5,12 +5,13 @@ using Results.Contract;
 
 namespace Usp;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class Options
 {
-    private static ParserResult<Options>? parserResult;
+    private static ParserResult<Options>? _parserResult;
 
     // General options
-    [Option("listenerport", Group = "Sim", Default = 8880, HelpText = "Port that the applcation listens to. Remember to open the firewall for this port if you ar using a broeser on another")]
+    [Option("listenerport", Group = "Sim", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
     public int ListenerPort { get; set; }
 
     [Option('s', "simulator", Group = "Sim", Default = true, HelpText = "Use data from built in simulator.")]
@@ -23,7 +24,7 @@ public class Options
     public bool UseOla { get; set; }
 
     [Option("maxlatestart", Default = 10, HelpText = "Number of minutes to wait after schedulated starttime for participeant to get activated, until register as not started.")]
-    public int MinutesUntilNotStated { get; set; }
+    private int MinutesUntilNotStated { get; set; }
     public TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
     [Option("basepoints", Default = "BasePoints.csv", HelpText = "Points given to each team as a start. Format is comma separated file in UTF-8 format with first team name then point. First, header row must be: \"Team,Points\"")]
@@ -66,23 +67,23 @@ public class Options
         using var parser = new Parser(with =>
         {
         });
-        parserResult = parser.ParseArguments<Options>(args);
+        _parserResult = parser.ParseArguments<Options>(args);
 
-        if (parserResult.Errors.Any())
+        if (_parserResult.Errors.Any())
         {
-            HelpText = HelpText.AutoBuild(parserResult, h =>
+            HelpText = HelpText.AutoBuild(_parserResult, h =>
             {
                 h.AddEnumValuesToHelpText = true;
                 return h;
             });
         }
 
-        return parserResult.Value;
+        return _parserResult.Value;
     }
 
     public Configuration CreateConfiguration()
     {
-        Options value = parserResult!.Value;
+        Options value = _parserResult!.Value;
 
         var conf = new Configuration()
         {
@@ -90,7 +91,7 @@ public class Options
             value.UseSimulator ? ResultSource.Simulator
             : (value.UseOla ? ResultSource.OlaDatabase
                 : (value.UseMeos ? ResultSource.Meos
-                    : throw new InvalidOperationException("Cannot determin result source"))),
+                    : throw new InvalidOperationException("Cannot determine result source"))),
 
             TimeUntilNotStated = value.TimeUntilNotStated,
             SpeedMultiplier = value.Speed,
