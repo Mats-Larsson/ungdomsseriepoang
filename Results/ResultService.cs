@@ -17,7 +17,6 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly Configuration configuration;
     private readonly ILogger<ResultService> logger;
     private readonly PointsCalc pointsCalc;
-    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
 

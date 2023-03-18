@@ -26,6 +26,8 @@ public class Options
     public int MinutesUntilNotStated { get; set; }
     public TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
+    [Option("basepoints", Default = "BasePoints.csv", HelpText = "Points given to each team as a start. Format is comma separated file in UTF-8 format with first team name then point. First, header row must be: \"Team,Points\"")]
+    public string BasePoints { get; set; }
 
     // Simulator options
     [Option("speed", Group = "Sim", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]

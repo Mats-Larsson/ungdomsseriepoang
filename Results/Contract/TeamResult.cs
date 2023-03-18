@@ -6,6 +6,7 @@ public class TeamResult
     public string Team { get; }
     public int Points { get; }
     public bool IsPreliminary { get; }
+
     public TeamResult(int pos, string team, int points, bool isPreliminary)
     {
         Pos = pos;
