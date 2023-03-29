@@ -5,6 +5,7 @@ using Results.Model;
 using Results.Simulator;
 using Results.Ola;
 using Usp;
+using Results;
 
 var options = Options.Parse(args);
 if (options == null)
@@ -34,8 +35,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton(resultsConfiguration);
-builder.Services.AddSingleton<ResultService>();
+builder.Services.AddSingleton<Usp.Data.ResultService>();
 builder.Services.AddSingleton<IResultService, Results.ResultService>();
+builder.Services.AddSingleton<IBaseResultService, BaseResultService>();
 
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();

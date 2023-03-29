@@ -10,14 +10,17 @@ namespace ResultsTests
     [TestClass]
     public class ResultsTest
     {
-        private readonly ILogger<ResultService> loggerMock = Mock.Of<ILogger<ResultService>>();
-
         [TestMethod]
         public void TestWithSimulator()
         {
-            var configuration = new Configuration(ResultSource.Simulator);
+            var configuration = new Configuration(ResultSource.Simulator)
+            {
+                SpeedMultiplier = 10,
+                NumTeams = 100
+            };
+
             using var simulatorResultSource = new SimulatorResultSource(configuration);
-            using var results = new ResultService(configuration, simulatorResultSource, loggerMock);
+            using var results = new ResultService(configuration, simulatorResultSource, new BaseResultService("", Mock.Of<ILogger<BaseResultService>>()), Mock.Of<ILogger<ResultService>>());
             var teamResults = results.GetScoreBoard();
         }
     }

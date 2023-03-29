@@ -25,8 +25,8 @@ namespace Results;
 internal class PointsCalc
 {
 #pragma warning disable CA1822 // Mark members as static
-    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
-#pragma warning restore CA1822 // Mark members as static
+    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant, IDictionary<string, int> baseResults)
+#pragma warning restore CA1822 // Mark members as static    
     {
         var leaderByClass = participant
             .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))
@@ -37,16 +37,14 @@ internal class PointsCalc
         var pos = 1;
         var reportPos = 1;
         var prevPoints = 0;
-        return participant
-            .Select(pr => new
-            {
-                pr.Club,
-                Points = CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class)),
-                IsPreliminary = pr.Status == Preliminary
-            })
+        var participantResults = participant
+            .Select(pr => (pr.Club, Points: CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
-            .Select(g => new { Club = g.Key, Points = g.Sum(d => d.Points), IsPreliminary = g.Max(d => d.IsPreliminary) })
+            .Select(g => (Club: g.Key, Points: g.Sum(d => d.Points), IsPreliminary: g.Max(d => d.IsPreliminary)))
+            .ToDictionary(pr => pr.Club, pr => pr);
+
+        var orderedResults = MergeWithBaseResults(participantResults, baseResults)
             .OrderByDescending(kp => kp.Points)
             .Select(kp =>
             {
@@ -56,6 +54,8 @@ internal class PointsCalc
                 return new TeamResult(reportPos, kp.Club, kp.Points, kp.IsPreliminary);
             })
             .ToList();
+
+        return orderedResults;
     }
 
     internal static int CalcPoints(ParticipantResult pr, TimeSpan? bestTime)
@@ -73,11 +73,11 @@ internal class PointsCalc
 
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
-        if (!bestTime.HasValue || !pr.Time.HasValue) 
+        if (!bestTime.HasValue || !pr.Time.HasValue)
             throw new InvalidOperationException($"Unexpected null time");
-        var points = pointsTemplate.BasePoints 
-            - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, pr.Time.Value) 
-            - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
+        var points = pointsTemplate.BasePoints
+                     - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, pr.Time.Value)
+                     - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
 
         return Math.Max(points, pointsTemplate.MinPoints);
     }
@@ -87,6 +87,23 @@ internal class PointsCalc
         var secondsAfter = (time - bestTime).TotalSeconds;
         return (int)Math.Truncate((secondsAfter + 59) / 60.0);
     }
+
+    private static IEnumerable<(string Club, int Points, bool IsPreliminary)> MergeWithBaseResults(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> baseResults)
+    {
+        var allClubs = participantResults.Keys.Union(baseResults.Keys);
+
+        var merged = new List<(string Club, int Points, bool IsPreliminary)>();
+        foreach (string club in allClubs)
+        {
+            var points = participantResults.ContainsKey(club) ? participantResults[club].Points : 0;
+            var isPreliminary = participantResults.ContainsKey(club) && participantResults[club].IsPreliminary;
+            var baseResult = baseResults.ContainsKey(club) ? baseResults[club] : 0;
+
+            merged.Add((club, baseResult + points, isPreliminary));
+        }
+        return merged;
+    }
+
 }
 
 internal class PointsTemplate
