@@ -53,7 +53,8 @@ else
                     <th>Senast kollad / Senasta ändrad</th>
                     <th>Ej aktiverade</th>
                     <th>Checkade/Startade</th>
-                    <th>Preliminära/Godkända</th>
+                    <th hidden="@(!ResultService.SupportsPreliminary)">Preliminära</th>
+                    <th>Godkända</th>
                     <th>Ej godkända</th>
                     <th>Ej start</th>
                 </tr>
@@ -64,7 +65,8 @@ else
                     <td>@result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay</td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
-                    <td>@(result.Statistics.NumPreliminary + @result.Statistics.NumPassed)</td>
+                    <td hidden="@(!ResultService.SupportsPreliminary)">@result.Statistics.NumPreliminary</td>
+                    <td>@result.Statistics.NumPassed</td>
                     <td>@result.Statistics.NumNotValid</td>
                     <td>@result.Statistics.NumNotStarted</td>
                 </tr>

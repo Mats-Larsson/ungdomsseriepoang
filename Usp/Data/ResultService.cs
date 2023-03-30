@@ -14,6 +14,7 @@ public class ResultService
         resultService.OnNewResults += ResultService_OnNewResults;
     }
 
+    public bool SupportsPreliminary => resultService.SupportsPreliminary;
 
     public Task<Result> GetTeamResultsAsync()
     {

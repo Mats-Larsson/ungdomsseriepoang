@@ -19,6 +19,8 @@ public sealed class OlaResultSource : IResultSource
                            $"database={configuration.OlaMySqlDatabase}";
     }
 
+    public bool SupportsPreliminary => true;
+
     public IList<ParticipantResult> GetParticipantResults()
     {
         var list = GetFromOlaDb();

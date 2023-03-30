@@ -93,6 +93,8 @@ public sealed class ResultService : IResultService, IDisposable
         return statistics;
     }
 
+    public bool SupportsPreliminary => resultSource.SupportsPreliminary;
+
     public Result GetScoreBoard()
     {
         latestStatistics.LastUpdatedTimeOfDay = resultSource.CurrentTimeOfDay;

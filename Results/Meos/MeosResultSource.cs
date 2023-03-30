@@ -20,6 +20,8 @@ public sealed class MeosResultSource : IResultSource
         this.logger = logger;
     }
 
+    public bool SupportsPreliminary => false;
+
     public IList<ParticipantResult> GetParticipantResults()
     {
         return participantResults

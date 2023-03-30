@@ -55,6 +55,8 @@ public sealed class SimulatorResultSource : IResultSource
         }
     }
 
+    public bool SupportsPreliminary => true;
+
     public IList<ParticipantResult> GetParticipantResults()
     {
         return simulatedParticipants.Cast<ParticipantResult>().ToList();
