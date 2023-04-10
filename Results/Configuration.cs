@@ -16,6 +16,7 @@ public class Configuration
     public TimeSpan TimeUntilNotStated { get; init; }
     public int SpeedMultiplier { get; init; }
     public int NumTeams { get; init; }
+    public string? BasePointsFilePath { get; init; }
 
     public Configuration()
     {

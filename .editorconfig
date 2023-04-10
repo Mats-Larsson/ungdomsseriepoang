@@ -91,6 +91,8 @@ dotnet_style_qualification_for_event = false:silent
 dotnet_diagnostic.CA1724.severity = silent
 dotnet_diagnostic.CA1031.severity = silent
 dotnet_diagnostic.CA2100.severity = silent
+dotnet_diagnostic.CA1308.severity = silent
+dotnet_diagnostic.CA1848.severity = silent
 
 [*.cs]
 csharp_indent_labels = no_change

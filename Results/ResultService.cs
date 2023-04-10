@@ -21,17 +21,18 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly PointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
-    private readonly IBaseResultService baseResult;
+    private readonly IBasePointsService basePointsService;
 
-    public ResultService(Configuration configuration, IResultSource resultSource, IBaseResultService baseResult, ILogger<ResultService> logger)
+    public ResultService(Configuration configuration, IResultSource resultSource, IBasePointsService basePointsService, ILogger<ResultService> logger)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
-        this.baseResult = baseResult;
+        this.basePointsService = basePointsService;
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         pointsCalc = new PointsCalc();
 
+        GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
@@ -40,10 +41,15 @@ public sealed class ResultService : IResultService, IDisposable
 
     private void OnTimedEvent(object? sender, ElapsedEventArgs e)
     {
+        GetResult();
+    }
+
+    private void GetResult()
+    {
         try
         {
             IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults, baseResult.GetBaseResults());
+            var teamResults = pointsCalc.CalcScoreBoard(participantResults, basePointsService.GetBasePoints());
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)

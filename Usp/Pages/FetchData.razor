@@ -86,8 +86,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
-        columns = GetFirstOrDefault(uri, "columns", 2);
-        fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetFirstOrDefault(uri, "fontsize", 100.0) / 100.0);
+        columns = GetQueryParamFirstOrDefault(uri, "columns", 2);
+        fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetQueryParamFirstOrDefault(uri, "textsize", 100.0) / 100.0);
 
         result = await ResultService.GetTeamResultsAsync();
 
@@ -101,7 +101,7 @@ else
         InvokeAsync(this.StateHasChanged);
     }
 
-    private T GetFirstOrDefault<T>(Uri uri, string name, T defaultValue)
+    private T GetQueryParamFirstOrDefault<T>(Uri uri, string name, T defaultValue)
     {
         var stringValues = QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault(name);
         if (!stringValues.Any()) return defaultValue;

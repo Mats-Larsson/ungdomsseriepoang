@@ -25,7 +25,7 @@ namespace Results;
 internal class PointsCalc
 {
 #pragma warning disable CA1822 // Mark members as static
-    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant, IDictionary<string, int> baseResults)
+    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant, IDictionary<string, int> basePoints)
 #pragma warning restore CA1822 // Mark members as static    
     {
         var leaderByClass = participant
@@ -44,7 +44,7 @@ internal class PointsCalc
             .Select(g => (Club: g.Key, Points: g.Sum(d => d.Points), IsPreliminary: g.Max(d => d.IsPreliminary)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
-        var orderedResults = MergeWithBaseResults(participantResults, baseResults)
+        var orderedResults = MergeWithBasePoints(participantResults, basePoints)
             .OrderByDescending(kp => kp.Points)
             .Select(kp =>
             {
@@ -88,18 +88,18 @@ internal class PointsCalc
         return (int)Math.Truncate((secondsAfter + 59) / 60.0);
     }
 
-    private static IEnumerable<(string Club, int Points, bool IsPreliminary)> MergeWithBaseResults(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> baseResults)
+    private static IEnumerable<(string Club, int Points, bool IsPreliminary)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> basePointsDictionary)
     {
-        var allClubs = participantResults.Keys.Union(baseResults.Keys);
+        var allClubs = participantResults.Keys.Union(basePointsDictionary.Keys);
 
         var merged = new List<(string Club, int Points, bool IsPreliminary)>();
         foreach (string club in allClubs)
         {
             var points = participantResults.ContainsKey(club) ? participantResults[club].Points : 0;
             var isPreliminary = participantResults.ContainsKey(club) && participantResults[club].IsPreliminary;
-            var baseResult = baseResults.ContainsKey(club) ? baseResults[club] : 0;
+            var basePoints = basePointsDictionary.ContainsKey(club) ? basePointsDictionary[club] : 0;
 
-            merged.Add((club, baseResult + points, isPreliminary));
+            merged.Add((club, basePoints + points, isPreliminary));
         }
         return merged;
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Contract;
@@ -16,12 +17,15 @@ namespace ResultsTests
             var configuration = new Configuration(ResultSource.Simulator)
             {
                 SpeedMultiplier = 10,
-                NumTeams = 100
+                NumTeams = 100,
+                BasePointsFilePath = "BasePoints.csv"
             };
-
+            File.WriteAllText(configuration.BasePointsFilePath, "Lag X,1000\r\n");
             using var simulatorResultSource = new SimulatorResultSource(configuration);
-            using var results = new ResultService(configuration, simulatorResultSource, new BaseResultService("", Mock.Of<ILogger<BaseResultService>>()), Mock.Of<ILogger<ResultService>>());
-            var teamResults = results.GetScoreBoard();
+            var basePointsService = new BasePointsService(configuration, Mock.Of<ILogger<BasePointsService>>());
+            using var resultService = new ResultService(configuration, simulatorResultSource, basePointsService, Mock.Of<ILogger<ResultService>>());
+            var teamResults = resultService.GetScoreBoard();
+            teamResults.TeamResults.Should().Contain(new TeamResult(1, "Lag X", 1000, false));
         }
     }
 }

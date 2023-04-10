@@ -37,7 +37,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<Usp.Data.ResultService>();
 builder.Services.AddSingleton<IResultService, Results.ResultService>();
-builder.Services.AddSingleton<IBaseResultService>(provider => new BaseResultService("", provider.GetService<ILogger<BaseResultService>>()!));
+builder.Services.AddSingleton<IBasePointsService, BasePointsService>();
 
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
