@@ -24,9 +24,14 @@ namespace Results;
 
 internal class PointsCalc
 {
-#pragma warning disable CA1822 // Mark members as static
-    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant, IDictionary<string, int> basePoints)
-#pragma warning restore CA1822 // Mark members as static    
+    private readonly IDictionary<string, int> basePoints;
+
+    public PointsCalc(IDictionary<string, int> basePoints)
+    {
+        this.basePoints = basePoints;
+    }
+
+    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
     {
         var leaderByClass = participant
             .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))

@@ -21,16 +21,15 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly PointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
-    private readonly IBasePointsService basePointsService;
 
     public ResultService(Configuration configuration, IResultSource resultSource, IBasePointsService basePointsService, ILogger<ResultService> logger)
     {
+        if (basePointsService == null) throw new ArgumentNullException(nameof(basePointsService));
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
-        this.basePointsService = basePointsService;
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = new PointsCalc();
+        pointsCalc = new PointsCalc(basePointsService.GetBasePoints());
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
@@ -49,7 +48,7 @@ public sealed class ResultService : IResultService, IDisposable
         try
         {
             IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults, basePointsService.GetBasePoints());
+            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash != latestTeamResultsHash)
