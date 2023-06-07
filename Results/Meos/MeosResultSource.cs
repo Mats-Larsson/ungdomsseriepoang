@@ -115,8 +115,7 @@ public sealed class MeosResultSource : IResultSource
                 clubs[value.OrgId],
                 value.StartTime,
                 value.Time,
-                ToParticipantStatus(value.Stat, value.IsActivated),
-                false // TODO: Patrol
+                ToParticipantStatus(value.Stat, value.IsActivated)
             );
             participantResults[id] = meosParticipantResult;
         }

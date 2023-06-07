@@ -31,18 +31,27 @@ internal class PointsCalc
         this.basePoints = basePoints;
     }
 
-    public List<TeamResult> CalcScoreBoard(IList<ParticipantResult> participant)
+    public List<TeamResult> CalcScoreBoard(IEnumerable<ParticipantResult> participants)
     {
-        var leaderByClass = participant
-            .Where(d => new[] { Preliminary, Passed }.Contains(d.Status))
-            .GroupBy(d => d.Class)
+        var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
+
+        participantsWithExtras
+            .Where(pr => pr.Status is Preliminary or Passed)
+            .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
+            .Where(g => g.Count() > 1)
+            .SelectMany(patrol => patrol.OrderBy(pp => pp.Time).ToArray()[1..])
+            .ForEach(pr => pr.IsExtraParticipant = true);
+
+        var leaderByClass = participantsWithExtras
+            .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
+            .GroupBy(pr => pr.Class)
             .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
             .ToImmutableDictionary(g => g.Class, g => g.Time);
 
         var pos = 1;
         var reportPos = 1;
         var prevPoints = 0;
-        var participantResults = participant
+        var participantResults = participantsWithExtras
             .Select(pr => (pr.Club, Points: CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
@@ -63,7 +72,7 @@ internal class PointsCalc
         return orderedResults;
     }
 
-    internal static int CalcPoints(ParticipantResult pr, TimeSpan? bestTime)
+    internal static int CalcPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
     {
         if (pr.Status <= Ignored) return -1;
         if (pr.Status == NotStarted) return 0;
@@ -111,6 +120,21 @@ internal class PointsCalc
 
 }
 
+internal class PointsCalcParticipantResult : ParticipantResult
+{
+    public bool IsExtraParticipant { get; internal set; }
+
+    public PointsCalcParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status) 
+        : base(@class, name, club, startTime, time, status)
+    {
+    }
+
+    public PointsCalcParticipantResult(ParticipantResult participantResult) 
+        : base(participantResult.Class, participantResult.Name, participantResult.Club, participantResult.StartTime, participantResult.Time, participantResult.Status)
+    {
+    }
+}
+
 internal class PointsTemplate
 {
     public int BasePoints { get; }
@@ -144,5 +168,16 @@ internal class PointsTemplate
             // ReSharper disable once LocalizableElement
             _ => UnknownTemplate
         };
+    }
+}
+
+internal static class Helper
+{
+    public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+    {
+        foreach (var item in items)
+        {
+            action(item);
+        }
     }
 }

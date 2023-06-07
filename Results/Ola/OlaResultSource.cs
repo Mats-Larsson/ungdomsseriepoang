@@ -24,10 +24,9 @@ public sealed class OlaResultSource : IResultSource
     public IList<ParticipantResult> GetParticipantResults()
     {
         var list = GetFromOlaDb();
-        var extras = GetExtraParticipants(list);
 
         return list
-            .Select(o => new ParticipantResult(o.Class, o.Name, o.Club, o.StartTime, o.Time, o.Status, extras.Contains(o.Id)))
+            .Select(o => new ParticipantResult(o.Class, o.Name, o.Club, o.StartTime, o.Time, o.Status))
             .ToList();
     }
 
@@ -57,9 +56,9 @@ public sealed class OlaResultSource : IResultSource
             var time = reader.IsDBNull(4) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(4));
             var olaStatus = reader.GetFieldValue<string>(5);
             var id = reader.GetFieldValue<int>(6);
-            var parMedId = reader.IsDBNull(7) ? null : reader.GetFieldValue<int?>(7);
+            var parMedId = reader.IsDBNull(7) ? null : reader.GetFieldValue<int?>(7); // TODO: Remove
 
-            list.Add(new OlaParticipantResult(@class, name, club, startTime, time, ToParticipantStatus(olaStatus, time), id, parMedId));
+            list.Add(new OlaParticipantResult(@class, name, club, startTime, time, ToParticipantStatus(olaStatus, time), id));
         }
         return list;
     }
@@ -88,61 +87,6 @@ public sealed class OlaResultSource : IResultSource
         };
     }
 
-    // ReSharper disable CommentTypo
-    // TODO: Klarar endast patruller med två deltagare, med 100% säkerhet. Detta är även en begränsning i Eventor, samt till viss del i OLA.
-    // ReSharper restore CommentTypo
-    internal static ISet<int> GetExtraParticipants(IList<OlaParticipantResult> list)
-    {
-        var linked = list
-            .Where(opr => opr.TogetherWithId.HasValue)
-            .Select(opr => new
-            {
-                Opr = opr,
-                Id2 = opr.TogetherWithId!.Value,
-                Id2Status = list // TODO: Byt till Dictionary
-                    .Where(x => x.Id == opr.TogetherWithId)
-                    .Select(x =>  x.Status)
-                    .FirstOrDefault(ParticipantStatus.Ignored)
-            })
-            //.Where(opr => opr.Id2Status >= ParticipantStatus.Activated)
-            .Select(ops => new { Id1 = ops.Opr.Id, Id1Status = ops.Opr.Status, ops.Id2, ops.Id2Status })
-            .ToHashSet();
-
-        // Make sure all are double linked
-        foreach (var pair in linked.ToList())
-        {
-            linked.Add(new { Id1 = pair.Id2, Id1Status = pair.Id2Status, Id2 = pair.Id1, Id2Status = pair.Id1Status });
-        }
-        var groups = new List<ISet<int>>();
-        foreach (var pair in linked)
-        {
-            foreach (var group in groups)
-            {
-                if (group.Contains(pair.Id1) && pair.Id2Status >= ParticipantStatus.Activated) {
-                    group.Add(pair.Id2);
-                    goto inGroup;
-                }
-                if (group.Contains(pair.Id2) && pair.Id1Status >= ParticipantStatus.Activated)
-                {
-                    group.Add(pair.Id1);
-                    goto inGroup;
-                }
-            }
-
-            var newGroup = new HashSet<int>();
-            if (pair.Id1Status >= ParticipantStatus.Activated) newGroup.Add(pair.Id1);
-            if (pair.Id2Status >= ParticipantStatus.Activated) newGroup.Add(pair.Id2);
-            if (newGroup.Any()) groups.Add(newGroup);
-        inGroup:
-            ;
-        }
-
-        var extras = groups
-            .SelectMany(g => g.Skip(1))
-            .ToHashSet();
-        return extras;
-    }
-
     public void Dispose()
     {
         // Nothing to dispose
@@ -158,9 +102,8 @@ internal class OlaParticipantResult
     public TimeSpan? Time { get; }
     public ParticipantStatus Status { get; }
     public int Id { get; }
-    public int? TogetherWithId { get; }
 
-    public OlaParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, int id, int? togetherWithId)
+    public OlaParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, int id)
     {
         Class = @class;
         Name = name;
@@ -169,6 +112,5 @@ internal class OlaParticipantResult
         Time = time;
         Status = status;
         Id = id;
-        TogetherWithId = togetherWithId;
     }
 }
