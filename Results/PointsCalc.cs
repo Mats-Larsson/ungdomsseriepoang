@@ -79,13 +79,12 @@ internal class PointsCalc
         if (pr.Status <= Ignored) return -1;
         if (pr.Status == NotStarted) return 0;
         if (pr.Status == NotActivated) return 0;
+        // TODO: Started om Activated och starttiden har passerats
+        if (pr.Status == Activated) return 0;
+        if (pr.Status == Started) return 0;
+        if (pr.Status == NotValid) return 0;
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
-
-        // TODO: Started om Activated och starttiden har passerats
-        if (pr.Status == Activated) return pointsTemplate.NotPassedPoints;
-        if (pr.Status == Started) return pointsTemplate.NotPassedPoints;
-        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
 
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
@@ -103,13 +102,12 @@ internal class PointsCalc
         if (pr.Status <= Ignored) return -1;
         if (pr.Status == NotStarted) return 0;
         if (pr.Status == NotActivated) return 0;
+        // TODO: Started om Activated och starttiden har passerats
+        if (pr.Status == Activated) return 0;
+        if (pr.Status == Started) return 0;
+        if (pr.Status == NotValid) return 0;
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
-
-        // TODO: Started om Activated och starttiden har passerats
-        if (pr.Status == Activated) return pointsTemplate.NotPassedPoints;
-        if (pr.Status == Started) return pointsTemplate.NotPassedPoints;
-        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
 
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
