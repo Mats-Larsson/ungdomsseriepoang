@@ -1,4 +1,5 @@
 using Results;
+using Results.Model;
 using Results.Ola;
 
 namespace ResultsTests
@@ -9,9 +10,10 @@ namespace ResultsTests
         [TestMethod]
         public void TestMethod1()
         {
-            IResultSource resultSource = new OlaResultSourceImpl("NUC", null, "kretstavling2019", "root", "kasby");
+            using IResultSource resultSource = new OlaResultSource(new Configuration());
 
             var participantResults = resultSource.GetParticipantResults();
         }
+
     }
 }

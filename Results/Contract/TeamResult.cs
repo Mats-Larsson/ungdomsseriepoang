@@ -6,6 +6,7 @@ public class TeamResult
     public string Team { get; }
     public int Points { get; }
     public bool IsPreliminary { get; }
+
     public TeamResult(int pos, string team, int points, bool isPreliminary)
     {
         Pos = pos;
@@ -21,18 +22,21 @@ public class TeamResult
 
     private bool Equals(TeamResult other)
     {
-        return Pos == other.Pos && Team == other.Team && Points == other.Points;
+        return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary;
     }
 
+#pragma warning disable IDE0041 // Use 'is null' check
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((TeamResult)obj);
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((TeamResult)obj);
     }
+#pragma warning restore IDE0041 // Use 'is null' check
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Pos, Team, Points);
+        return HashCode.Combine(Pos, Team, Points, IsPreliminary);
     }
 }

@@ -1,0 +1,115 @@
+﻿@page "/fetchdata"
+
+<PageTitle>Results</PageTitle>
+
+@using Microsoft.AspNetCore.WebUtilities;
+@using Usp.Data
+@using Results.Contract
+@using System.Globalization
+@inject ResultService ResultService;
+@inject NavigationManager NavManager
+
+@if (result?.TeamResults == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    @* ReSharper disable MarkupTextTypo, ReSharper disable CommentTypo *@
+    @* TODO: Indigera om data inte kan hämtas från ResultSource *@
+
+    <div style="height: 98vh">
+
+        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+            <table class="table" style="font-size: @fontSize">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: right">Pos</th>
+                        <th style="width: 80%">Lag</th>
+                        <th style="width: 10%; text-align: right">Poäng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var teamResult in result.TeamResults)
+                {
+                    <tr>
+                        <td style="width: 10%; text-align: right">@teamResult.Pos</td>
+                        <td style="width: 80%">@teamResult.Team</td>
+                        <td style="width: 10%; text-align: right">@teamResult.Points</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+        <hr/>
+
+        <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: 1.5vw; text-align: center">
+            <table class="table" style="border-top: solid">
+                <thead>
+                <tr>
+                    <th>Senast kollad / Senasta ändrad</th>
+                    <th>Ej aktiverade</th>
+                    <th>Checkade/Startade</th>
+                    <th hidden="@(!ResultService.SupportsPreliminary)">Preliminära</th>
+                    <th>Godkända</th>
+                    <th>Ej godkända</th>
+                    <th>Ej start</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    @* TODO: Ta bort delar av sekund*@
+                    <td>@result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay</td>
+                    <td>@result.Statistics.NumNotActivated</td>
+                    <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
+                    <td hidden="@(!ResultService.SupportsPreliminary)">@result.Statistics.NumPreliminary</td>
+                    <td>@result.Statistics.NumPassed</td>
+                    <td>@result.Statistics.NumNotValid</td>
+                    <td>@result.Statistics.NumNotStarted</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @* ReSharper restore MarkupTextTypo *@
+}
+
+@code {
+    private Result? result;
+    private int columns = 2;
+    private string fontSize = "1vw";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        columns = GetQueryParamFirstOrDefault(uri, "columns", 2);
+        fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetQueryParamFirstOrDefault(uri, "textsize", 100.0) / 100.0);
+
+        result = await ResultService.GetTeamResultsAsync();
+
+        ResultService.OnNewResults += ResultService_OnNewResults;
+    }
+
+
+    private void ResultService_OnNewResults(object? sender, EventArgs e)
+    {
+        result = ResultService.GetTeamResultsAsync().Result;
+        InvokeAsync(this.StateHasChanged);
+    }
+
+    private T GetQueryParamFirstOrDefault<T>(Uri uri, string name, T defaultValue)
+    {
+        var stringValues = QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault(name);
+        if (!stringValues.Any()) return defaultValue;
+        var stringValue = stringValues[0];
+        if (stringValue == null) return defaultValue;
+        var convertedValue = Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
+        return (T)convertedValue;
+    }
+
+}
+

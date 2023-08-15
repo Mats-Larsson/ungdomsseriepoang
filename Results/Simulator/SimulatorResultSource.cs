@@ -1,61 +1,71 @@
-﻿using System.Timers;
-using Results.Model;
+﻿using Results.Model;
 
 namespace Results.Simulator;
 
-internal class SimulatorResultSource : IResultSource, IDisposable
+public sealed class SimulatorResultSource : IResultSource
 {
-    private readonly System.Timers.Timer timer;
-
-    private readonly ParticipantResult[] participantResults;
-
-    public SimulatorResultSource()
+    private readonly Configuration configuration;
+    private readonly SimulatedParticipant[] simulatedParticipants;
+    private readonly TestData testData;
+    internal CancellationTokenSource TokenSource { get; } = new();
+    private TimeSpan currentTimeOfDay = TimeSpan.Zero;
+    public int SpeedMultiplier { get; }
+    public TimeSpan MinTime { get; }
+    public TimeSpan MaxTime { get; }
+    public TimeSpan ZeroTime { get; }
+    public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+    public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        participantResults = InitParticipantResults();
-
-        timer = new System.Timers.Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
-        // Hook up the Elapsed event for the timer. 
-        timer.Elapsed += OnTimedEvent;
-        timer.AutoReset = true;
-        timer.Enabled = true;
+        throw new NotImplementedException();
     }
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public SimulatorResultSource(Configuration configuration)
     {
-        return participantResults.ToArray();
-    }
+        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        testData = new TestData(configuration.NumTeams);
 
-    private ParticipantResult[] InitParticipantResults()
-    {
-        return TestData.TemplateParticipantResults
-            .Select(r => new ParticipantResult(
-                r.Class, 
-                r.Name, 
-                r.Club, 
-                null,
-                r.Status == ParticipantStatus.Ignored ? ParticipantStatus.Ignored : ParticipantStatus.NotStarted
-            ))
+        SpeedMultiplier = this.configuration.SpeedMultiplier;
+
+        MinTime = testData.TemplateParticipantResults
+            .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)
+            .Min(p => p.StartTime!.Value);
+        MaxTime = testData.TemplateParticipantResults
+            .Where(p => p.StartTime.HasValue && p.Time.HasValue && p.Status != ParticipantStatus.Ignored)
+            .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
+        ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
+
+        simulatedParticipants = testData.TemplateParticipantResults
+            .Select(r => new SimulatedParticipant(this, r))
             .ToArray();
-    }
 
-    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
-    {
-        for (var n = 0; n < participantResults.Length * 10; n++)
+        _ = RunClockAsync();
+        foreach (var pr in simulatedParticipants)
         {
-            var i = Random.Shared.Next(0, participantResults.Length);
-            var tpr = TestData.TemplateParticipantResults[i];
-            var pr = participantResults[i];
-            if (pr.Status == tpr.Status) continue;
-            pr.Status++;
-            if (pr.Status < ParticipantStatus.Preliminary) break;
-            pr.Time = tpr.Time;
-
+            pr.Task = pr.RunAsync();
         }
     }
 
-    public void Dispose()
+    private async Task RunClockAsync()
     {
-        timer.Dispose();
+        currentTimeOfDay = ZeroTime;
+        while (currentTimeOfDay <= MaxTime)
+        {
+            currentTimeOfDay = currentTimeOfDay.Add(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(1).Divide(SpeedMultiplier), TokenSource.Token).ConfigureAwait(false);
+        }
     }
 
+    public bool SupportsPreliminary => true;
+
+    public IList<ParticipantResult> GetParticipantResults()
+    {
+        return simulatedParticipants.Cast<ParticipantResult>().ToList();
+    }
+
+    public string Status => $"{simulatedParticipants.Count(pr => pr.Task?.Status == TaskStatus.RanToCompletion)} / {simulatedParticipants.Length} ";
+
+    public void Dispose()
+    {
+        TokenSource.Dispose();
+    }
 }
