@@ -66,13 +66,13 @@ namespace Results.Ola {
         ///			o.shortName									Klubb,
         ///            time(r.startTime)							StartTid,
         ///			sec_to_time(r.totalTime/100)				Tid,
-        ///			r.runnerStatus								&quot;Status&quot;
+        ///			r.runnerStatus								&quot;Status&quot;,
+        ///            r.entryId									&quot;Id&quot;,	
+        ///            e.allocationEntryId							&quot;ParMedId&quot;
         ///from		eventclasses	ec
         ///left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId
         ///left join	results			r	on	e.entryId = r.entryId
-        ///left join	persons			p	on	p.personId = e.competitorId
-        ///left join	organisations	o	on	o.organisationId = p.defaultOrganisationId
-        ///where [rest of string was truncated]&quot;;.
+        ///left join	persons			p	on	p.personId = e.com [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParticipantResultSql {
             get {
