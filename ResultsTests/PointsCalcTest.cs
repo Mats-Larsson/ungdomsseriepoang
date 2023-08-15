@@ -79,9 +79,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club C", 5, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
+        Assert.AreEqual(new TeamResult(1, "Club A", 0, false), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(1, "Club B", 0, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(1, "Club C", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -97,8 +97,8 @@ public class PointsCalcTest
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
+        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -114,8 +114,8 @@ public class PointsCalcTest
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(new TeamResult(1, "Club C", 50, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 5, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
+        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -131,15 +131,14 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club B", 51, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club C", 50, true), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 46, false), scoreBoard[1]);
         Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
     public void TestWithPatrol()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -150,11 +149,18 @@ public class PointsCalcTest
             new("U4", "Bill", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(14), Passed),
             new("U4", "Egon", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(99), Passed),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club B", 5+40+26, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club C", 50+10, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 38, false), scoreBoard[2]);
+
+        var normalScoreBoard = new PointsCalc(emptyBaseResults, false).CalcScoreBoard(participantResults);
+        Assert.AreEqual(3, normalScoreBoard.Count);
+        Assert.AreEqual(new TeamResult(1, "Club B", 40+26, false), normalScoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club C", 50+10, false), normalScoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club A", 38, false), normalScoreBoard[2]);
+
+        var finalScoreBoard = new PointsCalc(emptyBaseResults, true).CalcScoreBoard(participantResults);
+        Assert.AreEqual(3, finalScoreBoard.Count);
+        Assert.AreEqual(new TeamResult(1, "Club C", 100 + 20, false), finalScoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 80 + 20, false), finalScoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club A", 70, false), finalScoreBoard[2]);
     }
 
     [TestMethod]
