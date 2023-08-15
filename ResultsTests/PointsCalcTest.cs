@@ -15,7 +15,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithSimulatorResults()
     {
-        PointsCalc pointsCalc = new(oneBaseResults);
+        PointsCalc pointsCalc = new(oneBaseResults, false);
         var configuration = new Configuration(ResultSource.Simulator)
         {
             SpeedMultiplier = 10,
@@ -30,7 +30,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithNoResults()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>();
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(0, scoreBoard.Count);
@@ -39,7 +39,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestBeforeCompetition()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
@@ -54,7 +54,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithIgnored()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
@@ -70,7 +70,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithChecked()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
@@ -87,7 +87,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithCheckedAndPreliminary()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -104,7 +104,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithCheckedAndPassed()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -121,7 +121,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithCheckedPreliminaryAndPassed()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -139,7 +139,7 @@ public class PointsCalcTest
     [TestMethod]
     public void TestWithPatrol()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults);
+        PointsCalc pointsCalc = new(emptyBaseResults, false);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -158,41 +158,80 @@ public class PointsCalcTest
     }
 
     [TestMethod]
-    public void TestCalcPoints()
+    public void TestCalcNormalPoints()    
     {
         // Max
-        Assert.AreEqual(50, CalcPoints("H10", "K", "00:00:00", "00:10:30", "00:10:30"));
-        Assert.AreEqual(50, CalcPoints("D10", "K", "00:00:00", "00:10:30", "00:10:30"));
-        Assert.AreEqual(40, CalcPoints("U1", "K", "00:00:00", "00:10:30", "00:10:30"));
-        Assert.AreEqual(10, CalcPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(50, CalcNormalPoints("H10", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(50, CalcNormalPoints("D10", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(40, CalcNormalPoints("U1", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(10, CalcNormalPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
 
         // Min
-        Assert.AreEqual(15, CalcPoints("H10", "K", "00:00:00", "02:10:30", "00:10:30"));
-        Assert.AreEqual(15, CalcPoints("D10", "K", "00:00:00", "02:10:30", "00:10:30"));
-        Assert.AreEqual(10, CalcPoints("U1", "K", "00:00:00", "02:10:30", "00:10:30"));
-        Assert.AreEqual(10, CalcPoints("Insk", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(15, CalcNormalPoints("H10", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(15, CalcNormalPoints("D10", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(10, CalcNormalPoints("U1", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(10, CalcNormalPoints("Insk", "K", "00:00:00", "02:10:30", "00:10:30"));
 
         // Reduction
-        Assert.AreEqual(48, CalcPoints("H10", "K", "00:00:00", "00:10:31", "00:10:30"));
-        Assert.AreEqual(48, CalcPoints("H10", "K", "00:01:00", "00:11:29", "00:10:30"));
-        Assert.AreEqual(48, CalcPoints("H10", "K", "00:02:00", "00:11:30", "00:10:30"));
-        Assert.AreEqual(46, CalcPoints("H10", "K", "00:00:00", "00:11:31", "00:10:30"));
-        Assert.AreEqual(10, CalcPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
-        Assert.AreEqual(10, CalcPoints("Insk", "K", "00:01:00", "00:12:30", "00:10:30"));
+        Assert.AreEqual(48, CalcNormalPoints("H10", "K", "00:00:00", "00:10:31", "00:10:30"));
+        Assert.AreEqual(48, CalcNormalPoints("H10", "K", "00:01:00", "00:11:29", "00:10:30"));
+        Assert.AreEqual(48, CalcNormalPoints("H10", "K", "00:02:00", "00:11:30", "00:10:30"));
+        Assert.AreEqual(46, CalcNormalPoints("H10", "K", "00:00:00", "00:11:31", "00:10:30"));
+        Assert.AreEqual(10, CalcNormalPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(10, CalcNormalPoints("Insk", "K", "00:01:00", "00:12:30", "00:10:30"));
 
         // Patrull
-        Assert.AreEqual(40, CalcPoints("U1", "K", "00:00:00", "00:12:30", "00:12:30"));
-        Assert.AreEqual(28, CalcPoints("U1", "K", "00:00:00", "00:13:30", "00:12:30", true));
-        Assert.AreEqual(10, CalcPoints("U1", "K", "00:00:00", "00:59:30", "00:12:30", true));
+        Assert.AreEqual(40, CalcNormalPoints("U1", "K", "00:00:00", "00:12:30", "00:12:30"));
+        Assert.AreEqual(28, CalcNormalPoints("U1", "K", "00:00:00", "00:13:30", "00:12:30", true));
+        Assert.AreEqual(10, CalcNormalPoints("U1", "K", "00:00:00", "00:59:30", "00:12:30", true));
     }
 
-    private static int CalcPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
+    private static int CalcNormalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
     {
         var participantResult = new PointsCalcParticipantResult( @class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
         {
             IsExtraParticipant = isExtraParticipant
         };
 
-        return PointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
+        return PointsCalc.CalcNormalPoints(participantResult, TimeSpan.Parse(bestTime));
+    }
+
+    [TestMethod]
+    public void TestCalcFinalPoints()
+    {
+        // Max
+        Assert.AreEqual(100, CalcFinalPoints("H10", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(100, CalcFinalPoints("D10", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual( 80, CalcFinalPoints("U1",  "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual( 20, CalcFinalPoints("Insk","K", "00:00:00", "00:10:30", "00:10:30"));
+
+        // Min
+        Assert.AreEqual(20, CalcFinalPoints("H10", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(20, CalcFinalPoints("D10", "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(20, CalcFinalPoints("U1",  "K", "00:00:00", "02:10:30", "00:10:30"));
+        Assert.AreEqual(20, CalcFinalPoints("Insk","K", "00:00:00", "02:10:30", "00:10:30"));
+
+        // Reduction
+        Assert.AreEqual(100, CalcFinalPoints("H10", "K", "00:00:00", "00:12:00", "00:10:30"));
+        Assert.AreEqual( 99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:01", "00:10:30"));
+        Assert.AreEqual( 99, CalcFinalPoints("H10", "K", "00:02:00", "00:12:06", "00:10:30"));
+        Assert.AreEqual( 98, CalcFinalPoints("H10", "K", "00:00:00", "00:12:07", "00:10:30"));
+        Assert.AreEqual( 20, CalcFinalPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual( 20, CalcFinalPoints("Insk", "K", "00:01:00", "00:12:30", "00:10:30"));
+
+        // Patrull
+        Assert.AreEqual(79, CalcFinalPoints("U1", "K", "00:00:00", "00:12:01", "00:12:30"));
+        Assert.AreEqual(20, CalcFinalPoints("U1", "K", "00:00:00", "00:13:30", "00:12:30", true));
+        Assert.AreEqual(20, CalcFinalPoints("U1", "K", "00:00:00", "00:59:30", "00:12:30", true));
+    }
+
+    private static int CalcFinalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
+    {
+        var participantResult = new PointsCalcParticipantResult(@class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
+        {
+            IsExtraParticipant = isExtraParticipant
+        };
+
+        return PointsCalc.CalcFinalPoints(participantResult, TimeSpan.Parse(bestTime));
     }
 }

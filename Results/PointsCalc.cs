@@ -25,10 +25,12 @@ namespace Results;
 internal class PointsCalc
 {
     private readonly IDictionary<string, int> basePoints;
+    private readonly Func<PointsCalcParticipantResult, TimeSpan?, int> calcPointsFunc;
 
-    public PointsCalc(IDictionary<string, int> basePoints)
+    public PointsCalc(IDictionary<string, int> basePoints, bool isFinal)
     {
         this.basePoints = basePoints;
+        calcPointsFunc = isFinal ? CalcFinalPoints : CalcNormalPoints;
     }
 
     public List<TeamResult> CalcScoreBoard(IEnumerable<ParticipantResult> participants)
@@ -52,7 +54,7 @@ internal class PointsCalc
         var reportPos = 1;
         var prevPoints = 0;
         var participantResults = participantsWithExtras
-            .Select(pr => (pr.Club, Points: CalcPoints(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
+            .Select(pr => (pr.Club, Points: calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
             .Select(g => (Club: g.Key, Points: g.Sum(d => d.Points), IsPreliminary: g.Max(d => d.IsPreliminary)))
@@ -72,7 +74,7 @@ internal class PointsCalc
         return orderedResults;
     }
 
-    internal static int CalcPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
+    internal static int CalcNormalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
     {
         if (pr.Status <= Ignored) return -1;
         if (pr.Status == NotStarted) return 0;
@@ -94,6 +96,36 @@ internal class PointsCalc
                      - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
 
         return Math.Max(points, pointsTemplate.MinPoints);
+    }
+
+    internal static int CalcFinalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
+    {
+        if (pr.Status <= Ignored) return -1;
+        if (pr.Status == NotStarted) return 0;
+        if (pr.Status == NotActivated) return 0;
+
+        var pointsTemplate = PointsTemplate.Get(pr.Class);
+
+        // TODO: Started om Activated och starttiden har passerats
+        if (pr.Status == Activated) return pointsTemplate.NotPassedPoints;
+        if (pr.Status == Started) return pointsTemplate.NotPassedPoints;
+        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
+
+        if (pr.Status != Passed && pr.Status != Preliminary)
+            throw new InvalidOperationException($"Unexpected status: {pr.Status}");
+        if (!bestTime.HasValue || !pr.Time.HasValue)
+            throw new InvalidOperationException($"Unexpected null time");
+
+        if (!pointsTemplate.FinalFullPointsTime.HasValue) return pointsTemplate.FinalFullPoints;
+
+        if (pr.Time.Value <= pointsTemplate.FinalFullPointsTime.Value) return pointsTemplate.FinalFullPoints;
+
+        if (pr.IsExtraParticipant) return pointsTemplate.FinalMinPoints;
+
+        var points = pointsTemplate.FinalFullPoints
+                     - (int)Math.Ceiling((pr.Time.Value - pointsTemplate.FinalFullPointsTime.Value) / pointsTemplate.FinalReductionTime);
+
+        return Math.Max(points, pointsTemplate.FinalMinPoints);
     }
 
     private static int StartedMinutesAfter(TimeSpan bestTime, TimeSpan time)
@@ -142,19 +174,28 @@ internal class PointsTemplate
     public int MinPoints { get; }
     public int NotPassedPoints { get; }
     public int PatrolExtraPaticipantsReduction { get; }
+    public int FinalFullPoints { get; }
+    public int FinalMinPoints { get; }
+    public TimeSpan? FinalFullPointsTime { get; }
+    public TimeSpan FinalReductionTime { get; }
 
-    private static readonly PointsTemplate DhTemplate = new(50, 2, 15, 5);
-    private static readonly PointsTemplate UTemplate = new(40, 2, 10, 5, 10);
-    private static readonly PointsTemplate InskTemplate = new(10, 0, 10, 5);
-    private static readonly PointsTemplate UnknownTemplate = new(0, 0, 0, 0);
+    private static readonly PointsTemplate DhTemplate       = new(50, 2, 15, 5,  0, 100, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(6));
+    private static readonly PointsTemplate UTemplate        = new(40, 2, 10, 5, 10,  80, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(6));
+    private static readonly PointsTemplate InskTemplate     = new(10, 0, 10, 5,  0,  20, 20, null, TimeSpan.Zero);
+    private static readonly PointsTemplate UnknownTemplate  = new( 0, 0,  0, 0,  0,   0,  0, null, TimeSpan.Zero);
 
-    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraPaticipantsReduction = 0)
+    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraPaticipantsReduction, 
+        int finalFullPoints, int finalMinPoints, TimeSpan? finalFullPointsTime, TimeSpan finalReductionTime)
     {
         BasePoints = basePoints;
         MinuteReduction = minuteReduction;
         MinPoints = minPoints;
         NotPassedPoints = notPassedPoints;
         PatrolExtraPaticipantsReduction = patrolExtraPaticipantsReduction;
+        FinalFullPoints = finalFullPoints;
+        FinalMinPoints = finalMinPoints;
+        FinalFullPointsTime = finalFullPointsTime;
+        FinalReductionTime = finalReductionTime;
     }
 
     public static PointsTemplate Get(string @class)

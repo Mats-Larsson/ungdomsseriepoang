@@ -29,7 +29,7 @@ public sealed class ResultService : IResultService, IDisposable
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = new PointsCalc(basePointsService.GetBasePoints());
+        pointsCalc = new PointsCalc(basePointsService.GetBasePoints(), configuration.IsFinal);
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
