@@ -1,23 +1,110 @@
-﻿namespace Results.Contract
-{
-    public class Statistics
-    {
-        public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
-        public TimeSpan LastChangedTimeOfDay { get; internal set; }
-        public int NumNotActivated { get; private set; }
-        public int NumActivated { get; private set; }
-        public int NumStarted { get; private set; }
-        public int NumPreliminary { get; private set; }
-        public int NumPassed { get; private set; }
-        public int NumNotValid { get; private set; }
-        public int NumNotStarted { get; private set; }
+﻿using Microsoft.Extensions.Configuration;
+using Results.Model;
+using System.Configuration;
 
-        internal void IncNumNotActivated() { NumNotActivated++; }
-        internal void IncNumActivated() { NumActivated++;}
-        internal void IncNumStarted() { NumStarted++; }
-        internal void IncNumPreliminary() { NumPreliminary++; }
-        internal void IncNumPassed() { NumPassed++;}
-        internal void IncNumNotValid() { NumNotValid++; }
-        internal void IncNumNotStarted() { NumNotStarted++; }
+namespace Results.Contract;
+
+public class Statistics
+{
+    public Statistics() { }
+
+    public Statistics(int numNotActivated, int numActivated, int numStarted, int numPreliminary, int numPassed, int numNotValid, int numNotStarted)
+    {
+        NumNotActivated = numNotActivated;
+        NumActivated = numActivated;
+        NumStarted = numStarted;
+        NumPreliminary = numPreliminary;
+        NumPassed = numPassed;
+        NumNotValid = numNotValid;
+        NumNotStarted = numNotStarted;
+    }
+
+    public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
+    public TimeSpan LastChangedTimeOfDay { get; internal set; }
+    public int NumNotActivated { get; private set; }
+    public int NumActivated { get; private set; }
+    public int NumStarted { get; private set; }
+    public int NumPreliminary { get; private set; }
+    public int NumPassed { get; private set; }
+    public int NumNotValid { get; private set; }
+    public int NumNotStarted { get; private set; }
+
+    internal void IncNumNotActivated() { NumNotActivated++; }
+    internal void IncNumActivated() { NumActivated++;}
+    internal void IncNumStarted() { NumStarted++; }
+    internal void IncNumPreliminary() { NumPreliminary++; }
+    internal void IncNumPassed() { NumPassed++;}
+    internal void IncNumNotValid() { NumNotValid++; }
+    internal void IncNumNotStarted() { NumNotStarted++; }
+
+    public static Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan currentTimeOfDay, Configuration configuration)
+    {
+        if (participantResults == null) throw new ArgumentNullException(nameof(participantResults));
+        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+
+        var statistics = new Statistics();
+
+        var notStartedCutOff = currentTimeOfDay.Add(configuration.TimeUntilNotStated);
+        foreach (var pr in participantResults)
+        {
+            var status = pr.Status;
+            var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
+
+            if (pr.Status == ParticipantStatus.NotActivated && startTime < notStartedCutOff)
+                status = ParticipantStatus.NotStarted;
+            else if (status == ParticipantStatus.Activated && currentTimeOfDay > pr.StartTime)
+                status = ParticipantStatus.Started;
+
+            statistics.LastChangedTimeOfDay = currentTimeOfDay;
+            switch (status)
+            {
+                case ParticipantStatus.Ignored: break;
+                case ParticipantStatus.NotActivated: statistics.IncNumNotActivated(); break;
+                case ParticipantStatus.Activated: statistics.IncNumActivated(); break;
+                case ParticipantStatus.Started: statistics.IncNumStarted(); break;
+                case ParticipantStatus.Preliminary: statistics.IncNumPreliminary(); break;
+                case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
+                case ParticipantStatus.NotValid: statistics.IncNumNotValid(); break;
+                case ParticipantStatus.NotStarted: statistics.IncNumNotStarted(); break;
+                default: throw new InvalidOperationException($"Unexpected: {status}");
+            }
+        }
+        return statistics;
+    }
+
+    public override string ToString()
+    {
+        return $"{nameof(NumNotActivated)}: {NumNotActivated}, {nameof(NumActivated)}: {NumActivated}, {nameof(NumStarted)}: {NumStarted}, {nameof(NumPreliminary)}: {NumPreliminary}, {nameof(NumPassed)}: {NumPassed}, {nameof(NumNotValid)}: {NumNotValid}, {nameof(NumNotStarted)}: {NumNotStarted}";
+    }
+
+    protected bool Equals(Statistics other)
+    {
+        return NumNotActivated == other.NumNotActivated && NumActivated == other.NumActivated && NumStarted == other.NumStarted && NumPreliminary == other.NumPreliminary && NumPassed == other.NumPassed && NumNotValid == other.NumNotValid && NumNotStarted == other.NumNotStarted;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj.GetType() != this.GetType())
+        {
+            return false;
+        }
+
+        return Equals((Statistics)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(NumNotActivated, NumActivated, NumStarted, NumPreliminary, NumPassed, NumNotValid, NumNotStarted);
     }
 }
+

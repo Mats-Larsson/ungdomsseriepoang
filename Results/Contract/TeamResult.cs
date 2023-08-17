@@ -8,8 +8,9 @@ public class TeamResult
     public bool IsPreliminary { get; }
     public int DiffPointsUp { get; }
     public int BasePoints { get; }
+    public Statistics Statistics { get; }
 
-    public TeamResult(int pos, string team, int points, bool isPreliminary, int diffPointsUp, int basePoints)
+    public TeamResult(int pos, string team, int points, bool isPreliminary, int diffPointsUp, int basePoints, Statistics statistics)
     {
         Pos = pos;
         Team = team;
@@ -17,16 +18,17 @@ public class TeamResult
         IsPreliminary = isPreliminary;
         DiffPointsUp = diffPointsUp;
         BasePoints = basePoints;
+        Statistics = statistics;
     }
 
     public override string ToString()
     {
-        return $"{nameof(Pos)}: {Pos}, {nameof(Team)}: {Team}, {nameof(Points)}: {Points}, {nameof(IsPreliminary)}: {IsPreliminary}, {nameof(DiffPointsUp)}: {DiffPointsUp}, {nameof(BasePoints)}: {BasePoints}";
+        return $"{nameof(Pos)}: {Pos}, {nameof(Team)}: {Team}, {nameof(Points)}: {Points}, {nameof(IsPreliminary)}: {IsPreliminary}, {nameof(DiffPointsUp)}: {DiffPointsUp}, {nameof(BasePoints)}: {BasePoints}, {nameof(Statistics)}: {Statistics}";
     }
 
     protected bool Equals(TeamResult other)
     {
-        return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary && DiffPointsUp == other.DiffPointsUp && BasePoints == other.BasePoints;
+        return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary && DiffPointsUp == other.DiffPointsUp && BasePoints == other.BasePoints && Statistics.Equals(other.Statistics);
     }
 
 #pragma warning disable IDE0041 // Use 'is null' check
@@ -53,6 +55,6 @@ public class TeamResult
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Pos, Team, Points, IsPreliminary, DiffPointsUp, BasePoints);
+        return HashCode.Combine(Pos, Team, Points, IsPreliminary, DiffPointsUp, BasePoints, Statistics);
     }
 }

@@ -91,10 +91,10 @@ public class Options
 
         var conf = new Configuration()
         {
-            ResultSource =
-            value.UseSimulator ? ResultSource.Simulator
-            : (value.UseOla ? ResultSource.OlaDatabase
-                : (value.UseMeos ? ResultSource.Meos
+            ResultSourceType =
+            value.UseSimulator ? ResultSourceType.Simulator
+            : (value.UseOla ? ResultSourceType.OlaDatabase
+                : (value.UseMeos ? ResultSourceType.Meos
                     : throw new InvalidOperationException("Cannot determine result source"))),
 
             TimeUntilNotStated = value.TimeUntilNotStated,

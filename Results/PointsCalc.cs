@@ -25,12 +25,16 @@ namespace Results;
 internal class PointsCalc
 {
     private readonly IDictionary<string, int> basePoints;
+    private readonly Configuration configuration;
+    private readonly IResultSource resultSource;
     private readonly Func<PointsCalcParticipantResult, TimeSpan?, int> calcPointsFunc;
 
-    public PointsCalc(IDictionary<string, int> basePoints, bool isFinal)
+    public PointsCalc(IDictionary<string, int> basePoints, Configuration configuration, IResultSource resultSource)
     {
         this.basePoints = basePoints;
-        calcPointsFunc = isFinal ? CalcFinalPoints : CalcNormalPoints;
+        this.configuration = configuration;
+        this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
+        calcPointsFunc = configuration.IsFinal ? CalcFinalPoints : CalcNormalPoints;
     }
 
     public List<TeamResult> CalcScoreBoard(IEnumerable<ParticipantResult> participants)
@@ -51,10 +55,14 @@ internal class PointsCalc
             .ToImmutableDictionary(g => g.Class, g => g.Time);
 
         var participantResults = participantsWithExtras
-            .Select(pr => (pr.Club, Points: calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
+            .Select(pr => (pr.Club, Points: calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)), pr.StartTime, pr.Time, pr.Status))
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
-            .Select(g => (Club: g.Key, Points: g.Sum(d => d.Points), IsPreliminary: g.Max(d => d.IsPreliminary)))
+            .Select(g => (
+                Club: g.Key, 
+                Points: g.Sum(d => d.Points), 
+                IsPreliminary: g.Max(d => d.Status == Preliminary), 
+                Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), resultSource.CurrentTimeOfDay, configuration)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
         var pos = 1;
@@ -72,7 +80,7 @@ internal class PointsCalc
                 if (!isSamePos) reportPos = pos;
                 prevPoints = kp.Points;
                 pos++;
-                TeamResult teamResult = new(reportPos, kp.Club, kp.Points, kp.IsPreliminary, upTeamPoints - kp.Points, kp.BasePoints);
+                TeamResult teamResult = new(reportPos, kp.Club, kp.Points, kp.IsPreliminary, upTeamPoints - kp.Points, kp.BasePoints, kp.Statistics);
                 return teamResult;
             })
             .ToList();
@@ -138,18 +146,25 @@ internal class PointsCalc
         return (int)Math.Truncate((secondsAfter + 59) / 60.0);
     }
 
-    private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> basePointsDictionary)
+    private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary, Statistics Statistics)> participantResults, IDictionary<string, int> basePointsDictionary)
     {
         var allClubs = participantResults.Keys.Union(basePointsDictionary.Keys);
 
-        var merged = new List<(string Club, int Points, bool IsPreliminary, int BasePoints)>();
+        var merged = new List<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>();
         foreach (string club in allClubs)
         {
-            var points = participantResults.TryGetValue(club, out (string Club, int Points, bool IsPreliminary) result) ? result.Points : 0;
-            var isPreliminary = participantResults.ContainsKey(club) && participantResults[club].IsPreliminary;
+            int points = 0;
+            var isPreliminary = false;
+            Statistics? statistics = null;
+            if (participantResults.TryGetValue(club, out (string Club, int Points, bool IsPreliminary, Statistics Statistics) result))
+            {
+                points = result.Points;
+                isPreliminary = result.IsPreliminary;
+                statistics = result.Statistics;
+            }
             var basePoints = basePointsDictionary.TryGetValue(club, out int value) ? value : 0;
 
-            merged.Add((club, basePoints + points, isPreliminary, basePoints));
+            merged.Add((club, basePoints + points, isPreliminary, basePoints, statistics ?? new Statistics()));
         }
         return merged;
     }

@@ -29,7 +29,7 @@ public sealed class ResultService : IResultService, IDisposable
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = new PointsCalc(basePointsService.GetBasePoints(), configuration.IsFinal);
+        pointsCalc = new PointsCalc(basePointsService.GetBasePoints(), configuration, resultSource);
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
@@ -51,51 +51,18 @@ public sealed class ResultService : IResultService, IDisposable
             var teamResults = pointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
-            if (teamResultsHash != latestTeamResultsHash)
-            {
-                latestTeamResults = teamResults;
-                latestTeamResultsHash = teamResultsHash;
-                latestStatistics = GetStatistics(participantResults, resultSource.CurrentTimeOfDay);
+            if (teamResultsHash == latestTeamResultsHash) return;
 
-                OnNewResults?.Invoke(this, EventArgs.Empty);
-            }
+            latestTeamResults = teamResults;
+            latestTeamResultsHash = teamResultsHash;
+            latestStatistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration);
+
+            OnNewResults?.Invoke(this, EventArgs.Empty);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, $"{nameof(OnTimedEvent)}");
         }
-    }
-
-    private Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan? currentTimeOfDay)
-    {
-        var statistics = new Statistics();
-
-        var notStartedCutOff = resultSource.CurrentTimeOfDay.Add(configuration.TimeUntilNotStated);
-        foreach (var pr in participantResults)
-        {
-            var status = pr.Status;
-            var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
-
-            if (pr.Status == ParticipantStatus.NotActivated && startTime < notStartedCutOff) 
-                status = ParticipantStatus.NotStarted;
-            else if (status == ParticipantStatus.Activated && currentTimeOfDay > pr.StartTime)
-                status = ParticipantStatus.Started;
-
-            statistics.LastChangedTimeOfDay = resultSource.CurrentTimeOfDay;
-            switch (status)
-            {
-                case ParticipantStatus.Ignored: break;
-                case ParticipantStatus.NotActivated: statistics.IncNumNotActivated(); break;
-                case ParticipantStatus.Activated: statistics.IncNumActivated(); break;
-                case ParticipantStatus.Started: statistics.IncNumStarted(); break;
-                case ParticipantStatus.Preliminary: statistics.IncNumPreliminary(); break;
-                case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
-                case ParticipantStatus.NotValid: statistics.IncNumNotValid(); break;
-                case ParticipantStatus.NotStarted: statistics.IncNumNotStarted(); break;
-                default: throw new InvalidOperationException($"Unexpected: {status}");
-            }
-        }
-        return statistics;
     }
 
     public bool SupportsPreliminary => resultSource.SupportsPreliminary;
