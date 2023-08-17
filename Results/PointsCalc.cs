@@ -50,9 +50,6 @@ internal class PointsCalc
             .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
             .ToImmutableDictionary(g => g.Class, g => g.Time);
 
-        var pos = 1;
-        var reportPos = 1;
-        var prevPoints = 0;
         var participantResults = participantsWithExtras
             .Select(pr => (pr.Club, Points: calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)), IsPreliminary: pr.Status == Preliminary))
             .Where(pr => pr.Points >= 0)
@@ -60,14 +57,23 @@ internal class PointsCalc
             .Select(g => (Club: g.Key, Points: g.Sum(d => d.Points), IsPreliminary: g.Max(d => d.IsPreliminary)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
+        var pos = 1;
+        var reportPos = 1;
+        var prevPoints = 0;
+        int upTeamPoints = -1;
         var orderedResults = MergeWithBasePoints(participantResults, basePoints)
             .OrderByDescending(kp => kp.Points)
             .Select(kp =>
             {
-                if (kp.Points != prevPoints) reportPos = pos;
+                var isSamePos = kp.Points == prevPoints;
+
+                if (upTeamPoints == -1) upTeamPoints = kp.Points;
+                else if (!isSamePos) upTeamPoints = prevPoints;
+                if (!isSamePos) reportPos = pos;
                 prevPoints = kp.Points;
                 pos++;
-                return new TeamResult(reportPos, kp.Club, kp.Points, kp.IsPreliminary, kp.BasePoints);
+                TeamResult teamResult = new(reportPos, kp.Club, kp.Points, kp.IsPreliminary, upTeamPoints - kp.Points, kp.BasePoints);
+                return teamResult;
             })
             .ToList();
 

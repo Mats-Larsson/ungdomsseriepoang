@@ -47,8 +47,8 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club A", 0, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(1, "Club B", 0, false), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(1, "Club A", 0, false), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(1, "Club B", 0, false), scoreBoard[1]);
     }
 
     [TestMethod]
@@ -79,9 +79,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club A", 0, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(1, "Club B", 0, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(1, "Club C", 0, false), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club A", 0, false), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(1, "Club B", 0, false), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(1, "Club C", 0, false), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -96,9 +96,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club A", 3, false, 3), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 2, false, 2), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club C", 1, false, 1), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club A", 3, false, 0, 3), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club B", 2, false, 1, 2), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club C", 1, false, 1, 1), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -113,9 +113,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club C", 50, true,  0), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(2, "Club B", 0, false, 50), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -130,9 +130,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club C", 50, false), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club A", 0, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 0, false), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club C", 50, false), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(2, "Club B", 0, false, 50), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -148,9 +148,9 @@ public class PointsCalcTest
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club C", 50, true), scoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 46, false), scoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 0, false), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club C", 50, true,  0), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club B", 46, false, 4), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club A", 0, false, 46), scoreBoard[2]);
     }
 
     [TestMethod]
@@ -169,15 +169,15 @@ public class PointsCalcTest
 
         var normalScoreBoard = new PointsCalc(emptyBaseResults, false).CalcScoreBoard(participantResults);
         Assert.AreEqual(3, normalScoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club B", 40+26, false), normalScoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club C", 50+10, false), normalScoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 38, false), normalScoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club B", 40+26, false), normalScoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club C", 50+10, false, 6), normalScoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club A", 38, false, 22), normalScoreBoard[2]);
 
         var finalScoreBoard = new PointsCalc(emptyBaseResults, true).CalcScoreBoard(participantResults);
         Assert.AreEqual(3, finalScoreBoard.Count);
-        Assert.AreEqual(new TeamResult(1, "Club C", 100 + 20, false), finalScoreBoard[0]);
-        Assert.AreEqual(new TeamResult(2, "Club B", 80 + 20, false), finalScoreBoard[1]);
-        Assert.AreEqual(new TeamResult(3, "Club A", 70, false), finalScoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club C", 100 + 20, false), finalScoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club B", 80 + 20, false, 20), finalScoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club A", 70, false, 30), finalScoreBoard[2]);
     }
 
     [TestMethod]
@@ -246,6 +246,11 @@ public class PointsCalcTest
         Assert.AreEqual(79, CalcFinalPoints("U1", "K", "00:00:00", "00:12:01", "00:12:30"));
         Assert.AreEqual(20, CalcFinalPoints("U1", "K", "00:00:00", "00:13:30", "00:12:30", true));
         Assert.AreEqual(20, CalcFinalPoints("U1", "K", "00:00:00", "00:59:30", "00:12:30", true));
+    }
+
+    private static TeamResult TeamResult(int pos, string club, int points, bool isPreliminary, int diffPointsUp = 0, int basePoints = 0)
+    {
+        return new TeamResult(pos, club, points, isPreliminary, diffPointsUp, basePoints);
     }
 
     private static int CalcFinalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)

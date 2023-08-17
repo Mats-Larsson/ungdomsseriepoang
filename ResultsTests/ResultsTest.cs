@@ -25,7 +25,7 @@ namespace ResultsTests
             var basePointsService = new BasePointsService(configuration, Mock.Of<ILogger<BasePointsService>>(), simulatorResultSource);
             using var resultService = new ResultService(configuration, simulatorResultSource, basePointsService, Mock.Of<ILogger<ResultService>>());
             var teamResults = resultService.GetScoreBoard();
-            teamResults.TeamResults.Should().Contain(new TeamResult(1, "Lag X", 1000, false));
+            teamResults.TeamResults.Should().Contain(new TeamResult(1, "Lag X", 1000, false, 0, 1000));
         }
     }
 }
