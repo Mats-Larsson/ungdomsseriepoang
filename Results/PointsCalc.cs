@@ -67,7 +67,7 @@ internal class PointsCalc
                 if (kp.Points != prevPoints) reportPos = pos;
                 prevPoints = kp.Points;
                 pos++;
-                return new TeamResult(reportPos, kp.Club, kp.Points, kp.IsPreliminary);
+                return new TeamResult(reportPos, kp.Club, kp.Points, kp.IsPreliminary, kp.BasePoints);
             })
             .ToList();
 
@@ -132,18 +132,18 @@ internal class PointsCalc
         return (int)Math.Truncate((secondsAfter + 59) / 60.0);
     }
 
-    private static IEnumerable<(string Club, int Points, bool IsPreliminary)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> basePointsDictionary)
+    private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary)> participantResults, IDictionary<string, int> basePointsDictionary)
     {
         var allClubs = participantResults.Keys.Union(basePointsDictionary.Keys);
 
-        var merged = new List<(string Club, int Points, bool IsPreliminary)>();
+        var merged = new List<(string Club, int Points, bool IsPreliminary, int BasePoints)>();
         foreach (string club in allClubs)
         {
-            var points = participantResults.ContainsKey(club) ? participantResults[club].Points : 0;
+            var points = participantResults.TryGetValue(club, out (string Club, int Points, bool IsPreliminary) result) ? result.Points : 0;
             var isPreliminary = participantResults.ContainsKey(club) && participantResults[club].IsPreliminary;
-            var basePoints = basePointsDictionary.ContainsKey(club) ? basePointsDictionary[club] : 0;
+            var basePoints = basePointsDictionary.TryGetValue(club, out int value) ? value : 0;
 
-            merged.Add((club, basePoints + points, isPreliminary));
+            merged.Add((club, basePoints + points, isPreliminary, basePoints));
         }
         return merged;
     }

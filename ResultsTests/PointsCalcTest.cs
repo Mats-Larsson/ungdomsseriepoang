@@ -85,6 +85,23 @@ public class PointsCalcTest
     }
 
     [TestMethod]
+    public void TestWithBasePoints()
+    {
+        PointsCalc pointsCalc = new(new Dictionary<string, int> {{"Club A", 3}, { "Club B", 2 }, { "Club C", 1 }, }, false);
+        var participantResults = new List<ParticipantResult>
+        {
+            new("H10", "Adam", "Club A", null, null, NotStarted),
+            new("H10", "Rory", "Club B", null, null, NotStarted),
+            new("H10", "Hugo", "Club C", null, null, NotStarted),
+        };
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.AreEqual(new TeamResult(1, "Club A", 3, false, 3), scoreBoard[0]);
+        Assert.AreEqual(new TeamResult(2, "Club B", 2, false, 2), scoreBoard[1]);
+        Assert.AreEqual(new TeamResult(3, "Club C", 1, false, 1), scoreBoard[2]);
+    }
+
+    [TestMethod]
     public void TestWithCheckedAndPreliminary()
     {
         PointsCalc pointsCalc = new(emptyBaseResults, false);

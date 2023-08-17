@@ -7,12 +7,15 @@ public class TeamResult
     public int Points { get; }
     public bool IsPreliminary { get; }
 
-    public TeamResult(int pos, string team, int points, bool isPreliminary)
+    public int BasePoints { get; }
+
+    public TeamResult(int pos, string team, int points, bool isPreliminary, int basePoints = 0)
     {
         Pos = pos;
         Team = team;
         Points = points;
         IsPreliminary = isPreliminary;
+        BasePoints = basePoints;
     }
 
     public override string ToString()
