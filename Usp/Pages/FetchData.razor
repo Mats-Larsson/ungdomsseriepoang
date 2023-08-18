@@ -3,11 +3,14 @@
 <PageTitle>Results</PageTitle>
 
 @using Microsoft.AspNetCore.WebUtilities;
-@using Usp.Data
 @using Results.Contract
 @using System.Globalization
+@using Results
+@using ResultService = Usp.Data.ResultService
+@using System.Diagnostics
 @inject ResultService ResultService;
-@inject NavigationManager NavManager
+@inject NavigationManager NavManager;
+@inject Configuration Configuration;
 
 @if (result?.TeamResults == null)
 {
@@ -18,26 +21,65 @@
 else
 {
     @* ReSharper disable MarkupTextTypo, ReSharper disable CommentTypo *@
-    @* TODO: Indigera om data inte kan hämtas från ResultSource *@
+    @* TODO: Indigera om data inte kan hämtas från ResultSourceType *@
 
     <div style="height: 98vh">
 
         <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
             <table class="table" style="font-size: @fontSize">
                 <thead>
-                    <tr>
+                <tr>
+                    @if (!isVerbose)
+                    {
                         <th style="width: 10%; text-align: right">Pos</th>
-                        <th style="width: 80%">Lag</th>
+                        <th style="width: 80%; text-align: left">Lag</th>
                         <th style="width: 10%; text-align: right">Poäng</th>
-                    </tr>
+                    }
+                    else
+                    {
+                        <th style="width:  5%; text-align: right">Pos</th>
+                        <th style="width: 10%; text-align: center">Trend</th>
+                        <th style="width: 50%; text-align: left">Lag</th>
+                        <th style="width: 15%; text-align: right" title="Antal: Ej aktiverade/Har checkat vid starten">Ej akt./I skogen</th>
+                        <th style="width:  5%; text-align: right">Diff uppåt</th>
+                        <th style="width: 10%; text-align: right" title="Poäng från tidigare + poäng idag = totalpoäng">Poäng</th>
+                        <th style="width: 10%; text-align: right" title="Minst en löpare har preliminär poäng">Prel</th>
+                    }
+                </tr>
                 </thead>
                 <tbody>
                 @foreach (var teamResult in result.TeamResults)
                 {
                     <tr>
-                        <td style="width: 10%; text-align: right">@teamResult.Pos</td>
-                        <td style="width: 80%">@teamResult.Team</td>
-                        <td style="width: 10%; text-align: right">@teamResult.Points</td>
+                        @if (!isVerbose)
+                        {
+                            <td style="text-align: right">@teamResult.Pos</td>
+                            <td style="text-align: left">@teamResult.Team</td>
+                            <td style="text-align: right">@teamResult.Points</td>
+                        }
+                        else
+                        {
+                            var stats = teamResult.Statistics;
+                            var trend = trends.TryGetValue(teamResult.Team, out var value) ? value : 0;
+                            <td style="text-align: right">@teamResult.Pos</td>
+                            @switch (trend)
+                            {
+                                case 1:
+                                    <td style="text-align: center; font-weight:900; color: green">↑</td>
+                                    break;
+                                case -1:
+                                        <td style="text-align: center; font-weight:900; color: red">↓</td>
+                                    break;
+                                case 0:
+                                    <td style="text-align: center"></td>
+                                    break;
+                            }
+                            <td style="text-align: left">@teamResult.Team</td>
+                            <td style="text-align: right">@(stats.NumNotActivated)/@(stats.NumActivated + stats.NumStarted)</td>
+                            <td style="text-align: right">@teamResult.DiffPointsUp</td>
+                            <td style="text-align: right"><i>@teamResult.BasePoints</i>+@(teamResult.Points - teamResult.BasePoints)=<b>@teamResult.Points</b></td>
+                            <td style="text-align: center">@(teamResult.IsPreliminary ? "P" : "")</td>
+                        }
                     </tr>
                 }
                 </tbody>
@@ -47,7 +89,7 @@ else
         <hr/>
 
         <div style="bottom: 0; left: 0; right: 0; position: absolute;font-size: 1.5vw; text-align: center">
-            <table class="table" style="border-top: solid">
+            <table class="table" style="border-top: solid; background-color: lightgray">
                 <thead>
                 <tr>
                     <th>Senast kollad / Senasta ändrad</th>
@@ -82,15 +124,19 @@ else
     private Result? result;
     private int columns = 2;
     private string fontSize = "1vw";
+    private bool isVerbose;
+
+    private IDictionary<string, int>? prevPoss;
+    private IDictionary<string, int>? poss;
+    private IDictionary<string, int> trends = new Dictionary<string, int>();
 
     protected override async Task OnInitializedAsync()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         columns = GetQueryParamFirstOrDefault(uri, "columns", 2);
         fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetQueryParamFirstOrDefault(uri, "textsize", 100.0) / 100.0);
-
+        isVerbose = GetQueryParamFirstOrDefault(uri, "verbose", "false") != "false";
         result = await ResultService.GetTeamResultsAsync();
-
         ResultService.OnNewResults += ResultService_OnNewResults;
     }
 
@@ -98,7 +144,45 @@ else
     private void ResultService_OnNewResults(object? sender, EventArgs e)
     {
         result = ResultService.GetTeamResultsAsync().Result;
+        CalcTrend();
         InvokeAsync(this.StateHasChanged);
+    }
+
+    private void CalcTrend()
+    {
+        if (result == null)
+            return;
+        poss = result.TeamResults.ToDictionary(tr => tr.Team, tr => tr.Pos);
+        if (prevPoss == null)
+        {
+            prevPoss = poss;
+            return;
+        }
+        if (EqualPos(poss, prevPoss)) return;
+
+        trends = poss.Select(pos =>
+            {
+                var prevPos = prevPoss.TryGetValue(pos.Key, out var value) ? value : 0;
+                if (pos.Value < prevPos) return (pos.Key, 1);
+                if (pos.Value > prevPos) return (pos.Key, -1);
+                return (pos.Key, 0);
+            })
+            .ToDictionary(t => t.Key, t => t.Item2);
+
+        prevPoss = poss;
+    }
+
+    private static bool EqualPos(IDictionary<string, int> pos1s, IDictionary<string, int> pos2s)
+    {
+        if (pos1s.Count != pos2s.Count) return false;
+
+        foreach (var pos1 in pos1s)
+        {
+            if (!pos2s.ContainsKey(pos1.Key)) return false;
+            var pos2Value = pos2s[pos1.Key];
+            if (pos1.Value != pos2Value) return false;
+        }
+        return true;
     }
 
     private T GetQueryParamFirstOrDefault<T>(Uri uri, string name, T defaultValue)
@@ -110,6 +194,4 @@ else
         var convertedValue = Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
         return (T)convertedValue;
     }
-
 }
-

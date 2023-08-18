@@ -1,5 +1,5 @@
 ﻿namespace Results.Contract;
-public enum ResultSource
+public enum ResultSourceType
 {
     OlaDatabase,
     Simulator,

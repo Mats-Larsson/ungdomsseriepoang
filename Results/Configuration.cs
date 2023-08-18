@@ -4,7 +4,7 @@ namespace Results;
 
 public class Configuration
 {
-    public ResultSource ResultSource { get; set; }
+    public ResultSourceType ResultSourceType { get; set; }
 
     public string? OlaMySqlHost { get; init; }
     public int OlaMySqlPort { get; init; }
@@ -23,9 +23,9 @@ public class Configuration
     {
     }
 
-    public Configuration(ResultSource resultSource)
+    public Configuration(ResultSourceType resultSourceType)
     {
-        ResultSource = resultSource;
+        ResultSourceType = resultSourceType;
     }
 
 }
