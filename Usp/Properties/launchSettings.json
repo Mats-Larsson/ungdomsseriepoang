@@ -29,7 +29,7 @@
     },
     "Ola": {
       "commandName": "Project",
-      "commandLineArgs": "--ola --host NUC --database \"kretstavling2019\" --user root --password kasby --eventid 1",
+      "commandLineArgs": "--ola --basepoints \"..\\..\\..\\BasePoints.csvX\" --host localhost --database \"useriefinal\" --user root --password kasby --eventid 3",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
