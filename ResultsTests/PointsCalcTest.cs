@@ -7,7 +7,7 @@ using static Results.Model.ParticipantStatus;
 namespace ResultsTests;
 
 [TestClass]
-public class PointsCalcTest
+public sealed class PointsCalcTest : IDisposable
 {
     private readonly Dictionary<string, int> emptyBaseResults = new();
     private readonly Dictionary<string, int> oneBaseResults = new() { { "Other club", 1 } };
@@ -274,5 +274,11 @@ public class PointsCalcTest
         };
 
         return PointsCalc.CalcFinalPoints(participantResult, TimeSpan.Parse(bestTime));
+    }
+
+    public void Dispose()
+    {
+        normalResultSource?.Dispose();
+        finalResultSource?.Dispose();
     }
 }
