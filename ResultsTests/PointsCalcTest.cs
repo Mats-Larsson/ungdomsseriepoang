@@ -188,7 +188,7 @@ public sealed class PointsCalcTest : IDisposable
         Assert.AreEqual(3, finalScoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 100 + 20, false, numPassed: 2), finalScoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 80 + 20, false, 20, numStarted: 1, numPassed: 2), finalScoreBoard[1]);
-        Assert.AreEqual(TeamResult(3, "Club A", 70, false, 30, numNotStarted: 1, numPassed: 1), finalScoreBoard[2]);
+        Assert.AreEqual(TeamResult(3, "Club A", 72, false, 28, numNotStarted: 1, numPassed: 1), finalScoreBoard[2]);
     }
 
     [TestMethod]
@@ -247,11 +247,26 @@ public sealed class PointsCalcTest : IDisposable
 
         // Reduction
         Assert.AreEqual(100, CalcFinalPoints("H10", "K", "00:00:00", "00:12:00", "00:10:30"));
-        Assert.AreEqual( 99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:01", "00:10:30"));
-        Assert.AreEqual( 99, CalcFinalPoints("H10", "K", "00:02:00", "00:12:06", "00:10:30"));
-        Assert.AreEqual( 98, CalcFinalPoints("H10", "K", "00:00:00", "00:12:07", "00:10:30"));
-        Assert.AreEqual( 20, CalcFinalPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
-        Assert.AreEqual( 20, CalcFinalPoints("Insk", "K", "00:01:00", "00:12:30", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:01", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:02", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:03", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:04", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:01:00", "00:12:05", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:02:00", "00:12:06", "00:10:30"));
+        Assert.AreEqual(99, CalcFinalPoints("H10", "K", "00:00:00", "00:12:07", "00:10:30"));
+        Assert.AreEqual(98, CalcFinalPoints("H10", "K", "00:00:00", "00:12:08", "00:10:30"));
+
+        Assert.AreEqual(79, CalcFinalPoints("H10", "K", "00:00:00", "00:14:37", "00:10:30"));
+        Assert.AreEqual(78, CalcFinalPoints("H10", "K", "00:00:00", "00:14:38", "00:10:30"));
+
+        Assert.AreEqual(56, CalcFinalPoints("H10", "K", "00:00:00", "00:17:30", "00:10:30"));
+        Assert.AreEqual(55, CalcFinalPoints("H10", "K", "00:00:00", "00:17:31", "00:10:30"));
+
+        Assert.AreEqual(55, CalcFinalPoints("H10", "K", "00:00:00", "00:17:37", "00:10:30"));
+        Assert.AreEqual(54, CalcFinalPoints("H10", "K", "00:00:00", "00:17:38", "00:10:30"));
+
+        Assert.AreEqual(20, CalcFinalPoints("Insk", "K", "00:00:00", "00:10:30", "00:10:30"));
+        Assert.AreEqual(20, CalcFinalPoints("Insk", "K", "00:01:00", "00:12:30", "00:10:30"));
 
         // Patrull
         Assert.AreEqual(79, CalcFinalPoints("U1", "K", "00:00:00", "00:12:01", "00:12:30"));
@@ -262,7 +277,7 @@ public sealed class PointsCalcTest : IDisposable
     private static TeamResult TeamResult(int pos, string club, int points, bool isPreliminary, int diffPointsUp = 0, int basePoints = 0,
         int numNotActivated = 0, int numActivated = 0, int numStarted = 0, int numPreliminary = 0, int numPassed = 0, int numNotValid = 0, int numNotStarted = 0)
     {
-        Statistics statistics = new Statistics(numNotActivated, numActivated, numStarted, numPreliminary, numPassed, numNotValid, numNotStarted);
+        Statistics statistics = new(numNotActivated, numActivated, numStarted, numPreliminary, numPassed, numNotValid, numNotStarted);
         return new TeamResult(pos, club, points, isPreliminary, diffPointsUp, basePoints, statistics);
     }
 

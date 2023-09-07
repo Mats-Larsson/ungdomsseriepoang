@@ -105,9 +105,9 @@ internal class PointsCalc
         // TODO: Started om Activated och starttiden har passerats
         if (pr.Status == Activated) return 0;
         if (pr.Status == Started) return 0;
-        if (pr.Status == NotValid) return 0;
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
+        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
 
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
@@ -128,25 +128,31 @@ internal class PointsCalc
         // TODO: Started om Activated och starttiden har passerats
         if (pr.Status == Activated) return 0;
         if (pr.Status == Started) return 0;
-        if (pr.Status == NotValid) return 0;
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
+
+        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
 
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
         if (!bestTime.HasValue || !pr.Time.HasValue)
             throw new InvalidOperationException($"Unexpected null time");
 
-        if (!pointsTemplate.FinalFullPointsTime.HasValue) return pointsTemplate.FinalFullPoints;
-
-        if (pr.Time.Value <= pointsTemplate.FinalFullPointsTime.Value) return pointsTemplate.FinalFullPoints;
+        if (pr.Time.Value <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
 
         if (pr.IsExtraParticipant) return pointsTemplate.FinalMinPoints;
 
-        var points = pointsTemplate.FinalFullPoints
-                     - (int)Math.Ceiling((pr.Time.Value - pointsTemplate.FinalFullPointsTime.Value) / pointsTemplate.FinalReductionTime);
+        int v = CalcFinalPoints(pointsTemplate, pr.Time.Value);
+        return v;
+    }
 
-        return Math.Max(points, pointsTemplate.FinalMinPoints);
+    private static int CalcFinalPoints(PointsTemplate pointsTemplate, TimeSpan time)
+    {
+        var points = pointsTemplate.FinalFullPoints
+                     - (int)Math.Ceiling((time.TotalMilliseconds - pointsTemplate.FinalFullPointsTime.TotalMilliseconds) / pointsTemplate.FinalReductionTime.TotalMilliseconds);
+
+        int v = Math.Max(points, pointsTemplate.FinalMinPoints);
+        return v;
     }
 
     private static int StartedMinutesAfter(TimeSpan bestTime, TimeSpan time)
@@ -204,16 +210,16 @@ internal class PointsTemplate
     public int PatrolExtraPaticipantsReduction { get; }
     public int FinalFullPoints { get; }
     public int FinalMinPoints { get; }
-    public TimeSpan? FinalFullPointsTime { get; }
+    public TimeSpan FinalFullPointsTime { get; }
     public TimeSpan FinalReductionTime { get; }
 
-    private static readonly PointsTemplate DhTemplate       = new(50, 2, 15, 5,  0, 100, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(6));
-    private static readonly PointsTemplate UTemplate        = new(40, 2, 10, 5, 10,  80, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(6));
-    private static readonly PointsTemplate InskTemplate     = new(10, 0, 10, 5,  0,  20, 20, null, TimeSpan.Zero);
-    private static readonly PointsTemplate UnknownTemplate  = new( 0, 0,  0, 0,  0,   0,  0, null, TimeSpan.Zero);
+    private static readonly PointsTemplate DhTemplate       = new(50, 2, 15, 5,  0, 100, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
+    private static readonly PointsTemplate UTemplate        = new(40, 2, 10, 5, 10,  80, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
+    private static readonly PointsTemplate InskTemplate     = new(10, 0, 10, 5,  0,  20, 20, TimeSpan.MaxValue, TimeSpan.Zero);
+    private static readonly PointsTemplate UnknownTemplate  = new( 0, 0,  0, 0,  0,   0,  0, TimeSpan.Zero, TimeSpan.Zero);
 
     private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraPaticipantsReduction, 
-        int finalFullPoints, int finalMinPoints, TimeSpan? finalFullPointsTime, TimeSpan finalReductionTime)
+        int finalFullPoints, int finalMinPoints, TimeSpan finalFullPointsTime, TimeSpan finalReductionTime)
     {
         BasePoints = basePoints;
         MinuteReduction = minuteReduction;

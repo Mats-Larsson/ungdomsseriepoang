@@ -11,7 +11,9 @@ var options = Options.Parse(args);
 if (options == null)
 {
     Console.Error.WriteLine(Options.HelpText?.ToString());
+    Console.Error.Flush();
     // TODO: Set exit code != 0
+    
     return;
 }
 
