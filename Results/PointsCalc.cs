@@ -39,23 +39,9 @@ internal class PointsCalc
 
     public List<TeamResult> CalcScoreBoard(IEnumerable<ParticipantResult> participants)
     {
-        var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
+        var participantPoints = GetParticipantPoints(participants);
 
-        participantsWithExtras
-            .Where(pr => pr.Status is Preliminary or Passed)
-            .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
-            .Where(g => g.Count() > 1)
-            .SelectMany(patrol => patrol.OrderBy(pp => pp.Time).ToArray()[1..])
-            .ForEach(pr => pr.IsExtraParticipant = true);
-
-        var leaderByClass = participantsWithExtras
-            .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
-            .GroupBy(pr => pr.Class)
-            .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
-            .ToImmutableDictionary(g => g.Class, g => g.Time);
-
-        var participantResults = participantsWithExtras
-            .Select(pr => (pr.Club, Points: calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)), pr.StartTime, pr.Time, pr.Status))
+        var teamResults = participantPoints
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
             .Select(g => (
@@ -69,7 +55,7 @@ internal class PointsCalc
         var reportPos = 1;
         var prevPoints = 0;
         int upTeamPoints = -1;
-        var orderedResults = MergeWithBasePoints(participantResults, basePoints)
+        var orderedResults = MergeWithBasePoints(teamResults, basePoints)
             .OrderByDescending(kp => kp.Points)
             .Select(kp =>
             {
@@ -86,6 +72,29 @@ internal class PointsCalc
             .ToList();
 
         return orderedResults;
+    }
+
+    public IList<ParticipantPoints> GetParticipantPoints(IEnumerable<ParticipantResult> participants)   
+    {
+        var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
+
+        participantsWithExtras
+            .Where(pr => pr.Status is Preliminary or Passed)
+            .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
+            .Where(g => g.Count() > 1)
+            .SelectMany(patrol => patrol.OrderBy(pp => pp.Time).ToArray()[1..])
+            .ForEach(pr => pr.IsExtraParticipant = true);
+
+        var leaderByClass = participantsWithExtras
+            .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
+            .GroupBy(pr => pr.Class)
+            .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
+            .ToImmutableDictionary(g => g.Class, g => g.Time);
+
+        var participantPoints = participantsWithExtras
+            .Select(pr => new ParticipantPoints(pr.Class, pr.Name, pr.Club, pr.StartTime, pr.Time, pr.Status, pr.IsExtraParticipant, calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)))) 
+            .ToList();
+        return participantPoints;
     }
 
     internal static int CalcNormalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)

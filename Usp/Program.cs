@@ -1,4 +1,4 @@
-using Usp.Data;
+using System.Text;
 using Results.Contract;
 using Results.Meos;
 using Results.Model;
@@ -38,14 +38,14 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<Usp.Data.ResultService>();
-builder.Services.AddSingleton<IResultService, Results.ResultService>();
+builder.Services.AddSingleton<IResultService, ResultService>();
 builder.Services.AddSingleton<IBasePointsService, BasePointsService>();
 
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
 
-builder.Services.AddSingleton<IResultSource>(provider => 
+builder.Services.AddSingleton<IResultSource>(provider =>
 {
     if (options.UseMeos) return provider.GetService<MeosResultSource>()!;
     if (options.UseOla) return provider.GetService<OlaResultSource>()!;
@@ -71,6 +71,22 @@ app.MapPost("/meos", async (HttpRequest request) =>
 {
     var resultService = app.Services.GetService<IResultService>()!;
     return await resultService.NewResultPostAsync(request.Body, DateTime.Now).ConfigureAwait(false);
+});
+app.MapGet("/teams", context =>
+{
+    var resultService = app.Services.GetService<IResultService>()!;
+    var teamResults = resultService.GetScoreBoard().TeamResults;
+
+    return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(teamResults), contentType: "text/csv")
+        .ExecuteAsync(context);
+});
+app.MapGet("/participants", context =>
+{
+    var resultService = app.Services.GetService<IResultService>()!;
+    var participantPointsList = resultService.GetParticipantPointsList();
+
+    return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(participantPointsList), contentType: "text/csv")
+        .ExecuteAsync(context);
 });
 
 app.Run();

@@ -80,6 +80,11 @@ public sealed class ResultService : IResultService, IDisposable
         return resultSource.NewResultPostAsync(body, timestamp);
     }
 
+    public IList<ParticipantPoints> GetParticipantPointsList()
+    {
+        return pointsCalc.GetParticipantPoints(resultSource.GetParticipantResults());
+    }
+
     private static int CalcHasCode(IList<TeamResult> results)
     {
         var hashCode = 0;
