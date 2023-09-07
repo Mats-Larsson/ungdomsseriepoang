@@ -70,6 +70,8 @@ public class Options
     {
         using var parser = new Parser(with =>
         {
+            with.CaseInsensitiveEnumValues = true;
+            with.CaseSensitive = true;   
         });
         _parserResult = parser.ParseArguments<Options>(args);
 
