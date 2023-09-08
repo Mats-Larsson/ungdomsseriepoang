@@ -47,9 +47,12 @@ builder.Services.AddSingleton<SimulatorResultSource>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
-    if (options.UseMeos) return provider.GetService<MeosResultSource>()!;
-    if (options.UseOla) return provider.GetService<OlaResultSource>()!;
-    if (options.UseSimulator) return provider.GetService<SimulatorResultSource>()!;
+    switch (options.Source)
+    {
+        case Source.Simulator: return provider.GetService<SimulatorResultSource>()!;
+        case Source.Meos: return provider.GetService<MeosResultSource>()!;
+        case Source.Ola: return provider.GetService<OlaResultSource>()!;
+    }
     throw new NotImplementedException();
 });
 

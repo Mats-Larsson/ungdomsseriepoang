@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Usp": {
+    "UspX": {
       "commandName": "Project",
       "commandLineArgs": "--numteams 20",
       "launchBrowser": true,
@@ -30,6 +30,16 @@
     "Ola": {
       "commandName": "Project",
       "commandLineArgs": "--ola --pointscalc final --basepoints \"..\\..\\..\\BasePoints.csvX\" --host localhost --database \"useriefinal\" --user root --password kasby --eventid 3",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8880"
+    },
+    "MeOS": {
+      "commandName": "Project",
+      "commandLineArgs": "--source meos --pointscalc final",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

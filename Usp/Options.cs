@@ -12,17 +12,11 @@ public class Options
     private static ParserResult<Options>? _parserResult;
 
     // General options
-    [Option("listenerport", Group = "Sim", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
+    [Option("listenerport", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
     public int ListenerPort { get; set; }
 
-    [Option('s', "simulator", Group = "Sim", Default = true, HelpText = "Use data from built in simulator.")]
-    public bool UseSimulator { get; set; }
-
-    [Option('m', "meos", Group = "Meos", Default = false, HelpText = "Use data from MeOS via HTTP POST")]
-    public bool UseMeos { get; set; }
-
-    [Option('o', "ola", Group = "Ola", Default = false, HelpText = "Use data from Ola via MySQL database. Built in H2 database is not supported yet.")]
-    public bool UseOla { get; set; }
+    [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
+    public Source Source { get; set; }
 
     [Option("maxlatestart", Default = 10, HelpText = "Number of minutes to wait after schedulated starttime for participeant to get activated, until register as not started.")]
     private int MinutesUntilNotStated { get; set; }
@@ -90,14 +84,15 @@ public class Options
     public Configuration CreateConfiguration()
     {
         Options value = _parserResult!.Value;
-
         var conf = new Configuration()
         {
-            ResultSourceType =
-            value.UseSimulator ? ResultSourceType.Simulator
-            : (value.UseOla ? ResultSourceType.OlaDatabase
-                : (value.UseMeos ? ResultSourceType.Meos
-                    : throw new InvalidOperationException("Cannot determine result source"))),
+            ResultSourceType = value.Source switch
+            {
+                Source.Simulator => ResultSourceType.Simulator,
+                Source.Ola => ResultSourceType.OlaDatabase,
+                Source.Meos => ResultSourceType.Meos,
+                _ => throw new InvalidOperationException("Cannot determine result source"),
+            },
 
             TimeUntilNotStated = value.TimeUntilNotStated,
             SpeedMultiplier = value.Speed,
@@ -122,6 +117,13 @@ public enum PointsCalcType
 {
     Normal,
     Final
+}
+
+public enum Source
+{
+    Simulator,
+    Meos,
+    Ola
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes
