@@ -28,58 +28,42 @@ else
         <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
             <table class="table" style="font-size: @fontSize">
                 <thead>
-                <tr>
-                    @if (!isVerbose)
-                    {
-                        <th style="width: 10%; text-align: right">Pos</th>
-                        <th style="width: 80%; text-align: left">Lag</th>
-                        <th style="width: 10%; text-align: right">Poäng</th>
-                    }
-                    else
-                    {
+                    <tr>
                         <th style="width:  5%; text-align: right">Pos</th>
                         <th style="width: 10%; text-align: center">Trend</th>
                         <th style="width: 50%; text-align: left">Lag</th>
-                        <th style="width: 15%; text-align: right" title="Antal: Ej aktiverade/Har checkat vid starten">Ej akt./I skogen</th>
-                        <th style="width:  5%; text-align: right">Diff uppåt</th>
-                        <th style="width: 10%; text-align: right" title="Poäng från tidigare + poäng idag = totalpoäng">Poäng</th>
-                        <th style="width: 10%; text-align: right" title="Minst en löpare har preliminär poäng">Prel</th>
-                    }
-                </tr>
+                        @if (isVerbose) { <th style="width: 15%; text-align: right" title="Antal: Ej aktiverade/Har checkat vid starten">Ej akt./I skogen</th> }
+                        @if (isVerbose) { <th style="width:  5%; text-align: right">Diff uppåt</th> }
+                        @if (isVerbose) { <th style="width: 10%; text-align: right" title="Poäng från tidigare + poäng idag = totalpoäng">Poäng</th> }
+                        @if (isVerbose) { <th style="width: 10%; text-align: right" title="Minst en löpare har preliminär poäng">Prel</th> }
+                        @if (!isVerbose) { <th style="width: 10%; text-align: right">Poäng</th> }
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach (var teamResult in result.TeamResults)
                 {
+                    var stats = teamResult.Statistics;
+                    var trend = trends.TryGetValue(teamResult.Team, out var value) ? value : 0;
                     <tr>
-                        @if (!isVerbose)
+                        <td style="text-align: right">@teamResult.Pos</td>
+                        @switch (trend)
                         {
-                            <td style="text-align: right">@teamResult.Pos</td>
-                            <td style="text-align: left">@teamResult.Team</td>
-                            <td style="text-align: right">@teamResult.Points</td>
+                            case 1:
+                                <td style="text-align: center; font-family:Verdana; font-weight:900; color: green">↑</td>
+                                break;
+                            case -1:
+                                <td style="text-align: center; font-family:Verdana; font-weight:900; color: red">↓</td>
+                                break;
+                            case 0:
+                                <td style="text-align: center"></td>
+                                break;
                         }
-                        else
-                        {
-                            var stats = teamResult.Statistics;
-                            var trend = trends.TryGetValue(teamResult.Team, out var value) ? value : 0;
-                            <td style="text-align: right">@teamResult.Pos</td>
-                            @switch (trend)
-                            {
-                                case 1:
-                                    <td style="text-align: center; font-weight:900; color: green">↑</td>
-                                    break;
-                                case -1:
-                                        <td style="text-align: center; font-weight:900; color: red">↓</td>
-                                    break;
-                                case 0:
-                                    <td style="text-align: center"></td>
-                                    break;
-                            }
-                            <td style="text-align: left">@teamResult.Team</td>
-                            <td style="text-align: right">@(stats.NumNotActivated)/@(stats.NumActivated + stats.NumStarted)</td>
-                            <td style="text-align: right">@teamResult.DiffPointsUp</td>
-                            <td style="text-align: right"><i>@teamResult.BasePoints</i>+@(teamResult.Points - teamResult.BasePoints)=<b>@teamResult.Points</b></td>
-                            <td style="text-align: center">@(teamResult.IsPreliminary ? "P" : "")</td>
-                        }
+                        <td style="text-align: left">@teamResult.Team</td>
+                        @if (isVerbose) { <td style="text-align: right">@(stats.NumNotActivated)/@(stats.NumActivated + stats.NumStarted)</td> }
+                        @if (isVerbose) { <td style="text-align: right">@teamResult.DiffPointsUp</td> }
+                        @if (isVerbose) { <td style="text-align: right"><i>@teamResult.BasePoints</i>+@(teamResult.Points - teamResult.BasePoints)=<b>@teamResult.Points</b></td> }
+                        @if (isVerbose) { <td style="text-align: center">@(teamResult.IsPreliminary ? "P" : "")</td> }
+                        @if (!isVerbose) { <td style="text-align: right">@teamResult.Points</td> }
                     </tr>
                 }
                 </tbody>
@@ -92,7 +76,7 @@ else
             <table class="table" style="border-top: solid; background-color: lightgray">
                 <thead>
                 <tr>
-                    <th>Senast kollad / Senasta ändrad</th>
+                    <th>Senasta ändrad</th>
                     <th>Ej aktiverade</th>
                     <th>Checkade/Startade</th>
                     <th hidden="@(!ResultService.SupportsPreliminary)">Preliminära</th>
@@ -103,8 +87,7 @@ else
                 </thead>
                 <tbody>
                 <tr>
-                    @* TODO: Ta bort delar av sekund*@
-                    <td>@result.Statistics.LastUpdatedTimeOfDay / @result.Statistics.LastChangedTimeOfDay</td>
+                    <td>@result.Statistics.LastChangedTimeOfDay.ToString(@"hh\:mm\:ss")</td>
                     <td>@result.Statistics.NumNotActivated</td>
                     <td>@(result.Statistics.NumActivated + result.Statistics.NumStarted)</td>
                     <td hidden="@(!ResultService.SupportsPreliminary)">@result.Statistics.NumPreliminary</td>
