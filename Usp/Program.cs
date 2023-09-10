@@ -29,7 +29,7 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddDebug();
 });
 
-var url = $"http://localhost:{options.ListenerPort}";
+var url = $"http://*:{options.ListenerPort}";
 builder.WebHost.UseUrls(url);
 
 // Add services to the container.
