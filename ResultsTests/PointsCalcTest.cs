@@ -2,7 +2,7 @@
 using Results.Contract;
 using Results.Model;
 using Results.Simulator;
-using static Results.Model.ParticipantStatus;
+using static Results.Contract.ParticipantStatus;
 
 namespace ResultsTests;
 
@@ -42,8 +42,7 @@ public sealed class PointsCalcTest : IDisposable
     public void TestWithNoResults()
     {
         PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
-        var participantResults = new List<ParticipantResult>();
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(new List<ParticipantResult>());
         Assert.AreEqual(0, scoreBoard.Count);
     }
 
@@ -54,12 +53,28 @@ public sealed class PointsCalcTest : IDisposable
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
-            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club A", 0, false, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(1, "Club B", 0, false, numNotStarted: 1), scoreBoard[1]);
+    }
+
+    [TestMethod]
+    public void TestBeforeCompetitionWithBasePoints()
+    {
+        Dictionary<string, int> baseResults = new() {{ "Club A", 10}, { "Club B", 5 }};
+        PointsCalc pointsCalc = new(baseResults, normalConfiguration, normalResultSource);
+        var participantResults = new List<ParticipantResult>
+        {
+            new("H10", "Adam", "Club A", null, null, NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
+        };
+        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        Assert.AreEqual(2, scoreBoard.Count);
+        Assert.AreEqual(TeamResult(1, "Club A", 10, false, numNotStarted: 1, basePoints: 10, diffPointsUp: 0), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club B", 5, false, numNotStarted: 1, basePoints: 5, diffPointsUp: 5), scoreBoard[1]);
     }
 
     [TestMethod]

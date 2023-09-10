@@ -13,12 +13,12 @@ namespace Usp.Pages
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
 #pragma warning disable IDE0052 // Remove unread private members
-        private readonly ILogger<ErrorModel> _logger;
+        private readonly ILogger<ErrorModel> logger;
 #pragma warning restore IDE0052 // Remove unread private members
 
         public ErrorModel(ILogger<ErrorModel> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public void OnGet()

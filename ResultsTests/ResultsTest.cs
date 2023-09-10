@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Contract;
-using Results.Model;
 using Results.Simulator;
 
 namespace ResultsTests

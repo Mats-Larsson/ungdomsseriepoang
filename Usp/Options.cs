@@ -84,7 +84,7 @@ public class Options
     public Configuration CreateConfiguration()
     {
         Options value = _parserResult!.Value;
-        var conf = new Configuration()
+        var conf = new Configuration
         {
             ResultSourceType = value.Source switch
             {

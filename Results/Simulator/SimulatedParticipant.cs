@@ -1,4 +1,5 @@
-﻿using Results.Model;
+﻿using Results.Contract;
+using Results.Model;
 
 namespace Results.Simulator
 {
@@ -25,6 +26,7 @@ namespace Results.Simulator
         {
             while (Status != targetStatus && !simulator.TokenSource.IsCancellationRequested)
             {
+                // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
                 switch (Status)
                 {
                     case ParticipantStatus.NotActivated:

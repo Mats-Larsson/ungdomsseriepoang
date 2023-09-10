@@ -1,4 +1,7 @@
-﻿using Results.Model;
+﻿using Results.Contract;
+using Results.Model;
+
+namespace Results.Simulator;
 
 internal class SimulatorParticipantResult : ParticipantResult
 {

@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
+using Results.Contract;
 using Results.Model;
 
 namespace Results.Meos;

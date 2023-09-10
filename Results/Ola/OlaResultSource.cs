@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Results.Contract;
 using Results.Model;
 
 namespace Results.Ola;

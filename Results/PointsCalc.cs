@@ -1,7 +1,7 @@
 ﻿using Results.Contract;
 using Results.Model;
 using System.Collections.Immutable;
-using static Results.Model.ParticipantStatus;
+using static Results.Contract.ParticipantStatus;
 
 namespace Results;
 
@@ -112,22 +112,27 @@ internal class PointsCalc
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
         if (!bestTime.HasValue || !pr.Time.HasValue)
-            throw new InvalidOperationException($"Unexpected null time");
+            throw new InvalidOperationException("Unexpected null time");
         var points = pointsTemplate.BasePoints
                      - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, pr.Time.Value)
-                     - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraPaticipantsReduction : 0);
+                     - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraParticipantsReduction : 0);
 
         return Math.Max(points, pointsTemplate.MinPoints);
     }
 
     internal static int CalcFinalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
     {
-        if (pr.Status <= Ignored) return -1;
-        if (pr.Status == NotStarted) return 0;
-        if (pr.Status == NotActivated) return 0;
-        // TODO: Started om Activated och starttiden har passerats
-        if (pr.Status == Activated) return 0;
-        if (pr.Status == Started) return 0;
+        switch (pr.Status)
+        {
+            case <= Ignored:
+                return -1;
+            case NotStarted:
+            case NotActivated:
+            // TODO: Started om Activated och starttiden har passerats
+            case Activated:
+            case Started:
+                return 0;
+        }
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
 
@@ -136,7 +141,7 @@ internal class PointsCalc
         if (pr.Status != Passed && pr.Status != Preliminary)
             throw new InvalidOperationException($"Unexpected status: {pr.Status}");
         if (!bestTime.HasValue || !pr.Time.HasValue)
-            throw new InvalidOperationException($"Unexpected null time");
+            throw new InvalidOperationException("Unexpected null time");
 
         if (pr.Time.Value <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
 
@@ -207,7 +212,7 @@ internal class PointsTemplate
     public int MinuteReduction { get; }
     public int MinPoints { get; }
     public int NotPassedPoints { get; }
-    public int PatrolExtraPaticipantsReduction { get; }
+    public int PatrolExtraParticipantsReduction { get; }
     public int FinalFullPoints { get; }
     public int FinalMinPoints { get; }
     public TimeSpan FinalFullPointsTime { get; }
@@ -218,14 +223,14 @@ internal class PointsTemplate
     private static readonly PointsTemplate InskTemplate     = new(10, 0, 10, 5,  0,  20, 20, TimeSpan.MaxValue, TimeSpan.Zero);
     private static readonly PointsTemplate UnknownTemplate  = new( 0, 0,  0, 0,  0,   0,  0, TimeSpan.Zero, TimeSpan.Zero);
 
-    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraPaticipantsReduction, 
+    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraParticipantsReduction, 
         int finalFullPoints, int finalMinPoints, TimeSpan finalFullPointsTime, TimeSpan finalReductionTime)
     {
         BasePoints = basePoints;
         MinuteReduction = minuteReduction;
         MinPoints = minPoints;
         NotPassedPoints = notPassedPoints;
-        PatrolExtraPaticipantsReduction = patrolExtraPaticipantsReduction;
+        PatrolExtraParticipantsReduction = patrolExtraParticipantsReduction;
         FinalFullPoints = finalFullPoints;
         FinalMinPoints = finalMinPoints;
         FinalFullPointsTime = finalFullPointsTime;
