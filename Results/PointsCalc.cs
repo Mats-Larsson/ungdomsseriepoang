@@ -99,12 +99,17 @@ internal class PointsCalc
 
     internal static int CalcNormalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
     {
-        if (pr.Status <= Ignored) return -1;
-        if (pr.Status == NotStarted) return 0;
-        if (pr.Status == NotActivated) return 0;
-        // TODO: Started om Activated och starttiden har passerats
-        if (pr.Status == Activated) return 0;
-        if (pr.Status == Started) return 0;
+        switch (pr.Status)
+        {
+            case <= Ignored:
+                return -1;
+            case NotStarted:
+            case NotActivated:
+            // TODO: Started om Activated och starttiden har passerats
+            case Activated:
+            case Started:
+                return 0;
+        }
 
         var pointsTemplate = PointsTemplate.Get(pr.Class);
         if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;

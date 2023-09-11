@@ -5,9 +5,7 @@ namespace Results.Simulator;
 
 public sealed class SimulatorResultSource : IResultSource
 {
-    private readonly Configuration configuration;
     private readonly SimulatedParticipant[] simulatedParticipants;
-    private readonly TestData testData;
     internal CancellationTokenSource TokenSource { get; } = new();
     private TimeSpan currentTimeOfDay = TimeSpan.Zero;
     public int SpeedMultiplier { get; }
@@ -22,10 +20,11 @@ public sealed class SimulatorResultSource : IResultSource
 
     public SimulatorResultSource(Configuration configuration)
     {
-        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        testData = new TestData(configuration.NumTeams);
+        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
-        SpeedMultiplier = this.configuration.SpeedMultiplier;
+        TestData testData = new(configuration.NumTeams);
+
+        SpeedMultiplier = configuration.SpeedMultiplier;
 
         MinTime = testData._templateParticipantResults
             .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)

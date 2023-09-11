@@ -21,12 +21,13 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly PointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
+    private readonly ITeamService teamService;
 
     public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
     {
-        if (teamService == null) throw new ArgumentNullException(nameof(teamService));
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
+        this.teamService = teamService ?? throw new ArgumentNullException(nameof(teamService));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         pointsCalc = new PointsCalc(teamService.GetTeamBasePoints(), configuration, resultSource);
@@ -47,7 +48,7 @@ public sealed class ResultService : IResultService, IDisposable
     {
         try
         {
-            IList<ParticipantResult> participantResults = resultSource.GetParticipantResults();
+            var participantResults = FilterTeams(resultSource.GetParticipantResults());
             var teamResults = pointsCalc.CalcScoreBoard(participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
@@ -65,6 +66,13 @@ public sealed class ResultService : IResultService, IDisposable
         }
     }
 
+    private IList<ParticipantResult> FilterTeams(IList<ParticipantResult> participantResults)
+    {
+        return teamService.Teams == null 
+            ? participantResults 
+            : participantResults.Where(pr => teamService.Teams.Contains(pr.Club)).ToList();
+    }
+
     public bool SupportsPreliminary => resultSource.SupportsPreliminary;
 
     public Result GetScoreBoard()
@@ -75,17 +83,18 @@ public sealed class ResultService : IResultService, IDisposable
     }
 
     public event EventHandler? OnNewResults;
+
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         return resultSource.NewResultPostAsync(body, timestamp);
     }
 
-    public IList<ParticipantPoints> GetParticipantPointsList()
+    public IEnumerable<ParticipantPoints> GetParticipantPointsList()
     {
         return pointsCalc.GetParticipantPoints(resultSource.GetParticipantResults());
     }
 
-    private static int CalcHasCode(IList<TeamResult> results)
+    private static int CalcHasCode(IEnumerable<TeamResult> results)
     {
         var hashCode = 0;
 
@@ -96,6 +105,7 @@ public sealed class ResultService : IResultService, IDisposable
                 hashCode += result.GetHashCode();
             }
         }
+
         return hashCode;
     }
 

@@ -54,4 +54,12 @@ public class TeamService : ITeamService
     { 
         return teamBasePoints;
     }
+
+    public ICollection<string>? Teams
+    {
+        get
+        {
+            return teamBasePoints.Any() ? teamBasePoints.Keys : null;
+        }
+    }
 }

@@ -128,7 +128,7 @@ else
     {
         result = ResultService.GetTeamResultsAsync().Result;
         CalcTrend();
-        InvokeAsync(this.StateHasChanged);
+        InvokeAsync(StateHasChanged);
     }
 
     private void CalcTrend()
