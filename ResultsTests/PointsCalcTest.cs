@@ -199,13 +199,13 @@ public sealed class PointsCalcTest : IDisposable
         Assert.AreEqual(3, normalScoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club B", 40+26, false, numStarted: 1, numPassed: 2), normalScoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club C", 50+10, false, 6, numPassed: 2), normalScoreBoard[1]);
-        Assert.AreEqual(TeamResult(3, "Club A", 38, false, 22, numNotStarted: 1, numPassed: 1), normalScoreBoard[2]);
+        Assert.AreEqual(TeamResult(3, "Club A", 40, false, 20, numNotStarted: 1, numPassed: 1), normalScoreBoard[2]);
 
         var finalScoreBoard = new PointsCalc(emptyBaseResults, finalConfiguration, finalResultSource).CalcScoreBoard(participantResults);
         Assert.AreEqual(3, finalScoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 100 + 20, false, numPassed: 2), finalScoreBoard[0]);
-        Assert.AreEqual(TeamResult(2, "Club B", 80 + 20, false, 20, numStarted: 1, numPassed: 2), finalScoreBoard[1]);
-        Assert.AreEqual(TeamResult(3, "Club A", 72, false, 28, numNotStarted: 1, numPassed: 1), finalScoreBoard[2]);
+        Assert.AreEqual(TeamResult(2, "Club B", 64 + 20, false, 36, numStarted: 1, numPassed: 2), finalScoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club A", 72, false, 12, numNotStarted: 1, numPassed: 1), finalScoreBoard[2]);
     }
 
     [TestMethod]
