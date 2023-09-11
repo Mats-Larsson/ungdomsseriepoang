@@ -1,4 +1,6 @@
-﻿namespace Results.Model;
+﻿using Results.Contract;
+
+namespace Results.Model;
 
 public class ParticipantResult
 {

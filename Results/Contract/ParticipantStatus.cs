@@ -1,4 +1,4 @@
-﻿namespace Results.Model;
+﻿namespace Results.Contract;
 
 public enum ParticipantStatus
 {

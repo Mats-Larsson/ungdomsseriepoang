@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using Moq;
 using Results.Meos;
 using static Results.Meos.MeosResultSource;
@@ -13,6 +9,7 @@ using static Results.Meos.MeosResultSource;
 namespace ResultsTests
 {
     [TestClass]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class MeosTest
     {
         private readonly ILogger<MeosResultSource> loggerMock = Mock.Of<ILogger<MeosResultSource>>();
@@ -40,7 +37,9 @@ namespace ResultsTests
             using var meosResultSource = new MeosResultSource(loggerMock);
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(Message));
             var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
+            Assert.IsNotNull(newResultPostAsync);
             IList<Results.Model.ParticipantResult> participantResults = meosResultSource.GetParticipantResults();
+            Assert.IsNotNull(participantResults);
         }
     }
 }

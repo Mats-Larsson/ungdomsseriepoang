@@ -1,4 +1,5 @@
-﻿using Results.Model;
+﻿using Results.Contract;
+using Results.Model;
 
 namespace Results.Meos
 {

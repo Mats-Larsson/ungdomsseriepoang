@@ -3,29 +3,54 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Contract;
-using Results.Model;
 using Results.Simulator;
 
-namespace ResultsTests
+namespace ResultsTests;
+
+[TestClass]
+public class ResultsTest
 {
-    [TestClass]
-    public class ResultsTest
+    [TestMethod]
+    public void TestWithSimulatorTeamsAndBasePoints()
     {
-        [TestMethod]
-        public void TestWithSimulator()
+        var configuration = new Configuration(ResultSourceType.Simulator)
         {
-            var configuration = new Configuration(ResultSourceType.Simulator)
-            {
-                SpeedMultiplier = 10,
-                NumTeams = 100,
-                BasePointsFilePath = "BasePoints.csv"
-            };
-            File.WriteAllText(configuration.BasePointsFilePath, "Lag X,1000\r\n");
-            using var simulatorResultSource = new SimulatorResultSource(configuration);
-            var basePointsService = new BasePointsService(configuration, Mock.Of<ILogger<BasePointsService>>(), simulatorResultSource);
-            using var resultService = new ResultService(configuration, simulatorResultSource, basePointsService, Mock.Of<ILogger<ResultService>>());
-            var teamResults = resultService.GetScoreBoard();
-            teamResults.TeamResults.Should().Contain(new TeamResult(1, "Lag X", 1000, false, 0, 1000, new Statistics()));
-        }
+            SpeedMultiplier = 10,
+            NumTeams = 100,
+            TeamsFilePath = "Teams.csv"
+        };
+        File.WriteAllText(configuration.TeamsFilePath, "Lag A,1000\r\nLag B, 600");
+        using var simulatorResultSource = new SimulatorResultSource(configuration);
+        var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>(), simulatorResultSource);
+        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
+        var teamResults = resultService.GetScoreBoard();
+        teamResults.TeamResults.Should().Contain(
+            new TeamResult(1, "Lag A", 1000, false, 0, 1000, new Statistics())
+        );
+        teamResults.TeamResults.Should().Contain(
+            new TeamResult(2, "Lag B", 600, false, 400, 600, new Statistics())
+        );
+    }
+    
+    [TestMethod]
+    public void TestWithSimulatorTeams()
+    {
+        var configuration = new Configuration(ResultSourceType.Simulator)
+        {
+            SpeedMultiplier = 10,
+            NumTeams = 100,
+            TeamsFilePath = "Teams.csv"
+        };
+        File.WriteAllText(configuration.TeamsFilePath, "Lag A\r\nLag B");
+        using var simulatorResultSource = new SimulatorResultSource(configuration);
+        var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>(), simulatorResultSource);
+        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
+        var teamResults = resultService.GetScoreBoard();
+        teamResults.TeamResults.Should().Contain(
+            new TeamResult(1, "Lag A", 0, false, 0, 0, new Statistics())
+        );
+        teamResults.TeamResults.Should().Contain(
+            new TeamResult(1, "Lag B", 0, false, 0, 0, new Statistics())
+        );
     }
 }

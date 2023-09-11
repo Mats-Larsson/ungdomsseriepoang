@@ -39,7 +39,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<Usp.Data.ResultService>();
 builder.Services.AddSingleton<IResultService, ResultService>();
-builder.Services.AddSingleton<IBasePointsService, BasePointsService>();
+builder.Services.AddSingleton<ITeamService, TeamService>();
 
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();

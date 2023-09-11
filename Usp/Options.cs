@@ -22,8 +22,8 @@ public class Options
     private int MinutesUntilNotStated { get; set; }
     public TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
-    [Option("basepoints", Default = "BasePoints.csv", HelpText = "Points given to each team as a start. Format is comma separated file in UTF-8 format with first team name then point. First, header row must be: \"Team,Points\"")]
-    public string? BasePoints { get; set; }
+    [Option("teams", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
+    public string? TeamsPath { get; set; }
 
     [Option("pointscalc", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
     public PointsCalcType PointsCalc { get; set; }
@@ -84,7 +84,7 @@ public class Options
     public Configuration CreateConfiguration()
     {
         Options value = _parserResult!.Value;
-        var conf = new Configuration()
+        var conf = new Configuration
         {
             ResultSourceType = value.Source switch
             {
@@ -97,7 +97,7 @@ public class Options
             TimeUntilNotStated = value.TimeUntilNotStated,
             SpeedMultiplier = value.Speed,
             NumTeams = value.NumTeams,
-            BasePointsFilePath = value.BasePoints,
+            TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
 
             OlaMySqlHost = value.Host,

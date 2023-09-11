@@ -22,14 +22,14 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
 
-    public ResultService(Configuration configuration, IResultSource resultSource, IBasePointsService basePointsService, ILogger<ResultService> logger)
+    public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
     {
-        if (basePointsService == null) throw new ArgumentNullException(nameof(basePointsService));
+        if (teamService == null) throw new ArgumentNullException(nameof(teamService));
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = new PointsCalc(basePointsService.GetBasePoints(), configuration, resultSource);
+        pointsCalc = new PointsCalc(teamService.GetTeamBasePoints(), configuration, resultSource);
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);

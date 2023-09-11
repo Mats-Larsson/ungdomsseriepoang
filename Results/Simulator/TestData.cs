@@ -7,7 +7,7 @@
         public TestData(int numTeams)
         {
             var maxTeams = Math.Min(numTeams, Clubs.Length);
-            foreach (var participantResult in TemplateParticipantResults)
+            foreach (var participantResult in _templateParticipantResults)
             {
                 participantResult.Club = Clubs[Random.Shared.Next(0, maxTeams)];
             }
@@ -44,7 +44,7 @@
             "Nynäshamns OK"
         };
 
-        internal readonly SimulatorParticipantResult[] TemplateParticipantResults =
+        internal readonly SimulatorParticipantResult[] _templateParticipantResults =
         {
             new("D16", "Sofia Lindhagen", "IFK Enskede", T("18:34:00.000"), T("00:00:00"), "notStarted"),
             new("D16K", "Lilly Christie", "Snättringe SK", T("18:32:00.000"), T("00:00:00"), "notValid"),
