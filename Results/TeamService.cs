@@ -8,30 +8,31 @@ using Results.Simulator;
 
 namespace Results;
 
-public class BasePointsService : IBasePointsService
+public class TeamService : ITeamService
 {
-    private readonly Dictionary<string, int> basePoints = new();
+    private readonly Dictionary<string, int> teamBasePoints = new();
 
-    public BasePointsService(Configuration configuration, ILogger<BasePointsService> logger, IResultSource resultSource)
+    public TeamService(Configuration configuration, ILogger<TeamService> logger, IResultSource resultSource)
     {
         if (configuration == null) throw new ArgumentNullException(nameof(configuration));
         if (resultSource == null)  throw new ArgumentNullException(nameof(resultSource));
 
-        var filePath = configuration.BasePointsFilePath;
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            HasHeaderRecord = false
-        };
+        var filePath = configuration.TeamsFilePath;
         if (File.Exists(filePath))
         {
             logger.LogInformation("Using base result file: {}", filePath);
 
             try
             {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = false, 
+                    MissingFieldFound = null
+                };
                 using var reader = new StreamReader(filePath);
                 using var csv = new CsvReader(reader, config);
-                var records = csv.GetRecords<BasePoints>();
-                basePoints = records.ToDictionary(br => br.Team, br => br.Points);
+                var records = csv.GetRecords<Team>().ToList();
+                teamBasePoints = records.ToDictionary(br => br.Name, br => br.BasePoints ?? 0);
             }
             catch (Exception ex)
             {
@@ -46,11 +47,11 @@ public class BasePointsService : IBasePointsService
         if (resultSource is not SimulatorResultSource) return;
 
         var clubs = resultSource.GetParticipantResults().Select(pr => pr.Club).Distinct().ToList();
-        basePoints = clubs.ToDictionary(c => c, _ => Random.Shared.Next(0, 200));
+        teamBasePoints = clubs.ToDictionary(c => c, _ => Random.Shared.Next(0, 200));
     }
 
-    public IDictionary<string, int> GetBasePoints()
-    {
-        return basePoints;
+    public IDictionary<string, int> GetTeamBasePoints()
+    { 
+        return teamBasePoints;
     }
 }
