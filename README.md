@@ -11,3 +11,5 @@ Poängen beräknas enligt instruktioner på:
 https://www.orientering.se/stockholm/utvecklingsmiljon/ungdom/ungdomsserien/arrangorsanvisningar-for-ungdomsserien/
 Här beskrivs två metoder för poängberäkning: en för finalen och en för övriga deltävlingar. Applikationen stöder båda.
 
+Mer info i:
+https://github.com/Mats-Larsson/ungdomsseriepoang/wiki
