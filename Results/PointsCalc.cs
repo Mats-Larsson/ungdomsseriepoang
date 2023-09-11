@@ -45,9 +45,9 @@ internal class PointsCalc
             .Where(pr => pr.Points >= 0)
             .GroupBy(pr => pr.Club)
             .Select(g => (
-                Club: g.Key, 
-                Points: g.Sum(d => d.Points), 
-                IsPreliminary: g.Max(d => d.Status == Preliminary), 
+                Club: g.Key,
+                Points: g.Sum(d => d.Points),
+                IsPreliminary: g.Max(d => d.Status == Preliminary),
                 Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), resultSource.CurrentTimeOfDay, configuration)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
@@ -74,16 +74,9 @@ internal class PointsCalc
         return orderedResults;
     }
 
-    public IList<ParticipantPoints> GetParticipantPoints(IEnumerable<ParticipantResult> participants)   
+    public IList<ParticipantPoints> GetParticipantPoints(IEnumerable<ParticipantResult> participants)
     {
-        var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
-
-        participantsWithExtras
-            .Where(pr => pr.Status is Preliminary or Passed)
-            .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
-            .Where(g => g.Count() > 1)
-            .SelectMany(patrol => patrol.OrderBy(pp => pp.Time).ToArray()[1..])
-            .ForEach(pr => pr.IsExtraParticipant = true);
+        List<PointsCalcParticipantResult> participantsWithExtras = MarkPatrolExtraRunner(participants);
 
         var leaderByClass = participantsWithExtras
             .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
@@ -92,9 +85,36 @@ internal class PointsCalc
             .ToImmutableDictionary(g => g.Class, g => g.Time);
 
         var participantPoints = participantsWithExtras
-            .Select(pr => new ParticipantPoints(pr.Class, pr.Name, pr.Club, pr.StartTime, pr.Time, pr.Status, pr.IsExtraParticipant, calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class)))) 
+            .Select(pr => new ParticipantPoints(pr.Class, pr.Name, pr.Club, pr.StartTime, pr.Time, pr.Status, pr.IsExtraParticipant, calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class))))
             .ToList();
         return participantPoints;
+    }
+
+    private static List<PointsCalcParticipantResult> MarkPatrolExtraRunner(IEnumerable<ParticipantResult> participants)
+    {
+        var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
+
+        foreach (var patrol in participantsWithExtras
+                     .Where(pr => pr.Status is Preliminary or Passed)
+                     .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
+                     .Where(patrol => patrol.Count() > 1))
+        {
+            TimeSpan longestTime = TimeSpan.Zero;
+            foreach (PointsCalcParticipantResult pr in patrol.OrderByDescending(pr => pr.Time))
+            {
+                if (longestTime == TimeSpan.Zero)
+                {
+                    longestTime = pr.Time ?? TimeSpan.MaxValue;
+                }
+                else
+                {
+                    pr.Time = longestTime;
+                    pr.IsExtraParticipant = true;
+                }
+            }
+        }
+
+        return participantsWithExtras;
     }
 
     internal static int CalcNormalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
@@ -187,25 +207,26 @@ internal class PointsCalc
                 isPreliminary = result.IsPreliminary;
                 statistics = result.Statistics;
             }
+
             var basePoints = basePointsDictionary.TryGetValue(club, out int value) ? value : 0;
 
             merged.Add((club, basePoints + points, isPreliminary, basePoints, statistics ?? new Statistics()));
         }
+
         return merged;
     }
-
 }
 
 internal class PointsCalcParticipantResult : ParticipantResult
 {
     public bool IsExtraParticipant { get; internal set; }
 
-    public PointsCalcParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status) 
+    public PointsCalcParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status)
         : base(@class, name, club, startTime, time, status)
     {
     }
 
-    public PointsCalcParticipantResult(ParticipantResult participantResult) 
+    public PointsCalcParticipantResult(ParticipantResult participantResult)
         : base(participantResult.Class, participantResult.Name, participantResult.Club, participantResult.StartTime, participantResult.Time, participantResult.Status)
     {
     }
@@ -223,12 +244,12 @@ internal class PointsTemplate
     public TimeSpan FinalFullPointsTime { get; }
     public TimeSpan FinalReductionTime { get; }
 
-    private static readonly PointsTemplate DhTemplate       = new(50, 2, 15, 5,  0, 100, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
-    private static readonly PointsTemplate UTemplate        = new(40, 2, 10, 5, 10,  80, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
-    private static readonly PointsTemplate InskTemplate     = new(10, 0, 10, 5,  0,  20, 20, TimeSpan.MaxValue, TimeSpan.Zero);
-    private static readonly PointsTemplate UnknownTemplate  = new( 0, 0,  0, 0,  0,   0,  0, TimeSpan.Zero, TimeSpan.Zero);
+    private static readonly PointsTemplate DhTemplate = new(50, 2, 15, 5, 0, 100, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
+    private static readonly PointsTemplate UTemplate = new(40, 2, 10, 5, 10, 80, 20, TimeSpan.FromMinutes(12), TimeSpan.FromSeconds(7.5));
+    private static readonly PointsTemplate InskTemplate = new(10, 0, 10, 5, 0, 20, 20, TimeSpan.MaxValue, TimeSpan.Zero);
+    private static readonly PointsTemplate UnknownTemplate = new(0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero, TimeSpan.Zero);
 
-    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraParticipantsReduction, 
+    private PointsTemplate(int basePoints, int minuteReduction, int minPoints, int notPassedPoints, int patrolExtraParticipantsReduction,
         int finalFullPoints, int finalMinPoints, TimeSpan finalFullPointsTime, TimeSpan finalReductionTime)
     {
         BasePoints = basePoints;
