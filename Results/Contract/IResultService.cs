@@ -1,6 +1,4 @@
-﻿using Results.Model;
-
-namespace Results.Contract;
+﻿namespace Results.Contract;
 
 public interface IResultService
 {
@@ -8,5 +6,5 @@ public interface IResultService
     Result GetScoreBoard();
     event EventHandler OnNewResults;
     Task<string> NewResultPostAsync(Stream body, DateTime timestamp);
-    IList<ParticipantPoints> GetParticipantPointsList();
+    IEnumerable<ParticipantPoints> GetParticipantPointsList();
 }

@@ -1,4 +1,3 @@
-using System.Text;
 using Results.Contract;
 using Results.Meos;
 using Results.Model;
@@ -19,7 +18,7 @@ if (options == null)
 
 var builder = WebApplication.CreateBuilder(args);
 
-var resultsConfiguration = options.CreateConfiguration();
+var resultsConfiguration = Options.CreateConfiguration(options);
 
 // Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
 builder.Host.ConfigureLogging(logging =>
@@ -47,13 +46,13 @@ builder.Services.AddSingleton<SimulatorResultSource>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
-    switch (options.Source)
+    return options.Source switch
     {
-        case Source.Simulator: return provider.GetService<SimulatorResultSource>()!;
-        case Source.Meos: return provider.GetService<MeosResultSource>()!;
-        case Source.Ola: return provider.GetService<OlaResultSource>()!;
-    }
-    throw new NotImplementedException();
+        Source.Simulator => provider.GetService<SimulatorResultSource>()!,
+        Source.Meos => provider.GetService<MeosResultSource>()!,
+        Source.Ola => provider.GetService<OlaResultSource>()!,
+        _ => throw new InvalidOperationException()
+    };
 });
 
 var app = builder.Build();

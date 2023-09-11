@@ -1,4 +1,5 @@
-﻿using Results;
+﻿using System.Diagnostics.CodeAnalysis;
+using Results;
 using Results.Contract;
 using Results.Model;
 using Results.Simulator;
@@ -7,13 +8,14 @@ using static Results.Contract.ParticipantStatus;
 namespace ResultsTests;
 
 [TestClass]
+[SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
 public sealed class PointsCalcTest : IDisposable
 {
     private readonly Dictionary<string, int> emptyBaseResults = new();
     private readonly Dictionary<string, int> oneBaseResults = new() { { "Other club", 1 } };
-    private readonly Configuration normalConfiguration = new(ResultSourceType.Simulator) {SpeedMultiplier = 1};
+    private readonly Configuration normalConfiguration = new() {SpeedMultiplier = 1};
     private readonly IResultSource normalResultSource;
-    private readonly Configuration finalConfiguration = new(ResultSourceType.Simulator) { SpeedMultiplier = 1, IsFinal = true};
+    private readonly Configuration finalConfiguration = new() { SpeedMultiplier = 1, IsFinal = true};
     private readonly IResultSource finalResultSource;
 
     public PointsCalcTest()
@@ -24,7 +26,7 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithSimulatorResults()
     {
-        var configuration1 = new Configuration(ResultSourceType.Simulator)
+        var configuration1 = new Configuration
         {
             SpeedMultiplier = 10,
             NumTeams = 100
@@ -85,7 +87,7 @@ public sealed class PointsCalcTest : IDisposable
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
-            new("H10", "Hugo", "Club C", null, null, Ignored),
+            new("H10", "Hugo", "Club C", null, null, Ignored)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
@@ -135,7 +137,7 @@ public sealed class PointsCalcTest : IDisposable
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary),
+            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -152,7 +154,7 @@ public sealed class PointsCalcTest : IDisposable
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Passed),
+            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Passed)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -306,6 +308,7 @@ public sealed class PointsCalcTest : IDisposable
         return PointsCalc.CalcFinalPoints(participantResult, TimeSpan.Parse(bestTime));
     }
 
+    [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
     public void Dispose()
     {
         normalResultSource?.Dispose();

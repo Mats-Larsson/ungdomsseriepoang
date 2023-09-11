@@ -1,6 +1,4 @@
-﻿using Results.Model;
-
-namespace Results.Contract;
+﻿namespace Results.Contract;
 
 public class ParticipantPoints
 {

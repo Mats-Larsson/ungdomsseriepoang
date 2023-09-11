@@ -57,7 +57,7 @@ public sealed class MeosResultSource : IResultSource
         var pairs = doc.Root!
             .Elements(MopNs + "cls")
             .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
-        foreach (var (id, value) in pairs)
+        foreach ((int id, string? value) in pairs)
         {
             if (value == null)
                 classes.Remove(id);
@@ -72,7 +72,7 @@ public sealed class MeosResultSource : IResultSource
         var orgs = doc.Root!
             .Elements(MopNs + "org")
             .ToDictionary(e => int.Parse(e.Attribute("id")!.Value), e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
-        foreach (var (id, value) in orgs)
+        foreach ((int id, string? value) in orgs)
         {
             if (value == null)
                 clubs.Remove(id);
@@ -103,7 +103,7 @@ public sealed class MeosResultSource : IResultSource
                     Stat = ToInt(@base.Attribute("stat")?.Value) ?? 0
                 };
             });
-        foreach (var (id, value) in meosParticipants)
+        foreach ((int id, var value) in meosParticipants)
         {
             if (value == null)
             {

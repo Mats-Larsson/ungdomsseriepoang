@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
@@ -8,12 +9,13 @@ using Results.Simulator;
 namespace ResultsTests;
 
 [TestClass]
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class ResultsTest
 {
     [TestMethod]
     public void TestWithSimulatorTeamsAndBasePoints()
     {
-        var configuration = new Configuration(ResultSourceType.Simulator)
+        var configuration = new Configuration
         {
             SpeedMultiplier = 10,
             NumTeams = 100,
@@ -24,6 +26,7 @@ public class ResultsTest
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>(), simulatorResultSource);
         using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
         var teamResults = resultService.GetScoreBoard();
+        teamResults.TeamResults.Count.Should().Be(2);
         teamResults.TeamResults.Should().Contain(
             new TeamResult(1, "Lag A", 1000, false, 0, 1000, new Statistics())
         );
@@ -35,22 +38,25 @@ public class ResultsTest
     [TestMethod]
     public void TestWithSimulatorTeams()
     {
-        var configuration = new Configuration(ResultSourceType.Simulator)
+        var configuration = new Configuration
         {
             SpeedMultiplier = 10,
             NumTeams = 100,
             TeamsFilePath = "Teams.csv"
         };
-        File.WriteAllText(configuration.TeamsFilePath, "Lag A\r\nLag B");
+        File.WriteAllText(configuration.TeamsFilePath, "Lag A\r\nLag B\r\nSnättringe SK");
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>(), simulatorResultSource);
         using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
+        Task.Delay(TimeSpan.FromMilliseconds(10)).Wait(); // Let simulator start
         var teamResults = resultService.GetScoreBoard();
+        teamResults.TeamResults.Count.Should().Be(3);
         teamResults.TeamResults.Should().Contain(
             new TeamResult(1, "Lag A", 0, false, 0, 0, new Statistics())
         );
         teamResults.TeamResults.Should().Contain(
             new TeamResult(1, "Lag B", 0, false, 0, 0, new Statistics())
         );
+        teamResults.TeamResults.Should().Contain(result => result.Team == "Snättringe SK");
     }
 }

@@ -1,16 +1,16 @@
-﻿using CommandLine;
+﻿using System.Diagnostics.CodeAnalysis;
+using CommandLine;
 using CommandLine.Text;
 using Results;
-using Results.Contract;
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Usp;
 
-// ReSharper disable once ClassNeverInstantiated.Global
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class Options
 {
-    private static ParserResult<Options>? _parserResult;
-
     // General options
     [Option("listenerport", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
     public int ListenerPort { get; set; }
@@ -18,95 +18,90 @@ public class Options
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
     public Source Source { get; set; }
 
-    [Option("maxlatestart", Default = 10, HelpText = "Number of minutes to wait after schedulated starttime for participeant to get activated, until register as not started.")]
+    [Option("maxlatestart", Default = 10, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
     private int MinutesUntilNotStated { get; set; }
-    public TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
+    private TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
-    [Option("teams", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
-    public string? TeamsPath { get; set; }
+    [Option("teams", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. If omitted all teams are included. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
+    private string? TeamsPath { get; set; }
 
     [Option("pointscalc", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
-    public PointsCalcType PointsCalc { get; set; }
+    private PointsCalcType PointsCalc { get; set; }
 
     // Simulator options
     [Option("speed", Group = "Sim", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
-    public int Speed { get; set; }
+    private int Speed { get; set; }
 
     [Option("numteams", Group = "Sim", Default = 27, HelpText = "Number of teams to show in simulation.")]
-    public int NumTeams { get; set; }
+    private int NumTeams { get; set; }
 
     // MeOS options
     // Not yet
 
     // Ola options
     [Option('h', "host", Group = "Ola", Default = "localhost", HelpText = "MySQL database server host")]
-    public string? Host { get; set; }
+    private string? Host { get; set; }
 
     [Option('P', "port", Group = "Ola", Default = 3306, HelpText = "MySQL database server port")]
-    public int Port { get; set; }
+    private int Port { get; set; }
 
     [Option('D', "database", Group = "Ola", Required = true, HelpText = "MySQL database server database")]
-    public string? Database { get; set; }
+    private string? Database { get; set; }
 
     [Option('u', "user", Group = "Ola", Required = true, HelpText = "MySQL database server user to run select on database to get results")]
-    public string? User { get; set; }
+    private string? User { get; set; }
 
     [Option('p', "password", Group = "Ola", Required = true, HelpText = "MySQL database server password associated with user")]
-    public string? Password { get; set; }
+    private string? Password { get; set; }
 
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
-    public int EventId { get; set; }
-
+    private int EventId { get; set; }
 
     public static HelpText? HelpText { get; private set; }
 
-    internal static Options? Parse(string[] args)
+    internal static Options? Parse(IEnumerable<string> args)
     {
         using var parser = new Parser(with =>
         {
             with.CaseInsensitiveEnumValues = true;
             with.CaseSensitive = true;   
         });
-        _parserResult = parser.ParseArguments<Options>(args);
+        ParserResult<Options>? parserResult = parser.ParseArguments<Options>(args);
 
-        if (_parserResult.Errors.Any())
+        if (parserResult.Errors.Any())
         {
-            HelpText = HelpText.AutoBuild(_parserResult, h =>
+            HelpText = HelpText.AutoBuild(parserResult, h =>
             {
                 h.AddEnumValuesToHelpText = true;
                 return h;
             });
         }
 
-        return _parserResult.Value;
+        return parserResult.Value;
     }
 
-    public Configuration CreateConfiguration()
+    public static Configuration CreateConfiguration(Options value)
     {
-        Options value = _parserResult!.Value;
+        if (value == null) throw new ArgumentNullException(nameof(value));
+
         var conf = new Configuration
         {
-            ResultSourceType = value.Source switch
-            {
-                Source.Simulator => ResultSourceType.Simulator,
-                Source.Ola => ResultSourceType.OlaDatabase,
-                Source.Meos => ResultSourceType.Meos,
-                _ => throw new InvalidOperationException("Cannot determine result source"),
-            },
-
+            // General
             TimeUntilNotStated = value.TimeUntilNotStated,
-            SpeedMultiplier = value.Speed,
-            NumTeams = value.NumTeams,
             TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
 
+            // Simulator
+            SpeedMultiplier = value.Speed,
+            NumTeams = value.NumTeams,
+            
+            // Ola
             OlaMySqlHost = value.Host,
             OlaMySqlPort = value.Port,
             OlaMySqlDatabase = value.Database,
             OlaMySqlUser = value.User,
             OlaMySqlPassword = value.Password,
             OlaEventId = value.EventId
-
         };
 
         return conf;

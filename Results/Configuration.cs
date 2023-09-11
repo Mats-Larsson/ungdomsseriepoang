@@ -1,11 +1,13 @@
-﻿using Results.Contract;
-
-namespace Results;
+﻿namespace Results;
 
 public class Configuration
 {
-    public ResultSourceType ResultSourceType { get; set; }
+    // General
+    public TimeSpan TimeUntilNotStated { get; init; }
+    public string? TeamsFilePath { get; init; }
+    public bool IsFinal { get; init; }
 
+    //Ola
     public string? OlaMySqlHost { get; init; }
     public int OlaMySqlPort { get; init; }
     public string? OlaMySqlDatabase { get; init; }
@@ -13,19 +15,7 @@ public class Configuration
     public string? OlaMySqlPassword { get; init; }
     public int? OlaEventId { get; init; }
 
-    public TimeSpan TimeUntilNotStated { get; init; }
+    // Simulator
     public int SpeedMultiplier { get; init; }
     public int NumTeams { get; init; }
-    public string? TeamsFilePath { get; init; }
-    public bool IsFinal { get; init; }
-
-    public Configuration()
-    {
-    }
-
-    public Configuration(ResultSourceType resultSourceType)
-    {
-        ResultSourceType = resultSourceType;
-    }
-
 }

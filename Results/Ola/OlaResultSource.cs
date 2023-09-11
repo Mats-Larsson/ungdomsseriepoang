@@ -38,7 +38,7 @@ public sealed class OlaResultSource : IResultSource
         throw new InvalidOperationException();
     }
 
-    private IList<OlaParticipantResult> GetFromOlaDb()
+    private IEnumerable<OlaParticipantResult> GetFromOlaDb()
     {
         using var con = new MySqlConnection(connectionString);
         con.Open();

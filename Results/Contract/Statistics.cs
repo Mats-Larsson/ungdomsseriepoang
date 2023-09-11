@@ -1,14 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Diagnostics.CodeAnalysis;
 using Results.Model;
-using System.Configuration;
 
 namespace Results.Contract;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class Statistics
 {
-    public Statistics() { }
-
-    public Statistics(int numNotActivated, int numActivated, int numStarted, int numPreliminary, int numPassed, int numNotValid, int numNotStarted)
+    public Statistics(int numNotActivated = 0, int numActivated = 0, int numStarted = 0, int numPreliminary = 0, 
+        int numPassed = 0, int numNotValid = 0, int numNotStarted = 0)
     {
         NumNotActivated = numNotActivated;
         NumActivated = numActivated;
@@ -19,8 +18,9 @@ public class Statistics
         NumNotStarted = numNotStarted;
     }
 
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")] 
     public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
-    public TimeSpan LastChangedTimeOfDay { get; internal set; }
+    public TimeSpan LastChangedTimeOfDay { get; private set; }
     public int NumNotActivated { get; private set; }
     public int NumActivated { get; private set; }
     public int NumStarted { get; private set; }
@@ -77,10 +77,12 @@ public class Statistics
         return $"{nameof(NumNotActivated)}: {NumNotActivated}, {nameof(NumActivated)}: {NumActivated}, {nameof(NumStarted)}: {NumStarted}, {nameof(NumPreliminary)}: {NumPreliminary}, {nameof(NumPassed)}: {NumPassed}, {nameof(NumNotValid)}: {NumNotValid}, {nameof(NumNotStarted)}: {NumNotStarted}";
     }
 
+#pragma warning disable CA1062
     protected bool Equals(Statistics other)
     {
         return NumNotActivated == other.NumNotActivated && NumActivated == other.NumActivated && NumStarted == other.NumStarted && NumPreliminary == other.NumPreliminary && NumPassed == other.NumPassed && NumNotValid == other.NumNotValid && NumNotStarted == other.NumNotStarted;
     }
+#pragma warning restore CA1062
 
     public override bool Equals(object? obj)
     {
@@ -102,6 +104,7 @@ public class Statistics
         return Equals((Statistics)obj);
     }
 
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public override int GetHashCode()
     {
         return HashCode.Combine(NumNotActivated, NumActivated, NumStarted, NumPreliminary, NumPassed, NumNotValid, NumNotStarted);
