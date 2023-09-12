@@ -16,7 +16,12 @@ if (options == null)
     return;
 }
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+{
+    Args = args,
+    ContentRootPath = Path.GetFullPath(Path.Combine(typeof(Program).Assembly.Location, "..")),
+    WebRootPath = Path.GetFullPath(Path.Combine(typeof(Program).Assembly.Location, "..", "wwwroot"))
+});
 
 var resultsConfiguration = Options.CreateConfiguration(options);
 
@@ -25,7 +30,7 @@ builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
     logging.AddConsole();
-    logging.AddDebug();
+//    logging.AddDebug();
 });
 
 var url = $"http://*:{options.ListenerPort}";
