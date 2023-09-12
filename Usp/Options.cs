@@ -18,44 +18,45 @@ public class Options
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
     public Source Source { get; set; }
 
-    [Option("maxlatestart", Default = 10, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
-    private int MinutesUntilNotStated { get; set; }
+    // Points calculation
+    [Option("pointscalc", Group = "Points", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
+    public PointsCalcType PointsCalc { get; set; }
+
+    [Option("teams", Group = "Points", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. If omitted all teams are included. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
+    public string? TeamsPath { get; set; }
+
+    [Option("maxlatestart", Group = "Points", Default = 10, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
+    public int MinutesUntilNotStated { get; set; }
     private TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
-    [Option("teams", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. If omitted all teams are included. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
-    private string? TeamsPath { get; set; }
-
-    [Option("pointscalc", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
-    private PointsCalcType PointsCalc { get; set; }
-
     // Simulator options
-    [Option("speed", Group = "Sim", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
-    private int Speed { get; set; }
+    [Option("speed", Group = "Simulator", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
+    public int Speed { get; set; }
 
-    [Option("numteams", Group = "Sim", Default = 27, HelpText = "Number of teams to show in simulation.")]
-    private int NumTeams { get; set; }
+    [Option("numteams", Group = "Simulator", Default = 27, HelpText = "Number of teams to show in simulation.")]
+    public int NumTeams { get; set; }
 
     // MeOS options
     // Not yet
 
     // Ola options
     [Option('h', "host", Group = "Ola", Default = "localhost", HelpText = "MySQL database server host")]
-    private string? Host { get; set; }
+    public string? Host { get; set; }
 
     [Option('P', "port", Group = "Ola", Default = 3306, HelpText = "MySQL database server port")]
-    private int Port { get; set; }
+    public int Port { get; set; }
 
     [Option('D', "database", Group = "Ola", Required = true, HelpText = "MySQL database server database")]
     private string? Database { get; set; }
 
     [Option('u', "user", Group = "Ola", Required = true, HelpText = "MySQL database server user to run select on database to get results")]
-    private string? User { get; set; }
+    public string? User { get; set; }
 
     [Option('p', "password", Group = "Ola", Required = true, HelpText = "MySQL database server password associated with user")]
-    private string? Password { get; set; }
+    public string? Password { get; set; }
 
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
-    private int EventId { get; set; }
+    public int EventId { get; set; }
 
     public static HelpText? HelpText { get; private set; }
 
@@ -73,6 +74,7 @@ public class Options
             HelpText = HelpText.AutoBuild(parserResult, h =>
             {
                 h.AddEnumValuesToHelpText = true;
+                h.AutoHelp = true;
                 return h;
             });
         }
