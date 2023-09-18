@@ -1,0 +1,3108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MOPComplete xmlns="http://www.melin.nu/mop">
+<competition date="2023-09-16" organizer="IFK Enskede" homepage="http://Ifkenskede.se">Ungdomsseriefinalen, Stockholm</competition>
+<ctrl id="38">Radio A</ctrl>
+<ctrl id="46">Radio B</ctrl>
+<ctrl id="48">Radio C</ctrl>
+<ctrl id="57">Förvarning</ctrl>
+<ctrl id="82">Radio D</ctrl>
+<ctrl id="87">Radio E</ctrl>
+<ctrl id="92">Radio F</ctrl>
+<ctrl id="100">Sista</ctrl>
+<cls id="29" ord="240" radio="46,48,92,87,57,100">H16</cls>
+<cls id="30" ord="260" radio="92,57,100">H14</cls>
+<cls id="31" ord="280" radio="46,82,57,100">H12</cls>
+<cls id="32" ord="300" radio="46,48,38,100">H10</cls>
+<cls id="54" ord="230" radio="48,92,82,87,57,100">D16</cls>
+<cls id="55" ord="250" radio="82,57,100">D14</cls>
+<cls id="56" ord="270" radio="46,82,92,57,100">D12</cls>
+<cls id="57" ord="290" radio="46,38,100">D10</cls>
+<cls id="58" ord="750" radio="82,57,100">U4</cls>
+<cls id="59" ord="740" radio="48,57,100">U3</cls>
+<cls id="60" ord="730" radio="48,38,100">U2D</cls>
+<cls id="61" ord="720" radio="46,48,38,100">U1D</cls>
+<cls id="62" ord="710" radio="38,100">Insk</cls>
+<cls id="160" ord="735" radio="48,38,100">U2H</cls>
+<cls id="161" ord="725" radio="46,48,38,100">U1H</cls>
+<org id="63" nat="SWE">Bromma-Vällingby SOK</org>
+<org id="130" nat="SWE">Haninge SOK</org>
+<org id="172" nat="SWE">IFK Enskede</org>
+<org id="198" nat="SWE">Järfälla OK</org>
+<org id="200" nat="SWE">Jönköpings OK</org>
+<org id="270" nat="SWE">Mälarö SOK</org>
+<org id="302" nat="SWE">OK Ravinen</org>
+<org id="335" nat="SWE">Skarpnäcks OL</org>
+<org id="340" nat="SWE">Skogsluffarnas OK</org>
+<org id="348" nat="SWE">Snättringe SK</org>
+<org id="354" nat="SWE">Solna OK</org>
+<org id="373" nat="SWE">Sundbybergs IK</org>
+<org id="388" nat="SWE">OK Södertörn</org>
+<org id="410" nat="SWE">Tullinge SK</org>
+<org id="417" nat="SWE">Söders-Tyresö</org>
+<org id="447" nat="SWE">Väsby OK</org>
+<org id="489" nat="SWE">OK Älvsjö-Örby</org>
+<org id="515" nat="SWE">OK Österåker</org>
+<org id="546" nat="SWE">IFK Lidingö SOK</org>
+<org id="559" nat="SWE">Nynäshamns OK</org>
+<org id="565" nat="SWE">Täby OK</org>
+<org id="585" nat="SWE">Järla Orientering</org>
+<org id="608" nat="SWE">Tumba-Mälarhöjden OK</org>
+<org id="630" nat="SWE">Waxholms OK</org>
+<org id="632" nat="SWE">Gustavsbergs OK</org>
+<org id="636" nat="SWE">Centrum OK</org>
+<org id="638" nat="SWE">Attunda OK</org>
+<org id="757" nat="SWE">Hellas Orientering</org>
+<org id="3398" nat="SWE">Klubblös</org>
+<org id="888888888" nat="SWE">Vakant</org>
+<cmp id="28751" card="8432008">
+<base org="565" cls="29" stat="0" st="432000" rt="0" nat="SWE">Petter Ljungquist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="41895" card="8091113">
+<base org="348" cls="55" stat="0" st="414600" rt="0" nat="SWE">Mira Vejedal</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="42279" card="1090808">
+<base org="373" cls="55" stat="0" st="419400" rt="0" nat="SWE">Hanna Sundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="46074" card="8070813">
+<base org="373" cls="29" stat="0" st="397200" rt="0" nat="SWE">Botvid Simonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="51582" card="1001789">
+<base org="348" cls="29" stat="0" st="415200" rt="0" nat="SWE">Emil Hammarberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="55463" card="2060705">
+<base org="565" cls="55" stat="0" st="405600" rt="0" nat="SWE">Meja Helgars</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="55464" card="2060723">
+<base org="565" cls="55" stat="0" st="408600" rt="0" nat="SWE">Irma Helgars</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="55831" card="8200091">
+<base org="302" cls="30" stat="0" st="431400" rt="0" nat="SWE">Hugo #15 Nyström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="55832" card="8407118">
+<base org="302" cls="29" stat="0" st="418200" rt="0" nat="SWE">Gustav Nyström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="57169" card="8090716">
+<base org="638" cls="55" stat="0" st="411600" rt="0" nat="SWE">Greta Sandvik</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="58101" card="8083822">
+<base org="373" cls="55" stat="0" st="430800" rt="0" nat="SWE">Sofia Dell'Orto</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="59975" card="2077318">
+<base org="630" cls="55" stat="0" st="418200" rt="0" nat="SWE">Sigrid Mellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="60256" card="9001210">
+<base org="546" cls="30" stat="0" st="402600" rt="0" nat="SWE">Lukas Amblie Tarandi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="60262" card="8402010" competing="true">
+<base org="546" cls="30" stat="0" st="398400" rt="0" nat="SWE">Wilmer Carlstein</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="60798" card="449747">
+<base org="546" cls="54" stat="0" st="411600" rt="0" nat="SWE">Irma Jarlemark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="64067" card="8090907">
+<base org="198" cls="55" stat="0" st="409200" rt="0" nat="SWE">Ida Pettersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="64068" card="8070913" competing="true">
+<base org="198" cls="54" stat="0" st="398400" rt="0" nat="SWE">Julia Pettersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="73316" card="8500086" competing="true">
+<base org="172" cls="29" stat="0" st="396600" rt="0" nat="SWE">Hilmar Hedin</base>
+<radio>46,1180</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="74111" card="1110309" competing="true">
+<base org="608" cls="31" stat="0" st="397800" rt="0" nat="SWE">Samuel Törnros</base>
+<radio>46,1410</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="75098" card="2148445">
+<base org="447" cls="30" stat="0" st="446400" rt="0" nat="SWE">Hugo Rundlöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="80019" card="1110140">
+<base org="63" cls="56" stat="0" st="435600" rt="0" nat="SWE">Miri Bøgevig Wachtmeister</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="80040" card="2125913">
+<base org="410" cls="30" stat="0" st="406200" rt="0" nat="SWE">Eskil Myrberger</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="80122" card="981946">
+<base org="608" cls="54" stat="0" st="423600" rt="0" nat="SWE">Matilda Hedberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="80123" card="1108050">
+<base org="608" cls="56" stat="0" st="423600" rt="0" nat="SWE">Amanda Hedberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="80516" card="8200805" competing="true">
+<base org="172" cls="29" stat="0" st="399600" rt="0" nat="SWE">Lucas De Boussard</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="82878" card="1111215">
+<base org="270" cls="56" stat="0" st="432000" rt="0" nat="SWE">Olivia Edlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="83117" card="452184">
+<base org="388" cls="54" stat="0" st="405600" rt="0" nat="SWE">Blenda Sandén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="85922" card="1090709">
+<base org="515" cls="55" stat="0" st="424800" rt="0" nat="SWE">Signe Albinsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="85958" card="8100503">
+<base org="172" cls="30" stat="0" st="423600" rt="0" nat="SWE">Jon Forsberg Rundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="86194" card="452136" competing="true">
+<base org="302" cls="29" stat="0" st="397800" rt="0" nat="SWE">Ture Lindskog</base>
+<radio>46,1030</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="86212" card="8090613">
+<base org="198" cls="30" stat="0" st="407400" rt="0" nat="SWE">Samuel Andersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="87640" card="8510935" competing="true">
+<base org="417" cls="54" stat="0" st="399600" rt="0" nat="SWE">Josefin Berg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="89500" card="38783">
+<base org="172" cls="55" stat="0" st="421200" rt="0" nat="SWE">Nora Ahlström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="89501" card="217226">
+<base org="172" cls="30" stat="0" st="426600" rt="0" nat="SWE">Simon Ahlström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="89502" card="2229386">
+<base org="172" cls="30" stat="0" st="440400" rt="0" nat="SWE">Felix Ahlström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="91733" card="1080510">
+<base org="410" cls="29" stat="0" st="429000" rt="0" nat="SWE">Pontus Aasa</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="92571" card="8313323">
+<base org="348" cls="54" stat="0" st="418800" rt="0" nat="SWE">Thea Gelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="94374" card="8404678">
+<base org="410" cls="54" stat="0" st="401400" rt="0" nat="SWE">Miranda Strand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="96777" card="7090519">
+<base org="608" cls="30" stat="0" st="421200" rt="0" nat="SWE">Erik Käll</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="97130" card="7080210">
+<base org="608" cls="29" stat="0" st="408000" rt="0" nat="SWE">Oskar Eklöv</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="97131" card="7160711">
+<base org="608" cls="31" stat="0" st="418200" rt="0" nat="SWE">Erik Eklöv</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="97877" card="8389868">
+<base org="348" cls="30" stat="0" st="438000" rt="0" nat="SWE">Noel Hedman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="98019" card="1416642">
+<base org="348" cls="29" stat="0" st="423600" rt="0" nat="SWE">Gabriel Carlqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="99752" card="8080910">
+<base org="373" cls="54" stat="0" st="415800" rt="0" nat="SWE">Astrid Kraft</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="100158" card="1111080">
+<base org="410" cls="56" stat="0" st="401400" rt="0" nat="SWE">Hilma Arevång</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="100513" card="2137573">
+<base org="417" cls="56" stat="0" st="422400" rt="0" nat="SWE">Sara Almgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="102048" card="8280605">
+<base org="373" cls="54" stat="0" st="411000" rt="0" nat="SWE">Alice Hellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="102049" card="1977062">
+<base org="373" cls="29" stat="0" st="424200" rt="0" nat="SWE">Noel Hellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="102158" card="2062043">
+<base org="585" cls="54" stat="0" st="417600" rt="0" nat="SWE">Mirjam Costermans</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="102308" card="8110015">
+<base org="447" cls="29" stat="0" st="411000" rt="0" nat="SWE">Edvin Johansson Liljegren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="102910" card="8021607" competing="true">
+<base org="302" cls="54" stat="0" st="397200" rt="0" nat="SWE">Milla Klasson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="104959" card="2066582">
+<base org="585" cls="54" stat="0" st="412800" rt="0" nat="SWE">Märta Ahlquist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="105444" card="2062171">
+<base org="410" cls="54" stat="0" st="416400" rt="0" nat="SWE">Stina Nygren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="106138" card="2095582">
+<base org="585" cls="30" stat="0" st="427800" rt="0" nat="SWE">Jonas Nicander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="106207" card="2100587">
+<base org="608" cls="56" stat="0" st="419400" rt="0" nat="SWE">Klara Skogholm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="106535" card="2057360">
+<base org="340" cls="31" stat="0" st="439800" rt="0" nat="SWE">Tage Lindqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="108215" card="8030602" competing="true">
+<base org="373" cls="54" stat="0" st="396600" rt="0" nat="SWE">Irma Widehag</base>
+<radio>82,3130</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="108348" card="2065316">
+<base org="198" cls="29" stat="0" st="407400" rt="0" nat="SWE">Simon Anderson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="109627" card="8201107">
+<base org="172" cls="31" stat="0" st="402600" rt="0" nat="SWE">Liam De Boussard</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="109703" card="36534">
+<base org="348" cls="161" stat="0" st="405600" rt="0" nat="SWE">Albin Gelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="110652" card="8112595">
+<base org="546" cls="56" stat="0" st="430200" rt="0" nat="SWE">Elsa Wanek Terry</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="110701" card="8130320">
+<base org="348" cls="32" stat="0" st="408000" rt="0" nat="SWE">Elvin Hedman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="111832" card="9080518" competing="true">
+<base org="417" cls="54" stat="0" st="400200" rt="0" nat="SWE">Elin Almgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="112700" card="205244">
+<base org="630" cls="57" stat="0" st="421800" rt="0" nat="SWE">Josefin Mellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="113937" card="2089189">
+<base org="417" cls="54" stat="0" st="419400" rt="0" nat="SWE">Maja Thimberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="113997" card="8511109">
+<base org="198" cls="54" stat="0" st="407400" rt="0" nat="SWE">Amanda Mörkfors</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="114039" card="7206779">
+<base org="348" cls="56" stat="0" st="405600" rt="0" nat="SWE">Vilma Dyrelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="114374" card="1090323">
+<base org="348" cls="30" stat="0" st="408600" rt="0" nat="SWE">Algot Sjöstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="114375" card="1107040" competing="true">
+<base org="348" cls="56" stat="0" st="399600" rt="0" nat="SWE">Titti Sjöstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="115003" card="8200430">
+<base org="630" cls="54" stat="0" st="414000" rt="0" nat="SWE">Sofia Quas</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="115105" card="2077395">
+<base org="373" cls="29" stat="0" st="432600" rt="0" nat="SWE">Erik Westman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="115113" card="8000957">
+<base org="373" cls="55" stat="0" st="430200" rt="0" nat="SWE">Ellen Wickbom Westman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="115195" card="1100813">
+<base org="410" cls="55" stat="0" st="433800" rt="0" nat="SWE">Liv Ställberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="115666" card="2121974">
+<base org="388" cls="29" stat="0" st="424800" rt="0" nat="SWE">Carl Wännman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="116935" card="22975">
+<base org="335" cls="55" stat="0" st="403200" rt="0" nat="SWE">Lova Jonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117054" card="8230711">
+<base org="638" cls="54" stat="20" st="402000" rt="0" nat="SWE">Linda Strömqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117055" card="8071123">
+<base org="638" cls="54" stat="20" st="406200" rt="0" nat="SWE">Sara Strömqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117107" card="2121933">
+<base org="388" cls="30" stat="0" st="432600" rt="0" nat="SWE">Martin Wännman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117259" card="8112627">
+<base org="348" cls="30" stat="0" st="439800" rt="0" nat="SWE">Hugo Abel</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117487" card="8071016">
+<base org="565" cls="29" stat="0" st="409800" rt="0" nat="SWE">Elliot Ljungdell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117489" card="8091016">
+<base org="565" cls="55" stat="0" st="433200" rt="0" nat="SWE">Ella Ljungdell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="117798" card="209857">
+<base org="335" cls="29" stat="0" st="422400" rt="0" nat="SWE">Teodor Jonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="118892" card="1312290">
+<base org="348" cls="57" stat="0" st="410400" rt="0" nat="SWE">Hedda Sjöstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="119362" card="2101700">
+<base org="630" cls="55" stat="0" st="426600" rt="0" nat="SWE">Livia Quas</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="121228" card="8081129">
+<base org="565" cls="29" stat="0" st="411600" rt="0" nat="SWE">Filip Sjölander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="121458" card="2077356">
+<base org="348" cls="31" stat="0" st="444000" rt="0" nat="SWE">Vidar Wisén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="122042" card="418050">
+<base org="302" cls="55" stat="0" st="432600" rt="0" nat="SWE">Sara Berg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="122132" card="2137693">
+<base org="608" cls="55" stat="0" st="412200" rt="0" nat="SWE">Vanja Lif</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="123507" card="2801318">
+<base org="348" cls="30" stat="0" st="409800" rt="0" nat="SWE">Filip Wimmer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="123508" card="2801319">
+<base org="348" cls="30" stat="0" st="408000" rt="0" nat="SWE">Isak Wimmer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="124036" card="8500175">
+<base org="373" cls="29" stat="0" st="427800" rt="0" nat="SWE">Egon Wistedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="126032" card="2126131">
+<base org="388" cls="54" stat="0" st="403800" rt="0" nat="SWE">Ida Samuelsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="126467" card="2077239">
+<base org="410" cls="54" stat="0" st="409200" rt="0" nat="SWE">Fanny Bergman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="127157" card="362367" competing="true">
+<base org="410" cls="55" stat="0" st="400800" rt="0" nat="SWE">Frida Lidström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="127605" card="1239712">
+<base org="447" cls="55" stat="0" st="410400" rt="0" nat="SWE">Iben Stattin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="127606" card="2139834">
+<base org="447" cls="32" stat="0" st="402600" rt="0" nat="SWE">Egil Stattin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="127607" card="1665627">
+<base org="447" cls="30" stat="0" st="425400" rt="0" nat="SWE">Tage Stattin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="129015" card="2063817">
+<base org="585" cls="30" stat="0" st="444600" rt="0" nat="SWE">Olof Hagwall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="129018" card="2155909" competing="true">
+<base org="585" cls="31" stat="0" st="397200" rt="0" nat="SWE">Melker Hagwall</base>
+<radio>46,1140;82,1680</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="129655" card="8511131">
+<base org="417" cls="31" stat="0" st="412800" rt="0" nat="SWE">Victor Hallendal</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="129759" card="8038115">
+<base org="373" cls="55" stat="0" st="426000" rt="0" nat="SWE">Betty Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="130146" card="2137579">
+<base org="417" cls="55" stat="0" st="405000" rt="0" nat="SWE">Ebba Sahlstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="130150" card="433386">
+<base org="417" cls="56" stat="0" st="403800" rt="0" nat="SWE">Irma Sahlstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="131536" card="8432007">
+<base org="565" cls="29" stat="0" st="430200" rt="0" nat="SWE">Simon Trossing</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="131804" card="8420208">
+<base org="348" cls="54" stat="0" st="406800" rt="0" nat="SWE">Kerstin Christie</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="132183" card="1120416">
+<base org="410" cls="56" stat="0" st="421200" rt="0" nat="SWE">Vera Ställberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="132748" card="8484200">
+<base org="198" cls="29" stat="0" st="420000" rt="0" nat="SWE">Max Boström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="133315" card="2107444">
+<base org="489" cls="29" stat="20" st="402000" rt="0" nat="SWE">Ivar Messing</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="133324" card="7201137">
+<base org="546" cls="60" stat="0" st="414000" rt="0" nat="SWE">Emmy Boström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="133417" card="1070831">
+<base org="447" cls="54" stat="0" st="422400" rt="0" nat="SWE">Matilda Modig</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135004" card="8210310">
+<base org="638" cls="30" stat="0" st="412200" rt="0" nat="SWE">Malte Hallman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135005" card="8120127">
+<base org="638" cls="31" stat="0" st="408600" rt="0" nat="SWE">Melker Hallman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135008" card="2123461">
+<base org="348" cls="59" stat="0" st="397800" rt="0" nat="SWE">Liv Dalenstam</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135010" card="675442">
+<base org="348" cls="56" stat="0" st="426600" rt="0" nat="SWE">Alva Dalenstam</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135552" card="2093432" competing="true">
+<base org="198" cls="58" stat="0" st="397200" rt="0" nat="SWE">Simon Sjölund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135556" card="2087200">
+<base org="198" cls="29" stat="0" st="417600" rt="0" nat="SWE">John Nyman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135639" card="8035223">
+<base org="198" cls="29" stat="0" st="427200" rt="0" nat="SWE">Edvin Björklund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135640" card="888369">
+<base org="198" cls="58" stat="0" st="396600" rt="0" nat="SWE">Hannes Broms</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135664" card="2156262">
+<base org="546" cls="29" stat="0" st="426000" rt="0" nat="SWE">Åke Engman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="135960" card="2443362">
+<base org="410" cls="56" stat="0" st="408600" rt="0" nat="SWE">Märta Levinson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="136266" card="2126172" competing="true">
+<base org="388" cls="29" stat="0" st="400800" rt="0" nat="SWE">Gustaf Stange</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="136770" card="1101032">
+<base org="373" cls="56" stat="0" st="416400" rt="0" nat="SWE">Saga Hellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="136776" card="2115471">
+<base org="373" cls="30" stat="0" st="415200" rt="0" nat="SWE">Alve Wistedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="136777" card="1101031">
+<base org="373" cls="56" stat="0" st="431400" rt="0" nat="SWE">Ida Hellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="136823" card="7110626">
+<base org="373" cls="56" stat="0" st="405000" rt="0" nat="SWE">Nova Falk</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="137596" card="2093507">
+<base org="302" cls="56" stat="0" st="406200" rt="0" nat="SWE">Alice Larsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="137597" card="2093258">
+<base org="302" cls="55" stat="0" st="406200" rt="0" nat="SWE">Wilma Larsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="137951" card="9130518">
+<base org="546" cls="31" stat="0" st="409200" rt="0" nat="SWE">Simon Amblie Tarandi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="138341" card="8402011">
+<base org="546" cls="31" stat="0" st="421200" rt="0" nat="SWE">Edvin Carlstein</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="138467" card="8432009">
+<base org="565" cls="30" stat="0" st="420600" rt="0" nat="SWE">Elias Trossing</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139243" card="2093667">
+<base org="198" cls="30" stat="0" st="432000" rt="0" nat="SWE">David Nyman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139244" card="1410872">
+<base org="198" cls="30" stat="0" st="411000" rt="0" nat="SWE">Isak Anderson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139246" card="1140515">
+<base org="270" cls="57" stat="0" st="406200" rt="0" nat="SWE">Molly Edlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139251" card="1504162">
+<base org="417" cls="62" stat="0" st="-1" rt="0" nat="SWE">Siri Wångdahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139629" card="2104486">
+<base org="608" cls="56" stat="0" st="412200" rt="0" nat="SWE">Mira Mårsell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139630" card="8500088" competing="true">
+<base org="608" cls="30" stat="0" st="399600" rt="0" nat="SWE">Viggo Mårsell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139682" card="2222239">
+<base org="340" cls="31" stat="0" st="406800" rt="0" nat="SWE">Elis Lind</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139831" card="246198">
+<base org="172" cls="61" stat="0" st="405000" rt="0" nat="SWE">Saga Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139851" card="2141496">
+<base org="348" cls="160" stat="0" st="419400" rt="0" nat="SWE">Viggo Abel</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="139955" card="8506263">
+<base org="302" cls="29" stat="0" st="420600" rt="0" nat="SWE">Arvid Rundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="140187" card="7071126">
+<base org="638" cls="54" stat="0" st="412200" rt="0" nat="SWE">Ellinor Bartels</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="140321" card="8262728">
+<base org="373" cls="30" stat="0" st="419400" rt="0" nat="SWE">Folke Johansson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="140322" card="8090924">
+<base org="373" cls="55" stat="0" st="423000" rt="0" nat="SWE">Bodil Johansson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="140582" card="1090319">
+<base org="373" cls="30" stat="0" st="405600" rt="0" nat="SWE">Gustav Bursjö</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="140598" card="228240">
+<base org="373" cls="31" stat="0" st="442800" rt="0" nat="SWE">Joar Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="141091" card="1109191">
+<base org="410" cls="56" stat="0" st="417000" rt="0" nat="SWE">Nora Ställberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="141094" card="2135782">
+<base org="410" cls="32" stat="0" st="407400" rt="0" nat="SWE">Nils Ställberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="141420" card="1208282">
+<base org="632" cls="31" stat="0" st="438000" rt="0" nat="SWE">Ludvig Lindberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="141833" card="8511132" competing="true">
+<base org="388" cls="29" stat="0" st="400200" rt="0" nat="SWE">Robin Björkman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="141876" card="8110058">
+<base org="410" cls="55" stat="0" st="415200" rt="0" nat="SWE">Ida Andersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142167" card="8431843">
+<base org="270" cls="55" stat="0" st="431400" rt="0" nat="SWE">Hedda Tunblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142179" card="2101650">
+<base org="608" cls="29" stat="0" st="423000" rt="0" nat="SWE">Edvin Björklund Boljang</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142228" card="2135421">
+<base org="410" cls="30" stat="0" st="401400" rt="0" nat="SWE">Axel Näsman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142538" card="1200712">
+<base org="348" cls="56" stat="0" st="412800" rt="0" nat="SWE">Audrey Fransson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142590" card="8070795">
+<base org="585" cls="29" stat="0" st="406200" rt="0" nat="SWE">Gustav Netz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142614" card="2101624">
+<base org="585" cls="30" stat="0" st="436200" rt="0" nat="SWE">Sven Börjesson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="142638" card="1081205">
+<base org="585" cls="54" stat="0" st="403200" rt="0" nat="SWE">Meya Tengblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="143054" card="8509242" competing="true">
+<base org="373" cls="54" stat="0" st="399000" rt="0" nat="SWE">Selma Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="143180" card="2107250">
+<base org="130" cls="29" stat="0" st="404400" rt="0" nat="SWE">Martin Lindvall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="143449" card="8181438">
+<base org="546" cls="54" stat="0" st="413400" rt="0" nat="SWE">Sara Liwång</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="144241" card="8500115">
+<base org="302" cls="30" stat="0" st="412800" rt="0" nat="SWE">Hannes Pihlo</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="144541" card="8339588">
+<base org="373" cls="54" stat="0" st="405000" rt="0" nat="SWE">Molly Boman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="144619" card="1091114" competing="true">
+<base org="373" cls="55" stat="0" st="399600" rt="0" nat="SWE">Alice Slars Paulsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="144620" card="1111010">
+<base org="373" cls="56" stat="0" st="429000" rt="0" nat="SWE">Lilly Slars Paulsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="144776" card="2109307">
+<base org="198" cls="31" stat="0" st="417000" rt="0" nat="SWE">Hampus Siljekvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="145705" card="12608">
+<base org="608" cls="32" stat="0" st="409800" rt="0" nat="SWE">Teodor Törnros</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="145855" card="2112246">
+<base org="585" cls="29" stat="0" st="412800" rt="0" nat="SWE">Vilmer Folcke</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="146606" card="2139713">
+<base org="302" cls="55" stat="0" st="416400" rt="0" nat="SWE">Ellen Stadig</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147361" card="18687">
+<base org="302" cls="31" stat="0" st="441000" rt="0" nat="SWE">Ilon Holmström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147523" card="2139198">
+<base org="335" cls="55" stat="0" st="420000" rt="0" nat="SWE">Amelie Dryselius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147557" card="8071226">
+<base org="489" cls="29" stat="0" st="417000" rt="0" nat="SWE">Anton Akterin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147597" card="8058754">
+<base org="630" cls="30" stat="0" st="435600" rt="0" nat="SWE">Albin Sandeberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147603" card="8504096">
+<base org="447" cls="29" stat="0" st="414000" rt="0" nat="SWE">Victor Granath</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147628" card="8090000">
+<base org="388" cls="29" stat="0" st="425400" rt="0" nat="SWE">Simon Wenzin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147644" card="2057372">
+<base org="340" cls="59" stat="0" st="399000" rt="0" nat="SWE">John Lundborg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147709" card="2039739">
+<base org="172" cls="29" stat="0" st="403800" rt="0" nat="SWE">Mille Dahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="147994" card="8090905">
+<base org="348" cls="29" stat="0" st="433200" rt="0" nat="SWE">Gustav Eggöy Markhester</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148219" card="2443117">
+<base org="340" cls="31" stat="0" st="435600" rt="0" nat="SWE">Sixten Ottosson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148325" card="1991005">
+<base org="489" cls="31" stat="0" st="411000" rt="0" nat="SWE">Love Akterin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148606" card="43814">
+<base org="638" cls="29" stat="0" st="406800" rt="0" nat="SWE">Wilmer Jonasson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148761" card="2138971">
+<base org="302" cls="54" stat="0" st="414600" rt="0" nat="SWE">Frida Ekblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148831" card="8304122">
+<base org="638" cls="30" stat="0" st="418200" rt="0" nat="SWE">Adrian Antonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148891" card="2135313">
+<base org="388" cls="55" stat="0" st="432000" rt="0" nat="SWE">Kerstin Nylind</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="148964" card="7046053">
+<base org="388" cls="55" stat="0" st="414000" rt="0" nat="SWE">Mella Wiberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149051" card="7464371">
+<base org="410" cls="56" stat="0" st="404400" rt="0" nat="SWE">Agnes Barker</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149069" card="2079617">
+<base org="198" cls="56" stat="0" st="407400" rt="0" nat="SWE">Moa Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149077" card="2132182">
+<base org="130" cls="55" stat="0" st="435000" rt="0" nat="SWE">Anja Hartley</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149382" card="2448136">
+<base org="608" cls="55" stat="0" st="418800" rt="0" nat="SWE">Emelie Hellström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149752" card="1147369">
+<base org="447" cls="30" stat="0" st="437400" rt="0" nat="SWE">Theo Santalius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="149955" card="2139956" competing="true">
+<base org="417" cls="31" stat="0" st="396000" rt="0" nat="SWE">Emil Thimberg</base>
+<radio>46,1280;82,2070</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="150477" card="446199">
+<base org="348" cls="32" stat="0" st="401400" rt="0" nat="SWE">Viggo Lidmar</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="150755" card="2139811">
+<base org="270" cls="31" stat="0" st="443400" rt="0" nat="SWE">Ludvig Boman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="151241" card="438771">
+<base org="198" cls="30" stat="0" st="409200" rt="0" nat="SWE">Justus Hedin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="151261" card="227980">
+<base org="302" cls="55" stat="0" st="420600" rt="0" nat="SWE">Isabella Sjögren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153181" card="2123574">
+<base org="546" cls="30" stat="0" st="414000" rt="0" nat="SWE">Ville Åman Klasén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153182" card="2123560">
+<base org="546" cls="56" stat="0" st="425400" rt="0" nat="SWE">Edith Klasèn</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153271" card="2100135">
+<base org="608" cls="60" stat="0" st="402000" rt="0" nat="SWE">Hilda Skogholm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153533" card="2170831">
+<base org="198" cls="31" stat="0" st="428400" rt="0" nat="SWE">Marcus Edemyr</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153662" card="1108162">
+<base org="410" cls="31" stat="0" st="424200" rt="0" nat="SWE">John Flodmark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="153708" card="7010814">
+<base org="515" cls="57" stat="0" st="424800" rt="0" nat="SWE">Moa Wielander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="154259" card="1100112">
+<base org="489" cls="30" stat="0" st="417000" rt="0" nat="SWE">Alexander Nimrodsson Engblom</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="154354" card="2131997">
+<base org="608" cls="30" stat="0" st="441000" rt="0" nat="SWE">Alexander Bäckman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="154401" card="1000686">
+<base org="410" cls="30" stat="0" st="430800" rt="0" nat="SWE">Alexander Hanson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="154775" card="2138852">
+<base org="198" cls="30" stat="0" st="435000" rt="0" nat="SWE">Noel Kimblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155111" card="9110414">
+<base org="198" cls="56" stat="0" st="430800" rt="0" nat="SWE">Inez Hellberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155122" card="2215115">
+<base org="388" cls="55" stat="0" st="429600" rt="0" nat="SWE">Freja Winby</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155123" card="2212799">
+<base org="388" cls="30" stat="0" st="416400" rt="0" nat="SWE">Linus Hållstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155215" card="2107224" competing="true">
+<base org="270" cls="56" stat="0" st="396000" rt="0" nat="SWE">Nora Tunblad</base>
+<radio>46,1730;82,2590</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155307" card="8120627">
+<base org="340" cls="31" stat="0" st="437400" rt="0" nat="SWE">Alfred Eklund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155393" card="2139769">
+<base org="335" cls="29" stat="0" st="413400" rt="0" nat="SWE">Kevin Karlsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155411" card="2121991">
+<base org="63" cls="56" stat="0" st="424200" rt="0" nat="SWE">Siri Håstad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155414" card="8343438">
+<base org="410" cls="30" stat="0" st="403200" rt="0" nat="SWE">Holger Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155525" card="2214394">
+<base org="340" cls="57" stat="0" st="426000" rt="0" nat="SWE">Elsa Berg Rendahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155526" card="2443169">
+<base org="340" cls="31" stat="0" st="427800" rt="0" nat="SWE">Arthur Rendahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="155903" card="1101000">
+<base org="565" cls="30" stat="0" st="439200" rt="0" nat="SWE">Vilhelm Askehed</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="156609" card="2123462">
+<base org="585" cls="31" stat="0" st="419400" rt="0" nat="SWE">Isak Netz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="157087" card="8145252">
+<base org="638" cls="31" stat="0" st="416400" rt="0" nat="SWE">Filip Sone</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="157568" card="2141462">
+<base org="335" cls="29" stat="0" st="418800" rt="0" nat="SWE">Lukas Ferner Thurén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="157597" card="2139000">
+<base org="198" cls="31" stat="0" st="400200" rt="0" nat="SWE">Folke Wällstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="157713" card="446172">
+<base org="335" cls="57" stat="0" st="423600" rt="0" nat="SWE">Julia Doyle</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="158919" card="2148437">
+<base org="270" cls="56" stat="0" st="438600" rt="0" nat="SWE">Lilly Lundqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="159210" card="8080329">
+<base org="198" cls="29" stat="0" st="410400" rt="0" nat="SWE">Benjamin Hjertén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="159414" card="2801494">
+<base org="447" cls="29" stat="0" st="399000" rt="0" nat="SWE">Felix Öhman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160420" card="2123531">
+<base org="348" cls="29" stat="0" st="421200" rt="0" nat="SWE">Love Norell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160424" card="8435465">
+<base org="348" cls="30" stat="0" st="424200" rt="0" nat="SWE">Harry Norell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160587" card="2101665">
+<base org="630" cls="31" stat="0" st="442200" rt="0" nat="SWE">Elias Sandeberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160686" card="2220512">
+<base org="388" cls="31" stat="0" st="436200" rt="0" nat="SWE">Sixten Stark Hultgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160720" card="2123941">
+<base org="373" cls="56" stat="0" st="429600" rt="0" nat="SWE">Vera Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160843" card="2222425">
+<base org="417" cls="55" stat="0" st="407400" rt="0" nat="SWE">Tuva Thörnqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160888" card="8019611">
+<base org="638" cls="54" stat="0" st="410400" rt="0" nat="SWE">Emily Blyth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="160894" card="0">
+<base org="489" cls="31" stat="0" st="421800" rt="0" nat="SWE">Vide Messing</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="161134" card="26983">
+<base org="335" cls="55" stat="0" st="409800" rt="0" nat="SWE">Laura Lund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="161624" card="2126230">
+<base org="130" cls="29" stat="0" st="414600" rt="0" nat="SWE">Samuel Backlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="161710" card="1020908">
+<base org="489" cls="29" stat="0" st="421800" rt="0" nat="SWE">Nils Gidlöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="161891" card="2152233">
+<base org="340" cls="30" stat="0" st="421800" rt="0" nat="SWE">Folke Andersson Östholm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162295" card="1120807">
+<base org="348" cls="56" stat="0" st="409800" rt="0" nat="SWE">Edla Leidner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162297" card="1100818">
+<base org="348" cls="30" stat="0" st="427200" rt="0" nat="SWE">Reidmond Leidner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162323" card="2147820">
+<base org="348" cls="30" stat="0" st="414600" rt="0" nat="SWE">Emil Sundblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162326" card="1010497">
+<base org="348" cls="59" stat="0" st="403800" rt="0" nat="SWE">Emilia Olsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162411" card="2214148">
+<base org="198" cls="31" stat="0" st="415200" rt="0" nat="SWE">Love Åberg Ekstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="162435" card="2123929">
+<base org="348" cls="54" stat="0" st="397800" rt="0" nat="SWE">Ylva Remén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="163219" card="2141460">
+<base org="348" cls="56" stat="0" st="426000" rt="0" nat="SWE">Lovisa Starenius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="163222" card="2147842">
+<base org="348" cls="160" stat="0" st="412200" rt="0" nat="SWE">Alexander Sundblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="163231" card="2141472">
+<base org="348" cls="55" stat="0" st="434400" rt="0" nat="SWE">Ellinor Starenius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="163364" card="8501017">
+<base org="632" cls="29" stat="0" st="428400" rt="0" nat="SWE">Malte Jenner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164385" card="7472012">
+<base org="559" cls="31" stat="0" st="413400" rt="0" nat="SWE">Tjalve Fröberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164418" card="1472583">
+<base org="489" cls="29" stat="0" st="415800" rt="0" nat="SWE">Hugo Fulke</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164448" card="1705240">
+<base org="373" cls="62" stat="0" st="-1" rt="0" nat="SWE">Oscar Slars Paulsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164452" card="2025066" competing="true">
+<base org="546" cls="32" stat="0" st="396000" rt="0" nat="SWE">Theodor Wanek Terry</base>
+<radio>46,1650</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164731" card="2089155">
+<base org="172" cls="59" stat="0" st="401400" rt="0" nat="SWE">Rakel Dahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164753" card="7001145">
+<base org="417" cls="55" stat="0" st="404400" rt="0" nat="SWE">Stina Martinelle</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="164754" card="7001132">
+<base org="417" cls="55" stat="0" st="412800" rt="0" nat="SWE">Signe Martinelle</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165338" card="1292908">
+<base org="172" cls="29" stat="0" st="409200" rt="0" nat="SWE">Joel Holmgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165663" card="2148447">
+<base org="447" cls="57" stat="0" st="422400" rt="0" nat="SWE">Elsa Rundlöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165803" card="8021708">
+<base org="489" cls="29" stat="20" st="412200" rt="0" nat="SWE">Jacob Engver</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165888" card="2125955">
+<base org="410" cls="56" stat="0" st="415200" rt="0" nat="SWE">Viola Andersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165909" card="38138">
+<base org="172" cls="56" stat="0" st="411600" rt="0" nat="SWE">Siri Holmgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="165917" card="2137761">
+<base org="388" cls="56" stat="0" st="436800" rt="0" nat="SWE">Olivia Hållstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166174" card="2148454">
+<base org="585" cls="56" stat="0" st="433800" rt="0" nat="SWE">Lilja Hellman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166399" card="2123587">
+<base org="198" cls="56" stat="0" st="408000" rt="0" nat="SWE">Kajsa Jonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166401" card="8080112" competing="true">
+<base org="198" cls="29" stat="0" st="396000" rt="0" nat="SWE">Arthur Lindquist</base>
+<radio>46,970;87,3150</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166651" card="7120315">
+<base org="638" cls="56" stat="0" st="436200" rt="0" nat="SWE">Saga Wallner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166673" card="2148500">
+<base org="270" cls="31" stat="0" st="403200" rt="0" nat="SWE">Max Leire</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166689" card="2138986">
+<base org="302" cls="31" stat="0" st="412200" rt="0" nat="SWE">Erik Ekblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166722" card="1061031" competing="true">
+<base org="608" cls="54" stat="0" st="400800" rt="0" nat="SWE">Freja Saers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166725" card="2147897">
+<base org="608" cls="55" stat="0" st="429000" rt="0" nat="SWE">Viola Saers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166740" card="2148466">
+<base org="608" cls="30" stat="0" st="441600" rt="0" nat="SWE">Ingemar Färm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166751" card="1110327">
+<base org="489" cls="31" stat="0" st="425400" rt="0" nat="SWE">Vilhelm Lindgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166752" card="1112703">
+<base org="489" cls="31" stat="0" st="430800" rt="0" nat="SWE">Tage Lindgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="166903" card="2420693">
+<base org="335" cls="55" stat="0" st="408000" rt="0" nat="SWE">Nora Enlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167280" card="8013186">
+<base org="565" cls="29" stat="0" st="430800" rt="0" nat="SWE">Gustav Dargin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167283" card="8013192">
+<base org="565" cls="55" stat="0" st="428400" rt="0" nat="SWE">Emilia Dargin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167499" card="441743">
+<base org="757" cls="60" stat="0" st="430800" rt="0" nat="SWE">Ida Maria Paulina Nyberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167628" card="8281089">
+<base org="638" cls="54" stat="0" st="408000" rt="0" nat="SWE">Nora Elkert</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167779" card="2001690">
+<base org="340" cls="32" stat="0" st="417000" rt="0" nat="SWE">Vilgot Åstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167845" card="2135305">
+<base org="198" cls="31" stat="0" st="405000" rt="0" nat="SWE">Walter Lindquist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="167950" card="2138969">
+<base org="348" cls="55" stat="0" st="425400" rt="0" nat="SWE">Vanja Remén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168052" card="1101281">
+<base org="417" cls="31" stat="0" st="404400" rt="0" nat="SWE">Herman Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168053" card="1312181">
+<base org="417" cls="57" stat="0" st="416400" rt="0" nat="SWE">Matilda Sundberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168115" card="1000685">
+<base org="348" cls="30" stat="0" st="445800" rt="0" nat="SWE">Viktor Pannagel</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168116" card="1001800">
+<base org="348" cls="56" stat="0" st="424800" rt="0" nat="SWE">Rebecka Pannagel</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168218" card="8011692">
+<base org="410" cls="60" stat="0" st="418800" rt="0" nat="SWE">Alma Sandberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168248" card="7002520">
+<base org="302" cls="54" stat="0" st="421800" rt="0" nat="SWE">Wera Björklund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168250" card="7036700">
+<base org="302" cls="54" stat="0" st="404400" rt="0" nat="SWE">Tora Björklund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168604" card="1101122" competing="true">
+<base org="447" cls="31" stat="0" st="398400" rt="0" nat="SWE">Rasmus Sigfridsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168641" card="8507885" competing="true">
+<base org="447" cls="30" stat="0" st="400200" rt="0" nat="SWE">Viktor Nygren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168651" card="2123854">
+<base org="198" cls="57" stat="0" st="419400" rt="0" nat="SWE">Frida Jonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168652" card="2212815">
+<base org="198" cls="61" stat="0" st="401400" rt="0" nat="SWE">Maja Jonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168665" card="2001663">
+<base org="348" cls="55" stat="0" st="427800" rt="0" nat="SWE">Erika Remén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168754" card="2088536">
+<base org="335" cls="30" stat="0" st="424800" rt="0" nat="SWE">Hugo Jacov</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168778" card="2229377">
+<base org="302" cls="31" stat="0" st="433200" rt="0" nat="SWE">David Öhman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168814" card="2123874">
+<base org="198" cls="54" stat="0" st="408600" rt="0" nat="SWE">Klara Loberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="168844" card="2132156">
+<base org="130" cls="30" stat="0" st="444000" rt="0" nat="SWE">Emil Libérth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169117" card="2222538">
+<base org="302" cls="55" stat="0" st="401400" rt="0" nat="SWE">Linnea Enberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169178" card="2220152">
+<base org="340" cls="32" stat="0" st="419400" rt="0" nat="SWE">Wilhelm Gryzelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169186" card="2123908" competing="true">
+<base org="447" cls="55" stat="0" st="399000" rt="0" nat="SWE">Elin Smeds</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169187" card="1137398">
+<base org="447" cls="56" stat="0" st="433200" rt="0" nat="SWE">Emma Nygren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169555" card="2420502">
+<base org="546" cls="55" stat="0" st="403800" rt="0" nat="SWE">Lina Silén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169946" card="435971" competing="true">
+<base org="340" cls="161" stat="0" st="396000" rt="0" nat="SWE">Gunnar Fischer</base>
+<radio>46,3670</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="169953" card="27237">
+<base org="348" cls="161" stat="0" st="412800" rt="0" nat="SWE">Dante Letfors</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="170438" card="2214212">
+<base org="410" cls="31" stat="0" st="409800" rt="0" nat="SWE">Noah Dyberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171127" card="2148449">
+<base org="489" cls="31" stat="20" st="422400" rt="0" nat="SWE">Edvin Schylander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171580" card="1020219">
+<base org="348" cls="30" stat="0" st="447000" rt="0" nat="SWE">Vidar Berg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171779" card="2139168">
+<base org="388" cls="57" stat="20" st="421200" rt="0" nat="SWE">Esther Fernandez</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171857" card="2220188">
+<base org="388" cls="57" stat="0" st="420600" rt="0" nat="SWE">Ester Stark Hultgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171866" card="2148461" competing="true">
+<base org="302" cls="55" stat="0" st="400200" rt="0" nat="SWE">Tuva Holmer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="171868" card="2107124" competing="true">
+<base org="302" cls="56" stat="0" st="397800" rt="0" nat="SWE">Sonja Rundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172174" card="2141495">
+<base org="348" cls="54" stat="0" st="402600" rt="0" nat="SWE">Linnea Starenius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172178" card="1040487">
+<base org="348" cls="30" stat="0" st="442800" rt="0" nat="SWE">Vide Hrastinski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172312" card="2229492">
+<base org="489" cls="55" stat="0" st="413400" rt="0" nat="SWE">Ester Cumming</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172473" card="2141320">
+<base org="335" cls="55" stat="0" st="427200" rt="0" nat="SWE">Pauline Vilgon</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172551" card="2139932">
+<base org="638" cls="55" stat="0" st="417600" rt="0" nat="SWE">Moa Mellqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172816" card="2448225">
+<base org="348" cls="56" stat="0" st="427200" rt="0" nat="SWE">Anja Hedin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172908" card="981923">
+<base org="757" cls="161" stat="0" st="417600" rt="0" nat="SWE">Vincent Nyberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172910" card="1403568">
+<base org="565" cls="30" stat="0" st="422400" rt="0" nat="SWE">Kuzey Basol</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172911" card="1403527">
+<base org="565" cls="30" stat="0" st="438600" rt="0" nat="SWE">Deniz Basol</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="172999" card="2222296">
+<base org="373" cls="55" stat="0" st="424200" rt="0" nat="SWE">Esther Oliv</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="173497" card="1110118">
+<base org="172" cls="54" stat="20" st="417000" rt="0" nat="SWE">Edith Atterlöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="173662" card="2141337">
+<base org="335" cls="31" stat="0" st="429000" rt="0" nat="SWE">Oscar Dahlgren Tucker</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="173673" card="2152304">
+<base org="489" cls="56" stat="0" st="437400" rt="0" nat="SWE">Elsa Edner Svedlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="174487" card="2137646">
+<base org="546" cls="57" stat="0" st="417600" rt="0" nat="SWE">Miranda Silén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="174591" card="2147929">
+<base org="340" cls="56" stat="0" st="432600" rt="0" nat="SWE">Juno Sandler</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="174829" card="7130314">
+<base org="565" cls="57" stat="0" st="420000" rt="0" nat="SWE">Irma Westerdahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="176144" card="2001557" competing="true">
+<base org="340" cls="30" stat="0" st="400800" rt="0" nat="SWE">Sixten Åstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="176792" card="2443047">
+<base org="417" cls="59" stat="0" st="417000" rt="0" nat="SWE">Lukas Kjellgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="176793" card="2443340">
+<base org="417" cls="160" stat="0" st="439800" rt="0" nat="SWE">Noah Kjellgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177023" card="1140820">
+<base org="410" cls="57" stat="0" st="412800" rt="0" nat="SWE">Maja Flodmark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177226" card="43802">
+<base org="410" cls="32" stat="0" st="398400" rt="0" nat="SWE">Gustav Åkerman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177253" card="503010">
+<base org="410" cls="31" stat="0" st="408000" rt="0" nat="SWE">Eskil Bergh</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177254" card="25198">
+<base org="410" cls="32" stat="0" st="396600" rt="0" nat="SWE">Hilmer Bergh</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177358" card="36489">
+<base org="410" cls="57" stat="0" st="415200" rt="0" nat="SWE">Wilma Ohlin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177359" card="306404">
+<base org="410" cls="57" stat="0" st="423000" rt="0" nat="SWE">Astrid Ohlin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177438" card="1121003">
+<base org="410" cls="56" stat="0" st="434400" rt="0" nat="SWE">Elise Riseth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177450" card="830330">
+<base org="410" cls="161" stat="0" st="411600" rt="0" nat="SWE">Harry Lönnkvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177455" card="1908130">
+<base org="410" cls="57" stat="0" st="414600" rt="0" nat="SWE">Alva Lönnkvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177584" card="1120830">
+<base org="546" cls="56" stat="0" st="428400" rt="0" nat="SWE">Amanda Åkesson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="177707" card="2078181">
+<base org="130" cls="56" stat="0" st="439200" rt="0" nat="SWE">Ella Norrman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178216" card="2420504">
+<base org="63" cls="29" stat="0" st="419400" rt="0" nat="SWE">Albin Myringer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178218" card="2001510">
+<base org="63" cls="55" stat="0" st="421800" rt="0" nat="SWE">Sigrid Myringer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178224" card="2212813">
+<base org="198" cls="31" stat="0" st="420000" rt="0" nat="SWE">Adam Lundin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178231" card="2100576">
+<base org="198" cls="31" stat="0" st="410400" rt="0" nat="SWE">Matteo Coello Petters</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178365" card="2024005">
+<base org="340" cls="160" stat="0" st="420600" rt="0" nat="SWE">Arthur Gryzelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178481" card="2220536">
+<base org="340" cls="61" stat="0" st="418200" rt="0" nat="SWE">Esther Elwin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178555" card="2170871">
+<base org="198" cls="55" stat="0" st="435600" rt="0" nat="SWE">Elin Lidwall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178556" card="2420535">
+<base org="198" cls="32" stat="0" st="410400" rt="0" nat="SWE">Malte Fogeby</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="178649" card="2107424">
+<base org="388" cls="57" stat="0" st="414000" rt="0" nat="SWE">Dina Skatt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179011" card="7120910">
+<base org="638" cls="56" stat="0" st="406800" rt="0" nat="SWE">Ida Kastenholm Tenn</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179037" card="8638841" competing="true">
+<base org="630" cls="59" stat="0" st="400200" rt="0" nat="SWE">Linus Holm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179048" card="8506234">
+<base org="757" cls="29" stat="0" st="431400" rt="0" nat="SWE">Viggo Holmqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179108" card="2147954">
+<base org="608" cls="57" stat="0" st="408600" rt="0" nat="SWE">Saga Saers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179109" card="2140392">
+<base org="608" cls="57" stat="0" st="424200" rt="0" nat="SWE">Solveig Saers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179231" card="2141313">
+<base org="335" cls="30" stat="0" st="418800" rt="0" nat="SWE">Kristoffer Schramm Fridolfsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179262" card="7142042">
+<base org="632" cls="56" stat="0" st="414000" rt="0" nat="SWE">Elisia Karlström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179333" card="2132160">
+<base org="388" cls="30" stat="0" st="428400" rt="0" nat="SWE">Elton Edding</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179341" card="2132171">
+<base org="130" cls="31" stat="0" st="414000" rt="0" nat="SWE">Kasper Florczyk</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179389" card="2420478">
+<base org="757" cls="54" stat="0" st="409800" rt="0" nat="SWE">Sofia Julander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179590" card="2141309">
+<base org="335" cls="56" stat="0" st="415800" rt="0" nat="SWE">Esther Enlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="179630" card="1502030">
+<base org="489" cls="57" stat="0" st="413400" rt="0" nat="SWE">Vilma Nordström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180004" card="9761104">
+<base org="417" cls="160" stat="0" st="399000" rt="0" nat="SWE">Hugo Hartley</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180068" card="2095297">
+<base org="340" cls="160" stat="20" st="407400" rt="0" nat="SWE">Emil Marteleur</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180213" card="2223500">
+<base org="302" cls="32" stat="0" st="414600" rt="0" nat="SWE">Hugo Öhman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180337" card="2135314">
+<base org="198" cls="31" stat="0" st="429600" rt="0" nat="SWE">Nils Palmqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180531" card="2100437">
+<base org="388" cls="57" stat="0" st="411600" rt="0" nat="SWE">Elsa Winby</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180573" card="246642">
+<base org="515" cls="30" stat="0" st="433800" rt="0" nat="SWE">Edvin Olsson Åhlén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180574" card="17396">
+<base org="515" cls="59" stat="0" st="396600" rt="0" nat="SWE">Viktor Åhlén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180622" card="2137683">
+<base org="565" cls="29" stat="20" st="403200" rt="0" nat="SWE">Gustaf Monell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="180765" card="2148845">
+<base org="302" cls="30" stat="0" st="415800" rt="0" nat="SWE">Ture Niva</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181064" card="2100443">
+<base org="172" cls="56" stat="0" st="402600" rt="0" nat="SWE">Clara Widin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181076" card="2147923">
+<base org="302" cls="31" stat="0" st="423600" rt="0" nat="SWE">Ernst Kurosz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181145" card="2222429">
+<base org="585" cls="31" stat="0" st="424800" rt="0" nat="SWE">Albin Löfgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181149" card="1121314">
+<base org="585" cls="59" stat="20" st="423000" rt="0" nat="SWE">Carl Norrman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181497" card="1140417">
+<base org="585" cls="60" stat="0" st="432000" rt="0" nat="SWE">Elin Norrman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181584" card="2132175">
+<base org="388" cls="30" stat="0" st="420000" rt="0" nat="SWE">Carl Djurberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181606" card="2095112" competing="true">
+<base org="340" cls="61" stat="0" st="397800" rt="0" nat="SWE">Vera Ottosson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="181866" card="33478">
+<base org="585" cls="32" stat="0" st="415800" rt="0" nat="SWE">Love Heinrup</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="183870" card="2219999">
+<base org="130" cls="160" stat="0" st="433800" rt="0" nat="SWE">Felix Hägglund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="183913" card="2214365">
+<base org="632" cls="30" stat="0" st="410400" rt="0" nat="SWE">Harald Gromark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184009" card="2137684">
+<base org="172" cls="29" stat="0" st="416400" rt="0" nat="SWE">John Ericson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184024" card="2443161">
+<base org="340" cls="59" stat="0" st="399000" rt="0" nat="SWE">John Aizawa</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184036" card="26033">
+<base org="585" cls="57" stat="0" st="418200" rt="0" nat="SWE">Amelie Hellman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184078" card="2137666">
+<base org="302" cls="29" stat="0" st="426600" rt="0" nat="SWE">Carl-Meijer Axelsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184084" card="2137643">
+<base org="373" cls="55" stat="0" st="417000" rt="0" nat="SWE">Alicia Olson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184213" card="1307220">
+<base org="302" cls="57" stat="0" st="417000" rt="0" nat="SWE">Clara Ek</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184701" card="2148008">
+<base org="198" cls="31" stat="0" st="402000" rt="0" nat="SWE">Malte Lundblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="184902" card="2148033">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Eskil Sjölén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185020" card="1030310">
+<base org="546" cls="56" stat="0" st="417600" rt="0" nat="SWE">Emma Asplund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185021" card="8502533">
+<base org="546" cls="55" stat="0" st="406800" rt="0" nat="SWE">Alina Asplund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185028" card="2144445">
+<base org="340" cls="61" stat="0" st="418200" rt="0" nat="SWE">Ruby Molander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185068" card="1160730">
+<base org="546" cls="161" stat="0" st="406800" rt="0" nat="SWE">Oskar Asplund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185096" card="1001893">
+<base org="348" cls="60" stat="0" st="424800" rt="0" nat="SWE">Elise Hrastinski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185152" card="1000812">
+<base org="515" cls="54" stat="0" st="421200" rt="0" nat="SWE">Sophia Larsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185356" card="2100619">
+<base org="348" cls="161" stat="0" st="429600" rt="0" nat="SWE">Ludvig Selö</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185380" card="2148488" competing="true">
+<base org="270" cls="32" stat="0" st="397800" rt="0" nat="SWE">Gustav Leire</base>
+<radio>46,1750</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185451" card="800022">
+<base org="608" cls="62" stat="0" st="-1" rt="0" nat="SWE">Mario Warg Tjernberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185471" card="7070901" competing="true">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Hugo Boström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185472" card="7070800" competing="true">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">William Boström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185473" card="7070900" competing="true">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Victor Boström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185587" card="7500733">
+<base org="417" cls="56" stat="0" st="411000" rt="0" nat="SWE">Astrid Schibort</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185615" card="435976">
+<base org="340" cls="161" stat="0" st="439200" rt="0" nat="SWE">Olle Nordén Wahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="185731" card="2155679" competing="true">
+<base org="340" cls="161" stat="0" st="399600" rt="0" nat="SWE">Erik Nääs</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="186446" card="2443281">
+<base org="410" cls="31" stat="0" st="407400" rt="0" nat="SWE">Stig Helander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="186502" card="1010491">
+<base org="410" cls="29" stat="0" st="401400" rt="0" nat="SWE">Hjalmar Strålin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="186822" card="2420633">
+<base org="335" cls="30" stat="0" st="402000" rt="0" nat="SWE">Josef Ishaq</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="186881" card="2390753">
+<base org="388" cls="30" stat="0" st="434400" rt="0" nat="SWE">Melker Avelin Wänelöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187004" card="2442998">
+<base org="388" cls="30" stat="0" st="413400" rt="0" nat="SWE">Erland Nordenskiöld</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187149" card="2132197">
+<base org="130" cls="54" stat="0" st="418200" rt="0" nat="SWE">Tuva Westerback</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187233" card="7110502">
+<base org="417" cls="31" stat="0" st="434400" rt="0" nat="SWE">Kasper Torstensson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187234" card="7130602">
+<base org="417" cls="161" stat="0" st="435600" rt="0" nat="SWE">Noah Torstensson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187615" card="209961">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Stina Lind</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187699" card="43549">
+<base org="388" cls="57" stat="0" st="405600" rt="0" nat="SWE">Liv Fritzell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="187752" card="2310998">
+<base org="172" cls="160" stat="0" st="424200" rt="0" nat="SWE">Lo Fröberg Wilhelm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="188374" card="1526490">
+<base org="302" cls="56" stat="0" st="400200" rt="0" nat="SWE">Svea Häggqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="188394" card="1040463">
+<base org="373" cls="30" stat="0" st="411600" rt="0" nat="SWE">Elis Lauri</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="188395" card="1001884">
+<base org="373" cls="56" stat="0" st="410400" rt="0" nat="SWE">Ester Lauri</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="188410" card="1526489">
+<base org="302" cls="55" stat="0" st="402600" rt="0" nat="SWE">Signe Häggqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="189481" card="1900200">
+<base org="410" cls="31" stat="0" st="401400" rt="0" nat="SWE">Sixten Näsman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="189907" card="2100641">
+<base org="410" cls="160" stat="0" st="427800" rt="0" nat="SWE">Benjamin Dyberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="189941" card="7111756">
+<base org="638" cls="31" stat="20" st="440400" rt="0" nat="SWE">Ruben Elkert</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="190149" card="7917402">
+<base org="608" cls="31" stat="0" st="433800" rt="0" nat="SWE">Hjalmar Wåhlin Sjöberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="190401" card="1976625" competing="true">
+<base org="489" cls="160" stat="0" st="400200" rt="0" nat="SWE">Erik Wiklund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="191345" card="2222434">
+<base org="348" cls="56" stat="0" st="421800" rt="0" nat="SWE">Moa Ström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="191359" card="2158923">
+<base org="340" cls="57" stat="0" st="418800" rt="0" nat="SWE">Ebba Hardell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="191362" card="2156264">
+<base org="585" cls="31" stat="0" st="414600" rt="0" nat="SWE">Victor Ek</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192098" card="2222408">
+<base org="335" cls="29" stat="0" st="429600" rt="0" nat="SWE">Hannes Brandén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192493" card="2220236">
+<base org="340" cls="32" stat="0" st="412800" rt="0" nat="SWE">Karl Müller</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192507" card="2213242">
+<base org="340" cls="160" stat="0" st="442200" rt="0" nat="SWE">Knut Holmgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192520" card="2220009">
+<base org="340" cls="57" stat="0" st="409800" rt="0" nat="SWE">Maiken Sandell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192724" card="2500423">
+<base org="335" cls="55" stat="0" st="402000" rt="0" nat="SWE">Ingrid Niring</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="192726" card="2141343">
+<base org="335" cls="57" stat="0" st="407400" rt="0" nat="SWE">Alva Jacov</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="193338" card="2443158">
+<base org="388" cls="30" stat="0" st="447600" rt="0" nat="SWE">Vilgot Lindh</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="193544" card="2144562">
+<base org="340" cls="32" stat="0" st="418800" rt="0" nat="SWE">Edgar Maltzman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="193747" card="435973">
+<base org="340" cls="161" stat="0" st="418800" rt="0" nat="SWE">Fred Franzén Larsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194107" card="2100617">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Mira Pettersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194126" card="351206">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Oscar Frejd</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194209" card="351221">
+<base org="348" cls="32" stat="0" st="411000" rt="0" nat="SWE">Ludwig Klang</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194210" card="351219">
+<base org="348" cls="161" stat="0" st="409200" rt="0" nat="SWE">Filip Klang</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194243" card="437096">
+<base org="63" cls="30" stat="0" st="423000" rt="0" nat="SWE">Ian Holmlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194325" card="351210">
+<base org="348" cls="61" stat="0" st="402600" rt="0" nat="SWE">Liv Hjalmarsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194484" card="7120228">
+<base org="546" cls="31" stat="0" st="431400" rt="0" nat="SWE">Henry Anderkvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194490" card="7210163">
+<base org="198" cls="55" stat="0" st="411000" rt="0" nat="SWE">Elin Eng</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194497" card="2170870">
+<base org="198" cls="30" stat="0" st="417600" rt="0" nat="SWE">Artur Jedrzejewski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194502" card="2447933">
+<base org="198" cls="31" stat="0" st="415800" rt="0" nat="SWE">Fabian Wernersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194598" card="2229561">
+<base org="585" cls="56" stat="0" st="414600" rt="0" nat="SWE">Phoebe Self</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194646" card="8120413" competing="true">
+<base org="632" cls="56" stat="0" st="397200" rt="0" nat="SWE">Sigrid Sandström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194668" card="2420664">
+<base org="335" cls="56" stat="0" st="402000" rt="0" nat="SWE">Linnea Ferner Thurén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194786" card="2057396" competing="true">
+<base org="340" cls="32" stat="0" st="399600" rt="0" nat="SWE">Arvid Rossling</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194787" card="2057377" competing="true">
+<base org="340" cls="31" stat="0" st="400800" rt="0" nat="SWE">Hilding Rossling</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194797" card="850528">
+<base org="632" cls="160" stat="0" st="403800" rt="0" nat="SWE">Love Lindberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194906" card="2145336">
+<base org="388" cls="55" stat="0" st="415800" rt="0" nat="SWE">Alma Rimpi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194907" card="10493">
+<base org="388" cls="56" stat="0" st="413400" rt="0" nat="SWE">Nathalie Westerlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194911" card="2229526" competing="true">
+<base org="388" cls="31" stat="0" st="399600" rt="0" nat="SWE">Olof Rimpi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="194930" card="2223757">
+<base org="373" cls="31" stat="0" st="439200" rt="0" nat="SWE">Arttu Andreev</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195089" card="227109">
+<base org="335" cls="31" stat="0" st="411600" rt="0" nat="SWE">Ivar Nuoranne</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195090" card="227196">
+<base org="335" cls="60" stat="0" st="433200" rt="0" nat="SWE">Silja Nuoranne</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195197" card="1891000">
+<base org="348" cls="30" stat="0" st="429600" rt="0" nat="SWE">Winston Karlsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195227" card="2132164">
+<base org="130" cls="56" stat="0" st="427800" rt="0" nat="SWE">Maja Libérth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195244" card="2222381">
+<base org="340" cls="160" stat="0" st="425400" rt="0" nat="SWE">Olof Hardell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195255" card="2220227">
+<base org="340" cls="57" stat="0" st="412200" rt="0" nat="SWE">Olivia Björkebäck Silva</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195256" card="2095260">
+<base org="340" cls="60" stat="0" st="417600" rt="0" nat="SWE">Lilja Björner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195332" card="262752">
+<base org="417" cls="161" stat="0" st="410400" rt="0" nat="SWE">Theodor Skwarski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195345" card="2041884">
+<base org="388" cls="160" stat="0" st="435000" rt="0" nat="SWE">Ebbe Stjärnström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195548" card="2223851">
+<base org="388" cls="30" stat="0" st="403800" rt="0" nat="SWE">Elliot Björkman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195735" card="2229472">
+<base org="335" cls="31" stat="0" st="426600" rt="0" nat="SWE">Kai Söderbaum</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195792" card="2100369">
+<base org="585" cls="30" stat="0" st="429000" rt="0" nat="SWE">Ludwig Sundin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195957" card="1202040">
+<base org="447" cls="31" stat="0" st="423000" rt="0" nat="SWE">Alvar Törnlöv</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="195980" card="2222442">
+<base org="335" cls="31" stat="0" st="432600" rt="0" nat="SWE">Love Brandén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196025" card="351214">
+<base org="348" cls="59" stat="0" st="402600" rt="0" nat="SWE">Arvid Hörlin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196026" card="351223">
+<base org="348" cls="160" stat="0" st="426600" rt="0" nat="SWE">Edvin Hörlin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196028" card="351215" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Helmer Hörlin</base>
+<radio>38,109280;100,111890</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196309" card="2057392">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Disa Borseman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196354" card="2220111">
+<base org="410" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ingrid Levinson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196387" card="1040490">
+<base org="348" cls="30" stat="0" st="404400" rt="0" nat="SWE">Truls Ågren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196400" card="30961">
+<base org="585" cls="61" stat="0" st="408600" rt="0" nat="SWE">Julia Andrée</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196434" card="428934">
+<base org="130" cls="160" stat="0" st="445800" rt="0" nat="SWE">Valdemar Nelander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196441" card="1070746" competing="true">
+<base org="410" cls="32" stat="0" st="397200" rt="0" nat="SWE">Isak Berg</base>
+<radio>46,1830</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196473" card="2214225">
+<base org="447" cls="31" stat="0" st="427200" rt="0" nat="SWE">Heino Tahkokorpi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196614" card="2156545">
+<base org="388" cls="59" stat="0" st="421800" rt="0" nat="SWE">Erik Bäckroos</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="196677" card="2095586">
+<base org="565" cls="29" stat="0" st="398400" rt="0" nat="SWE">Adam Berglund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="197077" card="0">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Emma Müller</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="197552" card="443366">
+<base org="348" cls="32" stat="0" st="417600" rt="0" nat="SWE">Juliuz Sjöström Salom</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198190" card="2148048">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Wilmer Kimblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198293" card="449872">
+<base org="757" cls="29" stat="0" st="408600" rt="0" nat="SWE">Harry Ewers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198374" card="2100580">
+<base org="410" cls="160" stat="0" st="432600" rt="0" nat="SWE">Ture Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198647" card="43939">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Mio Äppelgran</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198945" card="2229585">
+<base org="348" cls="61" stat="0" st="415800" rt="0" nat="SWE">Linnea Norström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198971" card="2214428">
+<base org="340" cls="160" stat="0" st="444600" rt="0" nat="SWE">Jesper Plogmark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198977" card="2222539" competing="true">
+<base org="340" cls="60" stat="0" st="398400" rt="0" nat="SWE">Vera Mild</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="198986" card="2222524">
+<base org="340" cls="60" stat="0" st="408000" rt="0" nat="SWE">Dorotea Ferm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199066" card="2148981">
+<base org="608" cls="32" stat="0" st="416400" rt="0" nat="SWE">Henning Färm</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199208" card="2214204">
+<base org="198" cls="32" stat="0" st="405000" rt="0" nat="SWE">Ludvig Wernersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199257" card="2222530">
+<base org="340" cls="31" stat="0" st="418800" rt="0" nat="SWE">Milian Hjälle</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199279" card="2155699">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Albin Mild</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199316" card="2448260">
+<base org="608" cls="60" stat="0" st="409200" rt="0" nat="SWE">Nikita Quinteros Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199318" card="2447937">
+<base org="608" cls="59" stat="0" st="420600" rt="0" nat="SWE">Felicia Persson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199319" card="2155714">
+<base org="340" cls="160" stat="0" st="418200" rt="0" nat="SWE">Axel Hector Brinne</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199359" card="2214109">
+<base org="198" cls="30" stat="0" st="406800" rt="0" nat="SWE">Simon Rosenblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199361" card="2170849">
+<base org="198" cls="31" stat="0" st="435000" rt="0" nat="SWE">Robin Rosenblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199530" card="2443294">
+<base org="410" cls="60" stat="0" st="427200" rt="0" nat="SWE">Villemo Tonring</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199546" card="2443347">
+<base org="410" cls="160" stat="0" st="417000" rt="0" nat="SWE">Matheo Tonring</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199603" card="2214205">
+<base org="198" cls="32" stat="0" st="400200" rt="0" nat="SWE">Leonard Casselberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199895" card="1070766">
+<base org="410" cls="56" stat="0" st="420000" rt="0" nat="SWE">Emma Berg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199924" card="2448156">
+<base org="348" cls="61" stat="0" st="423000" rt="0" nat="SWE">Alva Östergaard</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199929" card="2220291">
+<base org="340" cls="32" stat="0" st="403800" rt="0" nat="SWE">Oliver Lindberg-Matute</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199957" card="8501625">
+<base org="546" cls="30" stat="0" st="442200" rt="0" nat="SWE">Max Hutnik</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199963" card="2214390">
+<base org="373" cls="31" stat="0" st="430200" rt="0" nat="SWE">Adam Ruthner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199965" card="7120903">
+<base org="373" cls="160" stat="0" st="401400" rt="0" nat="SWE">Adrian Forssell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="199983" card="8339579">
+<base org="546" cls="30" stat="0" st="443400" rt="0" nat="SWE">Melvin Hellestig</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200010" card="2154106" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Alvar Björkebäck Silva</base>
+<radio>38,109550</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200029" card="2095245" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Vidar Hägerström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200084" card="8121029">
+<base org="630" cls="56" stat="0" st="438000" rt="0" nat="SWE">Lisa Berndolf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200193" card="437091">
+<base org="63" cls="56" stat="0" st="409200" rt="0" nat="SWE">My Malmström Wallin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200339" card="2222438">
+<base org="608" cls="32" stat="0" st="420600" rt="0" nat="SWE">Ture Bäckström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200382" card="2443037">
+<base org="608" cls="30" stat="0" st="426000" rt="0" nat="SWE">Felix Gyllfors</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200458" card="2156544">
+<base org="388" cls="160" stat="0" st="413400" rt="0" nat="SWE">Arvid Dahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200577" card="2155694">
+<base org="340" cls="160" stat="0" st="423000" rt="0" nat="SWE">Albin Kingstedt von Corswant</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200728" card="440840" competing="true">
+<base org="447" cls="56" stat="0" st="400800" rt="0" nat="SWE">Emma Wennman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200757" card="2443053">
+<base org="348" cls="56" stat="0" st="435000" rt="0" nat="SWE">Astrid Öberg Loveday</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200840" card="7772582">
+<base org="447" cls="56" stat="0" st="403200" rt="0" nat="SWE">Alva Dahlqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200881" card="2222432">
+<base org="302" cls="32" stat="0" st="403200" rt="0" nat="SWE">Isac Lundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="200908" card="2158947">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Iris Nordén Wahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201061" card="2015700">
+<base org="335" cls="31" stat="0" st="426000" rt="0" nat="SWE">Dante Rödin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201067" card="2229360">
+<base org="335" cls="54" stat="0" st="420600" rt="0" nat="SWE">Idun Ekman-Dahlgren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201173" card="2042216">
+<base org="302" cls="57" stat="0" st="405000" rt="0" nat="SWE">Carla Bayer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201218" card="2022819">
+<base org="302" cls="32" stat="0" st="415200" rt="0" nat="SWE">Hjalmar Kurosz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201224" card="347202">
+<base org="335" cls="60" stat="0" st="396000" rt="0" nat="SWE">Sigrid Dominkovic Tunemar</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201232" card="347137">
+<base org="335" cls="60" stat="0" st="400800" rt="0" nat="SWE">Lykke Minogue</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201357" card="1506291">
+<base org="585" cls="32" stat="0" st="408600" rt="0" nat="SWE">Stellan Kling</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201358" card="1407160">
+<base org="585" cls="32" stat="0" st="404400" rt="0" nat="SWE">Simon Germanis</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201360" card="2064317">
+<base org="585" cls="161" stat="0" st="428400" rt="0" nat="SWE">Olof Brandberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201481" card="8170919" competing="true">
+<base org="546" cls="62" stat="0" st="-1" rt="0" nat="SWE">Samuel Amblie Tarandi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201508" card="2223548">
+<base org="447" cls="32" stat="0" st="406200" rt="0" nat="SWE">Anton Skogh</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201523" card="2223983">
+<base org="410" cls="57" stat="0" st="408000" rt="0" nat="SWE">Signe Fryxell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="201738" card="1817266">
+<base org="130" cls="31" stat="0" st="406200" rt="0" nat="SWE">Elis Sohlman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202153" card="2155712">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Leo Lindberg-Matute</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202155" card="431075" competing="true">
+<base org="585" cls="60" stat="0" st="397200" rt="0" nat="SWE">Cornelia Gustafsson Falk</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202276" card="2138976">
+<base org="585" cls="161" stat="0" st="445200" rt="0" nat="SWE">Samuel Netz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202362" card="8201103" competing="true">
+<base org="340" cls="31" stat="0" st="396600" rt="0" nat="SWE">Simon Nordling</base>
+<radio>46,1690;82,2570</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202520" card="7840419">
+<base org="565" cls="62" stat="0" st="-1" rt="0" nat="SWE">Agnes Westerdahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202863" card="1310110" competing="true">
+<base org="348" cls="160" stat="0" st="397800" rt="0" nat="SWE">Oskar Olsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202898" card="2155726" competing="true">
+<base org="340" cls="161" stat="0" st="397200" rt="0" nat="SWE">Elis Wallin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="202935" card="209650">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Gideon Sundelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="203418" card="17455">
+<base org="638" cls="61" stat="0" st="421800" rt="0" nat="SWE">Hedda Hallman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204226" card="1070758">
+<base org="410" cls="61" stat="0" st="413400" rt="0" nat="SWE">Astrid Tulldahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204230" card="2139086">
+<base org="417" cls="59" stat="0" st="419400" rt="0" nat="SWE">Edith Hedkvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204232" card="2100612">
+<base org="348" cls="59" stat="0" st="407400" rt="0" nat="SWE">Einar Lindblom Isaksson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204280" card="2448050">
+<base org="340" cls="160" stat="0" st="436200" rt="0" nat="SWE">Edvin Hedberg Lassbo</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204295" card="2212755">
+<base org="348" cls="31" stat="0" st="432000" rt="0" nat="SWE">Leo Juhlin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204352" card="351204">
+<base org="348" cls="161" stat="0" st="423600" rt="0" nat="SWE">Alexander Branelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204354" card="2057232">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Vera Pålsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204356" card="2057375">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ada Pålsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204773" card="246106">
+<base org="608" cls="59" stat="0" st="409800" rt="0" nat="SWE">Alexander Knutsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204832" card="1070715">
+<base org="373" cls="54" stat="0" st="415200" rt="0" nat="SWE">Ellinor Fjägers</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204855" card="2155703">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Eric Elwin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204866" card="2223942">
+<base org="489" cls="54" stat="0" st="423000" rt="0" nat="SWE">Elin Helgesson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204925" card="2653358">
+<base org="373" cls="30" stat="0" st="445200" rt="0" nat="SWE">Jack Gidlöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="204976" card="2155889">
+<base org="335" cls="160" stat="0" st="414600" rt="0" nat="SWE">Ellis Graneli</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205204" card="27108" competing="true">
+<base org="636" cls="62" stat="0" st="-1" rt="0" nat="SWE">Olle Svensson Jernselius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205205" card="440061" competing="true">
+<base org="636" cls="62" stat="0" st="-1" rt="0" nat="SWE">John Holmberg Atteblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205311" card="2123578" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Erik Larsson</base>
+<radio>38,111500</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205421" card="351207">
+<base org="348" cls="29" stat="0" st="405600" rt="0" nat="SWE">Leo Hedberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205529" card="2220525">
+<base org="340" cls="161" stat="0" st="416400" rt="0" nat="SWE">Valter MacLean</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205531" card="2220178">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ester MacLean</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205657" card="2448031">
+<base org="63" cls="31" stat="0" st="417600" rt="0" nat="SWE">Albin Norberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="205843" card="2448182">
+<base org="340" cls="60" stat="0" st="426000" rt="0" nat="SWE">Sigrid Lundvall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206030" card="2041897">
+<base org="388" cls="60" stat="0" st="434400" rt="0" nat="SWE">Sofia Djurberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206037" card="2156556">
+<base org="388" cls="59" stat="0" st="406200" rt="0" nat="SWE">Jesper Hultman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206039" card="2156531">
+<base org="388" cls="60" stat="0" st="405600" rt="0" nat="SWE">Emmy Skoogberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206040" card="2156533">
+<base org="388" cls="61" stat="0" st="417000" rt="0" nat="SWE">Elsa Skoogberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206065" card="2158880">
+<base org="130" cls="59" stat="0" st="413400" rt="0" nat="SWE">Hugo Callerius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206094" card="8402210" competing="true">
+<base org="630" cls="161" stat="0" st="398400" rt="0" nat="SWE">Axel Berndolf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206134" card="2220468">
+<base org="447" cls="31" stat="0" st="420600" rt="0" nat="SWE">Victor Aglert</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206304" card="1709190">
+<base org="489" cls="62" stat="0" st="-1" rt="0" nat="SWE">Agnes Nordström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206328" card="450751">
+<base org="340" cls="61" stat="0" st="429000" rt="0" nat="SWE">Stina Rendahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206468" card="2212809">
+<base org="198" cls="59" stat="0" st="418200" rt="0" nat="SWE">Emma Lundin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206507" card="7928222">
+<base org="585" cls="160" stat="0" st="402600" rt="0" nat="SWE">Noah Tengblad</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206901" card="2123583">
+<base org="198" cls="58" stat="0" st="396000" rt="0" nat="SWE">Hedda Johansson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="206992" card="2222387">
+<base org="373" cls="31" stat="0" st="441600" rt="0" nat="SWE">Henrik Henningsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207200" card="1200003">
+<base org="489" cls="59" stat="0" st="412200" rt="0" nat="SWE">Kasper Bergman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207222" card="8170203">
+<base org="585" cls="32" stat="0" st="421200" rt="0" nat="SWE">Milo Hogart</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207246" card="8091318">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Iris Antonsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207301" card="2220056">
+<base org="638" cls="30" stat="0" st="430200" rt="0" nat="SWE">Julian Bodin Lindström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207302" card="2448131" competing="true">
+<base org="608" cls="56" stat="0" st="399000" rt="0" nat="SWE">Amanda Nilsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207363" card="2653412">
+<base org="348" cls="54" stat="0" st="420000" rt="0" nat="SWE">Elsa Lundqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207605" card="2041848">
+<base org="388" cls="62" stat="0" st="-1" rt="0" nat="SWE">Boris Wiberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207841" card="2057388">
+<base org="340" cls="61" stat="0" st="406200" rt="0" nat="SWE">Stina Dockberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="207844" card="452242" competing="true">
+<base org="340" cls="160" stat="0" st="406200" rt="0" nat="SWE">Hugo Kempe</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208092" card="2448200" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Hjalmar Kempe</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208115" card="0">
+<base org="335" cls="56" stat="0" st="439800" rt="0" nat="SWE">Hedvig Söderqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208320" card="2100616">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Max Pettersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208421" card="2060731">
+<base org="348" cls="161" stat="0" st="421200" rt="0" nat="SWE">Olle Rudérus</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208568" card="1090922">
+<base org="373" cls="31" stat="0" st="405600" rt="0" nat="SWE">Thor Becker</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208577" card="2448140" competing="true">
+<base org="373" cls="30" stat="0" st="397800" rt="0" nat="SWE">Axel Brolén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208894" card="2139228">
+<base org="417" cls="62" stat="0" st="-1" rt="0" nat="SWE">Svante Sahlstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="208941" card="2100610">
+<base org="348" cls="59" stat="0" st="414600" rt="0" nat="SWE">Cesar Känngård</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="209209" card="2212806">
+<base org="198" cls="160" stat="0" st="421800" rt="0" nat="SWE">Erik Lundin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="209453" card="264883">
+<base org="340" cls="161" stat="0" st="402000" rt="0" nat="SWE">Lou Kropf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="209827" card="2653350">
+<base org="410" cls="60" stat="0" st="415200" rt="0" nat="SWE">Majlis Helander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210130" card="353951">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Bruno Haller</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210131" card="8170424" competing="true">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Tage Sanderi</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210484" card="2212829">
+<base org="198" cls="61" stat="0" st="407400" rt="0" nat="SWE">Saga Lidwall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210485" card="2148021">
+<base org="198" cls="61" stat="0" st="430200" rt="0" nat="SWE">Lovisa Coello Petters</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210489" card="2212820">
+<base org="198" cls="32" stat="0" st="409200" rt="0" nat="SWE">Alexander Lindberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210537" card="2448251">
+<base org="608" cls="60" stat="0" st="411600" rt="0" nat="SWE">Vera Persson Bang</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210541" card="2039954">
+<base org="608" cls="56" stat="0" st="418200" rt="0" nat="SWE">Mikaela Dohn</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210642" card="443379">
+<base org="348" cls="161" stat="0" st="404400" rt="0" nat="SWE">Leo Chytraeus</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210689" card="1098769">
+<base org="172" cls="160" stat="0" st="443400" rt="0" nat="SWE">Aston Georgsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210847" card="1315200" competing="true">
+<base org="172" cls="30" stat="0" st="399000" rt="0" nat="SWE">Sixten Georgsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210895" card="246104">
+<base org="608" cls="32" stat="0" st="412200" rt="0" nat="SWE">Albin Axelsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210916" card="2148906" competing="true">
+<base org="335" cls="32" stat="0" st="400800" rt="0" nat="SWE">Bernard Lantz</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210926" card="246112">
+<base org="608" cls="57" stat="0" st="409200" rt="0" nat="SWE">Juni Bergman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="210995" card="2212758">
+<base org="335" cls="160" stat="0" st="431400" rt="0" nat="SWE">Charlie Karlsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211053" card="27800" competing="true">
+<base org="63" cls="31" stat="0" st="399000" rt="0" nat="SWE">Elias Alpsjö</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211056" card="27799">
+<base org="63" cls="31" stat="0" st="436800" rt="0" nat="SWE">Samuel Alpsjö</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211128" card="2155707">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Greta Gryzelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211166" card="2041892">
+<base org="388" cls="60" stat="0" st="429600" rt="0" nat="SWE">Pim Wright</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211167" card="2220184">
+<base org="130" cls="160" stat="0" st="438600" rt="0" nat="SWE">Ciarán Rigney Törnblom</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211169" card="2222335" competing="true">
+<base org="340" cls="59" stat="0" st="399000" rt="0" nat="SWE">Lucas Karlsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211239" card="2448055">
+<base org="302" cls="32" stat="0" st="405600" rt="0" nat="SWE">Wilmer Eriksen</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211252" card="2107352">
+<base org="302" cls="32" stat="0" st="411600" rt="0" nat="SWE">Melker Rundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211418" card="2157432">
+<base org="489" cls="30" stat="0" st="433200" rt="0" nat="SWE">Vilmer Sundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211419" card="2771988">
+<base org="447" cls="55" stat="0" st="423600" rt="0" nat="SWE">Hilda Törnlöv</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211510" card="2155681" competing="true">
+<base org="340" cls="161" stat="0" st="400800" rt="0" nat="SWE">Elliot Ingman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="211646" card="2448252">
+<base org="335" cls="29" stat="0" st="405000" rt="0" nat="SWE">Malte Tornberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212158" card="1979020" competing="true">
+<base org="348" cls="32" stat="0" st="399000" rt="0" nat="SWE">Frans Ågren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212384" card="2144233">
+<base org="388" cls="60" stat="0" st="406800" rt="0" nat="SWE">Lexi Thalén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212528" card="0">
+<base org="335" cls="60" stat="0" st="423600" rt="0" nat="SWE">Emma Niklasson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212712" card="504287">
+<base org="585" cls="62" stat="0" st="-1" rt="0" nat="SWE">Linus Heinrup</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212718" card="2157455">
+<base org="585" cls="161" stat="0" st="424800" rt="0" nat="SWE">Edvin Sundelin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="212752" card="2448246">
+<base org="302" cls="32" stat="0" st="418200" rt="0" nat="SWE">Edvin Eriksen</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="213453" card="353973" competing="true">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Oskar Avellan-hultman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="215217" card="8038266">
+<base org="638" cls="32" stat="0" st="420000" rt="0" nat="SWE">Leonard Lindqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="215218" card="8504136">
+<base org="638" cls="160" stat="0" st="408600" rt="0" nat="SWE">Julian Lindqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="215731" card="1622226" competing="true">
+<base org="388" cls="61" stat="0" st="400200" rt="0" nat="SWE">Alice Syrmakesis</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="215911" card="887843">
+<base org="565" cls="57" stat="0" st="411000" rt="0" nat="SWE">Amanda Monell</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="215931" card="2442993">
+<base org="388" cls="57" stat="0" st="415800" rt="0" nat="SWE">Ingrid Winberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216152" card="2157369">
+<base org="354" cls="32" stat="0" st="402000" rt="0" nat="SWE">Harald Grettve</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216412" card="2078105">
+<base org="172" cls="60" stat="20" st="404400" rt="0" nat="SWE">Vilda Lennmarker</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216428" card="2100615" competing="true">
+<base org="348" cls="61" stat="0" st="399000" rt="0" nat="SWE">Wilma Nordstedt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216431" card="2100614" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ludvig Nordstedt</base>
+<radio>38,109340</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216437" card="2057373">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Hedda Fischer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216530" card="2133999">
+<base org="410" cls="32" stat="0" st="414000" rt="0" nat="SWE">Malte Wende</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216532" card="8007060" competing="true">
+<base org="546" cls="60" stat="0" st="399600" rt="0" nat="SWE">Bella Nenzén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216583" card="2223562">
+<base org="200" cls="62" stat="0" st="-1" rt="0" nat="SWE">Alma Erixon</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216623" card="2039737">
+<base org="340" cls="161" stat="0" st="436800" rt="0" nat="SWE">Malte Ekengren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216686" card="1200013" competing="true">
+<base org="489" cls="56" stat="0" st="398400" rt="0" nat="SWE">Juno Pettersson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216751" card="1999967">
+<base org="373" cls="57" stat="0" st="425400" rt="0" nat="SWE">Lily Abarca Fryland</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216754" card="2123541" competing="true">
+<base org="373" cls="56" stat="0" st="396600" rt="0" nat="SWE">Alva Fryland Viberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="216972" card="26032">
+<base org="585" cls="61" stat="0" st="396600" rt="0" nat="SWE">Nina Hellman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217037" card="2155719">
+<base org="340" cls="61" stat="0" st="409800" rt="0" nat="SWE">Liv Knutsson Jakobsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217322" card="2223561">
+<base org="340" cls="160" stat="0" st="429000" rt="0" nat="SWE">Albert Hammarstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217385" card="2041815">
+<base org="388" cls="161" stat="0" st="403200" rt="0" nat="SWE">Elis Nylén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217391" card="2041819">
+<base org="388" cls="160" stat="0" st="430200" rt="0" nat="SWE">Johannes Roginski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217393" card="19848">
+<base org="410" cls="161" stat="0" st="438000" rt="0" nat="SWE">Einar Markroth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217446" card="8511102">
+<base org="130" cls="59" stat="0" st="405000" rt="0" nat="SWE">Tuva Sandström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217451" card="430155">
+<base org="198" cls="160" stat="0" st="441000" rt="0" nat="SWE">Theo Engvall</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217587" card="246116">
+<base org="608" cls="62" stat="0" st="-1" rt="0" nat="SWE">Svante Granlund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217715" card="0">
+<base org="335" cls="160" stat="0" st="437400" rt="0" nat="SWE">Jonah Thomander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217843" card="209635">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Elvira Erlandsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217914" card="2139229">
+<base org="417" cls="160" stat="0" st="415800" rt="0" nat="SWE">Clint Hedkvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="217923" card="2156881">
+<base org="302" cls="61" stat="0" st="403800" rt="0" nat="SWE">Nora Öhman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218284" card="2155776">
+<base org="172" cls="30" stat="0" st="436800" rt="0" nat="SWE">Knut Cornelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218434" card="2057355" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Valter Hedby</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218476" card="2155677">
+<base org="757" cls="55" stat="20" st="422400" rt="0" nat="SWE">Tess Rylander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218586" card="42427">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Fanny Stadig</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218665" card="8212121">
+<base org="638" cls="62" stat="20" st="-1" rt="0" nat="SWE">Nora Herlin Fredriksson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218915" card="2390701">
+<base org="348" cls="60" stat="0" st="403200" rt="0" nat="SWE">Ida Helander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="218916" card="2390702" competing="true">
+<base org="348" cls="160" stat="0" st="397800" rt="0" nat="SWE">Arvid Helander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="220074" card="435863">
+<base org="565" cls="161" stat="0" st="422400" rt="0" nat="SWE">Sixten Widén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="220120" card="8307061">
+<base org="585" cls="161" stat="0" st="414000" rt="0" nat="SWE">Love Hogart</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="220129" card="1880412">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Olivia Kock</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="220130" card="19344">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Valter Kock</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="220380" card="443370">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ruben Ström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221098" card="1200014">
+<base org="489" cls="160" stat="0" st="447000" rt="0" nat="SWE">Svante Omberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221522" card="1200010">
+<base org="489" cls="60" stat="0" st="428400" rt="0" nat="SWE">Hulda Lindberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221524" card="2155882">
+<base org="340" cls="31" stat="0" st="403800" rt="0" nat="SWE">Johannes Strandås</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221568" card="351212">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">John Hrastinski</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221617" card="351205">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Arvid Frejd</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221772" card="41822">
+<base org="410" cls="161" stat="0" st="434400" rt="0" nat="SWE">Eivind Riseth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221775" card="443368">
+<base org="348" cls="60" stat="0" st="410400" rt="0" nat="SWE">Emma Spångdal</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="221806" card="2156253">
+<base org="172" cls="29" stat="0" st="402600" rt="0" nat="SWE">Jonatan Åkerström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222013" card="2155704">
+<base org="340" cls="60" stat="0" st="412800" rt="0" nat="SWE">Alma Enhus</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222274" card="2041816">
+<base org="388" cls="60" stat="0" st="416400" rt="0" nat="SWE">Selma Nylén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222887" card="1411387">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Hugo Lind</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222938" card="441603">
+<base org="63" cls="161" stat="0" st="442800" rt="0" nat="SWE">Douglas Everhed</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222945" card="449417">
+<base org="63" cls="161" stat="0" st="432000" rt="0" nat="SWE">Theodore Fagerström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="222947" card="2220273">
+<base org="63" cls="56" stat="0" st="418800" rt="0" nat="SWE">Stella Sandberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223002" card="236001">
+<base org="608" cls="62" stat="0" st="-1" rt="0" nat="SWE">Patrik Warg Tjernberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223034" card="0">
+<base org="335" cls="62" stat="0" st="-1" rt="0" nat="SWE">Elis Jonsson Kristiansson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223146" card="2095297">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Maja Qvarfordt</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223148" card="209634">
+<base org="340" cls="61" stat="0" st="411000" rt="0" nat="SWE">Jackie Gonzalez Pope</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223157" card="2217028">
+<base org="130" cls="32" stat="0" st="413400" rt="0" nat="SWE">Leo Ruta</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223164" card="845585">
+<base org="335" cls="56" stat="0" st="423000" rt="0" nat="SWE">Hannah Andersson Tsygan</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223284" card="36212">
+<base org="388" cls="32" stat="0" st="406800" rt="0" nat="SWE">Nils Deckner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223311" card="2100611">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Diana Letfors</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223349" card="2107408">
+<base org="608" cls="161" stat="0" st="420000" rt="0" nat="SWE">Adrian Kahraman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223350" card="246115">
+<base org="608" cls="160" stat="0" st="411000" rt="0" nat="SWE">Jonathan Jevring</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223361" card="449878" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Finn Ljones</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223466" card="2014383">
+<base org="198" cls="161" stat="0" st="433200" rt="0" nat="SWE">Ingmar Palmqvist</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223509" card="209667">
+<base org="340" cls="61" stat="0" st="411000" rt="0" nat="SWE">Eira Edberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223519" card="0">
+<base org="335" cls="62" stat="0" st="-1" rt="0" nat="SWE">Erling Sällström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223524" card="3000010">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Malte Viberth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="223526" card="0">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Mikael Asiryan-Salzer</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="224465" card="347258">
+<base org="335" cls="161" stat="0" st="440400" rt="0" nat="SWE">Tyko Höier</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="224595" card="2041808" competing="true">
+<base org="388" cls="62" stat="0" st="-1" rt="0" nat="SWE">Amelie Hurtig</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="224700" card="2041806" competing="true">
+<base org="388" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ellen Ljungman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="224852" card="209604" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Arvid Hovi Grundh</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="224855" card="2158943" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Harry Farzin Mothander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225000" card="2140000">
+<base org="585" cls="59" stat="0" st="411000" rt="0" nat="SWE">Beatrice Allder</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225074" card="2141364">
+<base org="585" cls="62" stat="0" st="-1" rt="0" nat="SWE">Max Sacharov</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225290" card="344562">
+<base org="130" cls="61" stat="0" st="426600" rt="0" nat="SWE">Amalia Nelander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225316" card="30962" competing="true">
+<base org="585" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ida Andrée</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225362" card="2156560">
+<base org="585" cls="32" stat="0" st="421800" rt="0" nat="SWE">Adam Eklöf</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225377" card="2124579">
+<base org="585" cls="61" stat="0" st="420600" rt="0" nat="SWE">Thelma Backman</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225378" card="2148014">
+<base org="585" cls="61" stat="0" st="427800" rt="0" nat="SWE">Frida Rosenberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225873" card="2125948">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ester Engdahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225917" card="1504160">
+<base org="417" cls="62" stat="0" st="-1" rt="0" nat="SWE">Valdemar Wångdahl</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225930" card="351209" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Benjamin Hjalmarsson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="225931" card="2115498">
+<base org="608" cls="160" stat="0" st="409800" rt="0" nat="SWE">Samrudh Sudershan</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="226688" card="2158934">
+<base org="340" cls="161" stat="0" st="427200" rt="0" nat="SWE">Tore Wahlander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="226788" card="19825">
+<base org="410" cls="62" stat="0" st="-1" rt="0" nat="SWE">Estrid Markroth</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="226935" card="2158898">
+<base org="447" cls="30" stat="0" st="405000" rt="0" nat="SWE">Anton Hedberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="227018" card="2057208" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Wilhelm Järnmark Marteleur</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="229284" card="2223565">
+<base org="200" cls="62" stat="0" st="-1" rt="0" nat="SWE">Signe Erixon</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="230779" card="0">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Knut Sjölén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="230943" card="443371">
+<base org="348" cls="60" stat="0" st="410400" rt="0" nat="SWE">Signe Zachrisson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="231363" card="227684">
+<base org="447" cls="161" stat="0" st="441600" rt="0" nat="SWE">Yannick Leufkens</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="232780" card="2100618">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Otto Pistone</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="233345" card="2123828">
+<base org="447" cls="161" stat="0" st="426000" rt="0" nat="SWE">Vilgot Åstrand</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="233441" card="450239">
+<base org="565" cls="161" stat="0" st="430800" rt="0" nat="SWE">Casper Annerborn</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="233657" card="2158933">
+<base org="340" cls="161" stat="0" st="415200" rt="0" nat="SWE">Charlie Clausen</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="233926" card="7800304">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Olivia Klint</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="233999" card="443369">
+<base org="348" cls="60" stat="0" st="422400" rt="0" nat="SWE">Irma Stenberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234002" card="450259">
+<base org="447" cls="61" stat="0" st="424200" rt="0" nat="SWE">Saskia Alfranca Wagner</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234047" card="2057241">
+<base org="340" cls="62" stat="3" st="669890" rt="26630" nat="SWE">Theo Wernberger</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234471" card="2057361">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Sasha Bolund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234760" card="451702" competing="true">
+<base org="340" cls="59" stat="0" st="399000" rt="0" nat="SWE">Alvar Thakker Zetterström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234869" card="428933">
+<base org="130" cls="161" stat="0" st="408000" rt="0" nat="SWE">Gabriel Frögren</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234870" card="445267">
+<base org="130" cls="160" stat="0" st="405000" rt="0" nat="SWE">Elliot Sandström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234890" card="246109">
+<base org="608" cls="60" stat="0" st="420000" rt="0" nat="SWE">Majken Rönnols</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234908" card="246105">
+<base org="608" cls="62" stat="0" st="-1" rt="0" nat="SWE">William Vinemo Li</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234910" card="0">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Elliot Lundström</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234912" card="2057215">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Felix Kingstedt Von Corswant</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234913" card="209649">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Bettie Sundelius</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234922" card="246111">
+<base org="608" cls="62" stat="0" st="-1" rt="0" nat="SWE">Kasper Ahlzén</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234925" card="2155697" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Eric Dunsö</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234947" card="209685">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Otis Dits</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234948" card="450753">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Naima Dits</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234949" card="451306">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Vilgot Mark</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="234979" card="2158950">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Frank Nylander</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235003" card="353979">
+<base org="638" cls="61" stat="0" st="414600" rt="0" nat="SWE">Zelda Unogård</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235004" card="353958">
+<base org="638" cls="61" stat="0" st="412200" rt="0" nat="SWE">Roya Unogård</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235062" card="720221">
+<base org="638" cls="62" stat="20" st="-1" rt="0" nat="SWE">Anton Herlin Fredriksson</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235063" card="0">
+<base org="410" cls="161" stat="0" st="444000" rt="0">Olle Sandberg</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235064" card="2158922">
+<base org="340" cls="62" stat="0" st="-1" rt="0">Vilgot Näslund</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235065" card="2158944">
+<base org="340" cls="62" stat="0" st="-1" rt="0">Louie Eldestrand de Bruin</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235066" card="7580304">
+<base org="3398" cls="62" stat="99" st="362050" rt="41640">Mats Larssn</base>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235067" card="2311069">
+<base org="3398" cls="62" stat="99" st="370230" rt="24640">patrik w</base>
+<radio>100,24510</radio>
+<input it="0" tstat="1"/>
+</cmp>
+<cmp id="235068" card="2041895">
+<base org="388" cls="62" stat="0" st="-1" rt="0">Flora Wright</base>
+<input it="0" tstat="1"/>
+</cmp>
+</MOPComplete>

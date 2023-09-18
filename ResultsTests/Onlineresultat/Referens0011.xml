@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="210689">
+<base org="172" cls="160" stat="1" st="443400" rt="11940" nat="SWE">Aston Georgsson</base>
+<radio>48,5590;38,10220;100,11730</radio>
+</cmp>
+<cmp id="160587">
+<base org="630" cls="31" stat="1" st="442200" rt="17270" nat="SWE">Elias Sandeberg</base>
+<radio>46,2260;82,3540;57,13500;100,17020</radio>
+</cmp>
+<cmp id="168844">
+<base org="130" cls="30" stat="1" st="444000" rt="13060" nat="SWE">Emil Libérth</base>
+<radio>92,5990;57,10110;100,12910</radio>
+</cmp>
+<cmp id="234979">
+<base org="340" cls="62" stat="1" st="434920" rt="19480" nat="SWE">Frank Nylander</base>
+<radio>38,12050;100,18950</radio>
+</cmp>
+<cmp id="223164">
+<base org="335" cls="56" stat="1" st="423000" rt="35620" nat="SWE">Hannah Andersson Tsygan</base>
+<radio>46,6680;82,9160;57,23530</radio>
+</cmp>
+<cmp id="75098">
+<base org="447" cls="30" stat="1" st="446400" rt="8690" nat="SWE">Hugo Rundlöf</base>
+<radio>92,4150;57,7380;100,8540</radio>
+</cmp>
+<cmp id="204925">
+<base org="373" cls="30" stat="1" st="445200" rt="10780" nat="SWE">Jack Gidlöf</base>
+<radio>92,5140;57,8930;100,10600</radio>
+</cmp>
+<cmp id="198971">
+<base org="340" cls="160" stat="1" st="444600" rt="13440" nat="SWE">Jesper Plogmark</base>
+<radio>48,6360;38,11960;100,13240</radio>
+</cmp>
+<cmp id="217715">
+<base org="335" cls="160" stat="1" st="437400" rt="20290" nat="SWE">Jonah Thomander</base>
+<radio>48,10460;38,18160;100,20080</radio>
+</cmp>
+<cmp id="192507">
+<base org="340" cls="160" stat="1" st="442200" rt="12020" nat="SWE">Knut Holmgren</base>
+<radio>48,5890;38,10200;100,11810</radio>
+</cmp>
+<cmp id="158919">
+<base org="270" cls="56" stat="1" st="438600" rt="15730" nat="SWE">Lilly Lundqvist</base>
+<radio>46,5310;82,6250;92,7980;57,11820;100,15570</radio>
+</cmp>
+<cmp id="150755">
+<base org="270" cls="31" stat="3" st="443400" rt="11600" nat="SWE">Ludvig Boman</base>
+<radio>46,1810;57,9590;100,11440</radio>
+</cmp>
+<cmp id="235063">
+<base org="410" cls="161" stat="3" st="441620" rt="18100">Olle Sandberg</base>
+<radio>38,10590;100,17850</radio>
+</cmp>
+<cmp id="202276">
+<base org="585" cls="161" stat="1" st="445200" rt="13580" nat="SWE">Samuel Netz</base>
+<radio>46,4680;48,6120;38,10540;100,13400</radio>
+</cmp>
+<cmp id="221098" competing="true">
+<base org="489" cls="160" stat="0" st="447000" rt="0" nat="SWE">Svante Omberg</base>
+<radio>38,10740</radio>
+</cmp>
+<cmp id="217451" competing="true">
+<base org="198" cls="160" stat="0" st="441000" rt="0" nat="SWE">Theo Engvall</base>
+<radio>38,17270</radio>
+</cmp>
+<cmp id="196434">
+<base org="130" cls="160" stat="1" st="445800" rt="13060" nat="SWE">Valdemar Nelander</base>
+<radio>48,5690;38,11060;100,12840</radio>
+</cmp>
+<cmp id="171580" competing="true">
+<base org="348" cls="30" stat="0" st="447000" rt="0" nat="SWE">Vidar Berg</base>
+<radio>57,11920</radio>
+</cmp>
+<cmp id="172178">
+<base org="348" cls="30" stat="1" st="442800" rt="11720" nat="SWE">Vide Hrastinski</base>
+<radio>92,4940;57,9920;100,11550</radio>
+</cmp>
+<cmp id="193338">
+<base org="388" cls="30" stat="1" st="447600" rt="12150" nat="SWE">Vilgot Lindh</base>
+<radio>92,5300;57,10030;100,12000</radio>
+</cmp>
+</MOPDiff>

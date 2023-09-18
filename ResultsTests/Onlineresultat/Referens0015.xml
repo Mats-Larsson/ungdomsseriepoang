@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="58101">
+<base org="373" cls="55" stat="1" st="430800" rt="6900" nat="SWE">Sofia Dell'Orto</base>
+<radio>82,2800;57,5760;100,6770</radio>
+</cmp>
+<cmp id="115113">
+<base org="373" cls="55" stat="1" st="430200" rt="7760" nat="SWE">Ellen Wickbom Westman</base>
+<radio>82,3020;57,6430;100,7590</radio>
+</cmp>
+<cmp id="41895">
+<base org="348" cls="55" stat="1" st="414600" rt="7910" nat="SWE">Mira Vejedal</base>
+<radio>82,3150;57,6510;100,7750</radio>
+</cmp>
+<cmp id="167283">
+<base org="565" cls="55" stat="1" st="428400" rt="7960" nat="SWE">Emilia Dargin</base>
+<radio>82,3270;57,6650;100,7800</radio>
+</cmp>
+<cmp id="164753">
+<base org="417" cls="55" stat="1" st="404400" rt="7960" nat="SWE">Stina Martinelle</base>
+<radio>82,2930;57,6660;100,7790</radio>
+</cmp>
+<cmp id="172999">
+<base org="373" cls="55" stat="1" st="424200" rt="8020" nat="SWE">Esther Oliv</base>
+<radio>82,3100;57,6640;100,7850</radio>
+</cmp>
+<cmp id="130146">
+<base org="417" cls="55" stat="1" st="405000" rt="8060" nat="SWE">Ebba Sahlstedt</base>
+<radio>82,3040;57,6500;100,7890</radio>
+</cmp>
+<cmp id="64067">
+<base org="198" cls="55" stat="1" st="409200" rt="8290" nat="SWE">Ida Pettersson</base>
+<radio>82,3200;57,6910;100,8120</radio>
+</cmp>
+<cmp id="192724">
+<base org="335" cls="55" stat="1" st="402000" rt="8580" nat="SWE">Ingrid Niring</base>
+<radio>82,3420;57,7260;100,8400</radio>
+</cmp>
+<cmp id="172312">
+<base org="489" cls="55" stat="1" st="413400" rt="8600" nat="SWE">Ester Cumming</base>
+<radio>82,3550;57,7150;100,8430</radio>
+</cmp>
+<cmp id="117489">
+<base org="565" cls="55" stat="1" st="433200" rt="8710" nat="SWE">Ella Ljungdell</base>
+<radio>82,3490;57,7350;100,8540</radio>
+</cmp>
+<cmp id="141876">
+<base org="410" cls="55" stat="1" st="415200" rt="8900" nat="SWE">Ida Andersson</base>
+<radio>82,3490;57,7470;100,8750</radio>
+</cmp>
+<cmp id="140322">
+<base org="373" cls="55" stat="1" st="423000" rt="8910" nat="SWE">Bodil Johansson</base>
+<radio>82,3260;57,7210;100,8630</radio>
+</cmp>
+<cmp id="169186">
+<base org="447" cls="55" stat="1" st="399000" rt="8950" nat="SWE">Elin Smeds</base>
+<radio>82,3570;57,7560;100,8780</radio>
+</cmp>
+<cmp id="164754">
+<base org="417" cls="55" stat="1" st="412800" rt="9000" nat="SWE">Signe Martinelle</base>
+<radio>82,3790;57,7620;100,8840</radio>
+</cmp>
+<cmp id="57169">
+<base org="638" cls="55" stat="1" st="411600" rt="9160" nat="SWE">Greta Sandvik</base>
+<radio>82,3430;57,7600;100,8970</radio>
+</cmp>
+<cmp id="166903">
+<base org="335" cls="55" stat="1" st="408000" rt="9210" nat="SWE">Nora Enlund</base>
+<radio>82,3490;57,7810;100,9060</radio>
+</cmp>
+<cmp id="151261">
+<base org="302" cls="55" stat="1" st="420600" rt="9840" nat="SWE">Isabella Sjögren</base>
+<radio>82,3660;57,8190;100,9650</radio>
+</cmp>
+<cmp id="161134">
+<base org="335" cls="55" stat="1" st="409800" rt="9890" nat="SWE">Laura Lund</base>
+<radio>82,3710;57,8370;100,9720</radio>
+</cmp>
+<cmp id="160843">
+<base org="417" cls="55" stat="1" st="407400" rt="9980" nat="SWE">Tuva Thörnqvist</base>
+<radio>82,3650;57,8530;100,9790</radio>
+</cmp>
+<cmp id="172551">
+<base org="638" cls="55" stat="1" st="417600" rt="10040" nat="SWE">Moa Mellqvist</base>
+<radio>82,3530;57,7700;100,9820</radio>
+</cmp>
+<cmp id="178218">
+<base org="63" cls="55" stat="1" st="421800" rt="10180" nat="SWE">Sigrid Myringer</base>
+<radio>82,4500;57,8520;100,10020</radio>
+</cmp>
+<cmp id="149077">
+<base org="130" cls="55" stat="1" st="435000" rt="10330" nat="SWE">Anja Hartley</base>
+<radio>82,4080;57,8510;100,10180</radio>
+</cmp>
+<cmp id="137597">
+<base org="302" cls="55" stat="1" st="406200" rt="10750" nat="SWE">Wilma Larsson</base>
+<radio>82,3990;57,9090;100,10560</radio>
+</cmp>
+<cmp id="171866">
+<base org="302" cls="55" stat="1" st="400200" rt="10870" nat="SWE">Tuva Holmer</base>
+<radio>82,3990;57,9130;100,10690</radio>
+</cmp>
+<cmp id="163231">
+<base org="348" cls="55" stat="1" st="434400" rt="11040" nat="SWE">Ellinor Starenius</base>
+<radio>82,4580;57,9360;100,10870</radio>
+</cmp>
+<cmp id="167950">
+<base org="348" cls="55" stat="1" st="425400" rt="11320" nat="SWE">Vanja Remén</base>
+<radio>82,4440;57,9860;100,11150</radio>
+</cmp>
+<cmp id="89500">
+<base org="172" cls="55" stat="1" st="421200" rt="11640" nat="SWE">Nora Ahlström</base>
+<radio>82,5370;57,9990;100,11490</radio>
+</cmp>
+<cmp id="148891">
+<base org="388" cls="55" stat="1" st="432000" rt="11660" nat="SWE">Kerstin Nylind</base>
+<radio>82,4490;57,9800;100,11480</radio>
+</cmp>
+<cmp id="55463">
+<base org="565" cls="55" stat="1" st="405600" rt="11670" nat="SWE">Meja Helgars</base>
+<radio>82,3920;57,10240;100,11510</radio>
+</cmp>
+<cmp id="116935">
+<base org="335" cls="55" stat="1" st="403200" rt="12020" nat="SWE">Lova Jonsson</base>
+<radio>82,3920;57,10300;100,11830</radio>
+</cmp>
+<cmp id="122132">
+<base org="608" cls="55" stat="1" st="412200" rt="12070" nat="SWE">Vanja Lif</base>
+<radio>82,4390;57,10360;100,11870</radio>
+</cmp>
+<cmp id="169117">
+<base org="302" cls="55" stat="1" st="401400" rt="12090" nat="SWE">Linnea Enberg</base>
+<radio>82,4440;57,10640;100,11950</radio>
+</cmp>
+<cmp id="211419">
+<base org="447" cls="55" stat="1" st="423600" rt="12350" nat="SWE">Hilda Törnlöv</base>
+<radio>82,4720;57,10520;100,12160</radio>
+</cmp>
+<cmp id="166725">
+<base org="608" cls="55" stat="1" st="429000" rt="12370" nat="SWE">Viola Saers</base>
+<radio>82,5270;57,10580;100,12180</radio>
+</cmp>
+<cmp id="127605">
+<base org="447" cls="55" stat="1" st="410400" rt="12430" nat="SWE">Iben Stattin</base>
+<radio>82,5000;57,10350;100,12210</radio>
+</cmp>
+<cmp id="55464">
+<base org="565" cls="55" stat="1" st="408600" rt="12440" nat="SWE">Irma Helgars</base>
+<radio>82,3590;57,11120;100,12290</radio>
+</cmp>
+<cmp id="115195">
+<base org="410" cls="55" stat="1" st="433800" rt="12530" nat="SWE">Liv Ställberg</base>
+<radio>82,4810;57,10330;100,12280</radio>
+</cmp>
+<cmp id="146606">
+<base org="302" cls="55" stat="1" st="416400" rt="12610" nat="SWE">Ellen Stadig</base>
+<radio>82,4530;57,10510;100,12450</radio>
+</cmp>
+<cmp id="85922">
+<base org="515" cls="55" stat="1" st="424800" rt="12960" nat="SWE">Signe Albinsson</base>
+<radio>82,5120;57,11030;100,12790</radio>
+</cmp>
+<cmp id="149382">
+<base org="608" cls="55" stat="1" st="418800" rt="13250" nat="SWE">Emelie Hellström</base>
+<radio>82,4860;57,11140;100,13080</radio>
+</cmp>
+<cmp id="168665">
+<base org="348" cls="55" stat="1" st="427800" rt="13640" nat="SWE">Erika Remén</base>
+<radio>82,5910;57,11740;100,13480</radio>
+</cmp>
+<cmp id="119362">
+<base org="630" cls="55" stat="1" st="426600" rt="13640" nat="SWE">Livia Quas</base>
+<radio>82,7100;57,11980;100,13470</radio>
+</cmp>
+<cmp id="178555">
+<base org="198" cls="55" stat="1" st="435600" rt="14230" nat="SWE">Elin Lidwall</base>
+<radio>82,5450;57,12170;100,14090</radio>
+</cmp>
+<cmp id="42279">
+<base org="373" cls="55" stat="1" st="419400" rt="14460" nat="SWE">Hanna Sundström</base>
+<radio>82,5230;57,11930;100,14260</radio>
+</cmp>
+<cmp id="148964">
+<base org="388" cls="55" stat="1" st="414000" rt="14810" nat="SWE">Mella Wiberg</base>
+<radio>82,5510;57,12580;100,14610</radio>
+</cmp>
+<cmp id="129759">
+<base org="373" cls="55" stat="1" st="426000" rt="15480" nat="SWE">Betty Persson</base>
+<radio>82,7180;57,13490;100,15290</radio>
+</cmp>
+<cmp id="127157">
+<base org="410" cls="55" stat="1" st="400800" rt="16360" nat="SWE">Frida Lidström</base>
+<radio>82,4900;57,12880;100,16200</radio>
+</cmp>
+<cmp id="147523">
+<base org="335" cls="55" stat="1" st="420000" rt="16850" nat="SWE">Amelie Dryselius</base>
+<radio>82,6180;57,14320;100,16630</radio>
+</cmp>
+<cmp id="155122">
+<base org="388" cls="55" stat="1" st="429600" rt="16900" nat="SWE">Freja Winby</base>
+<radio>82,6410;57,14000;100,16720</radio>
+</cmp>
+<cmp id="194906">
+<base org="388" cls="55" stat="1" st="415800" rt="17050" nat="SWE">Alma Rimpi</base>
+<radio>82,5290;57,15190;100,16840</radio>
+</cmp>
+<cmp id="169555">
+<base org="546" cls="55" stat="1" st="403800" rt="17730" nat="SWE">Lina Silén</base>
+<radio>82,3900;57,15990;100,17560</radio>
+</cmp>
+<cmp id="122042">
+<base org="302" cls="55" stat="1" st="432600" rt="19040" nat="SWE">Sara Berg</base>
+<radio>82,7680;57,16900;100,18840</radio>
+</cmp>
+<cmp id="172473">
+<base org="335" cls="55" stat="1" st="427200" rt="21820" nat="SWE">Pauline Vilgon</base>
+<radio>82,6900;57,18620;100,21620</radio>
+</cmp>
+</MOPDiff>

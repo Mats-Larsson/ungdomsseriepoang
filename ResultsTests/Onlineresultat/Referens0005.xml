@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="204356">
+<base org="340" cls="62" stat="1" st="406750" rt="12470" nat="SWE">Ada Pålsson</base>
+<radio>38,6910;100,12110</radio>
+</cmp>
+<cmp id="225362" competing="true">
+<base org="585" cls="32" stat="0" st="421800" rt="0" nat="SWE">Adam Eklöf</base>
+</cmp>
+<cmp id="178224" competing="true">
+<base org="198" cls="31" stat="0" st="420000" rt="0" nat="SWE">Adam Lundin</base>
+<radio>46,3130</radio>
+</cmp>
+<cmp id="223349" competing="true">
+<base org="608" cls="161" stat="0" st="420000" rt="0" nat="SWE">Adrian Kahraman</base>
+<radio>46,2040</radio>
+</cmp>
+<cmp id="206304" competing="true">
+<base org="489" cls="62" stat="0" st="-1" rt="0" nat="SWE">Agnes Nordström</base>
+<radio>38,134370</radio>
+</cmp>
+<cmp id="109703">
+<base org="348" cls="161" stat="1" st="405600" rt="13460" nat="SWE">Albin Gelius</base>
+<radio>46,3750;48,5940;38,9570;100,13200</radio>
+</cmp>
+<cmp id="200577" competing="true">
+<base org="340" cls="160" stat="0" st="423000" rt="0" nat="SWE">Albin Kingstedt von Corswant</base>
+</cmp>
+<cmp id="181145" competing="true">
+<base org="585" cls="31" stat="0" st="424800" rt="0" nat="SWE">Albin Löfgren</base>
+</cmp>
+<cmp id="178216" competing="true">
+<base org="63" cls="29" stat="0" st="419400" rt="0" nat="SWE">Albin Myringer</base>
+<radio>46,1280;87,3610</radio>
+</cmp>
+<cmp id="205657" competing="true">
+<base org="63" cls="31" stat="0" st="417600" rt="0" nat="SWE">Albin Norberg</base>
+<radio>46,2070;82,3240</radio>
+</cmp>
+<cmp id="204352" competing="true">
+<base org="348" cls="161" stat="0" st="423600" rt="0" nat="SWE">Alexander Branelius</base>
+</cmp>
+<cmp id="163222">
+<base org="348" cls="160" stat="1" st="412200" rt="9470" nat="SWE">Alexander Sundblad</base>
+<radio>48,4350;38,7700;100,9290</radio>
+</cmp>
+<cmp id="114374">
+<base org="348" cls="30" stat="1" st="408600" rt="9480" nat="SWE">Algot Sjöstrand</base>
+<radio>92,3980;57,7900;100,9330</radio>
+</cmp>
+<cmp id="102048">
+<base org="373" cls="54" stat="1" st="411000" rt="8790" nat="SWE">Alice Hellberg</base>
+<radio>48,1510;92,1850;82,2500;87,3200;57,7590;100,8630</radio>
+</cmp>
+<cmp id="184084" competing="true">
+<base org="373" cls="55" stat="0" st="417000" rt="0" nat="SWE">Alicia Olson</base>
+<radio>82,3630</radio>
+</cmp>
+<cmp id="194906" competing="true">
+<base org="388" cls="55" stat="0" st="415800" rt="0" nat="SWE">Alma Rimpi</base>
+<radio>82,5290</radio>
+</cmp>
+<cmp id="177455">
+<base org="410" cls="57" stat="1" st="414600" rt="7250" nat="SWE">Alva Lönnkvist</base>
+<radio>46,1870;38,5340;100,7090</radio>
+</cmp>
+<cmp id="199924" competing="true">
+<base org="348" cls="61" stat="0" st="423000" rt="0" nat="SWE">Alva Östergaard</base>
+</cmp>
+<cmp id="234760">
+<base org="340" cls="59" stat="1" st="399000" rt="19720" nat="SWE">Alvar Thakker Zetterström</base>
+<radio>48,6310;57,16260;100,19490</radio>
+</cmp>
+<cmp id="195957" competing="true">
+<base org="447" cls="31" stat="0" st="423000" rt="0" nat="SWE">Alvar Törnlöv</base>
+</cmp>
+<cmp id="80123" competing="true">
+<base org="608" cls="56" stat="0" st="423600" rt="0" nat="SWE">Amanda Hedberg</base>
+</cmp>
+<cmp id="147523" competing="true">
+<base org="335" cls="55" stat="0" st="420000" rt="0" nat="SWE">Amelie Dryselius</base>
+</cmp>
+<cmp id="184036" competing="true">
+<base org="585" cls="57" stat="0" st="418200" rt="0" nat="SWE">Amelie Hellman</base>
+<radio>46,4150</radio>
+</cmp>
+<cmp id="178365" competing="true">
+<base org="340" cls="160" stat="0" st="420600" rt="0" nat="SWE">Arthur Gryzelius</base>
+</cmp>
+<cmp id="139955" competing="true">
+<base org="302" cls="29" stat="0" st="420600" rt="0" nat="SWE">Arvid Rundström</base>
+<radio>46,1080</radio>
+</cmp>
+<cmp id="99752" competing="true">
+<base org="373" cls="54" stat="0" st="415800" rt="0" nat="SWE">Astrid Kraft</base>
+<radio>82,3170;87,3930</radio>
+</cmp>
+<cmp id="177359" competing="true">
+<base org="410" cls="57" stat="0" st="423000" rt="0" nat="SWE">Astrid Ohlin</base>
+</cmp>
+<cmp id="185587">
+<base org="417" cls="56" stat="1" st="411000" rt="11290" nat="SWE">Astrid Schibort</base>
+<radio>46,2370;82,3210;92,4220;57,9410;100,11090</radio>
+</cmp>
+<cmp id="204226" competing="true">
+<base org="410" cls="61" stat="0" st="413400" rt="0" nat="SWE">Astrid Tulldahl</base>
+<radio>46,3620;38,9350</radio>
+</cmp>
+<cmp id="142538" competing="true">
+<base org="348" cls="56" stat="0" st="412800" rt="0" nat="SWE">Audrey Fransson</base>
+<radio>46,2770;82,4190;57,9020</radio>
+</cmp>
+<cmp id="225000">
+<base org="585" cls="59" stat="1" st="411000" rt="11200" nat="SWE">Beatrice Allder</base>
+<radio>48,3010;57,9140;100,11000</radio>
+</cmp>
+<cmp id="159210">
+<base org="198" cls="29" stat="1" st="410400" rt="8220" nat="SWE">Benjamin Hjertén</base>
+<radio>46,1030;48,1570;92,1930;87,3080;57,7030;100,8070</radio>
+</cmp>
+<cmp id="83117">
+<base org="388" cls="54" stat="1" st="405600" rt="14830" nat="SWE">Blenda Sandén</base>
+<radio>48,2790;92,3380;82,5180;87,6570;57,12910;100,14650</radio>
+</cmp>
+<cmp id="140322" competing="true">
+<base org="373" cls="55" stat="0" st="423000" rt="0" nat="SWE">Bodil Johansson</base>
+</cmp>
+<cmp id="181584" competing="true">
+<base org="388" cls="30" stat="0" st="420000" rt="0" nat="SWE">Carl Djurberg</base>
+</cmp>
+<cmp id="115666" competing="true">
+<base org="388" cls="29" stat="0" st="424800" rt="0" nat="SWE">Carl Wännman</base>
+</cmp>
+<cmp id="201173">
+<base org="302" cls="57" stat="1" st="405000" rt="13260" nat="SWE">Carla Bayer</base>
+<radio>46,2600;38,9390;100,13050</radio>
+</cmp>
+<cmp id="233657" competing="true">
+<base org="340" cls="161" stat="0" st="415200" rt="0" nat="SWE">Charlie Clausen</base>
+<radio>46,3370;38,6840</radio>
+</cmp>
+<cmp id="184213" competing="true">
+<base org="302" cls="57" stat="0" st="417000" rt="0" nat="SWE">Clara Ek</base>
+<radio>46,1740;38,6650</radio>
+</cmp>
+<cmp id="169953" competing="true">
+<base org="348" cls="161" stat="0" st="412800" rt="0" nat="SWE">Dante Letfors</base>
+<radio>46,2950;38,9170</radio>
+</cmp>
+<cmp id="178649" competing="true">
+<base org="388" cls="57" stat="0" st="414000" rt="0" nat="SWE">Dina Skatt</base>
+<radio>38,9250</radio>
+</cmp>
+<cmp id="191359" competing="true">
+<base org="340" cls="57" stat="0" st="418800" rt="0" nat="SWE">Ebba Hardell</base>
+<radio>46,2600</radio>
+</cmp>
+<cmp id="193544" competing="true">
+<base org="340" cls="32" stat="0" st="418800" rt="0" nat="SWE">Edgar Maltzman</base>
+<radio>46,1420</radio>
+</cmp>
+<cmp id="162295">
+<base org="348" cls="56" stat="1" st="409800" rt="14030" nat="SWE">Edla Leidner</base>
+<radio>46,3710;82,4990;92,6450;57,11890;100,13870</radio>
+</cmp>
+<cmp id="138341" competing="true">
+<base org="546" cls="31" stat="0" st="421200" rt="0" nat="SWE">Edvin Carlstein</base>
+<radio>46,1030;82,1530</radio>
+</cmp>
+<cmp id="212752" competing="true">
+<base org="302" cls="32" stat="0" st="418200" rt="0" nat="SWE">Edvin Eriksen</base>
+<radio>46,1290</radio>
+</cmp>
+<cmp id="212718" competing="true">
+<base org="585" cls="161" stat="0" st="424800" rt="0" nat="SWE">Edvin Sundelin</base>
+</cmp>
+<cmp id="127606">
+<base org="447" cls="32" stat="1" st="402600" rt="17450" nat="SWE">Egil Stattin</base>
+<radio>46,2930;48,5070;38,12660;100,17200</radio>
+</cmp>
+<cmp id="138467" competing="true">
+<base org="565" cls="30" stat="0" st="420600" rt="0" nat="SWE">Elias Trossing</base>
+</cmp>
+<cmp id="194490" competing="true">
+<base org="198" cls="55" stat="0" st="411000" rt="0" nat="SWE">Elin Eng</base>
+<radio>82,4770;57,12020</radio>
+</cmp>
+<cmp id="204866" competing="true">
+<base org="489" cls="54" stat="0" st="423000" rt="0" nat="SWE">Elin Helgesson</base>
+</cmp>
+<cmp id="188394">
+<base org="373" cls="30" stat="1" st="411600" rt="12260" nat="SWE">Elis Lauri</base>
+<radio>92,4980;57,10390;100,12080</radio>
+</cmp>
+<cmp id="139682">
+<base org="340" cls="31" stat="3" st="406800" rt="16000" nat="SWE">Elis Lind</base>
+<radio>46,2430;57,14080;100,15860</radio>
+</cmp>
+<cmp id="217385">
+<base org="388" cls="161" stat="1" st="403200" rt="17460" nat="SWE">Elis Nylén</base>
+<radio>46,5710;48,8510;38,12300;100,17240</radio>
+</cmp>
+<cmp id="185096" competing="true">
+<base org="348" cls="60" stat="0" st="424800" rt="0" nat="SWE">Elise Hrastinski</base>
+</cmp>
+<cmp id="179262">
+<base org="632" cls="56" stat="1" st="414000" rt="8510" nat="SWE">Elisia Karlström</base>
+<radio>46,1840;82,2670;92,3600;57,6890;100,8320</radio>
+</cmp>
+<cmp id="146606" competing="true">
+<base org="302" cls="55" stat="0" st="416400" rt="0" nat="SWE">Ellen Stadig</base>
+<radio>82,4530</radio>
+</cmp>
+<cmp id="204832" competing="true">
+<base org="373" cls="54" stat="0" st="415200" rt="0" nat="SWE">Ellinor Fjägers</base>
+<radio>82,3930;87,4940</radio>
+</cmp>
+<cmp id="195548">
+<base org="388" cls="30" stat="1" st="403800" rt="14450" nat="SWE">Elliot Björkman</base>
+<radio>92,5840;57,11660;100,14280</radio>
+</cmp>
+<cmp id="117487">
+<base org="565" cls="29" stat="1" st="409800" rt="11350" nat="SWE">Elliot Ljungdell</base>
+<radio>46,1300;48,2280;92,2690;87,4230;57,9850;100,11210</radio>
+</cmp>
+<cmp id="234910" competing="true">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Elliot Lundström</base>
+</cmp>
+<cmp id="207363" competing="true">
+<base org="348" cls="54" stat="0" st="420000" rt="0" nat="SWE">Elsa Lundqvist</base>
+</cmp>
+<cmp id="165663" competing="true">
+<base org="447" cls="57" stat="0" st="422400" rt="0" nat="SWE">Elsa Rundlöf</base>
+</cmp>
+<cmp id="206040" competing="true">
+<base org="388" cls="61" stat="0" st="417000" rt="0" nat="SWE">Elsa Skoogberg</base>
+<radio>46,3370</radio>
+</cmp>
+<cmp id="180531" competing="true">
+<base org="388" cls="57" stat="0" st="411600" rt="0" nat="SWE">Elsa Winby</base>
+<radio>46,2820;38,10460</radio>
+</cmp>
+<cmp id="217843" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Elvira Erlandsson</base>
+</cmp>
+<cmp id="149382" competing="true">
+<base org="608" cls="55" stat="0" st="418800" rt="0" nat="SWE">Emelie Hellström</base>
+<radio>82,4860</radio>
+</cmp>
+<cmp id="51582" competing="true">
+<base org="348" cls="29" stat="0" st="415200" rt="0" nat="SWE">Emil Hammarberg</base>
+<radio>46,1770;87,4520</radio>
+</cmp>
+<cmp id="162326">
+<base org="348" cls="59" stat="1" st="403800" rt="16800" nat="SWE">Emilia Olsson</base>
+<radio>48,4940;57,13720;100,16610</radio>
+</cmp>
+<cmp id="160888">
+<base org="638" cls="54" stat="1" st="410400" rt="11850" nat="SWE">Emily Blyth</base>
+<radio>48,2320;92,2790;82,3740;87,4960;57,10140;100,11680</radio>
+</cmp>
+<cmp id="185020" competing="true">
+<base org="546" cls="56" stat="0" st="417600" rt="0" nat="SWE">Emma Asplund</base>
+<radio>82,2570;57,5900</radio>
+</cmp>
+<cmp id="199895" competing="true">
+<base org="410" cls="56" stat="0" st="420000" rt="0" nat="SWE">Emma Berg</base>
+<radio>46,2140;82,2920</radio>
+</cmp>
+<cmp id="221775">
+<base org="348" cls="60" stat="1" st="410400" rt="9580" nat="SWE">Emma Spångdal</base>
+<radio>48,4180;38,8490;100,9380</radio>
+</cmp>
+<cmp id="206039">
+<base org="388" cls="60" stat="1" st="405600" rt="14340" nat="SWE">Emmy Skoogberg</base>
+<radio>48,5890;38,12780;100,14120</radio>
+</cmp>
+<cmp id="196614" competing="true">
+<base org="388" cls="59" stat="0" st="421800" rt="0" nat="SWE">Erik Bäckroos</base>
+</cmp>
+<cmp id="166689" competing="true">
+<base org="302" cls="31" stat="0" st="412200" rt="0" nat="SWE">Erik Ekblad</base>
+<radio>46,1340;82,2130;57,9210</radio>
+</cmp>
+<cmp id="97131" competing="true">
+<base org="608" cls="31" stat="0" st="418200" rt="0" nat="SWE">Erik Eklöv</base>
+<radio>46,1330;82,1920</radio>
+</cmp>
+<cmp id="96777" competing="true">
+<base org="608" cls="30" stat="0" st="421200" rt="0" nat="SWE">Erik Käll</base>
+</cmp>
+<cmp id="209209" competing="true">
+<base org="198" cls="160" stat="0" st="421800" rt="0" nat="SWE">Erik Lundin</base>
+</cmp>
+<cmp id="190401">
+<base org="489" cls="160" stat="1" st="400200" rt="19700" nat="SWE">Erik Wiklund</base>
+<radio>48,8090;38,17050;100,19480</radio>
+</cmp>
+<cmp id="184902">
+<base org="198" cls="62" stat="1" st="415860" rt="7030" nat="SWE">Eskil Sjölén</base>
+<radio>38,3940;100,6810</radio>
+</cmp>
+<cmp id="172312">
+<base org="489" cls="55" stat="1" st="413400" rt="8600" nat="SWE">Ester Cumming</base>
+<radio>82,3550;57,7150;100,8430</radio>
+</cmp>
+<cmp id="188395">
+<base org="373" cls="56" stat="1" st="410400" rt="10380" nat="SWE">Ester Lauri</base>
+<radio>46,3650;82,4430;92,5530;57,8540;100,10210</radio>
+</cmp>
+<cmp id="171857" competing="true">
+<base org="388" cls="57" stat="0" st="420600" rt="0" nat="SWE">Ester Stark Hultgren</base>
+<radio>46,2280</radio>
+</cmp>
+<cmp id="178481" competing="true">
+<base org="340" cls="61" stat="0" st="418200" rt="0" nat="SWE">Esther Elwin</base>
+<radio>46,4580</radio>
+</cmp>
+<cmp id="179590" competing="true">
+<base org="335" cls="56" stat="0" st="415800" rt="0" nat="SWE">Esther Enlund</base>
+<radio>46,2300;82,7310</radio>
+</cmp>
+<cmp id="172999" competing="true">
+<base org="373" cls="55" stat="0" st="424200" rt="0" nat="SWE">Esther Oliv</base>
+</cmp>
+<cmp id="226788">
+<base org="410" cls="62" stat="1" st="407810" rt="11800" nat="SWE">Estrid Markroth</base>
+<radio>38,7530;100,11490</radio>
+</cmp>
+<cmp id="194502" competing="true">
+<base org="198" cls="31" stat="0" st="415800" rt="0" nat="SWE">Fabian Wernersson</base>
+<radio>46,1720;82,3850</radio>
+</cmp>
+<cmp id="126467">
+<base org="410" cls="54" stat="1" st="409200" rt="9180" nat="SWE">Fanny Bergman</base>
+<radio>48,1770;92,2190;82,2930;87,3810;57,7920;100,9020</radio>
+</cmp>
+<cmp id="218586" competing="true">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Fanny Stadig</base>
+<radio>38,130550</radio>
+</cmp>
+<cmp id="199318" competing="true">
+<base org="608" cls="59" stat="0" st="420600" rt="0" nat="SWE">Felicia Persson</base>
+</cmp>
+<cmp id="194210">
+<base org="348" cls="161" stat="1" st="409200" rt="13060" nat="SWE">Filip Klang</base>
+<radio>46,3620;48,6560;38,10020;100,12810</radio>
+</cmp>
+<cmp id="121228">
+<base org="565" cls="29" stat="1" st="411600" rt="10850" nat="SWE">Filip Sjölander</base>
+<radio>46,1160;48,1850;92,2250;87,3870;57,9230;100,10670</radio>
+</cmp>
+<cmp id="157087" competing="true">
+<base org="638" cls="31" stat="0" st="416400" rt="0" nat="SWE">Filip Sone</base>
+<radio>46,1330;82,1900;57,6230</radio>
+</cmp>
+<cmp id="123507">
+<base org="348" cls="30" stat="1" st="409800" rt="12410" nat="SWE">Filip Wimmer</base>
+<radio>92,4210;57,9010;100,12250</radio>
+</cmp>
+<cmp id="161891" competing="true">
+<base org="340" cls="30" stat="0" st="421800" rt="0" nat="SWE">Folke Andersson Östholm</base>
+</cmp>
+<cmp id="157597">
+<base org="198" cls="31" stat="3" st="400200" rt="21970" nat="SWE">Folke Wällstedt</base>
+<radio>46,3070;82,5860;57,19770;100,21760</radio>
+</cmp>
+<cmp id="193747" competing="true">
+<base org="340" cls="161" stat="0" st="418800" rt="0" nat="SWE">Fred Franzén Larsson</base>
+<radio>46,5030</radio>
+</cmp>
+<cmp id="148761" competing="true">
+<base org="302" cls="54" stat="0" st="414600" rt="0" nat="SWE">Frida Ekblad</base>
+<radio>82,3710;87,5070</radio>
+</cmp>
+<cmp id="168651" competing="true">
+<base org="198" cls="57" stat="0" st="419400" rt="0" nat="SWE">Frida Jonsson</base>
+</cmp>
+<cmp id="57169">
+<base org="638" cls="55" stat="1" st="411600" rt="9160" nat="SWE">Greta Sandvik</base>
+<radio>82,3430;57,7600;100,8970</radio>
+</cmp>
+<cmp id="55832" competing="true">
+<base org="302" cls="29" stat="0" st="418200" rt="0" nat="SWE">Gustav Nyström</base>
+<radio>46,1260;87,4620</radio>
+</cmp>
+<cmp id="223164" competing="true">
+<base org="335" cls="56" stat="0" st="423000" rt="0" nat="SWE">Hannah Andersson Tsygan</base>
+</cmp>
+<cmp id="144241">
+<base org="302" cls="30" stat="1" st="412800" rt="9050" nat="SWE">Hannes Pihlo</base>
+<radio>92,4410;57,7660;100,8910</radio>
+</cmp>
+<cmp id="183913">
+<base org="632" cls="30" stat="1" st="410400" rt="12970" nat="SWE">Harald Gromark</base>
+<radio>92,6140;57,11060;100,12820</radio>
+</cmp>
+<cmp id="198293">
+<base org="757" cls="29" stat="1" st="408600" rt="11320" nat="SWE">Harry Ewers</base>
+<radio>46,1110;48,1950;92,2350;87,4030;57,9730;100,11130</radio>
+</cmp>
+<cmp id="177450">
+<base org="410" cls="161" stat="1" st="411600" rt="8770" nat="SWE">Harry Lönnkvist</base>
+<radio>46,2890;48,4330;38,6360;100,8570</radio>
+</cmp>
+<cmp id="160424" competing="true">
+<base org="348" cls="30" stat="0" st="424200" rt="0" nat="SWE">Harry Norell</base>
+</cmp>
+<cmp id="203418" competing="true">
+<base org="638" cls="61" stat="0" st="421800" rt="0" nat="SWE">Hedda Hallman</base>
+</cmp>
+<cmp id="118892">
+<base org="348" cls="57" stat="1" st="410400" rt="10740" nat="SWE">Hedda Sjöstrand</base>
+<radio>46,2910;38,7950;100,10570</radio>
+</cmp>
+<cmp id="199066" competing="true">
+<base org="608" cls="32" stat="0" st="416400" rt="0" nat="SWE">Henning Färm</base>
+<radio>46,2030</radio>
+</cmp>
+<cmp id="211419" competing="true">
+<base org="447" cls="55" stat="0" st="423600" rt="0" nat="SWE">Hilda Törnlöv</base>
+</cmp>
+<cmp id="194787">
+<base org="340" cls="31" stat="1" st="400800" rt="20370" nat="SWE">Hilding Rossling</base>
+<radio>46,3730;82,5110;57,16410;100,20150</radio>
+</cmp>
+<cmp id="164418" competing="true">
+<base org="489" cls="29" stat="0" st="415800" rt="0" nat="SWE">Hugo Fulke</base>
+<radio>46,1500;87,5550</radio>
+</cmp>
+<cmp id="168754" competing="true">
+<base org="335" cls="30" stat="0" st="424800" rt="0" nat="SWE">Hugo Jacov</base>
+</cmp>
+<cmp id="207844" card="2220164">
+<base org="340" cls="160" stat="1" st="406200" rt="10520" nat="SWE">Hugo Kempe</base>
+<radio>48,4900;38,9210;100,10290</radio>
+</cmp>
+<cmp id="222887">
+<base org="340" cls="62" stat="1" st="402510" rt="19280" nat="SWE">Hugo Lind</base>
+<radio>38,11450;100,18600</radio>
+</cmp>
+<cmp id="180213">
+<base org="302" cls="32" stat="1" st="414600" rt="6820" nat="SWE">Hugo Öhman</base>
+<radio>46,1250;48,2110;38,4870;100,6650</radio>
+</cmp>
+<cmp id="194243" competing="true">
+<base org="63" cls="30" stat="0" st="423000" rt="0" nat="SWE">Ian Holmlund</base>
+</cmp>
+<cmp id="127605">
+<base org="447" cls="55" stat="1" st="410400" rt="12430" nat="SWE">Iben Stattin</base>
+<radio>82,5000;57,10350;100,12210</radio>
+</cmp>
+<cmp id="141876">
+<base org="410" cls="55" stat="1" st="415200" rt="8900" nat="SWE">Ida Andersson</base>
+<radio>82,3490;57,7470</radio>
+</cmp>
+<cmp id="126032">
+<base org="388" cls="54" stat="1" st="403800" rt="18860" nat="SWE">Ida Samuelsson</base>
+<radio>48,2680;92,3220;82,4520;87,10190;57,17120;100,18700</radio>
+</cmp>
+<cmp id="201067" competing="true">
+<base org="335" cls="54" stat="0" st="420600" rt="0" nat="SWE">Idun Ekman-Dahlgren</base>
+</cmp>
+<cmp id="215931" competing="true">
+<base org="388" cls="57" stat="0" st="415800" rt="0" nat="SWE">Ingrid Winberg</base>
+<radio>38,7420</radio>
+</cmp>
+<cmp id="207246" competing="true">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Iris Antonsson</base>
+</cmp>
+<cmp id="200908" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Iris Nordén Wahlgren</base>
+</cmp>
+<cmp id="55464">
+<base org="565" cls="55" stat="1" st="408600" rt="12440" nat="SWE">Irma Helgars</base>
+<radio>82,3590;57,11120;100,12290</radio>
+</cmp>
+<cmp id="60798" competing="true">
+<base org="546" cls="54" stat="0" st="411600" rt="0" nat="SWE">Irma Jarlemark</base>
+<radio>82,6280;87,11620</radio>
+</cmp>
+<cmp id="130150">
+<base org="417" cls="56" stat="1" st="403800" rt="14280" nat="SWE">Irma Sahlstedt</base>
+<radio>46,2210;82,3100;92,8880;57,12220;100,14120</radio>
+</cmp>
+<cmp id="233999" competing="true">
+<base org="348" cls="60" stat="0" st="422400" rt="0" nat="SWE">Irma Stenberg</base>
+</cmp>
+<cmp id="151261" competing="true">
+<base org="302" cls="55" stat="0" st="420600" rt="0" nat="SWE">Isabella Sjögren</base>
+</cmp>
+<cmp id="200881">
+<base org="302" cls="32" stat="1" st="403200" rt="18210" nat="SWE">Isac Lundström</base>
+<radio>46,2020;48,7800;38,13020;100,18030</radio>
+</cmp>
+<cmp id="156609" competing="true">
+<base org="585" cls="31" stat="0" st="419400" rt="0" nat="SWE">Isak Netz</base>
+<radio>46,1460;82,2040</radio>
+</cmp>
+<cmp id="195089">
+<base org="335" cls="31" stat="3" st="411600" rt="10080" nat="SWE">Ivar Nuoranne</base>
+<radio>46,3670;82,4340;57,8260;100,9920</radio>
+</cmp>
+<cmp id="206037" competing="true">
+<base org="388" cls="59" stat="0" st="406200" rt="0" nat="SWE">Jesper Hultman</base>
+<radio>57,13680;100,17730</radio>
+</cmp>
+<cmp id="165338">
+<base org="172" cls="29" stat="1" st="409200" rt="9870" nat="SWE">Joel Holmgren</base>
+<radio>46,1190;48,1810;92,2170;87,3470;57,8420;100,9710</radio>
+</cmp>
+<cmp id="184024">
+<base org="340" cls="59" stat="1" st="399000" rt="19890" nat="SWE">John Aizawa</base>
+<radio>48,6480;57,16250;100,19710</radio>
+</cmp>
+<cmp id="184009" competing="true">
+<base org="172" cls="29" stat="0" st="416400" rt="0" nat="SWE">John Ericson</base>
+<radio>46,1310;87,4960</radio>
+</cmp>
+<cmp id="153662" competing="true">
+<base org="410" cls="31" stat="0" st="424200" rt="0" nat="SWE">John Flodmark</base>
+</cmp>
+<cmp id="221568" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">John Hrastinski</base>
+</cmp>
+<cmp id="147644">
+<base org="340" cls="59" stat="1" st="399000" rt="19980" nat="SWE">John Lundborg</base>
+<radio>48,6550;57,16340;100,19810</radio>
+</cmp>
+<cmp id="135556" competing="true">
+<base org="198" cls="29" stat="0" st="417600" rt="0" nat="SWE">John Nyman</base>
+<radio>46,1180;87,4060</radio>
+</cmp>
+<cmp id="85958" competing="true">
+<base org="172" cls="30" stat="0" st="423600" rt="0" nat="SWE">Jon Forsberg Rundström</base>
+</cmp>
+<cmp id="223350">
+<base org="608" cls="160" stat="1" st="411000" rt="8500" nat="SWE">Jonathan Jevring</base>
+<radio>48,3610;38,7180;100,8190</radio>
+</cmp>
+<cmp id="112700" competing="true">
+<base org="630" cls="57" stat="0" st="421800" rt="0" nat="SWE">Josefin Mellberg</base>
+</cmp>
+<cmp id="196400">
+<base org="585" cls="61" stat="1" st="408600" rt="10200" nat="SWE">Julia Andrée</base>
+<radio>46,3570;48,4790;38,7160;100,9980</radio>
+</cmp>
+<cmp id="215218">
+<base org="638" cls="160" stat="1" st="408600" rt="13390" nat="SWE">Julian Lindqvist</base>
+<radio>48,6690;38,11630;100,13210</radio>
+</cmp>
+<cmp id="210926" competing="true">
+<base org="608" cls="57" stat="0" st="409200" rt="0" nat="SWE">Juni Bergman</base>
+<radio>46,3400;38,12330</radio>
+</cmp>
+<cmp id="151241">
+<base org="198" cls="30" stat="1" st="409200" rt="13550" nat="SWE">Justus Hedin</base>
+<radio>92,6370;57,11330;100,13390</radio>
+</cmp>
+<cmp id="192493" competing="true">
+<base org="340" cls="32" stat="0" st="412800" rt="0" nat="SWE">Karl Müller</base>
+<radio>46,1990;38,9230</radio>
+</cmp>
+<cmp id="234922">
+<base org="608" cls="62" stat="1" st="405060" rt="15800" nat="SWE">Kasper Ahlzén</base>
+<radio>38,9630;100,15340</radio>
+</cmp>
+<cmp id="207200">
+<base org="489" cls="59" stat="1" st="412200" rt="9940" nat="SWE">Kasper Bergman</base>
+<radio>48,2530;57,8000;100,9750</radio>
+</cmp>
+<cmp id="179341">
+<base org="130" cls="31" stat="1" st="414000" rt="10010" nat="SWE">Kasper Florczyk</base>
+<radio>46,1680;82,2540;57,7850;100,9850</radio>
+</cmp>
+<cmp id="168814">
+<base org="198" cls="54" stat="1" st="408600" rt="14530" nat="SWE">Klara Loberg</base>
+<radio>48,3060;92,3570;82,4700;87,6120;57,12610;100,14300</radio>
+</cmp>
+<cmp id="106207" competing="true">
+<base org="608" cls="56" stat="0" st="419400" rt="0" nat="SWE">Klara Skogholm</base>
+<radio>46,1690;82,2370</radio>
+</cmp>
+<cmp id="172910" competing="true">
+<base org="565" cls="30" stat="0" st="422400" rt="0" nat="SWE">Kuzey Basol</base>
+</cmp>
+<cmp id="161134">
+<base org="335" cls="55" stat="1" st="409800" rt="9890" nat="SWE">Laura Lund</base>
+<radio>82,3710;57,8370;100,9720</radio>
+</cmp>
+<cmp id="202153">
+<base org="340" cls="62" stat="1" st="406570" rt="13250" nat="SWE">Leo Lindberg-Matute</base>
+<radio>38,8400;100,12940</radio>
+</cmp>
+<cmp id="215217" competing="true">
+<base org="638" cls="32" stat="0" st="420000" rt="0" nat="SWE">Leonard Lindqvist</base>
+</cmp>
+<cmp id="212384">
+<base org="388" cls="60" stat="1" st="406800" rt="14310" nat="SWE">Lexi Thalén</base>
+<radio>48,6190;38,12380;100,14110</radio>
+</cmp>
+<cmp id="216751" competing="true">
+<base org="373" cls="57" stat="0" st="425400" rt="0" nat="SWE">Lily Abarca Fryland</base>
+</cmp>
+<cmp id="169555">
+<base org="546" cls="55" stat="1" st="403800" rt="17730" nat="SWE">Lina Silén</base>
+<radio>82,3900;57,15990;100,17560</radio>
+</cmp>
+<cmp id="194668">
+<base org="335" cls="56" stat="1" st="402000" rt="16510" nat="SWE">Linnea Ferner Thurén</base>
+<radio>46,4800;82,6110;92,8900;57,13830;100,16330</radio>
+</cmp>
+<cmp id="198945" competing="true">
+<base org="348" cls="61" stat="0" st="415800" rt="0" nat="SWE">Linnea Norström</base>
+<radio>46,8080</radio>
+</cmp>
+<cmp id="172174">
+<base org="348" cls="54" stat="1" st="402600" rt="15850" nat="SWE">Linnea Starenius</base>
+<radio>48,2410;92,2900;82,4040;87,5200;57,14120;100,15680</radio>
+</cmp>
+<cmp id="187699">
+<base org="388" cls="57" stat="1" st="405600" rt="12300" nat="SWE">Liv Fritzell</base>
+<radio>46,2910;38,9770;100,12090</radio>
+</cmp>
+<cmp id="217037">
+<base org="340" cls="61" stat="1" st="409800" rt="9250" nat="SWE">Liv Knutsson Jakobsson</base>
+<radio>46,3500;48,4830;38,7190;100,9040</radio>
+</cmp>
+<cmp id="187752" competing="true">
+<base org="172" cls="160" stat="0" st="424200" rt="0" nat="SWE">Lo Fröberg Wilhelm</base>
+</cmp>
+<cmp id="148325">
+<base org="489" cls="31" stat="1" st="411000" rt="7660" nat="SWE">Love Akterin</base>
+<radio>46,1220;82,1840;57,6200;100,7480</radio>
+</cmp>
+<cmp id="220120" competing="true">
+<base org="585" cls="161" stat="0" st="414000" rt="0" nat="SWE">Love Hogart</base>
+</cmp>
+<cmp id="211169">
+<base org="340" cls="59" stat="1" st="399000" rt="19570" nat="SWE">Lucas Karlsson</base>
+<radio>48,6250;57,16310;100,19340</radio>
+</cmp>
+<cmp id="199208" competing="true">
+<base org="198" cls="32" stat="0" st="405000" rt="0" nat="SWE">Ludvig Wernersson</base>
+<radio>46,3570;38,18610</radio>
+</cmp>
+<cmp id="194209">
+<base org="348" cls="32" stat="1" st="411000" rt="11100" nat="SWE">Ludwig Klang</base>
+<radio>46,1840;48,3040;38,8260;100,10890</radio>
+</cmp>
+<cmp id="157568" competing="true">
+<base org="335" cls="29" stat="0" st="418800" rt="0" nat="SWE">Lukas Ferner Thurén</base>
+<radio>46,1290;87,4530</radio>
+</cmp>
+<cmp id="177023" competing="true">
+<base org="410" cls="57" stat="0" st="412800" rt="0" nat="SWE">Maja Flodmark</base>
+<radio>46,7030</radio>
+</cmp>
+<cmp id="234890" competing="true">
+<base org="608" cls="60" stat="0" st="420000" rt="0" nat="SWE">Majken Rönnols</base>
+</cmp>
+<cmp id="178556">
+<base org="198" cls="32" stat="1" st="410400" rt="9860" nat="SWE">Malte Fogeby</base>
+<radio>46,1630;48,2620;38,7610;100,9710</radio>
+</cmp>
+<cmp id="135004">
+<base org="638" cls="30" stat="1" st="412200" rt="9260" nat="SWE">Malte Hallman</base>
+<radio>92,4360;57,7890;100,9120</radio>
+</cmp>
+<cmp id="211646">
+<base org="335" cls="29" stat="1" st="405000" rt="17080" nat="SWE">Malte Tornberg</base>
+<radio>46,1430;48,2840;92,3390;87,5190;57,15080;100,16910</radio>
+</cmp>
+<cmp id="223524" competing="true">
+<base org="302" cls="62" stat="0" st="-1" rt="0" nat="SWE">Malte Viberth</base>
+</cmp>
+<cmp id="133417" competing="true">
+<base org="447" cls="54" stat="0" st="422400" rt="0" nat="SWE">Matilda Modig</base>
+</cmp>
+<cmp id="168053" competing="true">
+<base org="417" cls="57" stat="0" st="416400" rt="0" nat="SWE">Matilda Sundberg</base>
+<radio>46,1950;38,5530</radio>
+</cmp>
+<cmp id="132748" competing="true">
+<base org="198" cls="29" stat="0" st="420000" rt="0" nat="SWE">Max Boström</base>
+<radio>46,880;87,2980</radio>
+</cmp>
+<cmp id="225074">
+<base org="585" cls="62" stat="1" st="409230" rt="9920" nat="SWE">Max Sacharov</base>
+<radio>38,6600;100,9670</radio>
+</cmp>
+<cmp id="211252">
+<base org="302" cls="32" stat="3" st="411600" rt="9820" nat="SWE">Melker Rundström</base>
+<radio>46,1870;48,4780;38,7960;100,9660</radio>
+</cmp>
+<cmp id="148964" competing="true">
+<base org="388" cls="55" stat="0" st="414000" rt="0" nat="SWE">Mella Wiberg</base>
+<radio>82,5510</radio>
+</cmp>
+<cmp id="142638">
+<base org="585" cls="54" stat="1" st="403200" rt="15920" nat="SWE">Meya Tengblad</base>
+<radio>48,6300;92,6790;82,7800;87,8880;57,14380;100,15740</radio>
+</cmp>
+<cmp id="210541" competing="true">
+<base org="608" cls="56" stat="0" st="418200" rt="0" nat="SWE">Mikaela Dohn</base>
+<radio>46,2950;82,3930</radio>
+</cmp>
+<cmp id="199257" competing="true">
+<base org="340" cls="31" stat="0" st="418800" rt="0" nat="SWE">Milian Hjälle</base>
+<radio>46,2180;82,3210</radio>
+</cmp>
+<cmp id="147709">
+<base org="172" cls="29" stat="3" st="403800" rt="18610" nat="SWE">Mille Dahlgren</base>
+<radio>46,1470;48,2320;92,4810;87,7030;57,17010;100,18410</radio>
+</cmp>
+<cmp id="198647" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Mio Äppelgran</base>
+<radio>38,135360</radio>
+</cmp>
+<cmp id="139629" competing="true">
+<base org="608" cls="56" stat="0" st="412200" rt="0" nat="SWE">Mira Mårsell</base>
+<radio>46,2670;82,5410;57,10880</radio>
+</cmp>
+<cmp id="41895">
+<base org="348" cls="55" stat="1" st="414600" rt="7910" nat="SWE">Mira Vejedal</base>
+<radio>82,3150;57,6510;100,7750</radio>
+</cmp>
+<cmp id="174487" competing="true">
+<base org="546" cls="57" stat="0" st="417600" rt="0" nat="SWE">Miranda Silén</base>
+<radio>46,2350</radio>
+</cmp>
+<cmp id="102158" competing="true">
+<base org="585" cls="54" stat="0" st="417600" rt="0" nat="SWE">Mirjam Costermans</base>
+<radio>82,3420;87,4670</radio>
+</cmp>
+<cmp id="172551" competing="true">
+<base org="638" cls="55" stat="0" st="417600" rt="0" nat="SWE">Moa Mellqvist</base>
+<radio>82,3530</radio>
+</cmp>
+<cmp id="191345" competing="true">
+<base org="348" cls="56" stat="0" st="421800" rt="0" nat="SWE">Moa Ström</base>
+<radio>46,2060</radio>
+</cmp>
+<cmp id="153708" competing="true">
+<base org="515" cls="57" stat="0" st="424800" rt="0" nat="SWE">Moa Wielander</base>
+</cmp>
+<cmp id="104959">
+<base org="585" cls="54" stat="3" st="412800" rt="8550" nat="SWE">Märta Ahlquist</base>
+<radio>48,1660;92,2040;82,2900;87,3590;57,7340;100,8390</radio>
+</cmp>
+<cmp id="234948">
+<base org="340" cls="62" stat="1" st="411480" rt="10770" nat="SWE">Naima Dits</base>
+<radio>38,6750;100,10410</radio>
+</cmp>
+<cmp id="194907" competing="true">
+<base org="388" cls="56" stat="0" st="413400" rt="0" nat="SWE">Nathalie Westerlund</base>
+<radio>46,2960;82,4040;57,9100</radio>
+</cmp>
+<cmp id="161710" competing="true">
+<base org="489" cls="29" stat="0" st="421800" rt="0" nat="SWE">Nils Gidlöf</base>
+<radio>46,1230</radio>
+</cmp>
+<cmp id="102049" competing="true">
+<base org="373" cls="29" stat="0" st="424200" rt="0" nat="SWE">Noel Hellberg</base>
+</cmp>
+<cmp id="89500" competing="true">
+<base org="172" cls="55" stat="0" st="421200" rt="0" nat="SWE">Nora Ahlström</base>
+</cmp>
+<cmp id="167628">
+<base org="638" cls="54" stat="1" st="408000" rt="12110" nat="SWE">Nora Elkert</base>
+<radio>48,2100;92,2580;82,3530;87,4650;57,10530;100,11910</radio>
+</cmp>
+<cmp id="141091" competing="true">
+<base org="410" cls="56" stat="0" st="417000" rt="0" nat="SWE">Nora Ställberg</base>
+<radio>46,1690;82,2760</radio>
+</cmp>
+<cmp id="199929">
+<base org="340" cls="32" stat="1" st="403800" rt="14050" nat="SWE">Oliver Lindberg-Matute</base>
+<radio>46,3810;48,5030;38,10470;100,13870</radio>
+</cmp>
+<cmp id="233926" competing="true">
+<base org="638" cls="62" stat="0" st="-1" rt="0" nat="SWE">Olivia Klint</base>
+</cmp>
+<cmp id="220129">
+<base org="198" cls="62" stat="1" st="412150" rt="7690" nat="SWE">Olivia Kock</base>
+<radio>38,4940;100,7480</radio>
+</cmp>
+<cmp id="208421" competing="true">
+<base org="348" cls="161" stat="0" st="421200" rt="0" nat="SWE">Olle Rudérus</base>
+</cmp>
+<cmp id="195244" competing="true">
+<base org="340" cls="160" stat="0" st="425400" rt="0" nat="SWE">Olof Hardell</base>
+</cmp>
+<cmp id="234947">
+<base org="340" cls="62" stat="1" st="411500" rt="10740" nat="SWE">Otis Dits</base>
+<radio>38,6810;100,10370</radio>
+</cmp>
+<cmp id="194598" competing="true">
+<base org="585" cls="56" stat="0" st="414600" rt="0" nat="SWE">Phoebe Self</base>
+<radio>46,2340;82,3210;57,7940</radio>
+</cmp>
+<cmp id="164731">
+<base org="172" cls="59" stat="1" st="401490" rt="16470" nat="SWE">Rakel Dahlgren</base>
+<radio>48,3940;57,13420;100,16250</radio>
+</cmp>
+<cmp id="168116" competing="true">
+<base org="348" cls="56" stat="0" st="424800" rt="0" nat="SWE">Rebecka Pannagel</base>
+</cmp>
+<cmp id="235004" competing="true">
+<base org="638" cls="61" stat="0" st="412200" rt="0" nat="SWE">Roya Unogård</base>
+<radio>46,3980;38,9780</radio>
+</cmp>
+<cmp id="220380" competing="true">
+<base org="348" cls="62" stat="0" st="-1" rt="0" nat="SWE">Ruben Ström</base>
+</cmp>
+<cmp id="185028" competing="true">
+<base org="340" cls="61" stat="0" st="418200" rt="0" nat="SWE">Ruby Molander</base>
+<radio>46,4520</radio>
+</cmp>
+<cmp id="136770">
+<base org="373" cls="56" stat="1" st="416400" rt="6200" nat="SWE">Saga Hellberg</base>
+<radio>46,1590;82,2060;92,2720;57,4990;100,6040</radio>
+</cmp>
+<cmp id="179108">
+<base org="608" cls="57" stat="1" st="408600" rt="11720" nat="SWE">Saga Saers</base>
+<radio>46,2520;38,8840;100,11530</radio>
+</cmp>
+<cmp id="139831">
+<base org="172" cls="61" stat="1" st="405000" rt="15630" nat="SWE">Saga Sundberg</base>
+<radio>46,4950;48,7870;38,11540;100,15320</radio>
+</cmp>
+<cmp id="161624" competing="true">
+<base org="130" cls="29" stat="0" st="414600" rt="0" nat="SWE">Samuel Backlund</base>
+</cmp>
+<cmp id="100513" competing="true">
+<base org="417" cls="56" stat="0" st="422400" rt="0" nat="SWE">Sara Almgren</base>
+</cmp>
+<cmp id="143449">
+<base org="546" cls="54" stat="1" st="413400" rt="9840" nat="SWE">Sara Liwång</base>
+<radio>48,1920;92,2360;82,3130;87,3950;57,8470;100,9680</radio>
+</cmp>
+<cmp id="234471">
+<base org="340" cls="62" stat="1" st="402440" rt="19800" nat="SWE">Sasha Bolund</base>
+<radio>38,11630;100,19320</radio>
+</cmp>
+<cmp id="234002" competing="true">
+<base org="447" cls="61" stat="0" st="424200" rt="0" nat="SWE">Saskia Alfranca Wagner</base>
+</cmp>
+<cmp id="85922" competing="true">
+<base org="515" cls="55" stat="0" st="424800" rt="0" nat="SWE">Signe Albinsson</base>
+</cmp>
+<cmp id="201523">
+<base org="410" cls="57" stat="1" st="408000" rt="12260" nat="SWE">Signe Fryxell</base>
+<radio>46,3050;38,9450;100,12100</radio>
+</cmp>
+<cmp id="164754">
+<base org="417" cls="55" stat="1" st="412800" rt="9000" nat="SWE">Signe Martinelle</base>
+<radio>82,3790;57,7620;100,8840</radio>
+</cmp>
+<cmp id="230943">
+<base org="348" cls="60" stat="1" st="410400" rt="9590" nat="SWE">Signe Zachrisson</base>
+<radio>48,4170;38,8500;100,9380</radio>
+</cmp>
+<cmp id="178218" competing="true">
+<base org="63" cls="55" stat="0" st="421800" rt="0" nat="SWE">Sigrid Myringer</base>
+</cmp>
+<cmp id="147628" competing="true">
+<base org="388" cls="29" stat="0" st="425400" rt="0" nat="SWE">Simon Wenzin</base>
+</cmp>
+<cmp id="165909">
+<base org="172" cls="56" stat="1" st="411600" rt="11780" nat="SWE">Siri Holmgren</base>
+<radio>46,2950;82,4210;92,5140;57,9780;100,11590</radio>
+</cmp>
+<cmp id="155411" competing="true">
+<base org="63" cls="56" stat="0" st="424200" rt="0" nat="SWE">Siri Håstad</base>
+</cmp>
+<cmp id="220074" competing="true">
+<base org="565" cls="161" stat="0" st="422400" rt="0" nat="SWE">Sixten Widén</base>
+</cmp>
+<cmp id="179389">
+<base org="757" cls="54" stat="1" st="409800" rt="12470" nat="SWE">Sofia Julander</base>
+<radio>48,2570;92,2980;82,3740;87,4530;57,10980;100,12320</radio>
+</cmp>
+<cmp id="115003" competing="true">
+<base org="630" cls="54" stat="0" st="414000" rt="0" nat="SWE">Sofia Quas</base>
+<radio>82,3840;87,5440</radio>
+</cmp>
+<cmp id="179109" competing="true">
+<base org="608" cls="57" stat="0" st="424200" rt="0" nat="SWE">Solveig Saers</base>
+</cmp>
+<cmp id="185152" competing="true">
+<base org="515" cls="54" stat="0" st="421200" rt="0" nat="SWE">Sophia Larsson</base>
+</cmp>
+<cmp id="222947" competing="true">
+<base org="63" cls="56" stat="0" st="418800" rt="0" nat="SWE">Stella Sandberg</base>
+<radio>46,2280;82,3090</radio>
+</cmp>
+<cmp id="201357" competing="true">
+<base org="585" cls="32" stat="0" st="408600" rt="0" nat="SWE">Stellan Kling</base>
+<radio>46,4070;38,12420</radio>
+</cmp>
+<cmp id="186446">
+<base org="410" cls="31" stat="1" st="407400" rt="13670" nat="SWE">Stig Helander</base>
+<radio>46,2180;82,3240;57,11160;100,13490</radio>
+</cmp>
+<cmp id="187615">
+<base org="340" cls="62" stat="1" st="402570" rt="19230" nat="SWE">Stina Lind</base>
+<radio>38,11350;100,18590</radio>
+</cmp>
+<cmp id="105444" competing="true">
+<base org="410" cls="54" stat="0" st="416400" rt="0" nat="SWE">Stina Nygren</base>
+<radio>82,4340;87,5840</radio>
+</cmp>
+<cmp id="127607" competing="true">
+<base org="447" cls="30" stat="0" st="425400" rt="0" nat="SWE">Tage Stattin</base>
+</cmp>
+<cmp id="117798" competing="true">
+<base org="335" cls="29" stat="0" st="422400" rt="0" nat="SWE">Teodor Jonsson</base>
+<radio>46,880</radio>
+</cmp>
+<cmp id="145705">
+<base org="608" cls="32" stat="1" st="409800" rt="11490" nat="SWE">Teodor Törnros</base>
+<radio>46,1770;48,4720;38,7920;100,11340</radio>
+</cmp>
+<cmp id="92571" competing="true">
+<base org="348" cls="54" stat="0" st="418800" rt="0" nat="SWE">Thea Gelius</base>
+<radio>82,3060;87,3860</radio>
+</cmp>
+<cmp id="225377" competing="true">
+<base org="585" cls="61" stat="0" st="420600" rt="0" nat="SWE">Thelma Backman</base>
+</cmp>
+<cmp id="234047">
+<base org="340" cls="62" stat="1" st="404180" rt="12560" nat="SWE">Theo Wernberger</base>
+<radio>38,6980;100,12210</radio>
+</cmp>
+<cmp id="195332">
+<base org="417" cls="161" stat="1" st="410400" rt="8560" nat="SWE">Theodor Skwarski</base>
+<radio>46,2630;48,4100;38,6210;100,8360</radio>
+</cmp>
+<cmp id="200339" competing="true">
+<base org="608" cls="32" stat="0" st="420600" rt="0" nat="SWE">Ture Bäckström</base>
+<radio>46,1560</radio>
+</cmp>
+<cmp id="217446">
+<base org="130" cls="59" stat="1" st="405000" rt="13870" nat="SWE">Tuva Sandström</base>
+<radio>48,3580;57,11230;100,13710</radio>
+</cmp>
+<cmp id="187149" competing="true">
+<base org="130" cls="54" stat="0" st="418200" rt="0" nat="SWE">Tuva Westerback</base>
+<radio>82,3850;87,5010</radio>
+</cmp>
+<cmp id="225917" competing="true">
+<base org="417" cls="62" stat="0" st="-1" rt="0" nat="SWE">Valdemar Wångdahl</base>
+<radio>38,132160</radio>
+</cmp>
+<cmp id="220130" competing="true">
+<base org="198" cls="62" stat="0" st="-1" rt="0" nat="SWE">Valter Kock</base>
+<radio>38,131010;100,135820</radio>
+</cmp>
+<cmp id="205529" competing="true">
+<base org="340" cls="161" stat="0" st="416400" rt="0" nat="SWE">Valter MacLean</base>
+<radio>46,2980;38,7460</radio>
+</cmp>
+<cmp id="122132" competing="true">
+<base org="608" cls="55" stat="0" st="412200" rt="0" nat="SWE">Vanja Lif</base>
+<radio>82,4390;57,10360</radio>
+</cmp>
+<cmp id="198977" competing="true">
+<base org="340" cls="60" stat="0" st="398400" rt="0" nat="SWE">Vera Mild</base>
+<radio>38,23890</radio>
+</cmp>
+<cmp id="132183" competing="true">
+<base org="410" cls="56" stat="0" st="421200" rt="0" nat="SWE">Vera Ställberg</base>
+<radio>46,2690</radio>
+</cmp>
+<cmp id="191362">
+<base org="585" cls="31" stat="1" st="414600" rt="9140" nat="SWE">Victor Ek</base>
+<radio>46,1260;82,2870;57,7310;100,8990</radio>
+</cmp>
+<cmp id="147603" competing="true">
+<base org="447" cls="29" stat="0" st="414000" rt="0" nat="SWE">Victor Granath</base>
+<radio>46,970;87,3480;57,8990</radio>
+</cmp>
+<cmp id="129655">
+<base org="417" cls="31" stat="1" st="412800" rt="9380" nat="SWE">Victor Hallendal</base>
+<radio>46,1630;82,2650;57,7510;100,9180</radio>
+</cmp>
+<cmp id="160894" competing="true">
+<base org="489" cls="31" stat="0" st="421800" rt="0" nat="SWE">Vide Messing</base>
+<radio>46,1630</radio>
+</cmp>
+<cmp id="234949" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0" nat="SWE">Vilgot Mark</base>
+<radio>38,132690</radio>
+</cmp>
+<cmp id="235064" competing="true">
+<base org="340" cls="62" stat="0" st="-1" rt="0">Vilgot Näslund</base>
+</cmp>
+<cmp id="167779" competing="true">
+<base org="340" cls="32" stat="0" st="417000" rt="0" nat="SWE">Vilgot Åstrand</base>
+<radio>46,1370</radio>
+</cmp>
+<cmp id="153181" card="8507887">
+<base org="546" cls="30" stat="1" st="414000" rt="8480" nat="SWE">Ville Åman Klasén</base>
+<radio>92,3780;57,7130;100,8320</radio>
+</cmp>
+<cmp id="145855">
+<base org="585" cls="29" stat="1" st="412800" rt="10260" nat="SWE">Vilmer Folcke</base>
+<radio>46,1140;48,1820;92,2150;87,3700;57,8730;100,10080</radio>
+</cmp>
+<cmp id="165888" competing="true">
+<base org="410" cls="56" stat="0" st="415200" rt="0" nat="SWE">Viola Andersson</base>
+<radio>46,2390;82,3300</radio>
+</cmp>
+<cmp id="168248" competing="true">
+<base org="302" cls="54" stat="0" st="421800" rt="0" nat="SWE">Wera Björklund</base>
+</cmp>
+<cmp id="169178" competing="true">
+<base org="340" cls="32" stat="0" st="419400" rt="0" nat="SWE">Wilhelm Gryzelius</base>
+<radio>46,2870</radio>
+</cmp>
+<cmp id="211239">
+<base org="302" cls="32" stat="1" st="405600" rt="15880" nat="SWE">Wilmer Eriksen</base>
+<radio>46,1580;48,2510;38,13000;100,15690</radio>
+</cmp>
+<cmp id="148606">
+<base org="638" cls="29" stat="1" st="406800" rt="13070" nat="SWE">Wilmer Jonasson</base>
+<radio>46,1120;48,1840;92,2350;87,4490;57,11510;100,12910</radio>
+</cmp>
+<cmp id="235003" competing="true">
+<base org="638" cls="61" stat="0" st="414600" rt="0" nat="SWE">Zelda Unogård</base>
+<radio>46,3410;38,6940</radio>
+</cmp>
+</MOPDiff>

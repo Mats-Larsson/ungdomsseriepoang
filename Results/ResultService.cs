@@ -33,7 +33,7 @@ public sealed class ResultService : IResultService, IDisposable
         pointsCalc = new PointsCalc(teamService.GetTeamBasePoints(), configuration, resultSource);
 
         GetResult();
-        timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
+        timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds); // TODO: Synka med MeOS post av ny data
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
         timer.Enabled = true;
@@ -86,7 +86,9 @@ public sealed class ResultService : IResultService, IDisposable
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        return resultSource.NewResultPostAsync(body, timestamp);
+        lock (this) {
+            return resultSource.NewResultPostAsync(body, timestamp);
+        }
     }
 
     public IEnumerable<ParticipantPoints> GetParticipantPointsList()

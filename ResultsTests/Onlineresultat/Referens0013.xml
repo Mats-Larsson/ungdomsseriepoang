@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="202520">
+<base org="565" cls="62" stat="20" st="-1" rt="0" nat="SWE">Agnes Westerdahl</base>
+</cmp>
+<cmp id="222013">
+<base org="340" cls="60" stat="20" st="412800" rt="0" nat="SWE">Alma Enhus</base>
+</cmp>
+<cmp id="216583">
+<base org="200" cls="62" stat="20" st="-1" rt="0" nat="SWE">Alma Erixon</base>
+</cmp>
+<cmp id="102308">
+<base org="447" cls="29" stat="20" st="411000" rt="0" nat="SWE">Edvin Johansson Liljegren</base>
+</cmp>
+<cmp id="140187">
+<base org="638" cls="54" stat="20" st="412200" rt="0" nat="SWE">Ellinor Bartels</base>
+</cmp>
+<cmp id="133324">
+<base org="546" cls="60" stat="20" st="414000" rt="0" nat="SWE">Emmy Boström</base>
+</cmp>
+<cmp id="223519">
+<base org="335" cls="62" stat="20" st="-1" rt="0" nat="SWE">Erling Sällström</base>
+</cmp>
+<cmp id="159414">
+<base org="447" cls="29" stat="20" st="399000" rt="0" nat="SWE">Felix Öhman</base>
+</cmp>
+<cmp id="177226">
+<base org="410" cls="32" stat="20" st="398400" rt="0" nat="SWE">Gustav Åkerman</base>
+</cmp>
+<cmp id="177254">
+<base org="410" cls="32" stat="20" st="396600" rt="0" nat="SWE">Hilmer Bergh</base>
+</cmp>
+<cmp id="180004">
+<base org="417" cls="160" stat="20" st="399000" rt="0" nat="SWE">Hugo Hartley</base>
+</cmp>
+<cmp id="221522">
+<base org="489" cls="60" stat="20" st="428400" rt="0" nat="SWE">Hulda Lindberg</base>
+</cmp>
+<cmp id="174829">
+<base org="565" cls="57" stat="20" st="420000" rt="0" nat="SWE">Irma Westerdahl</base>
+</cmp>
+<cmp id="157713">
+<base org="335" cls="57" stat="20" st="423600" rt="0" nat="SWE">Julia Doyle</base>
+</cmp>
+<cmp id="82878">
+<base org="270" cls="56" stat="20" st="432000" rt="0" nat="SWE">Olivia Edlund</base>
+</cmp>
+<cmp id="166651">
+<base org="638" cls="56" stat="20" st="436200" rt="0" nat="SWE">Saga Wallner</base>
+</cmp>
+<cmp id="229284">
+<base org="200" cls="62" stat="20" st="-1" rt="0" nat="SWE">Signe Erixon</base>
+</cmp>
+<cmp id="59975">
+<base org="630" cls="55" stat="20" st="418200" rt="0" nat="SWE">Sigrid Mellberg</base>
+</cmp>
+<cmp id="142614">
+<base org="585" cls="30" stat="20" st="436200" rt="0" nat="SWE">Sven Börjesson</base>
+</cmp>
+<cmp id="206134">
+<base org="447" cls="31" stat="20" st="420600" rt="0" nat="SWE">Victor Aglert</base>
+</cmp>
+<cmp id="168115">
+<base org="348" cls="30" stat="1" st="445800" rt="21950" nat="SWE">Viktor Pannagel</base>
+<radio>92,11200;57,19890;100,21700</radio>
+</cmp>
+<cmp id="135664">
+<base org="546" cls="29" stat="20" st="426000" rt="0" nat="SWE">Åke Engman</base>
+</cmp>
+</MOPDiff>

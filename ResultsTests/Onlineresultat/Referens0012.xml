@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="98019">
+<base org="348" cls="29" stat="20" st="423600" rt="0" nat="SWE">Gabriel Carlqvist</base>
+</cmp>
+<cmp id="223164">
+<base org="335" cls="56" stat="3" st="423000" rt="35620" nat="SWE">Hannah Andersson Tsygan</base>
+<radio>46,6680;82,9160;92,18290;57,23530</radio>
+</cmp>
+<cmp id="235063">
+<base org="410" cls="62" stat="1" st="441620" rt="18100">Olle Sandberg</base>
+<radio>38,10590;100,17850</radio>
+</cmp>
+<cmp id="221098">
+<base org="489" cls="160" stat="1" st="447000" rt="14130" nat="SWE">Svante Omberg</base>
+<radio>48,5070;38,10740;100,13950</radio>
+</cmp>
+<cmp id="217451">
+<base org="198" cls="160" stat="1" st="441000" rt="19350" nat="SWE">Theo Engvall</base>
+<radio>48,10240;38,17270;100,19190</radio>
+</cmp>
+<cmp id="171580">
+<base org="348" cls="30" stat="1" st="447000" rt="13610" nat="SWE">Vidar Berg</base>
+<radio>92,5510;57,11920;100,13460</radio>
+</cmp>
+<cmp id="121458">
+<base org="348" cls="31" stat="20" st="444000" rt="0" nat="SWE">Vidar Wisén</base>
+</cmp>
+<cmp id="168115" competing="true">
+<base org="348" cls="30" stat="0" st="445800" rt="0" nat="SWE">Viktor Pannagel</base>
+<radio>57,19890</radio>
+</cmp>
+</MOPDiff>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<MOPDiff xmlns="http://www.melin.nu/mop">
+<cmp id="144619">
+<base org="373" cls="55" stat="1" st="399600" rt="8160" nat="SWE">Alice Slars Paulsson</base>
+<radio>82,3080;57,6740;100,8000</radio>
+</cmp>
+<cmp id="184084">
+<base org="373" cls="55" stat="1" st="417000" rt="9380" nat="SWE">Alicia Olson</base>
+<radio>82,3630;57,7890;100,9190</radio>
+</cmp>
+<cmp id="185021">
+<base org="546" cls="55" stat="1" st="406800" rt="8490" nat="SWE">Alina Asplund</base>
+<radio>82,3230;57,7170;100,8310</radio>
+</cmp>
+<cmp id="194906">
+<base org="388" cls="55" stat="1" st="415800" rt="17050" nat="SWE">Alma Rimpi</base>
+</cmp>
+</MOPDiff>
