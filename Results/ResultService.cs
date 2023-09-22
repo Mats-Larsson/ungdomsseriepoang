@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Timers;
 using Microsoft.Extensions.Logging;
+using Mysqlx.Crud;
 using Results.Contract;
 using Results.Model;
 
@@ -22,6 +23,7 @@ public sealed class ResultService : IResultService, IDisposable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;
+    private static readonly SemaphoreSlim NewResultPostSemaphore = new(1, 1);
 
     public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
     {
@@ -56,7 +58,7 @@ public sealed class ResultService : IResultService, IDisposable
 
             latestTeamResults = teamResults;
             latestTeamResultsHash = teamResultsHash;
-            latestStatistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration);
+            latestStatistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration); // TODO: Uppdatera resultat om denna ändras.
 
             OnNewResults?.Invoke(this, EventArgs.Empty);
         }
@@ -84,10 +86,18 @@ public sealed class ResultService : IResultService, IDisposable
 
     public event EventHandler? OnNewResults;
 
-    public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
+    public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        lock (this) {
-            return resultSource.NewResultPostAsync(body, timestamp);
+        await NewResultPostSemaphore.WaitAsync().ConfigureAwait(true);
+        try
+        {
+            string status = await resultSource.NewResultPostAsync(body, timestamp).ConfigureAwait(true);
+            GetResult();
+            return status;
+        }
+        finally
+        {
+            NewResultPostSemaphore.Release();
         }
     }
 
