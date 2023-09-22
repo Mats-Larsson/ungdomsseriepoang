@@ -1,7 +1,8 @@
-﻿using System.Xml.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Results.Contract;
 
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class ParticipantPoints
 {
     public string Class { get; }

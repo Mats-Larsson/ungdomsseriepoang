@@ -1,8 +1,4 @@
-﻿using Results.Model;
-using System;
-using static Results.Contract.ParticipantStatus;
-
-namespace Results;
+﻿namespace Results;
 
 internal class PointsCalcFinal : PointsCalcBase
 {

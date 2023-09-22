@@ -12,11 +12,6 @@ class Team
     [Name("Points"), Optional]
     public int? BasePoints { get; }
 
-    public Team(string name)
-    {
-        Name = name;
-    }
-
     public Team(string name, int? basePoints)
     {
         Name = name;

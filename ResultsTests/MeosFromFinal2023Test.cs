@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Meos;
+// ReSharper disable StringLiteralTypo
 
 namespace ResultsTests;
 
@@ -17,26 +18,26 @@ public class MeosFromFinal2023Test
         TimeUntilNotStated = TimeSpan.FromMinutes(10)
     };
 
-    private static readonly IDictionary<string, DateTime> resultDateTimes = new Dictionary<string, DateTime>()
+    private static readonly IDictionary<string, DateTime> ResultDateTimes = new Dictionary<string, DateTime>
     {
-        { "Referens0001.xml", dt("2023-09-16 11:06") },
-        { "Referens0002.xml", dt("2023-09-16 11:16") },
-        { "Referens0003.xml", dt("2023-09-16 11:26") },
-        { "Referens0004.xml", dt("2023-09-16 11:36") },
-        { "Referens0005.xml", dt("2023-09-16 11:46") },
-        { "Referens0006.xml", dt("2023-09-16 11:56") },
-        { "Referens0007.xml", dt("2023-09-16 12:06") },
-        { "Referens0008.xml", dt("2023-09-16 12:16") },
-        { "Referens0009.xml", dt("2023-09-16 12:26") },
-        { "Referens0010.xml", dt("2023-09-16 12:36") },
-        { "Referens0011.xml", dt("2023-09-16 12:46") },
-        { "Referens0012.xml", dt("2023-09-16 12:56") },
-        { "Referens0013.xml", dt("2023-09-16 13:06") },
-        { "Referens0014.xml", dt("2023-09-16 13:16") },
-        { "Referens0015.xml", dt("2023-09-16 13:26") }
+        { "Referens0001.xml", Dt("2023-09-16 11:06") },
+        { "Referens0002.xml", Dt("2023-09-16 11:16") },
+        { "Referens0003.xml", Dt("2023-09-16 11:26") },
+        { "Referens0004.xml", Dt("2023-09-16 11:36") },
+        { "Referens0005.xml", Dt("2023-09-16 11:46") },
+        { "Referens0006.xml", Dt("2023-09-16 11:56") },
+        { "Referens0007.xml", Dt("2023-09-16 12:06") },
+        { "Referens0008.xml", Dt("2023-09-16 12:16") },
+        { "Referens0009.xml", Dt("2023-09-16 12:26") },
+        { "Referens0010.xml", Dt("2023-09-16 12:36") },
+        { "Referens0011.xml", Dt("2023-09-16 12:46") },
+        { "Referens0012.xml", Dt("2023-09-16 12:56") },
+        { "Referens0013.xml", Dt("2023-09-16 13:06") },
+        { "Referens0014.xml", Dt("2023-09-16 13:16") },
+        { "Referens0015.xml", Dt("2023-09-16 13:26") }
     };
 
-    private static DateTime dt(string val)
+    private static DateTime Dt(string val)
     {
         return DateTime.ParseExact(val, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
     }
@@ -48,20 +49,24 @@ public class MeosFromFinal2023Test
         var teamService = new TeamService(configuration, teamServiceLoggerMock, meosResultSource);
         using var results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock);
 
-        results.OnNewResults += async (sender, args) =>
-        {
-            var s = results.GetScoreBoard().Statistics;
-            await Console.Out.WriteAsync(s.NumNotActivated + s.NumActivated + s.NumStarted + s.NumPreliminary + s.NumPassed + s.NumNotValid + s.NumNotStarted + " ").ConfigureAwait(false);
-            await Console.Out.WriteLineAsync(s.ToString()).ConfigureAwait(false);
-        };
+        results.OnNewResults += OnNewResults;
 
         foreach (string file in MeosResultFiles())
         {
-            using (var stream = File.OpenRead(file)) {
-                await results.NewResultPostAsync(stream, resultDateTimes[Path.GetFileName(file)]).ConfigureAwait(false);
-                Task.Delay(100).Wait();
-            }
+            using Stream stream = File.OpenRead(file);
+            await results.NewResultPostAsync(stream, ResultDateTimes[Path.GetFileName(file)]).ConfigureAwait(true);
+            Task.Delay(100).Wait();
+        }
 
+        return;
+
+        async void OnNewResults(object? o, EventArgs eventArgs)
+        {
+            if (results == null) return;
+
+            var s = results.GetScoreBoard().Statistics;
+            await Console.Out.WriteAsync(s.NumNotActivated + s.NumActivated + s.NumStarted + s.NumPreliminary + s.NumPassed + s.NumNotValid + s.NumNotStarted + " ").ConfigureAwait(false);
+            await Console.Out.WriteLineAsync(s.ToString()).ConfigureAwait(false);
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Timers;
 using Microsoft.Extensions.Logging;
-using Mysqlx.Crud;
 using Results.Contract;
 using Results.Model;
 
@@ -19,7 +18,7 @@ public sealed class ResultService : IResultService, IDisposable
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
     private readonly ILogger<ResultService> logger;
-    private readonly PointsCalcBase pointsCalc;
+    private readonly IPointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;

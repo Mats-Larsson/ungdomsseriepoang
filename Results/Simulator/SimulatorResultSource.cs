@@ -9,8 +9,8 @@ public sealed class SimulatorResultSource : IResultSource
     internal CancellationTokenSource TokenSource { get; } = new();
     private TimeSpan currentTimeOfDay = TimeSpan.Zero;
     public int SpeedMultiplier { get; }
-    public TimeSpan MinTime { get; }
-    public TimeSpan MaxTime { get; }
+    private TimeSpan MinTime { get; }
+    private TimeSpan MaxTime { get; }
     public TimeSpan ZeroTime { get; }
     public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
@@ -61,8 +61,6 @@ public sealed class SimulatorResultSource : IResultSource
     {
         return simulatedParticipants.Cast<ParticipantResult>().ToList();
     }
-
-    public string Status => $"{simulatedParticipants.Count(pr => pr.Task?.Status == TaskStatus.RanToCompletion)} / {simulatedParticipants.Length} ";
 
     public void Dispose()
     {

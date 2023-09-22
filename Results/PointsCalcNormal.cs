@@ -1,7 +1,4 @@
-﻿using Results.Model;
-using static Results.Contract.ParticipantStatus;
-
-namespace Results;
+﻿namespace Results;
 
 internal class PointsCalcNormal : PointsCalcBase
 {

@@ -16,7 +16,7 @@ if (options == null)
     return;
 }
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
     ContentRootPath = Path.GetFullPath(Path.Combine(typeof(Program).Assembly.Location, "..")),

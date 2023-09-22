@@ -155,14 +155,14 @@ else
         prevPoss = poss;
     }
 
-    private static bool EqualPos(IDictionary<string, int> pos1s, IDictionary<string, int> pos2s)
+    private static bool EqualPos(IDictionary<string, int> positions1, IDictionary<string, int> positions2)
     {
-        if (pos1s.Count != pos2s.Count) return false;
+        if (positions1.Count != positions2.Count) return false;
 
-        foreach (var pos1 in pos1s)
+        foreach (var pos1 in positions1)
         {
-            if (!pos2s.ContainsKey(pos1.Key)) return false;
-            var pos2Value = pos2s[pos1.Key];
+            if (!positions2.ContainsKey(pos1.Key)) return false;
+            var pos2Value = positions2[pos1.Key];
             if (pos1.Value != pos2Value) return false;
         }
         return true;

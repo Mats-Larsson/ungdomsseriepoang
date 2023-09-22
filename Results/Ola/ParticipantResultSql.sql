@@ -4,8 +4,7 @@ select		ec.shortName								Klass,
             time(r.startTime)							StartTid,
 			sec_to_time(r.totalTime/100)				Tid,
 			r.runnerStatus								"Status",
-            r.entryId									"Id",	
-            e.allocationEntryId							"ParMedId"
+            r.entryId									"Id"
 from		eventclasses	ec
 left join	entries			e	on	ec.eventClassId = e.acceptedEventClassId
 left join	results			r	on	e.entryId = r.entryId

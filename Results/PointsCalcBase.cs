@@ -33,7 +33,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         this.configuration = configuration;
     }
 
-    public List<TeamResult> CalcScoreBoard(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
+    public IList<TeamResult> CalcScoreBoard(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
         var participantPoints = GetParticipantPoints(currentTimeOfDay, participants);
 
@@ -70,7 +70,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         return orderedResults;
     }
 
-    public IList<ParticipantPoints> GetParticipantPoints(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
+    public IEnumerable<ParticipantPoints> GetParticipantPoints(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
         List<PointsCalcParticipantResult> participantsWithExtras = MarkPatrolExtraRunner(participants);
 
@@ -82,7 +82,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         return participantPoints;
     }
 
-    private static ImmutableDictionary<string, TimeSpan?> GetLeadersByClass(List<PointsCalcParticipantResult> participantsWithExtras)
+    private static ImmutableDictionary<string, TimeSpan?> GetLeadersByClass(IEnumerable<PointsCalcParticipantResult> participantsWithExtras)
     {
         return participantsWithExtras
                     .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
@@ -180,8 +180,7 @@ public class PointsCalcParticipantResult : ParticipantResult
     {
     }
 
-    public PointsCalcParticipantResult(ParticipantResult participantResult)
-        : base(participantResult.Class, participantResult.Name, participantResult.Club, participantResult.StartTime, participantResult.Time, participantResult.Status)
+    public PointsCalcParticipantResult(ParticipantResult participantResult) : base(participantResult)
     {
     }
 }

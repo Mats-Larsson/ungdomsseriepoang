@@ -26,10 +26,13 @@ public class TeamResult
         return $"{nameof(Pos)}: {Pos}, {nameof(Team)}: {Team}, {nameof(Points)}: {Points}, {nameof(IsPreliminary)}: {IsPreliminary}, {nameof(DiffPointsUp)}: {DiffPointsUp}, {nameof(BasePoints)}: {BasePoints}, {nameof(Statistics)}: {Statistics}";
     }
 
+#pragma warning disable CA1062
+    // ReSharper disable once MemberCanBePrivate.Global
     protected bool Equals(TeamResult other)
     {
         return Pos == other.Pos && Team == other.Team && Points == other.Points && IsPreliminary == other.IsPreliminary && DiffPointsUp == other.DiffPointsUp && BasePoints == other.BasePoints && Statistics.Equals(other.Statistics);
     }
+#pragma warning restore CA1062
 
 #pragma warning disable IDE0041 // Use 'is null' check
     public override bool Equals(object? obj)

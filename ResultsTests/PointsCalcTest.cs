@@ -27,7 +27,7 @@ public sealed class PointsCalcTest
         };
         using IResultSource resultSource = new SimulatorResultSource(configuration1);
 
-        PointsCalcBase pointsCalc = new PointsCalcNormal(oneBaseResults, configuration1);
+        IPointsCalc pointsCalc = new PointsCalcNormal(oneBaseResults, configuration1);
         using var simulatorResultSource = new SimulatorResultSource(configuration1);
         var participantResults = simulatorResultSource.GetParticipantResults();
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
@@ -37,7 +37,7 @@ public sealed class PointsCalcTest
     [TestMethod]
     public void TestWithNoResults()
     {
-        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
+        IPointsCalc pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, new List<ParticipantResult>());
         Assert.AreEqual(0, scoreBoard.Count);
     }
@@ -45,7 +45,7 @@ public sealed class PointsCalcTest
     [TestMethod]
     public void TestBeforeCompetition()
     {
-        PointsCalcBase pointsCalc = new  PointsCalcNormal(emptyBaseResults, normalConfiguration);
+        IPointsCalc pointsCalc = new  PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
@@ -109,12 +109,12 @@ public sealed class PointsCalcTest
     [TestMethod]
     public void TestWithBasePoints()
     {
-        PointsCalcBase pointsCalc = new PointsCalcNormal(new Dictionary<string, int> {{"Club A", 3}, { "Club B", 2 }, { "Club C", 1 }, }, normalConfiguration);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(new Dictionary<string, int> {{"Club A", 3}, { "Club B", 2 }, { "Club C", 1 } }, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", null, null, NotStarted),
-            new("H10", "Hugo", "Club C", null, null, NotStarted),
+            new("H10", "Hugo", "Club C", null, null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);

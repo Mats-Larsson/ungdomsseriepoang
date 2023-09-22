@@ -110,6 +110,7 @@ public class Options
     }
 }
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum PointsCalcType
 {
     Normal,
