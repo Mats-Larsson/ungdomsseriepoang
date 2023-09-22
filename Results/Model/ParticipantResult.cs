@@ -20,4 +20,16 @@ public class ParticipantResult
         Time = time;
         Status = status;
     }
+
+    protected ParticipantResult(ParticipantResult pr)
+    {
+        if (pr == null) throw new ArgumentNullException(nameof(pr));
+
+        Class = pr.Class;
+        Name = pr.Name;
+        Club = pr.Club;
+        StartTime = pr.StartTime;
+        Time = pr.Time;
+        Status = pr.Status;
+    }
 }

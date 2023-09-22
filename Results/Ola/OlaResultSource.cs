@@ -57,7 +57,6 @@ public sealed class OlaResultSource : IResultSource
             var time = reader.IsDBNull(4) ? null : new TimeSpan?(reader.GetFieldValue<TimeSpan>(4));
             var olaStatus = reader.GetFieldValue<string>(5);
             var id = reader.GetFieldValue<int>(6);
-            var parMedId = reader.IsDBNull(7) ? null : reader.GetFieldValue<int?>(7); // TODO: Remove
 
             list.Add(new OlaParticipantResult(@class, name, club, startTime, time, ToParticipantStatus(olaStatus, time), id));
         }
@@ -102,6 +101,7 @@ internal class OlaParticipantResult
     public TimeSpan? StartTime { get; }
     public TimeSpan? Time { get; }
     public ParticipantStatus Status { get; }
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public int Id { get; }
 
     public OlaParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, int id)

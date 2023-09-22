@@ -2,8 +2,6 @@
 {
     internal class TestData
     {
-        internal static readonly TimeSpan ZeroTime = TimeSpan.FromHours(18.5);
-
         public TestData(int numTeams)
         {
             var maxTeams = Math.Min(numTeams, Clubs.Length);
