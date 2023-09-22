@@ -22,24 +22,20 @@ namespace Results;
 
 // ReSharper restore CommentTypo
 
-internal class PointsCalc
+internal abstract class PointsCalcBase : IPointsCalc
 {
     private readonly IDictionary<string, int> basePoints;
     private readonly Configuration configuration;
-    private readonly IResultSource resultSource;
-    private readonly Func<PointsCalcParticipantResult, TimeSpan?, int> calcPointsFunc;
 
-    public PointsCalc(IDictionary<string, int> basePoints, Configuration configuration, IResultSource resultSource)
+    protected PointsCalcBase(IDictionary<string, int> basePoints, Configuration configuration)
     {
         this.basePoints = basePoints;
         this.configuration = configuration;
-        this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
-        calcPointsFunc = configuration.IsFinal ? CalcFinalPoints : CalcNormalPoints;
     }
 
-    public List<TeamResult> CalcScoreBoard(IEnumerable<ParticipantResult> participants)
+    public List<TeamResult> CalcScoreBoard(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
-        var participantPoints = GetParticipantPoints(participants);
+        var participantPoints = GetParticipantPoints(currentTimeOfDay, participants);
 
         var teamResults = participantPoints
             .Where(pr => pr.Points >= 0)
@@ -48,7 +44,7 @@ internal class PointsCalc
                 Club: g.Key,
                 Points: g.Sum(d => d.Points),
                 IsPreliminary: g.Max(d => d.Status == Preliminary),
-                Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), resultSource.CurrentTimeOfDay, configuration)))
+                Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), currentTimeOfDay, configuration)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
         var pos = 1;
@@ -74,21 +70,52 @@ internal class PointsCalc
         return orderedResults;
     }
 
-    public IList<ParticipantPoints> GetParticipantPoints(IEnumerable<ParticipantResult> participants)
+    public IList<ParticipantPoints> GetParticipantPoints(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
         List<PointsCalcParticipantResult> participantsWithExtras = MarkPatrolExtraRunner(participants);
 
-        var leaderByClass = participantsWithExtras
-            .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
-            .GroupBy(pr => pr.Class)
-            .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
-            .ToImmutableDictionary(g => g.Class, g => g.Time);
+        var leadersByClass = GetLeadersByClass(participantsWithExtras);
 
         var participantPoints = participantsWithExtras
-            .Select(pr => new ParticipantPoints(pr.Class, pr.Name, pr.Club, pr.StartTime, pr.Time, pr.Status, pr.IsExtraParticipant, calcPointsFunc(pr, leaderByClass.GetValueOrDefault(pr.Class))))
+            .Select(pr => new ParticipantPoints(pr, CalcPoints(pr, leadersByClass.GetValueOrDefault(pr.Class))))
             .ToList();
         return participantPoints;
     }
+
+    private static ImmutableDictionary<string, TimeSpan?> GetLeadersByClass(List<PointsCalcParticipantResult> participantsWithExtras)
+    {
+        return participantsWithExtras
+                    .Where(pr => pr.Status is Preliminary or Passed && !pr.IsExtraParticipant)
+                    .GroupBy(pr => pr.Class)
+                    .Select(g => new { Class = g.Key, Time = g.Min(d => d.Time) })
+                    .ToImmutableDictionary(g => g.Class, g => g.Time);
+    }
+
+    internal int CalcPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
+    {
+        switch (pr.Status)
+        {
+            case <= Ignored:
+                return -1;
+            case NotStarted:
+            case NotActivated:
+            // TODO: Started om Activated och starttiden har passerats
+            case Activated:
+            case Started:
+                return 0;
+        }
+        var pointsTemplate = PointsTemplate.Get(pr.Class);
+
+        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
+        if (pr.Status != Passed && pr.Status != Preliminary)
+            throw new InvalidOperationException($"Unexpected status: {pr.Status}");
+        if (!bestTime.HasValue || !pr.Time.HasValue)
+            throw new InvalidOperationException("Unexpected null time");
+
+        return CalcPoints1(pointsTemplate, pr.Time.Value, bestTime.Value, pr.IsExtraParticipant);
+    }
+
+    protected abstract int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, TimeSpan bestTime, bool isExtraParticipant);
 
     private static List<PointsCalcParticipantResult> MarkPatrolExtraRunner(IEnumerable<ParticipantResult> participants)
     {
@@ -117,79 +144,6 @@ internal class PointsCalc
         return participantsWithExtras;
     }
 
-    internal static int CalcNormalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
-    {
-        switch (pr.Status)
-        {
-            case <= Ignored:
-                return -1;
-            case NotStarted:
-            case NotActivated:
-            // TODO: Started om Activated och starttiden har passerats
-            case Activated:
-            case Started:
-                return 0;
-        }
-
-        var pointsTemplate = PointsTemplate.Get(pr.Class);
-        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
-
-        if (pr.Status != Passed && pr.Status != Preliminary)
-            throw new InvalidOperationException($"Unexpected status: {pr.Status}");
-        if (!bestTime.HasValue || !pr.Time.HasValue)
-            throw new InvalidOperationException("Unexpected null time");
-        var points = pointsTemplate.BasePoints
-                     - pointsTemplate.MinuteReduction * StartedMinutesAfter(bestTime.Value, pr.Time.Value)
-                     - (pr.IsExtraParticipant ? pointsTemplate.PatrolExtraParticipantsReduction : 0);
-
-        return Math.Max(points, pointsTemplate.MinPoints);
-    }
-
-    internal static int CalcFinalPoints(PointsCalcParticipantResult pr, TimeSpan? bestTime)
-    {
-        switch (pr.Status)
-        {
-            case <= Ignored:
-                return -1;
-            case NotStarted:
-            case NotActivated:
-            // TODO: Started om Activated och starttiden har passerats
-            case Activated:
-            case Started:
-                return 0;
-        }
-
-        var pointsTemplate = PointsTemplate.Get(pr.Class);
-
-        if (pr.Status == NotValid) return pointsTemplate.NotPassedPoints;
-
-        if (pr.Status != Passed && pr.Status != Preliminary)
-            throw new InvalidOperationException($"Unexpected status: {pr.Status}");
-        if (!bestTime.HasValue || !pr.Time.HasValue)
-            throw new InvalidOperationException("Unexpected null time");
-
-        if (pr.Time.Value <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
-
-        if (pr.IsExtraParticipant) return pointsTemplate.FinalMinPoints;
-
-        int v = CalcFinalPoints(pointsTemplate, pr.Time.Value);
-        return v;
-    }
-
-    private static int CalcFinalPoints(PointsTemplate pointsTemplate, TimeSpan time)
-    {
-        var points = pointsTemplate.FinalFullPoints
-                     - (int)Math.Ceiling((time.TotalMilliseconds - pointsTemplate.FinalFullPointsTime.TotalMilliseconds) / pointsTemplate.FinalReductionTime.TotalMilliseconds);
-
-        int v = Math.Max(points, pointsTemplate.FinalMinPoints);
-        return v;
-    }
-
-    private static int StartedMinutesAfter(TimeSpan bestTime, TimeSpan time)
-    {
-        var secondsAfter = (time - bestTime).TotalSeconds;
-        return (int)Math.Truncate((secondsAfter + 59) / 60.0);
-    }
 
     private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary, Statistics Statistics)> participantResults, IDictionary<string, int> basePointsDictionary)
     {
@@ -217,7 +171,7 @@ internal class PointsCalc
     }
 }
 
-internal class PointsCalcParticipantResult : ParticipantResult
+public class PointsCalcParticipantResult : ParticipantResult
 {
     public bool IsExtraParticipant { get; internal set; }
 
@@ -274,16 +228,5 @@ internal class PointsTemplate
             // ReSharper disable once LocalizableElement
             _ => UnknownTemplate
         };
-    }
-}
-
-internal static class Helper
-{
-    public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
-    {
-        foreach (var item in items)
-        {
-            action(item);
-        }
     }
 }

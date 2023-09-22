@@ -9,20 +9,14 @@ namespace ResultsTests;
 
 [TestClass]
 [SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
-public sealed class PointsCalcTest : IDisposable
+public sealed class PointsCalcTest
 {
     private readonly Dictionary<string, int> emptyBaseResults = new();
     private readonly Dictionary<string, int> oneBaseResults = new() { { "Other club", 1 } };
     private readonly Configuration normalConfiguration = new() {SpeedMultiplier = 1};
-    private readonly IResultSource normalResultSource;
     private readonly Configuration finalConfiguration = new() { SpeedMultiplier = 1, IsFinal = true};
-    private readonly IResultSource finalResultSource;
+    private readonly TimeSpan currentTimeOfDay = TimeSpan.FromHours(18);
 
-    public PointsCalcTest()
-    {
-        normalResultSource = new SimulatorResultSource(normalConfiguration);
-        finalResultSource = new SimulatorResultSource(finalConfiguration);
-    }
     [TestMethod]
     public void TestWithSimulatorResults()
     {
@@ -33,31 +27,31 @@ public sealed class PointsCalcTest : IDisposable
         };
         using IResultSource resultSource = new SimulatorResultSource(configuration1);
 
-        PointsCalc pointsCalc = new(oneBaseResults, configuration1, resultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(oneBaseResults, configuration1);
         using var simulatorResultSource = new SimulatorResultSource(configuration1);
         var participantResults = simulatorResultSource.GetParticipantResults();
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(28, scoreBoard.Count);
     }
 
     [TestMethod]
     public void TestWithNoResults()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
-        var scoreBoard = pointsCalc.CalcScoreBoard(new List<ParticipantResult>());
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, new List<ParticipantResult>());
         Assert.AreEqual(0, scoreBoard.Count);
     }
 
     [TestMethod]
     public void TestBeforeCompetition()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new  PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted)
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club A", 0, false, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(1, "Club B", 0, false, numNotStarted: 1), scoreBoard[1]);
@@ -67,13 +61,13 @@ public sealed class PointsCalcTest : IDisposable
     public void TestBeforeCompetitionWithBasePoints()
     {
         Dictionary<string, int> baseResults = new() {{ "Club A", 10}, { "Club B", 5 }};
-        PointsCalc pointsCalc = new(baseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(baseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club A", 10, false, numNotStarted: 1, basePoints: 10, diffPointsUp: 0), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 5, false, numNotStarted: 1, basePoints: 5, diffPointsUp: 5), scoreBoard[1]);
@@ -82,14 +76,14 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithIgnored()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Hugo", "Club C", null, null, Ignored)
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
         Assert.AreEqual(0, scoreBoard[0].Points);
         Assert.AreEqual(0, scoreBoard[1].Points);
@@ -98,14 +92,14 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithChecked()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", null, null, NotStarted),
             new("H10", "Hugo", "Club C", null, null, Started),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club A", 0, false, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(1, "Club B", 0, false, numNotStarted: 1), scoreBoard[1]);
@@ -115,14 +109,14 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithBasePoints()
     {
-        PointsCalc pointsCalc = new(new Dictionary<string, int> {{"Club A", 3}, { "Club B", 2 }, { "Club C", 1 }, }, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(new Dictionary<string, int> {{"Club A", 3}, { "Club B", 2 }, { "Club C", 1 }, }, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", null, null, NotStarted),
             new("H10", "Hugo", "Club C", null, null, NotStarted),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club A", 3, false, 0, 3, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 2, false, 1, 2, numNotStarted: 1), scoreBoard[1]);
@@ -132,14 +126,14 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithCheckedAndPreliminary()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary)
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 50, true,  0, numPreliminary: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50, numNotStarted: 1), scoreBoard[1]);
@@ -149,14 +143,14 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithCheckedAndPassed()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Passed)
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 50, false, numPassed: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50, numNotStarted: 1), scoreBoard[1]);
@@ -166,7 +160,7 @@ public sealed class PointsCalcTest : IDisposable
     [TestMethod]
     public void TestWithCheckedPreliminaryAndPassed()
     {
-        PointsCalc pointsCalc = new(emptyBaseResults, normalConfiguration, normalResultSource);
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
@@ -174,7 +168,7 @@ public sealed class PointsCalcTest : IDisposable
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary),
             new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed),
         };
-        var scoreBoard = pointsCalc.CalcScoreBoard(participantResults);
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 50, true,  0, numPreliminary: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 46, false, 4, numStarted: 1, numPassed: 1), scoreBoard[1]);
@@ -195,13 +189,13 @@ public sealed class PointsCalcTest : IDisposable
             new("U4", "Egon", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(99), Passed),
         };
 
-        var normalScoreBoard = new PointsCalc(emptyBaseResults, normalConfiguration, normalResultSource).CalcScoreBoard(participantResults);
+        var normalScoreBoard = new PointsCalcNormal(emptyBaseResults, normalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, normalScoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club B", 40+26, false, numStarted: 1, numPassed: 2), normalScoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club C", 50+10, false, 6, numPassed: 2), normalScoreBoard[1]);
         Assert.AreEqual(TeamResult(3, "Club A", 40, false, 20, numNotStarted: 1, numPassed: 1), normalScoreBoard[2]);
 
-        var finalScoreBoard = new PointsCalc(emptyBaseResults, finalConfiguration, finalResultSource).CalcScoreBoard(participantResults);
+        var finalScoreBoard = new PointsCalcFinal(emptyBaseResults, finalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, finalScoreBoard.Count);
         Assert.AreEqual(TeamResult(1, "Club C", 100 + 20, false, numPassed: 2), finalScoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 64 + 20, false, 36, numStarted: 1, numPassed: 2), finalScoreBoard[1]);
@@ -237,14 +231,15 @@ public sealed class PointsCalcTest : IDisposable
         Assert.AreEqual(10, CalcNormalPoints("U1", "K", "00:00:00", "00:59:30", "00:12:30", true));
     }
 
-    private static int CalcNormalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
+    private int CalcNormalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
     {
         var participantResult = new PointsCalcParticipantResult( @class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
         {
             IsExtraParticipant = isExtraParticipant
         };
 
-        return PointsCalc.CalcNormalPoints(participantResult, TimeSpan.Parse(bestTime));
+        PointsCalcBase pointsCalc = new PointsCalcNormal(emptyBaseResults, normalConfiguration);
+        return pointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
     }
 
     [TestMethod]
@@ -298,20 +293,13 @@ public sealed class PointsCalcTest : IDisposable
         return new TeamResult(pos, club, points, isPreliminary, diffPointsUp, basePoints, statistics);
     }
 
-    private static int CalcFinalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
+    private int CalcFinalPoints(string @class, string club, string startTime, string time, string bestTime, bool isExtraParticipant = false)
     {
         var participantResult = new PointsCalcParticipantResult(@class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
         {
             IsExtraParticipant = isExtraParticipant
         };
-
-        return PointsCalc.CalcFinalPoints(participantResult, TimeSpan.Parse(bestTime));
-    }
-
-    [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
-    public void Dispose()
-    {
-        normalResultSource?.Dispose();
-        finalResultSource?.Dispose();
+        PointsCalcBase pointsCalc = new PointsCalcFinal(emptyBaseResults, finalConfiguration);
+        return pointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
     }
 }
