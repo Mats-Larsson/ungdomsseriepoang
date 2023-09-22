@@ -1,4 +1,4 @@
-﻿namespace Results;
+namespace Results;
 
 internal class PointsCalcNormal : PointsCalcBase
 {
