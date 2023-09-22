@@ -18,7 +18,7 @@ public sealed class ResultService : IResultService, IDisposable
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
     private readonly ILogger<ResultService> logger;
-    private readonly PointsCalc pointsCalc;
+    private readonly PointsCalcBase pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;
@@ -30,7 +30,9 @@ public sealed class ResultService : IResultService, IDisposable
         this.teamService = teamService ?? throw new ArgumentNullException(nameof(teamService));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = new PointsCalc(teamService.GetTeamBasePoints(), configuration, resultSource);
+        pointsCalc = configuration.IsFinal 
+            ? new PointsCalcFinal(teamService.GetTeamBasePoints(), configuration) 
+            : new PointsCalcNormal(teamService.GetTeamBasePoints(), configuration);
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds);
@@ -49,7 +51,7 @@ public sealed class ResultService : IResultService, IDisposable
         try
         {
             var participantResults = FilterTeams(resultSource.GetParticipantResults());
-            var teamResults = pointsCalc.CalcScoreBoard(participantResults);
+            var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
             var teamResultsHash = CalcHasCode(teamResults);
 
             if (teamResultsHash == latestTeamResultsHash) return;
@@ -91,7 +93,7 @@ public sealed class ResultService : IResultService, IDisposable
 
     public IEnumerable<ParticipantPoints> GetParticipantPointsList()
     {
-        return pointsCalc.GetParticipantPoints(resultSource.GetParticipantResults());
+        return pointsCalc.GetParticipantPoints(resultSource.CurrentTimeOfDay, resultSource.GetParticipantResults());
     }
 
     private static int CalcHasCode(IEnumerable<TeamResult> results)

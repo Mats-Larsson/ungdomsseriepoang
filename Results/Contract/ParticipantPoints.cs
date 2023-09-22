@@ -1,4 +1,6 @@
-﻿namespace Results.Contract;
+﻿using System.Xml.Linq;
+
+namespace Results.Contract;
 
 public class ParticipantPoints
 {
@@ -11,15 +13,17 @@ public class ParticipantPoints
     public bool IsExtraParticipant { get; }
     public int Points { get; }
 
-    public ParticipantPoints(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, bool isExtraParticipant, int points)
+    public ParticipantPoints(PointsCalcParticipantResult pr, int points)
     {
-        Class = @class;
-        Name = name;
-        Club = club;
-        StartTime = startTime;
-        Time = time;
-        Status = status;
-        IsExtraParticipant = isExtraParticipant;
+        if (pr is null) throw new ArgumentNullException(nameof(pr));
+
+        Class = pr.Class;
+        Name = pr.Name;
+        Club = pr.Club;
+        StartTime = pr.StartTime;
+        Time = pr.Time;
+        Status = pr.Status;
+        IsExtraParticipant = pr.IsExtraParticipant;
         Points = points;
     }
 }
