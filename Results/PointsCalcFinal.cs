@@ -1,8 +1,10 @@
+using Results.Contract;
+
 namespace Results;
 
 internal class PointsCalcFinal : PointsCalcBase
 {
-    public PointsCalcFinal(IDictionary<string, int> basePoints, Configuration configuration) : base(basePoints, configuration)
+    public PointsCalcFinal(ITeamService teamService, Configuration configuration) : base(teamService, configuration)
     {
     }
 

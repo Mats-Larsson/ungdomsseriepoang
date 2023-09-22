@@ -8,16 +8,8 @@ using Results.Meos;
 namespace ResultsTests;
 
 [TestClass]
-public class MeosFromFinal2023Test
+public sealed class MeosFromFinal2023Test : IDisposable
 {
-    private readonly ILogger<MeosResultSource> meosResultSourceLoggerMock = Mock.Of<ILogger<MeosResultSource>>();
-    private readonly ILogger<TeamService> teamServiceLoggerMock = Mock.Of<ILogger<TeamService>>();
-    private readonly ILogger<ResultService> resultServiceLoggerMock = Mock.Of<ILogger<ResultService>>();
-    private readonly Configuration configuration = new()
-    {
-        TimeUntilNotStated = TimeSpan.FromMinutes(10)
-    };
-
     private static readonly IDictionary<string, DateTime> ResultDateTimes = new Dictionary<string, DateTime>
     {
         { "Referens0001.xml", Dt("2023-09-16 11:06") },
@@ -37,6 +29,25 @@ public class MeosFromFinal2023Test
         { "Referens0015.xml", Dt("2023-09-16 13:26") }
     };
 
+    private readonly ILogger<MeosResultSource> meosResultSourceLoggerMock = Mock.Of<ILogger<MeosResultSource>>();
+    private readonly ILogger<TeamService> teamServiceLoggerMock = Mock.Of<ILogger<TeamService>>();
+    private readonly ILogger<ResultService> resultServiceLoggerMock = Mock.Of<ILogger<ResultService>>();
+    private readonly ResultService results; 
+    private readonly Configuration configuration = new()
+    {
+        TimeUntilNotStated = TimeSpan.FromMinutes(10)
+    };
+    private readonly MeosResultSource meosResultSource;
+
+    public MeosFromFinal2023Test()
+    {
+        meosResultSource = new MeosResultSource(meosResultSourceLoggerMock);
+        TeamService teamService = new(configuration, teamServiceLoggerMock);
+        
+        results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock);
+
+    }
+
     private static DateTime Dt(string val)
     {
         return DateTime.ParseExact(val, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
@@ -45,35 +56,34 @@ public class MeosFromFinal2023Test
     [TestMethod]
     public async Task ReadAllFiles()
     {
-        using var meosResultSource = new MeosResultSource(meosResultSourceLoggerMock);
-        var teamService = new TeamService(configuration, teamServiceLoggerMock, meosResultSource);
-        using var results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock);
 
         results.OnNewResults += OnNewResults;
 
         foreach (string file in MeosResultFiles())
         {
-            using Stream stream = File.OpenRead(file);
+            using var stream = File.OpenRead(file);
             await results.NewResultPostAsync(stream, ResultDateTimes[Path.GetFileName(file)]).ConfigureAwait(true);
             Task.Delay(100).Wait();
         }
-
         return;
 
         async void OnNewResults(object? o, EventArgs eventArgs)
         {
-            if (results == null) return;
-
             var s = results.GetScoreBoard().Statistics;
             await Console.Out.WriteAsync(s.NumNotActivated + s.NumActivated + s.NumStarted + s.NumPreliminary + s.NumPassed + s.NumNotValid + s.NumNotStarted + " ").ConfigureAwait(false);
             await Console.Out.WriteLineAsync(s.ToString()).ConfigureAwait(false);
         }
     }
-
     
     private static IEnumerable<string> MeosResultFiles()
     {
         var files = Directory.GetFiles(Path.Combine("..", "..", "..", "Onlineresultat")).OrderBy(f => f);
         return files;
+    }
+
+    public void Dispose()
+    {
+        results.Dispose();
+        meosResultSource.Dispose();
     }
 }

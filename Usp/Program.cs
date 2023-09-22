@@ -12,7 +12,7 @@ if (options == null)
     Console.Error.WriteLine(Options.HelpText?.ToString());
     Console.Error.Flush();
     // TODO: Set exit code != 0
-    
+
     return;
 }
 
@@ -43,7 +43,10 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(resultsConfiguration);
 builder.Services.AddSingleton<Usp.Data.ResultService>();
 builder.Services.AddSingleton<IResultService, ResultService>();
-builder.Services.AddSingleton<ITeamService, TeamService>();
+if (options.Source == Source.Simulator)
+    builder.Services.AddSingleton<ITeamService, SimulatorTeamService>();
+else
+    builder.Services.AddSingleton<ITeamService, TeamService>();
 
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();

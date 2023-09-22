@@ -1,8 +1,10 @@
+using Results.Contract;
+
 namespace Results;
 
 internal class PointsCalcNormal : PointsCalcBase
 {
-    public PointsCalcNormal(IDictionary<string, int> basePoints, Configuration configuration) : base(basePoints, configuration)
+    public PointsCalcNormal(ITeamService teamService, Configuration configuration) : base(teamService, configuration)
     {
     }
 

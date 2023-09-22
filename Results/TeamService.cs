@@ -10,12 +10,11 @@ namespace Results;
 
 public class TeamService : ITeamService
 {
-    private readonly Dictionary<string, int> teamBasePoints = new();
+    public IDictionary<string, int> TeamBasePoints { get; protected init; } = new Dictionary<string, int>();
 
-    public TeamService(Configuration configuration, ILogger<TeamService> logger, IResultSource resultSource)
+    public TeamService(Configuration configuration, ILogger<TeamService> logger)
     {
         if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-        if (resultSource == null)  throw new ArgumentNullException(nameof(resultSource));
 
         var filePath = configuration.TeamsFilePath;
         if (File.Exists(filePath))
@@ -32,7 +31,7 @@ public class TeamService : ITeamService
                 using var reader = new StreamReader(filePath);
                 using var csv = new CsvReader(reader, config);
                 var records = csv.GetRecords<Team>().ToList();
-                teamBasePoints = records.ToDictionary(br => br.Name, br => br.BasePoints ?? 0);
+                TeamBasePoints = records.ToDictionary(br => br.Name, br => br.BasePoints ?? 0);
             }
             catch (Exception ex)
             {
@@ -44,22 +43,13 @@ public class TeamService : ITeamService
 
         logger.LogInformation("Base result file: {} not found", filePath);
 
-        if (resultSource is not SimulatorResultSource) return;
-
-        var clubs = resultSource.GetParticipantResults().Select(pr => pr.Club).Distinct().ToList();
-        teamBasePoints = clubs.ToDictionary(c => c, _ => Random.Shared.Next(0, 200));
-    }
-
-    public IDictionary<string, int> GetTeamBasePoints()
-    { 
-        return teamBasePoints;
     }
 
     public ICollection<string>? Teams
     {
         get
         {
-            return teamBasePoints.Any() ? teamBasePoints.Keys : null;
+            return TeamBasePoints.Any() ? TeamBasePoints.Keys : null;
         }
     }
 }

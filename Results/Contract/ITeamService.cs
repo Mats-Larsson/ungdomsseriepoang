@@ -2,6 +2,6 @@
 
 public interface ITeamService
 {
-    IDictionary<string, int> GetTeamBasePoints();
+    IDictionary<string, int> TeamBasePoints { get; }
     ICollection<string>? Teams { get; }
 }

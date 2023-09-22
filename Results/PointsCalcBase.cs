@@ -24,12 +24,12 @@ namespace Results;
 
 internal abstract class PointsCalcBase : IPointsCalc
 {
-    private readonly IDictionary<string, int> basePoints;
+    private readonly ITeamService teamService;
     private readonly Configuration configuration;
 
-    protected PointsCalcBase(IDictionary<string, int> basePoints, Configuration configuration)
+    protected PointsCalcBase(ITeamService teamService, Configuration configuration)
     {
-        this.basePoints = basePoints;
+        this.teamService = teamService;
         this.configuration = configuration;
     }
 
@@ -51,7 +51,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         var reportPos = 1;
         var prevPoints = 0;
         int upTeamPoints = -1;
-        var orderedResults = MergeWithBasePoints(teamResults, basePoints)
+        var orderedResults = MergeWithBasePoints(teamResults, teamService.TeamBasePoints)
             .OrderByDescending(kp => kp.Points)
             .Select(kp =>
             {

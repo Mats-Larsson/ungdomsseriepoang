@@ -12,7 +12,7 @@
         }
 
         // ReSharper disable StringLiteralTypo
-        private static readonly string[] Clubs = {
+        internal static readonly string[] Clubs = {
             "Snättringe SK",
             "Tullinge SK",
             "Järfälla OK",

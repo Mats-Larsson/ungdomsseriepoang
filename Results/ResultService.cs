@@ -32,8 +32,8 @@ public sealed class ResultService : IResultService, IDisposable
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         pointsCalc = configuration.IsFinal 
-            ? new PointsCalcFinal(teamService.GetTeamBasePoints(), configuration) 
-            : new PointsCalcNormal(teamService.GetTeamBasePoints(), configuration);
+            ? new PointsCalcFinal(teamService, configuration) 
+            : new PointsCalcNormal(teamService, configuration);
 
         GetResult();
         timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds); // TODO: Synka med MeOS post av ny data
