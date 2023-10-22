@@ -117,14 +117,12 @@ internal abstract class PointsCalcBase : IPointsCalc
 
     protected abstract int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, TimeSpan bestTime, bool isExtraParticipant);
 
-    private static List<PointsCalcParticipantResult> MarkPatrolExtraRunner(IEnumerable<ParticipantResult> participants)
+    private List<PointsCalcParticipantResult> MarkPatrolExtraRunner(IEnumerable<ParticipantResult> participants)
     {
         var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
 
-        foreach (var patrol in participantsWithExtras
-                     .Where(pr => pr.Status is Preliminary or Passed)
-                     .GroupBy(pr => new { pr.Class, pr.Club, pr.StartTime })
-                     .Where(patrol => patrol.Count() > 1))
+        var patrols = FindPatrols(participantsWithExtras);
+        foreach (var patrol in patrols)
         {
             TimeSpan longestTime = TimeSpan.Zero;
             foreach (PointsCalcParticipantResult pr in patrol.OrderByDescending(pr => pr.Time))
@@ -144,6 +142,51 @@ internal abstract class PointsCalcBase : IPointsCalc
         return participantsWithExtras;
     }
 
+    private IEnumerable<IEnumerable<PointsCalcParticipantResult>> FindPatrols(List<PointsCalcParticipantResult> participantsWithExtras)
+    {
+        var patrols = new List<IEnumerable<PointsCalcParticipantResult>>();
+        var patrol = new List<PointsCalcParticipantResult>();
+
+        var participantsGroupedByClassAndClub = participantsWithExtras
+                                     .Where(pr => pr.Status is Preliminary or Passed)
+                                     .GroupBy(pr => new { pr.Class, pr.Club})
+                                     .Where(g => g.Count() >= 2);
+
+        foreach (var classAndCludGroup in participantsGroupedByClassAndClub)
+        {
+            var prevPartisipant = default(PointsCalcParticipantResult?);
+
+            foreach (var participant in classAndCludGroup.OrderBy(x => x.StartTime))
+            {
+                if ((prevPartisipant?.StartTime).HasValue && participant.StartTime.HasValue)
+                {
+                    if (participant.StartTime.Value - prevPartisipant?.StartTime <= configuration.MaxPatrolStartInterval)
+                    {
+#pragma warning disable CS8604 // Possible null reference argument.
+                        if (!patrol.Any()) patrol.Add(prevPartisipant);
+#pragma warning restore CS8604 // Possible null reference argument.
+                        patrol.Add(participant);
+                        continue;
+                    }
+                    else
+                    {
+                        if (patrol.Any())
+                        {
+                            patrols.Add(patrol);
+                            patrol  = new List<PointsCalcParticipantResult>();
+                        }
+                    }
+                }
+                prevPartisipant = participant;
+            }
+            if (patrol.Any())
+            {
+                patrols.Add(patrol);
+            }
+        }
+
+        return patrols;
+    }
 
     private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)> MergeWithBasePoints(IDictionary<string, (string Club, int Points, bool IsPreliminary, Statistics Statistics)> participantResults, IDictionary<string, int> basePointsDictionary)
     {

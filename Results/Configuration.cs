@@ -6,6 +6,7 @@ public class Configuration
     public TimeSpan TimeUntilNotStated { get; init; }
     public string? TeamsFilePath { get; init; }
     public bool IsFinal { get; init; }
+    public TimeSpan MaxPatrolStartInterval { get; init; }
 
     //Ola
     public string? OlaMySqlHost { get; init; }
