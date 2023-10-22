@@ -29,6 +29,11 @@ public class Options
     public int MinutesUntilNotStated { get; set; }
     private TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
+    [Option("maxpatrolinterval", Group = "Points", Default = 10, HelpText = "Number of seconds between start times to be detected as a patrol.")]
+    public int MaxPatrolStartIntervalSeconds { get; private set; }
+    public TimeSpan MaxPatrolStartInterval => TimeSpan.FromSeconds(MaxPatrolStartIntervalSeconds);
+
+
     // Simulator options
     [Option("speed", Group = "Simulator", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
     public int Speed { get; set; }
@@ -92,6 +97,7 @@ public class Options
             TimeUntilNotStated = value.TimeUntilNotStated,
             TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
+            MaxPatrolStartInterval = value.MaxPatrolStartInterval,
 
             // Simulator
             SpeedMultiplier = value.Speed,
