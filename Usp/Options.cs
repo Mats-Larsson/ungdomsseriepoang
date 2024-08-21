@@ -51,8 +51,8 @@ public class Options
     [Option('P', "port", Group = "Ola", Default = 3306, HelpText = "MySQL database server port")]
     public int Port { get; set; }
 
-    [Option('D', "database", Group = "Ola", Required = true, HelpText = "MySQL database server database")]
-    private string? Database { get; set; }
+    [Option('D', "database", Group = "Ola", Required = true, HelpText = "MySQL database name")]
+    public string? Database { get; set; }
 
     [Option('u', "user", Group = "Ola", Required = true, HelpText = "MySQL database server user to run select on database to get results")]
     public string? User { get; set; }
