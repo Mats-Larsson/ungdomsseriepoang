@@ -25,7 +25,7 @@ public class Options
     [Option("teams", Group = "Points", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. If omitted all teams are included. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
     public string? TeamsPath { get; set; }
 
-    [Option("maxlatestart", Group = "Points", Default = 10, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
+    [Option("maxlatestart", Group = "Points", Default = 1000, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
     public int MinutesUntilNotStated { get; set; }
     private TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 

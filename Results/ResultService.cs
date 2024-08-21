@@ -71,8 +71,8 @@ public sealed class ResultService : IResultService, IDisposable
             }
 
             var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
-            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration); // TODO: Uppdatera resultat om denna ändras.
-            var resultsHash = CalcHasCode(teamResults, statistics);
+            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration);
+            var resultsHash = CalcHashCode(teamResults, statistics);
 
             if (resultsHash == latestResultsHash) return;
 
@@ -126,7 +126,7 @@ public sealed class ResultService : IResultService, IDisposable
         return pointsCalc.GetParticipantPoints(resultSource.CurrentTimeOfDay, resultSource.GetParticipantResults());
     }
 
-    private static int CalcHasCode(IEnumerable<TeamResult> results, Statistics statistics)
+    private static int CalcHashCode(IEnumerable<TeamResult> results, Statistics statistics)
     {
         var hashCode = statistics.GetHashCode();
 
