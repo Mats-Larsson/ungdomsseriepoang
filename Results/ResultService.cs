@@ -14,7 +14,7 @@ namespace Results;
 public sealed class ResultService : IResultService, IDisposable
 {
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
-    private int latestTeamResultsHash;
+    private int latestResultsHash;
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
     private readonly ILogger<ResultService> logger;
@@ -52,14 +52,33 @@ public sealed class ResultService : IResultService, IDisposable
         try
         {
             var participantResults = FilterTeams(resultSource.GetParticipantResults());
-            var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
-            var teamResultsHash = CalcHasCode(teamResults);
 
-            if (teamResultsHash == latestTeamResultsHash) return;
+            var notStartedCutOff = resultSource.CurrentTimeOfDay - configuration.TimeUntilNotStated;
+
+            foreach (var pr in participantResults)
+            {
+                switch (pr.Status) {
+                    case ParticipantStatus.NotActivated:
+                    if (pr.StartTime < notStartedCutOff)
+                            pr.Status = ParticipantStatus.NotStarted;
+                        break;
+
+                    case ParticipantStatus.Activated:
+                        if (pr.StartTime < resultSource.CurrentTimeOfDay)
+                            pr.Status = ParticipantStatus.Started;
+                        break;
+                }
+            }
+
+            var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
+            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration);
+            var resultsHash = CalcHashCode(teamResults, statistics);
+
+            if (resultsHash == latestResultsHash) return;
 
             latestTeamResults = teamResults;
-            latestTeamResultsHash = teamResultsHash;
-            latestStatistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration); // TODO: Uppdatera resultat om denna ändras.
+            latestStatistics = statistics;
+            latestResultsHash = resultsHash;
 
             OnNewResults?.Invoke(this, EventArgs.Empty);
         }
@@ -107,9 +126,9 @@ public sealed class ResultService : IResultService, IDisposable
         return pointsCalc.GetParticipantPoints(resultSource.CurrentTimeOfDay, resultSource.GetParticipantResults());
     }
 
-    private static int CalcHasCode(IEnumerable<TeamResult> results)
+    private static int CalcHashCode(IEnumerable<TeamResult> results, Statistics statistics)
     {
-        var hashCode = 0;
+        var hashCode = statistics.GetHashCode();
 
         foreach (var result in results)
         {
@@ -118,7 +137,6 @@ public sealed class ResultService : IResultService, IDisposable
                 hashCode += result.GetHashCode();
             }
         }
-
         return hashCode;
     }
 
