@@ -44,19 +44,12 @@ public class Statistics
 
         var statistics = new Statistics();
 
-        var notStartedCutOff = currentTimeOfDay.Add(configuration.TimeUntilNotStated);
         foreach (var pr in participantResults)
         {
-            var status = pr.Status;
             var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
 
-            if (pr.Status == ParticipantStatus.NotActivated && startTime < notStartedCutOff)
-                status = ParticipantStatus.NotStarted;
-            else if (status == ParticipantStatus.Activated && currentTimeOfDay > pr.StartTime)
-                status = ParticipantStatus.Started;
-
             statistics.LastChangedTimeOfDay = currentTimeOfDay;
-            switch (status)
+            switch (pr.Status)
             {
                 case ParticipantStatus.Ignored: break;
                 case ParticipantStatus.NotActivated: statistics.IncNumNotActivated(); break;
@@ -66,7 +59,7 @@ public class Statistics
                 case ParticipantStatus.Passed: statistics.IncNumPassed(); break;
                 case ParticipantStatus.NotValid: statistics.IncNumNotValid(); break;
                 case ParticipantStatus.NotStarted: statistics.IncNumNotStarted(); break;
-                default: throw new InvalidOperationException($"Unexpected: {status}");
+                default: throw new InvalidOperationException($"Unexpected: {pr.Status}");
             }
         }
         return statistics;
