@@ -12,7 +12,7 @@
         }
 
         // ReSharper disable StringLiteralTypo
-        internal static readonly string[] Clubs = {
+        internal static readonly string[] Clubs = [
             "Snättringe SK",
             "Tullinge SK",
             "Järfälla OK",
@@ -40,10 +40,10 @@
             "Enebybergs IF",
             "Solna OK",
             "Nynäshamns OK"
-        };
+        ];
 
         internal readonly SimulatorParticipantResult[] _templateParticipantResults =
-        {
+        [
             new("D16", "Sofia Lindhagen", "IFK Enskede", T("18:34:00.000"), T("00:00:00"), "notStarted"),
             new("D16K", "Lilly Christie", "Snättringe SK", T("18:32:00.000"), T("00:00:00"), "notValid"),
             new("H14", "Frans Ekberg", "Snättringe SK", T("18:31:00.000"), T("00:00:00"), "notStarted"),
@@ -205,7 +205,7 @@
             new("H14", "Alvin Forslin", "Snättringe SK", T("18:51:00.000"), T("01:18:08.0000"), "passed"),
             new("H16", "Albert Nord", "Snättringe SK", T("18:31:00.000"), T("01:23:57.0000"), "passed"),
             new("D16", "Clara Höglind", "IFK Enskede", T("18:30:00.000"), T("01:26:05.0000"), "passed"),
-        };
+        ];
 
         private static TimeSpan T(string time) => TimeSpan.Parse(time);
     }

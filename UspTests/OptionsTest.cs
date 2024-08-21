@@ -8,7 +8,7 @@ namespace UspTests
         [TestMethod]
         public void Options()
         {
-            string[] args = { "--version" };
+            string[] args = ["--version"];
             var options = Usp.Options.Parse(args);
             Assert.IsNull(options);
 

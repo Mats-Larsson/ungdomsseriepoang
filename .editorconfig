@@ -148,3 +148,7 @@ dotnet_diagnostic.CA1824.severity = none
 
 # CA5394: Do not use insecure randomness
 dotnet_diagnostic.CA5394.severity = none
+csharp_style_prefer_primary_constructors = true:suggestion
+
+dotnet_diagnostic.IDE0079.severity = none
+dotnet_diagnostic.IDE0290.severity = none

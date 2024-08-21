@@ -26,12 +26,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 var resultsConfiguration = Options.CreateConfiguration(options);
 
 // Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
-builder.Host.ConfigureLogging(logging =>
-{
-    logging.ClearProviders();
-    logging.AddConsole();
-//    logging.AddDebug();
-});
+ILoggingBuilder loggingBuilder = builder.Logging.ClearProviders().AddConsole();
 
 var url = $"http://*:{options.ListenerPort}";
 builder.WebHost.UseUrls(url);
