@@ -50,7 +50,7 @@ public sealed class PointsCalcTest
     public void TestWithNoResults()
     {
         IPointsCalc pointsCalc = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration);
-        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, new List<ParticipantResult>());
+        var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, []);
         Assert.AreEqual(0, scoreBoard.Count);
     }
 

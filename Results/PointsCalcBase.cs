@@ -173,7 +173,7 @@ internal abstract class PointsCalcBase : IPointsCalc
                         if (patrol.Any())
                         {
                             patrols.Add(patrol);
-                            patrol  = new List<PointsCalcParticipantResult>();
+                            patrol = [];
                         }
                     }
                 }
