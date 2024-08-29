@@ -35,7 +35,7 @@ internal abstract class PointsCalcBase : IPointsCalc
 
     public IList<TeamResult> CalcScoreBoard(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
-        var participantPoints = GetParticipantPoints(currentTimeOfDay, participants);
+        var participantPoints = GetParticipantPoints(participants);
 
         var teamResults = participantPoints
             .Where(pr => pr.Points >= 0)
@@ -44,7 +44,7 @@ internal abstract class PointsCalcBase : IPointsCalc
                 Club: g.Key,
                 Points: g.Sum(d => d.Points),
                 IsPreliminary: g.Max(d => d.Status == Preliminary),
-                Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), currentTimeOfDay, configuration)))
+                Statistics: Statistics.GetStatistics(g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)), currentTimeOfDay)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
         var pos = 1;
@@ -70,7 +70,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         return orderedResults;
     }
 
-    public IEnumerable<ParticipantPoints> GetParticipantPoints(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
+    public IEnumerable<ParticipantPoints> GetParticipantPoints(IEnumerable<ParticipantResult> participants)
     {
         List<PointsCalcParticipantResult> participantsWithExtras = MarkPatrolExtraRunner(participants);
 
@@ -162,19 +162,15 @@ internal abstract class PointsCalcBase : IPointsCalc
                 {
                     if (participant.StartTime.Value - prevPartisipant?.StartTime <= configuration.MaxPatrolStartInterval)
                     {
-#pragma warning disable CS8604 // Possible null reference argument.
-                        if (!patrol.Any()) patrol.Add(prevPartisipant);
-#pragma warning restore CS8604 // Possible null reference argument.
+                        if (!patrol.Any()) patrol.Add(prevPartisipant!);
                         patrol.Add(participant);
                         continue;
                     }
-                    else
+
+                    if (patrol.Any())
                     {
-                        if (patrol.Any())
-                        {
-                            patrols.Add(patrol);
-                            patrol = [];
-                        }
+                        patrols.Add(patrol);
+                        patrol = [];
                     }
                 }
                 prevPartisipant = participant;

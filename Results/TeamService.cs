@@ -4,7 +4,6 @@ using Results.Contract;
 using System.Globalization;
 using Microsoft.Extensions.Logging;
 using Results.Model;
-using Results.Simulator;
 
 namespace Results;
 

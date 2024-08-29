@@ -2,12 +2,12 @@
 
 <PageTitle>Results</PageTitle>
 
+@using System.Diagnostics.CodeAnalysis
 @using Microsoft.AspNetCore.WebUtilities;
 @using Results.Contract
 @using System.Globalization
 @using Results
 @using ResultService = Usp.Data.ResultService
-@using System.Diagnostics
 @inject ResultService ResultService;
 @inject NavigationManager NavManager;
 @inject Configuration Configuration;
@@ -131,6 +131,7 @@ else
         InvokeAsync(StateHasChanged);
     }
 
+    [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]
     private void CalcTrend()
     {
         if (result == null)
@@ -161,8 +162,7 @@ else
 
         foreach (var pos1 in positions1)
         {
-            if (!positions2.ContainsKey(pos1.Key)) return false;
-            var pos2Value = positions2[pos1.Key];
+            if (!positions2.TryGetValue(pos1.Key, out var pos2Value)) return false;
             if (pos1.Value != pos2Value) return false;
         }
         return true;

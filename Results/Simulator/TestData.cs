@@ -1,5 +1,8 @@
-﻿namespace Results.Simulator
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Results.Simulator
 {
+    [SuppressMessage("ReSharper", "ArrangeObjectCreationWhenTypeNotEvident")]
     internal class TestData
     {
         public TestData(int numTeams)

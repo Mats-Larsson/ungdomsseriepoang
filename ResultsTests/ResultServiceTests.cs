@@ -5,11 +5,13 @@ using Results;
 using Results.Contract;
 using Results.Model;
 using System.Diagnostics.CodeAnalysis;
+using static Results.Contract.ParticipantStatus;
 
 namespace ResultsTests;
 
 [TestClass]
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class ResultServiceTests
 {
     private IResultService? resultService;
@@ -20,7 +22,7 @@ public class ResultServiceTests
 
     private IResultService Setup(bool isFinal, TimeSpan currentTime, IList<ParticipantResult> partisipantResults)
     {
-        configuration = new Configuration() { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10") };
+        configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10") };
         resultSourceMock.Setup(rs => rs.CurrentTimeOfDay).Returns(currentTime);
         resultSourceMock.Setup(rs => rs.GetParticipantResults()).Returns(partisipantResults);
 
@@ -31,7 +33,7 @@ public class ResultServiceTests
     private IResultService CreateResultService()
     {
         teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string,int>());
-        resultService = new ResultService(configuration, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object) ;
+        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object) ;
         return resultService;
     }
 
@@ -42,9 +44,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("9:30:00"), new[]
         {
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, ParticipantStatus.NotActivated),
+            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
+            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
         }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
@@ -63,9 +65,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("9:30:00"), new[]
         {
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, ParticipantStatus.Activated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, ParticipantStatus.NotActivated),
+            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
+            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
         }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
@@ -84,9 +86,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:01:30"), new[]
         {
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, ParticipantStatus.Activated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, ParticipantStatus.Activated),
+            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
+            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
         }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
@@ -105,9 +107,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:10:30"), new[]
         {
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, ParticipantStatus.Activated),
+            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
+            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
         }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
@@ -126,9 +128,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:10:30"), new[]
         {
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), ParticipantStatus.Passed),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, ParticipantStatus.NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, ParticipantStatus.Activated),
+            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
+            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
         }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
@@ -145,10 +147,10 @@ public class ResultServiceTests
     [DataRow(true)]
     public void TwoPatrols(bool isFinal)
     {
-        ParticipantResult pr0 = new ParticipantResult("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), ParticipantStatus.Passed);
-        ParticipantResult pr1 = new ParticipantResult("U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), ParticipantStatus.Passed);
-        ParticipantResult pr2 = new ParticipantResult("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), ParticipantStatus.Passed);
-        ParticipantResult pr3 = new ParticipantResult("U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), ParticipantStatus.Passed);
+        ParticipantResult pr0 = new("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed);
+        ParticipantResult pr1 = new("U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed);
+        ParticipantResult pr2 = new("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed);
+        ParticipantResult pr3 = new("U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed);
         Result actual = Setup(isFinal, TS("10:10:30"), new[] { pr0, pr1, pr2, pr3 }).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numPassed: 4));
@@ -160,10 +162,10 @@ public class ResultServiceTests
         
         resultService!.GetParticipantPointsList().OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
         {
-            new ParticipantPoints(new PointsCalcParticipantResult(pr0), isFinal ? 80-8 : 40),
-            new ParticipantPoints(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30) ,
-            new ParticipantPoints(new PointsCalcParticipantResult(pr2), isFinal ? 80-8 : 40),
-            new ParticipantPoints(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
+            new(new PointsCalcParticipantResult(pr0), isFinal ? 80-8 : 40),
+            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30) ,
+            new(new PointsCalcParticipantResult(pr2), isFinal ? 80-8 : 40),
+            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
         });
     }
 

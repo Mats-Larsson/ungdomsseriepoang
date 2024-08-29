@@ -47,12 +47,7 @@ public class TeamResult
             return true;
         }
 
-        if (obj.GetType() != this.GetType())
-        {
-            return false;
-        }
-
-        return Equals((TeamResult)obj);
+        return obj.GetType() == this.GetType() && Equals((TeamResult)obj);
     }
 #pragma warning restore IDE0041 // Use 'is null' check
 

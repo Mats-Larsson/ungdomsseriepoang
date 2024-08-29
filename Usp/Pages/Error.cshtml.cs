@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Usp.Pages
 {
@@ -12,9 +13,8 @@ namespace Usp.Pages
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-#pragma warning disable IDE0052 // Remove unread private members
+        [SuppressMessage("ReSharper", "NotAccessedField.Local")] 
         private readonly ILogger<ErrorModel> logger;
-#pragma warning restore IDE0052 // Remove unread private members
 
         public ErrorModel(ILogger<ErrorModel> logger)
         {

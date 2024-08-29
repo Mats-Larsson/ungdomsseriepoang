@@ -37,17 +37,14 @@ public class Statistics
     internal void IncNumNotValid() { NumNotValid++; }
     internal void IncNumNotStarted() { NumNotStarted++; }
 
-    public static Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan currentTimeOfDay, Configuration configuration)
+    public static Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan currentTimeOfDay)
     {
         if (participantResults == null) throw new ArgumentNullException(nameof(participantResults));
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
         var statistics = new Statistics();
 
         foreach (var pr in participantResults)
         {
-            var startTime = pr.StartTime != TimeSpan.Zero ? pr.StartTime : null;
-
             statistics.LastChangedTimeOfDay = currentTimeOfDay;
             switch (pr.Status)
             {
@@ -79,22 +76,11 @@ public class Statistics
 
     public override bool Equals(object? obj)
     {
-        if (obj is null)
-        {
-            return false;
-        }
+        if (obj is null) return false;
 
-        if (ReferenceEquals(this, obj))
-        {
-            return true;
-        }
+        if (ReferenceEquals(this, obj)) return true;
 
-        if (obj.GetType() != this.GetType())
-        {
-            return false;
-        }
-
-        return Equals((Statistics)obj);
+        return obj.GetType() == this.GetType() && Equals((Statistics)obj);
     }
 
     [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]

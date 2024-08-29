@@ -9,6 +9,7 @@ namespace Usp;
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class Options
 {
     // General options

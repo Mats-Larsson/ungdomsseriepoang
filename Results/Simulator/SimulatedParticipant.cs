@@ -1,8 +1,10 @@
-﻿using Results.Contract;
+﻿using System.Diagnostics.CodeAnalysis;
+using Results.Contract;
 using Results.Model;
 
 namespace Results.Simulator
 {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     internal class SimulatedParticipant : ParticipantResult
     {
         private readonly TimeSpan? startTime;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Timers;
 using Microsoft.Extensions.Logging;
 using Results.Contract;
@@ -31,8 +32,8 @@ public sealed class ResultService : IResultService, IDisposable
         this.teamService = teamService ?? throw new ArgumentNullException(nameof(teamService));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        pointsCalc = configuration.IsFinal 
-            ? new PointsCalcFinal(teamService, configuration) 
+        pointsCalc = configuration.IsFinal
+            ? new PointsCalcFinal(teamService, configuration)
             : new PointsCalcNormal(teamService, configuration);
 
         GetResult();
@@ -47,6 +48,7 @@ public sealed class ResultService : IResultService, IDisposable
         GetResult();
     }
 
+    [SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
     private void GetResult()
     {
         try
@@ -57,9 +59,10 @@ public sealed class ResultService : IResultService, IDisposable
 
             foreach (var pr in participantResults)
             {
-                switch (pr.Status) {
+                switch (pr.Status)
+                {
                     case ParticipantStatus.NotActivated:
-                    if (pr.StartTime < notStartedCutOff)
+                        if (pr.StartTime < notStartedCutOff)
                             pr.Status = ParticipantStatus.NotStarted;
                         break;
 
@@ -71,7 +74,7 @@ public sealed class ResultService : IResultService, IDisposable
             }
 
             var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
-            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay, configuration);
+            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay);
             var resultsHash = CalcHashCode(teamResults, statistics);
 
             if (resultsHash == latestResultsHash) return;
@@ -90,8 +93,8 @@ public sealed class ResultService : IResultService, IDisposable
 
     private IList<ParticipantResult> FilterTeams(IList<ParticipantResult> participantResults)
     {
-        return teamService.Teams == null 
-            ? participantResults 
+        return teamService.Teams == null
+            ? participantResults
             : participantResults.Where(pr => teamService.Teams.Contains(pr.Club)).ToList();
     }
 
@@ -123,7 +126,7 @@ public sealed class ResultService : IResultService, IDisposable
 
     public IEnumerable<ParticipantPoints> GetParticipantPointsList()
     {
-        return pointsCalc.GetParticipantPoints(resultSource.CurrentTimeOfDay, resultSource.GetParticipantResults());
+        return pointsCalc.GetParticipantPoints(resultSource.GetParticipantResults());
     }
 
     private static int CalcHashCode(IEnumerable<TeamResult> results, Statistics statistics)
@@ -137,6 +140,7 @@ public sealed class ResultService : IResultService, IDisposable
                 hashCode += result.GetHashCode();
             }
         }
+
         return hashCode;
     }
 
