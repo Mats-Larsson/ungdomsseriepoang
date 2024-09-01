@@ -4,7 +4,7 @@ public record Configuration
 {
     // General
     public TimeSpan RefreshInterval { get; init; }
-    
+
     // Points
     public TimeSpan TimeUntilNotStated { get; init; }
     public string? TeamsFilePath { get; init; }
@@ -25,4 +25,7 @@ public record Configuration
 
     //Liveresultat
     public int? LiveresultatId { get; init; }
+
+    // IofXml
+    public virtual string? IofXmlInputFolder { get; init; }
 }
