@@ -30,4 +30,10 @@
     <ProjectReference Include="..\Results\Results.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="IofXml\IofResultat.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -63,6 +63,12 @@ public class Options
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
     public int EventId { get; set; }
 
+    // IofXml options
+
+    [Option('d', "dir", Group = "IofXml", Default = ".", HelpText = "Directory to read IOF XML-files from")]
+    public string? InputFolder { get; set; }
+
+
     public static HelpText? HelpText { get; private set; }
 
     internal static Options? Parse(IEnumerable<string> args)
@@ -109,7 +115,10 @@ public class Options
             OlaMySqlDatabase = value.Database,
             OlaMySqlUser = value.User,
             OlaMySqlPassword = value.Password,
-            OlaEventId = value.EventId
+            OlaEventId = value.EventId,
+
+            // IofXml
+            IofXmlInputFolder = value.InputFolder
         };
 
         return conf;
@@ -127,7 +136,8 @@ public enum Source
 {
     Simulator,
     Meos,
-    Ola
+    Ola,
+    IofXml
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes

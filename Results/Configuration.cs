@@ -19,4 +19,7 @@ public class Configuration
     // Simulator
     public int SpeedMultiplier { get; init; }
     public int NumTeams { get; init; }
+
+    // IofXml
+    public virtual string? IofXmlInputFolder { get; init; }
 }
