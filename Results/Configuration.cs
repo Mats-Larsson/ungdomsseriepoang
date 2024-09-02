@@ -19,4 +19,7 @@ public class Configuration
     // Simulator
     public int SpeedMultiplier { get; init; }
     public int NumTeams { get; init; }
+
+    //Liveresultat
+    public int? LiveresultatComp { get; init; }
 }
