@@ -1,26 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Net.Http.Json;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
+using System.Web;
 
 namespace Results.Liveresultat;
 
 public sealed class LiveresultatFacade : IDisposable
 {
-    private readonly Uri ENDPOINT = new Uri("http://liveresultat.orientering.se/api.php");
+    private readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
     private readonly int comp;
     private readonly ILogger<LiveresultatFacade> logger;
     private readonly HttpClient client = new HttpClient();
 
-    private ClassList? classList;
-    private string? classListHash;
-    private readonly Dictionary<string,(ClassResultList classResultList, string? hash) > classResutLists = new ();
+    private Cached<ClassList> classListCache = new(default);
+    private readonly Dictionary<string,Cached<ClassResultList>> classResultListsCache = new ();
 
     public LiveresultatFacade(Configuration configuration, ILogger<LiveresultatFacade> logger)
     {
@@ -33,44 +26,56 @@ public sealed class LiveresultatFacade : IDisposable
 
     public async Task<ClassList?> GetClassesAsync()
     {
-        var classList =  await GetData<ClassList>(Method.GetClasses, classListHash).ConfigureAwait(false);
-        if (classList == null) return this.classList;
-        this.classList = classList;
-        classListHash = classList.Hash;
-        return classList;
+        var list =  await GetData<ClassList>(Method.GetClasses, classListCache.Hash).ConfigureAwait(false);
+        if (list == null) return classListCache.Data;
+        classListCache = new Cached<ClassList>(list);
+        return list;
     }
 
     public async Task<ClassResultList?> GetClassResultAsync(string className)
     {
-        var classResultList =  await GetData<ClassResultList>(Method.GetClasses, classListHash, [ ("class", className)]).ConfigureAwait(false);
-        if (classResultList == null) return this.classResutLists[className].classResultList;
-        classResutLists[className] = (classResultList, classResultList.Hash);
-        return classResultList;
+        var tuple = this.classResultListsCache[className];
+        
+        var list =  await GetData<ClassResultList>(Method.GetClasses, tuple.Hash, 
+            new NameValueCollection { ["className"] = className }).ConfigureAwait(false);
+        
+        classResultListsCache[className] = new Cached<ClassResultList>(list);
+        return list;
     }
 
-    private async Task<T?> GetData<T>(string method, string? hash, (string name, string value)[]? parameters = null) where T : ICommon
+    private async Task<T?> GetData<T>(string method, string? hash, NameValueCollection? parameters = null) where T : ICommon
     {
-        string.Join('&', parameters.Select(p => $"{p.name}={p.value}"));
-        Uri uri = new Uri(ENDPOINT, $"?comp={comp}&method={method}&last_hash={hash}");
+        UriBuilder uriBuilder = new(ENDPOINT);
+        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+        query["comp"] = comp.ToString();
+        query["method"] = method;
+        if (hash != null) query["last_hash"] = hash;
+        query.Add(parameters ?? new());
+        uriBuilder.Query = query.ToString();
 
-        var resp = await client.GetAsync(uri).ConfigureAwait(false);
+        var resp = await client.GetAsync(uriBuilder.Uri).ConfigureAwait(false);
+        if (!resp.IsSuccessStatusCode) return default;
         var data = await resp.Content.ReadFromJsonAsync<T>().ConfigureAwait(false);
+        
         if (data != null && data.Status == "OK") return data;
         return default;
-    }
-
-    private static async Task<bool> IsNewData(HttpResponseMessage resp)
-    {
-        if (!resp.IsSuccessStatusCode) return false;
-        var value = await resp.Content.ReadFromJsonAsync<JsonObject>().ConfigureAwait(false);
-        return true;
-        // return value != null && value.TryGetPropertyValue("status", out var status) && status!.AsValue().ToString() == "NOT MODIFIED";
     }
 
     public void Dispose()
     {
         client.Dispose();
     }
+}
+
+internal record Cached<T> where T : ICommon {
+    public T? Data { get; }
+
+    public Cached(T? data)
+    {
+        Data = data;
+    }
+    
+    public string? Hash => Data?.Hash;
 }
 
 static class Method
