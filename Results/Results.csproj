@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<AnalysisLevel>6.0-all</AnalysisLevel>
 		<NeutralLanguage>sv</NeutralLanguage>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

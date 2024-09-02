@@ -20,6 +20,7 @@ public sealed class LiveresultatFacade : IDisposable
 
     private ClassList? classList;
     private string? classListHash;
+    private readonly Dictionary<string,(ClassResultList classResultList, string? hash) > classResutLists = new ();
 
     public LiveresultatFacade(Configuration configuration, ILogger<LiveresultatFacade> logger)
     {
@@ -39,13 +40,17 @@ public sealed class LiveresultatFacade : IDisposable
         return classList;
     }
 
-    private ClassList? GetLastClasses<T>()
+    public async Task<ClassResultList?> GetClassResultAsync(string className)
     {
-        return classList;
+        var classResultList =  await GetData<ClassResultList>(Method.GetClasses, classListHash, [ ("class", className)]).ConfigureAwait(false);
+        if (classResultList == null) return this.classResutLists[className].classResultList;
+        classResutLists[className] = (classResultList, classResultList.Hash);
+        return classResultList;
     }
 
-    private async Task<T?> GetData<T>(string method, string? hash) where T : ICommon
+    private async Task<T?> GetData<T>(string method, string? hash, (string name, string value)[]? parameters = null) where T : ICommon
     {
+        string.Join('&', parameters.Select(p => $"{p.name}={p.value}"));
         Uri uri = new Uri(ENDPOINT, $"?comp={comp}&method={method}&last_hash={hash}");
 
         var resp = await client.GetAsync(uri).ConfigureAwait(false);
@@ -68,7 +73,7 @@ public sealed class LiveresultatFacade : IDisposable
     }
 }
 
-class Method
+static class Method
 {
     public const string GetCompetitionInfo = "getcompetitioninfo";
     public const string GetClasses = "getclasses";
@@ -107,7 +112,7 @@ public record ClassList : ICommon {
     }
 }
 
-public record Result
+public record PersonResult
 {
     public int Place { get; }
     public string Name { get; }
@@ -118,7 +123,7 @@ public record Result
     public int Progress { get; }
     public int Start { get; }
 
-    public Result(
+    public PersonResult(
         int place,
         string name,
         string club,
@@ -142,6 +147,15 @@ public record Result
 public record ClassResultList : ICommon
 {
     public string Status { get; }
-
+    public string ClassName { get; }
+    public IList<PersonResult> Results { get; }
     public string? Hash { get; }
+
+    public ClassResultList(string status, string className, IList<PersonResult> results, string? hash)
+    {
+        Status = status;
+        ClassName = className;
+        Results = results;
+        Hash = hash;
+    }
 }

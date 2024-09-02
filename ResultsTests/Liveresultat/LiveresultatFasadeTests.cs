@@ -1,10 +1,12 @@
-﻿using FluentAssertions;
+﻿#pragma warning disable CA1001
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Liveresultat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,9 +30,10 @@ public class LiveresultatFasadeTests
     [TestMethod]
     public void GetClassesTest()
     {
-        Assert.IsNotNull(facade);
-        int classes1 = facade.GetClassesAsync().Result.Classes.Count;
-        var classes2 = facade.GetClassesAsync().Result.Classes.Count;
+        Debug.Assert(facade != null, nameof(facade) + " != null");
+
+        int classes1 = facade.GetClassesAsync().Result!.Classes.Count;
+        var classes2 = facade.GetClassesAsync().Result!.Classes.Count;
 
         classes1.Should().Be(classes2);
     }

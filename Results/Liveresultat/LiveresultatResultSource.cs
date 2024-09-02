@@ -11,7 +11,7 @@ public class LiveresultatResultSource : IResultService
 {
     public bool SupportsPreliminary => false;
 
-    public event EventHandler OnNewResults;
+    public event EventHandler? OnNewResults;
 
     public IEnumerable<ParticipantPoints> GetParticipantPointsList()
     {
