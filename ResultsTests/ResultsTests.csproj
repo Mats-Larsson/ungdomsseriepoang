@@ -32,4 +32,16 @@
     <ProjectReference Include="..\Results\Results.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Liveresultat\H16.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Liveresultat\Classes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Liveresultat\CompetitionInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

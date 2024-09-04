@@ -1,73 +1,93 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
-using System.Net.Http.Json;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Web;
 
 namespace Results.Liveresultat;
 
+[SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
 public sealed class LiveresultatFacade : IDisposable
 {
-    private readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
-    private readonly int comp;
+    private static readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
     private readonly ILogger<LiveresultatFacade> logger;
     private readonly HttpClient client = new();
 
     private Cached<ClassList> classListCache = new(default);
     private readonly Dictionary<string, Cached<ClassResultList>> classResultListsCache = [];
 
-    public LiveresultatFacade(Configuration configuration, ILogger<LiveresultatFacade> logger)
+    public LiveresultatFacade(ILogger<LiveresultatFacade> logger)
     {
-        if (configuration is null) throw new ArgumentNullException(nameof(configuration));
-        if (!configuration.LiveresultatComp.HasValue) throw new InvalidOperationException("LiveresultatComp is missing");
-
-        comp = configuration.LiveresultatComp.Value;
         this.logger = logger;
     }
 
-    public async Task<ClassList?> GetClassesAsync()
+    public async Task<CompetitionInfo?> GetCompetitionInfoAsync(int competitionId)
     {
-        var list =  await GetData<ClassList>(Method.GetClasses, classListCache.Hash).ConfigureAwait(false);
+        return await GetDataAsync<CompetitionInfo>(competitionId, Method.GetCompetitionInfo, default).ConfigureAwait(false) ?? null;
+    }
+
+    public async Task<LastPassingList?> GetLastPassingListAsync(int competitionId)
+    {
+        return await GetDataAsync<LastPassingList>(competitionId, Method.GetLastPassings, default).ConfigureAwait(false) ?? null;
+    }
+
+    public async Task<ClassList?> GetClassesAsync(int competitionId)
+    {
+        var list =  await GetDataAsync<ClassList>(competitionId, Method.GetClasses, classListCache.Hash).ConfigureAwait(false);
         if (list == null) return classListCache.Data;
         classListCache = new Cached<ClassList>(list);
         return list;
     }
 
-    public async Task<ClassResultList?> GetClassResultAsync(string className)
+    public async Task<ClassResultList?> GetClassResultAsync(int competitionId, string className)
     {
         var found  = classResultListsCache.TryGetValue(className, out var value);
-
+        if (found) return value!.Data;
 
         NameValueCollection parameters = new() 
         { 
             ["class"] = className, 
             ["unformattedTimes"] = "true" 
         };
-        var list =  await GetData<ClassResultList>(Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
+        var list =  await GetDataAsync<ClassResultList>(competitionId, Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
         
         classResultListsCache[className] = new Cached<ClassResultList>(list);
         return list;
     }
 
-    private async Task<T?> GetData<T>(string method, string? hash, NameValueCollection? parameters = null) where T : ICommon
+    private async Task<T?> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
     {
         UriBuilder uriBuilder = new(ENDPOINT);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-        query["comp"] = comp.ToString();
+        query["comp"] = competitionId.ToString();
         query["method"] = method;
         if (hash != null) query["last_hash"] = hash;
         query.Add(parameters ?? []);
         uriBuilder.Query = query.ToString();
 
         var resp = await client.GetAsync(uriBuilder.Uri).ConfigureAwait(false);
-        if (!resp.IsSuccessStatusCode) return default;
-       // var str = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+        if (!resp.IsSuccessStatusCode)
+        {
+            logger.LogError("Failed to get liveresultat: {StatusCode}; {Uri}", resp.StatusCode, uriBuilder.Uri);
+            return default;
+        }
+       
+        var body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-        var data = await resp.Content.ReadFromJsonAsync<T>(new JsonSerializerOptions() { IncludeFields = true }).ConfigureAwait(false);
-        
-        if (data != null && data.Status == "OK") return data;
-        return default;
+        T? data = DeserializeJson<T>(body);
+
+        if (data == null) return default;
+        var statusBase = data as StatusBase;
+        if (statusBase is { Status: "OK" }) return data;
+        return statusBase == null ? data : default;
+    }
+
+#pragma warning disable CA1822
+    internal T? DeserializeJson<T>(string body)
+#pragma warning restore CA1822
+    {
+        var data = JsonSerializer.Deserialize<T>(body);
+        return data;
     }
 
     public void Dispose()
@@ -76,7 +96,7 @@ public sealed class LiveresultatFacade : IDisposable
     }
 }
 
-internal record Cached<T> where T : ICommon {
+internal record Cached<T> where T : StatusBase {
     public T? Data { get; }
 
     public Cached(T? data)
@@ -90,114 +110,7 @@ internal record Cached<T> where T : ICommon {
 static class Method
 {
     public const string GetCompetitionInfo = "getcompetitioninfo";
+    public const string GetLastPassings = "getlastpassings";
     public const string GetClasses = "getclasses";
     public const string GetClassResults = "getclassresults";
-}
-
-public interface ICommon {
-
-    public string? Status { get; }
-    public string? Hash { get; }
-}
-
-#pragma warning disable CA1716 // Identifiers should not match keywords
-public record @Class
-#pragma warning restore CA1716 // Identifiers should not match keywords
-{
-    public string ClassName { get; }
-
-    public @Class(string className)
-    {
-        ClassName = className;
-    }
-}
-
-public record ClassList : ICommon {
-
-    public string Status { get; }
-    public IList<Class> Classes { get; }
-    public string? Hash { get; }
-
-    public ClassList(string status, IList<@Class> classes, string? hash)
-    {
-        Status = status;
-        Classes = classes;
-        Hash = hash;
-    }
-}
-
-public enum Status
-{
-    OK = 0,
-    DNS = 1, //(Did Not Start)
-    DNF = 2, // (Did not finish)
-    MP = 3, // (Missing Punch)
-    DSQ = 4, // (Disqualified)
-    OT = 5, // (Over (max) time)
-    NotStartedYet1= 9,
-    NotStartedYet2 = 10,
-    WalkOver = 11, // (Resigned before the race started)
-    MovedUp = 12 // (The runner have been moved to a higher class)
-}
-
-public record PersonResult
-{
-    [JsonPropertyName("place")]
-    public string? Place { get; init; }
-
-    [JsonPropertyName("name")]
-    public string? Name { get; init; }
-
-    [JsonPropertyName("club")]
-    public string? Club { get; init; }
-
-    [JsonPropertyName("result")]
-    public string? Result { private get; init; }
-    public TimeSpan? Time => ToTimeSpan(Result);
-
-    [JsonPropertyName("status")]
-    public Status Status { get; init; }
-
-    [JsonPropertyName("timeplus")]
-    public string? Timeplus { get; init; }
-
-    [JsonPropertyName("progress")]
-    public int Progress { get; init; }
-
-    [JsonPropertyName("start")]
-    public JsonElement? Start { private get; init; }
-    public TimeSpan? StartTime
-    {
-        get
-        {
-            if (Start == null) return default;
-            if (!Start.HasValue) return default;
-            return ToTimeSpan(Start.Value.ToString());
-        }
-    }
-
-
-    private static TimeSpan? ToTimeSpan(string? val)
-    {
-        if (val == null) return default;
-
-        int intVal;
-        if (!int.TryParse(val, out intVal)) return default;
-        return TimeSpan.FromMilliseconds(10 * intVal);
-    }
-}
-
-public record ClassResultList : ICommon
-{
-    [JsonPropertyName("status")]
-    public string? Status { get; init; }
-
-    [JsonPropertyName("className")]
-    public string? ClassName { get; init; }
-
-    [JsonPropertyName("results")]
-    public IList<PersonResult>? Results { get; init; }
-
-    [JsonPropertyName("hash")]
-    public string? Hash { get; init; }
 }
