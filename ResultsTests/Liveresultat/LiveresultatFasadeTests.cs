@@ -28,14 +28,22 @@ public class LiveresultatFasadeTests
     }
 
     [TestMethod]
-    public void GetClassesTest()
+    public async Task GetClassesTest()
     {
         Debug.Assert(facade != null, nameof(facade) + " != null");
 
-        int classes1 = facade.GetClassesAsync().Result!.Classes.Count;
-        var classes2 = facade.GetClassesAsync().Result!.Classes.Count;
+        var classes1 = await facade.GetClassesAsync();
+        var classes2 = await facade.GetClassesAsync();
 
         classes1.Should().Be(classes2);
+    }
+
+    [TestMethod]
+    public async Task GetClassResultAsync()
+    {
+        var classResultList = await facade!.GetClassResultAsync("Insk").ConfigureAwait(false);
+
+        TimeSpan? startTime = classResultList!.Results![0].StartTime;
     }
 
     [TestCleanup]

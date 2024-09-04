@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 
 namespace Results.Liveresultat;
@@ -10,10 +12,10 @@ public sealed class LiveresultatFacade : IDisposable
     private readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
     private readonly int comp;
     private readonly ILogger<LiveresultatFacade> logger;
-    private readonly HttpClient client = new HttpClient();
+    private readonly HttpClient client = new();
 
     private Cached<ClassList> classListCache = new(default);
-    private readonly Dictionary<string,Cached<ClassResultList>> classResultListsCache = new ();
+    private readonly Dictionary<string, Cached<ClassResultList>> classResultListsCache = [];
 
     public LiveresultatFacade(Configuration configuration, ILogger<LiveresultatFacade> logger)
     {
@@ -34,10 +36,15 @@ public sealed class LiveresultatFacade : IDisposable
 
     public async Task<ClassResultList?> GetClassResultAsync(string className)
     {
-        var tuple = this.classResultListsCache[className];
-        
-        var list =  await GetData<ClassResultList>(Method.GetClasses, tuple.Hash, 
-            new NameValueCollection { ["className"] = className }).ConfigureAwait(false);
+        var found  = classResultListsCache.TryGetValue(className, out var value);
+
+
+        NameValueCollection parameters = new() 
+        { 
+            ["class"] = className, 
+            ["unformattedTimes"] = "true" 
+        };
+        var list =  await GetData<ClassResultList>(Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
         
         classResultListsCache[className] = new Cached<ClassResultList>(list);
         return list;
@@ -50,12 +57,14 @@ public sealed class LiveresultatFacade : IDisposable
         query["comp"] = comp.ToString();
         query["method"] = method;
         if (hash != null) query["last_hash"] = hash;
-        query.Add(parameters ?? new());
+        query.Add(parameters ?? []);
         uriBuilder.Query = query.ToString();
 
         var resp = await client.GetAsync(uriBuilder.Uri).ConfigureAwait(false);
         if (!resp.IsSuccessStatusCode) return default;
-        var data = await resp.Content.ReadFromJsonAsync<T>().ConfigureAwait(false);
+       // var str = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        var data = await resp.Content.ReadFromJsonAsync<T>(new JsonSerializerOptions() { IncludeFields = true }).ConfigureAwait(false);
         
         if (data != null && data.Status == "OK") return data;
         return default;
@@ -87,7 +96,7 @@ static class Method
 
 public interface ICommon {
 
-    public string Status { get; }
+    public string? Status { get; }
     public string? Hash { get; }
 }
 
@@ -117,50 +126,78 @@ public record ClassList : ICommon {
     }
 }
 
+public enum Status
+{
+    OK = 0,
+    DNS = 1, //(Did Not Start)
+    DNF = 2, // (Did not finish)
+    MP = 3, // (Missing Punch)
+    DSQ = 4, // (Disqualified)
+    OT = 5, // (Over (max) time)
+    NotStartedYet1= 9,
+    NotStartedYet2 = 10,
+    WalkOver = 11, // (Resigned before the race started)
+    MovedUp = 12 // (The runner have been moved to a higher class)
+}
+
 public record PersonResult
 {
-    public int Place { get; }
-    public string Name { get; }
-    public string Club { get; }
-    public string Result { get; }
-    public int Status { get; }
-    public string Timeplus { get; }
-    public int Progress { get; }
-    public int Start { get; }
+    [JsonPropertyName("place")]
+    public string? Place { get; init; }
 
-    public PersonResult(
-        int place,
-        string name,
-        string club,
-        string result,
-        int status,
-        string timeplus,
-        int progress,
-        int start)
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
+
+    [JsonPropertyName("club")]
+    public string? Club { get; init; }
+
+    [JsonPropertyName("result")]
+    public string? Result { private get; init; }
+    public TimeSpan? Time => ToTimeSpan(Result);
+
+    [JsonPropertyName("status")]
+    public Status Status { get; init; }
+
+    [JsonPropertyName("timeplus")]
+    public string? Timeplus { get; init; }
+
+    [JsonPropertyName("progress")]
+    public int Progress { get; init; }
+
+    [JsonPropertyName("start")]
+    public JsonElement? Start { private get; init; }
+    public TimeSpan? StartTime
     {
-        Place = place;
-        Name = name;
-        Club = club;
-        Result = result;
-        Status = status;
-        Timeplus = timeplus;
-        Progress = progress;
-        Start = start;
+        get
+        {
+            if (Start == null) return default;
+            if (!Start.HasValue) return default;
+            return ToTimeSpan(Start.Value.ToString());
+        }
+    }
+
+
+    private static TimeSpan? ToTimeSpan(string? val)
+    {
+        if (val == null) return default;
+
+        int intVal;
+        if (!int.TryParse(val, out intVal)) return default;
+        return TimeSpan.FromMilliseconds(10 * intVal);
     }
 }
 
 public record ClassResultList : ICommon
 {
-    public string Status { get; }
-    public string ClassName { get; }
-    public IList<PersonResult> Results { get; }
-    public string? Hash { get; }
+    [JsonPropertyName("status")]
+    public string? Status { get; init; }
 
-    public ClassResultList(string status, string className, IList<PersonResult> results, string? hash)
-    {
-        Status = status;
-        ClassName = className;
-        Results = results;
-        Hash = hash;
-    }
+    [JsonPropertyName("className")]
+    public string? ClassName { get; init; }
+
+    [JsonPropertyName("results")]
+    public IList<PersonResult>? Results { get; init; }
+
+    [JsonPropertyName("hash")]
+    public string? Hash { get; init; }
 }
