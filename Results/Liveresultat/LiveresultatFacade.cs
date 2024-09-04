@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Results.Liveresultat.Model;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -7,7 +8,7 @@ using System.Web;
 namespace Results.Liveresultat;
 
 [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
-public sealed class LiveresultatFacade : IDisposable
+public class LiveresultatFacade : IDisposable
 {
     private static readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
     private readonly ILogger<LiveresultatFacade> logger;

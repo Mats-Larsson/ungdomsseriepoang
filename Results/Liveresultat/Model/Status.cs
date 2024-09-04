@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Results.Liveresultat;
+namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -17,7 +17,7 @@ public enum Status
     DSQ = 4,
     /// <summary> Over (max) time</summary>
     OT = 5,
-    NotStartedYet1= 9,
+    NotStartedYet1 = 9,
     NotStartedYet2 = 10,
     /// <summary>Resigned before the race started</summary>
     WalkOver = 11,

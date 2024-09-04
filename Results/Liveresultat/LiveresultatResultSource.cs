@@ -1,4 +1,5 @@
 ﻿using Results.Contract;
+using Results.Liveresultat.Model;
 using Results.Model;
 
 namespace Results.Liveresultat;

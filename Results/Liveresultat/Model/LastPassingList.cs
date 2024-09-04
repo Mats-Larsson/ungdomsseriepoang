@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Results.Liveresultat;
+namespace Results.Liveresultat.Model;
 
 public record LastPassingList : StatusBase
 {

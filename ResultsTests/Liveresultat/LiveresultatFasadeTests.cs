@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
 using Results.Liveresultat;
+using Results.Liveresultat.Model;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 

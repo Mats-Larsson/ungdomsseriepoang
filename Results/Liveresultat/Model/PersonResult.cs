@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Results.Liveresultat;
+namespace Results.Liveresultat.Model;
 
 public record PersonResult
 {
@@ -35,8 +35,8 @@ public record PersonResult
     {
         if (val == null) return default;
 
-        return !int.TryParse(val, out int intVal) 
-            ? default(TimeSpan?) 
+        return !int.TryParse(val, out int intVal)
+            ? default(TimeSpan?)
             : TimeSpan.FromMilliseconds(10 * intVal);
     }
 }

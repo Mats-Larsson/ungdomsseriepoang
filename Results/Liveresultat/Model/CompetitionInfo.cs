@@ -1,10 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace Results.Liveresultat;
+namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-public record CompetitionInfo {
+public record CompetitionInfo
+{
 
     [JsonPropertyName("id")]
     public int? Id { get; init; }
