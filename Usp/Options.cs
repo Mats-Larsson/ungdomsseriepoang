@@ -19,6 +19,11 @@ public class Options
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
     public Source Source { get; set; }
 
+    [Option("refreshseconds", Default = 10, HelpText = "Number of seconds between data refresh.")]
+    public int RefreshSeconds { get; set; }
+    public TimeSpan RefreshInterval => TimeSpan.FromSeconds(RefreshSeconds);
+
+    
     // Points calculation
     [Option("pointscalc", Group = "Points", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
     public PointsCalcType PointsCalc { get; set; }
@@ -63,6 +68,10 @@ public class Options
 
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
     public int EventId { get; set; }
+    
+    [Option('L', "liveresultatid", Group = "Liveresultat", Required = true, HelpText = "CompetitionId för tävlingen i Liveresultat. Se t.ex. https://liveresultat.orientering.se/adm/editComp.php?compid=27215")]
+    public int? LiveresultatId { get; set; }
+
 
     public static HelpText? HelpText { get; private set; }
 
@@ -95,6 +104,9 @@ public class Options
         var conf = new Configuration
         {
             // General
+            RefreshInterval = value.RefreshInterval,
+
+            // Points
             TimeUntilNotStated = value.TimeUntilNotStated,
             TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
@@ -110,7 +122,10 @@ public class Options
             OlaMySqlDatabase = value.Database,
             OlaMySqlUser = value.User,
             OlaMySqlPassword = value.Password,
-            OlaEventId = value.EventId
+            OlaEventId = value.EventId,
+            
+            // Liveresultat
+            LiveresultatId = value.LiveresultatId
         };
 
         return conf;
@@ -128,7 +143,8 @@ public enum Source
 {
     Simulator,
     Meos,
-    Ola
+    Ola,
+    Liveresultat
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes

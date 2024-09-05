@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Results.Liveresultat.Model;
 
-public abstract record StatusBase
+public abstract record StatusBase : DeserializationBase
 {
 
     [JsonPropertyName("status")]

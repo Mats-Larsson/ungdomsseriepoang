@@ -1,4 +1,5 @@
-﻿using Results.Contract;
+﻿using Microsoft.Extensions.Logging;
+using Results.Contract;
 using Results.Liveresultat.Model;
 using Results.Model;
 
@@ -6,18 +7,20 @@ namespace Results.Liveresultat;
 
 public sealed class LiveresultatResultSource : IResultSource
 {
-    private readonly Configuration configuration;
     private readonly LiveresultatFacade liveresultatFacade;
+    private readonly ILogger<LiveresultatResultSource> logger;
     private readonly int competitionId;
     private TimeSpan lastCurrentTimeOfDay = TimeSpan.Zero;
+    private bool competitionFound;
 
-    public LiveresultatResultSource(Configuration configuration, LiveresultatFacade liveresultatFacade)
+    public LiveresultatResultSource(Configuration configuration, LiveresultatFacade liveresultatFacade, ILogger<LiveresultatResultSource> logger)
     {
-        this.configuration = configuration;
-        this.liveresultatFacade = liveresultatFacade;
         if (configuration is null) throw new ArgumentNullException(nameof(configuration));
-        if (!configuration.LiveresultatComp.HasValue) throw new InvalidOperationException("LiveresultatComp is missing");
-        competitionId = configuration.LiveresultatComp.Value;
+        this.liveresultatFacade = liveresultatFacade ?? throw new ArgumentNullException(nameof(liveresultatFacade));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        if (!configuration.LiveresultatId.HasValue) throw new InvalidOperationException("LiveresultatId is missing");
+        competitionId = configuration.LiveresultatId.Value;
     }
 
     public bool SupportsPreliminary => false;
@@ -29,11 +32,10 @@ public sealed class LiveresultatResultSource : IResultSource
 
     private async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        var competitionInfo = await liveresultatFacade.GetCompetitionInfoAsync(competitionId).ConfigureAwait(false);
-        if (competitionInfo is null) return new List<ParticipantResult>();
+        if (!(await CheckCompetitionInfo().ConfigureAwait(false))) return [];
 
         var classList = await liveresultatFacade.GetClassesAsync(competitionId).ConfigureAwait(false);
-        if (classList?.Classes is null) return new List<ParticipantResult>();
+        if (classList?.Classes is null) return [];
 
         var classNames = classList.Classes
             .Where(c => !string.IsNullOrEmpty(c.ClassName))
@@ -60,6 +62,19 @@ public sealed class LiveresultatResultSource : IResultSource
             })
             .ToList();
         return ret;
+    }
+
+    private async Task<bool> CheckCompetitionInfo()
+    {
+        if (competitionFound) return true;
+        var competitionInfo = await liveresultatFacade.GetCompetitionInfoAsync(competitionId).ConfigureAwait(false);
+        if (competitionInfo?.Name is null)
+        {
+            logger.LogError("Competition with LiveresultatId {LiveresultatId} not found in Liveresultat", competitionId);
+            return false;
+        }
+        competitionFound = true;
+        return true;
     }
 
     private static ParticipantStatus MapStatus(Status personResultStatus)

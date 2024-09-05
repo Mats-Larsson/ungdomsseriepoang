@@ -37,7 +37,7 @@ public sealed class ResultService : IResultService, IDisposable
             : new PointsCalcNormal(teamService, configuration);
 
         GetResult();
-        timer = new System.Timers.Timer(TimeSpan.FromSeconds(2).TotalMilliseconds); // TODO: Synka med MeOS post av ny data
+        timer = new System.Timers.Timer(this.configuration.RefreshInterval);
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
         timer.Enabled = true;

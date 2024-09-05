@@ -3,6 +3,9 @@
 public class Configuration
 {
     // General
+    public TimeSpan RefreshInterval { get; init; }
+    
+    // Points
     public TimeSpan TimeUntilNotStated { get; init; }
     public string? TeamsFilePath { get; init; }
     public bool IsFinal { get; init; }
@@ -21,5 +24,5 @@ public class Configuration
     public int NumTeams { get; init; }
 
     //Liveresultat
-    public int? LiveresultatComp { get; init; }
+    public int? LiveresultatId { get; init; }
 }

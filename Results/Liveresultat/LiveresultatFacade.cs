@@ -8,6 +8,7 @@ using System.Web;
 namespace Results.Liveresultat;
 
 [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
+[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 public class LiveresultatFacade : IDisposable
 {
     private static readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
@@ -34,7 +35,7 @@ public class LiveresultatFacade : IDisposable
 
     public async Task<ClassList?> GetClassesAsync(int competitionId)
     {
-        var list =  await GetDataAsync<ClassList>(competitionId, Method.GetClasses, classListCache.Hash).ConfigureAwait(false);
+        var list = await GetDataAsync<ClassList>(competitionId, Method.GetClasses, classListCache.Hash).ConfigureAwait(false);
         if (list == null) return classListCache.Data;
         classListCache = new Cached<ClassList>(list);
         return list;
@@ -42,21 +43,18 @@ public class LiveresultatFacade : IDisposable
 
     public async Task<ClassResultList?> GetClassResultAsync(int competitionId, string className)
     {
-        var found  = classResultListsCache.TryGetValue(className, out var value);
+        var found = classResultListsCache.TryGetValue(className, out var value);
         if (found) return value!.Data;
 
-        NameValueCollection parameters = new() 
-        { 
-            ["class"] = className, 
-            ["unformattedTimes"] = "true" 
-        };
-        var list =  await GetDataAsync<ClassResultList>(competitionId, Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
-        
+        NameValueCollection parameters = new() { ["class"] = className, ["unformattedTimes"] = "true" };
+        var list = await GetDataAsync<ClassResultList>(competitionId, Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
+
         classResultListsCache[className] = new Cached<ClassResultList>(list);
         return list;
     }
 
-    private async Task<T?> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
+    protected virtual async Task<T> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
+        where T : DeserializationBase
     {
         UriBuilder uriBuilder = new(ENDPOINT);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -70,22 +68,20 @@ public class LiveresultatFacade : IDisposable
         if (!resp.IsSuccessStatusCode)
         {
             logger.LogError("Failed to get liveresultat: {StatusCode}; {Uri}", resp.StatusCode, uriBuilder.Uri);
-            return default;
+            return default!;
         }
-       
-        var body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        string body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         T? data = DeserializeJson<T>(body);
 
-        if (data == null) return default;
+        if (data == null) return default!;
         var statusBase = data as StatusBase;
         if (statusBase is { Status: "OK" }) return data;
-        return statusBase == null ? data : default;
+        return statusBase == null ? data : default!;
     }
 
-#pragma warning disable CA1822
-    internal T? DeserializeJson<T>(string body)
-#pragma warning restore CA1822
+    internal virtual T? DeserializeJson<T>(string body)
     {
         var data = JsonSerializer.Deserialize<T>(body);
         return data;
@@ -93,18 +89,28 @@ public class LiveresultatFacade : IDisposable
 
     public void Dispose()
     {
-        client.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            client.Dispose();
+        }
     }
 }
 
-internal record Cached<T> where T : StatusBase {
+internal record Cached<T> where T : StatusBase
+{
     public T? Data { get; }
 
     public Cached(T? data)
     {
         Data = data;
     }
-    
+
     public string? Hash => Data?.Hash;
 }
 

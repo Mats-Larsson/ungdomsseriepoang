@@ -4,9 +4,12 @@ using System.Text.Json.Serialization;
 namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-public record CompetitionInfo
+public record CompetitionInfo : DeserializationBase
 {
 
     [JsonPropertyName("id")]
     public int? Id { get; init; }
+    
+    [JsonPropertyName("name")]
+    public String? Name { get; init; }
 }

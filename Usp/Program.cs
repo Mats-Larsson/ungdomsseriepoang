@@ -5,6 +5,7 @@ using Results.Simulator;
 using Results.Ola;
 using Usp;
 using Results;
+using Results.Liveresultat;
 
 var options = Options.Parse(args);
 if (options == null)
@@ -46,6 +47,8 @@ else
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
+builder.Services.AddSingleton<LiveresultatResultSource>();
+builder.Services.AddSingleton<LiveresultatFacade>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
@@ -54,6 +57,7 @@ builder.Services.AddSingleton<IResultSource>(provider =>
         Source.Simulator => provider.GetService<SimulatorResultSource>()!,
         Source.Meos => provider.GetService<MeosResultSource>()!,
         Source.Ola => provider.GetService<OlaResultSource>()!,
+        Source.Liveresultat => provider.GetService<LiveresultatResultSource>()!,
         _ => throw new InvalidOperationException()
     };
 });
