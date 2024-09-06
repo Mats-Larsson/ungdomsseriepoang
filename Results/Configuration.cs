@@ -1,6 +1,6 @@
 ﻿namespace Results;
 
-public class Configuration
+public record Configuration
 {
     // General
     public TimeSpan RefreshInterval { get; init; }

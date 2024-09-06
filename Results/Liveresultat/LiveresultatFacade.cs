@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Results.Liveresultat.Model;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -18,6 +19,8 @@ public class LiveresultatFacade : IDisposable
     private Cached<ClassList> classListCache = new(default);
     private readonly Dictionary<string, Cached<ClassResultList>> classResultListsCache = [];
 
+    private Cached<LastPassingList> lastPassingListCache = new(default);
+
     public LiveresultatFacade(ILogger<LiveresultatFacade> logger)
     {
         this.logger = logger;
@@ -25,12 +28,17 @@ public class LiveresultatFacade : IDisposable
 
     public async Task<CompetitionInfo?> GetCompetitionInfoAsync(int competitionId)
     {
-        return await GetDataAsync<CompetitionInfo>(competitionId, Method.GetCompetitionInfo, default).ConfigureAwait(false) ?? null;
+        var competitionInfo = await GetDataAsync<CompetitionInfo>(competitionId, Method.GetCompetitionInfo, default).ConfigureAwait(false) ?? null;
+        return competitionInfo;
+
     }
 
     public async Task<LastPassingList?> GetLastPassingListAsync(int competitionId)
     {
-        return await GetDataAsync<LastPassingList>(competitionId, Method.GetLastPassings, default).ConfigureAwait(false) ?? null;
+        var passings = await GetDataAsync<LastPassingList>(competitionId, Method.GetLastPassings, lastPassingListCache.Hash).ConfigureAwait(false) ?? null;
+        if (passings == null) return lastPassingListCache.Data;
+        lastPassingListCache = new Cached<LastPassingList>(passings);
+        return passings;
     }
 
     public async Task<ClassList?> GetClassesAsync(int competitionId)

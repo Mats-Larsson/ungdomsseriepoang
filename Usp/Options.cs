@@ -69,24 +69,27 @@ public class Options
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
     public int EventId { get; set; }
     
-    [Option('L', "liveresultatid", Group = "Liveresultat", Required = true, HelpText = "CompetitionId för tävlingen i Liveresultat. Se t.ex. https://liveresultat.orientering.se/adm/editComp.php?compid=27215")]
+    [Option('L', "liveresultatid", Group = "Liveresultat", Default = 0, HelpText = "CompetitionId för tävlingen i Liveresultat. Se t.ex. https://liveresultat.orientering.se/adm/editComp.php?compid=27215")]
     public int? LiveresultatId { get; set; }
 
 
     public static HelpText? HelpText { get; private set; }
+    public static IEnumerable<Error>? Errors { get; private set; }
 
     internal static Options? Parse(IEnumerable<string> args)
     {
         using var parser = new Parser(with =>
         {
             with.CaseInsensitiveEnumValues = true;
-            with.CaseSensitive = true;   
+            with.CaseSensitive = true;  
+            with.AutoHelp = true;
         });
         ParserResult<Options>? parserResult = parser.ParseArguments<Options>(args);
-
-        if (parserResult.Errors.Any())
+        Errors  = parserResult.Errors;
+        if (Errors.Any())
         {
-            HelpText = HelpText.AutoBuild(parserResult, h =>
+           
+           HelpText = HelpText.AutoBuild(parserResult, h =>
             {
                 h.AddEnumValuesToHelpText = true;
                 h.AutoHelp = true;
