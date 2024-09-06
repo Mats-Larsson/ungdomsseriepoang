@@ -1,8 +1,11 @@
 ﻿namespace Results;
 
-public class Configuration
+public record Configuration
 {
     // General
+    public TimeSpan RefreshInterval { get; init; }
+    
+    // Points
     public TimeSpan TimeUntilNotStated { get; init; }
     public string? TeamsFilePath { get; init; }
     public bool IsFinal { get; init; }
@@ -19,4 +22,7 @@ public class Configuration
     // Simulator
     public int SpeedMultiplier { get; init; }
     public int NumTeams { get; init; }
+
+    //Liveresultat
+    public int? LiveresultatId { get; init; }
 }

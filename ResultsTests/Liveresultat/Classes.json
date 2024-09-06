@@ -1,0 +1,51 @@
+{
+  "status": "OK",
+  "classes": [
+    {
+      "className": "D10"
+    },
+    {
+      "className": "D12"
+    },
+    {
+      "className": "D14"
+    },
+    {
+      "className": "D16"
+    },
+    {
+      "className": "H10"
+    },
+    {
+      "className": "H12"
+    },
+    {
+      "className": "H14"
+    },
+    {
+      "className": "H16"
+    },
+    {
+      "className": "Insk"
+    },
+    {
+      "className": "U1D"
+    },
+    {
+      "className": "U1H"
+    },
+    {
+      "className": "U2D"
+    },
+    {
+      "className": "U2H"
+    },
+    {
+      "className": "U3"
+    },
+    {
+      "className": "U4"
+    }
+  ],
+  "hash": "cb364ec3bb6c7464245b33ea10004c9b"
+}

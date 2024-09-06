@@ -5,6 +5,7 @@ using Results.Simulator;
 using Results.Ola;
 using Usp;
 using Results;
+using Results.Liveresultat;
 
 var options = Options.Parse(args);
 if (options == null)
@@ -28,6 +29,7 @@ var resultsConfiguration = Options.CreateConfiguration(options);
 // Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
 builder.Logging.ClearProviders().AddConsole();
 
+
 var url = $"http://*:{options.ListenerPort}";
 builder.WebHost.UseUrls(url);
 
@@ -46,6 +48,8 @@ else
 builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
+builder.Services.AddSingleton<LiveresultatResultSource>();
+builder.Services.AddSingleton<LiveresultatFacade>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
@@ -54,6 +58,7 @@ builder.Services.AddSingleton<IResultSource>(provider =>
         Source.Simulator => provider.GetService<SimulatorResultSource>()!,
         Source.Meos => provider.GetService<MeosResultSource>()!,
         Source.Ola => provider.GetService<OlaResultSource>()!,
+        Source.Liveresultat => provider.GetService<LiveresultatResultSource>()!,
         _ => throw new InvalidOperationException()
     };
 });
@@ -93,5 +98,8 @@ app.MapGet("/participants", context =>
     return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(participantPointsList), contentType: "text/csv")
         .ExecuteAsync(context);
 });
+
+Configuration configuration = app.Services.GetService<Configuration>()!;
+app.Logger.LogInformation("{}", configuration.ToString());
 
 app.Run();
