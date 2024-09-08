@@ -1,13 +1,16 @@
 # Ungdomsseriepoäng
 
 Ungdomsseriepoäng är en applikation som beräknar och presenterar klubbarnas poäng i Stockholms
-orienteringsförbunds ungdomsserie. Applikationen hämtar data från det tävlingsadministrativa
-systemet och presenterar aktuell ställning som en webbsida. Denna sida kan användas av speaker och även visas för publiken.
+orienteringsförbunds ungdomsserie. Applikationen hämtar data från det tävlingsadministrativa systemet, direkt eller inderekt, och presenterar aktuell ställning som en webbsida. Denna sida kan användas av speaker och även visas för publiken.
 
 För närvarande stöds koppling till:
 
-* MeOS
-* OLA med MySQL som databas (fungerar, ännu, inte med den inbyggda databasen)
+| <div style="width:100px">Datakälla</div> | Beskrivning |
+| - | - |
+| MeOS          | Automat i MeOS skickas till denna applikation men HTTP-POST |
+| OLA med MySQL | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbygda databasen. |
+| Liveresultat  | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Livresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet. |
+| XML-resultat | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
 
 Poängen beräknas enligt instruktioner på:
 [https://www.orientering.se/stockholm/utvecklingsmiljon/ungdom/ungdomsserien/arrangorsanvisningar-for-ungdomsserien/]()
@@ -63,22 +66,25 @@ usp --help
 
 #### Generella alternativ
 
-| <div style="width:150px">Alternativ</div> | Beskrivning | Arg | Default |
-|-------------------------------------------| ----------- | --- | ------- |
-| `--source <arg>`                         | Väljer från vilken källa data ska tas. Simulatorn är inbyggd, men för övriga krävs ytterligare konfiguration. | Simulator<br/>Meos<br/>Ola | Simulator |
-| `--listenerport <arg>`                   | Väljer vilken port webbservern ska lyssna på. | (Heltal) | 8880 |
-| `--teams <arg>`                          | Sätter vilka klubbar som poäng ska presenteras för och, för finalen, vilka poäng klubbarna har från tidigare tävlingar. Om detta inte anges kommer alla klubbar som deltar få poäng och dessa räknas från noll. | Sökväg till CSV-fil | |
-| `--pointscalc <arg>`                     | Väljer hur poängberäkningen ska ske. Det är olika regler för finalen och de övriga tävlingarna. | Normal<br/>Final | Final |
-| `--maxpatrolinterval <arg>`              | Patrull detekteras automatisk när flera löpare i en klass är från samma klubb och har samma starttid. Vid startsstämpling kan inte löparna få exakt samma starttid. Denna parameter anger hur många sekunder tiderna får skilja och ändå räknas som patrull | (Heltal) | 10 |
-| `--maxlatestart <arg>`                   | Om man har on-line check kopplat till TA-systemet kan man använda denna parameter för att räkna löpare som har status 'Ej aktiverade' som 'Ej start' om de inte har checkat angivet antal minuter efter sin lottade starttid. T.ex. 5 minuter. Detta gäller endast så länge status är ej aktiverad.  | (Heltal) | 1000 |
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                                                                                                                                 | Arg                        | Default   |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------- |
+| `--source <arg>`                          | Väljer från vilken källa data ska tas. Simulatorn är inbyggd, men för övriga krävs ytterligare konfiguration.                                                                                                                                                                                        | Simulator<br/>Meos<br/>Ola | Simulator |
+| `--listenerport <arg>`                    | Väljer vilken port webbservern ska lyssna på.                                                                                                                                                                                                                                                             | (Heltal)                   | 8880      |
+| `--teams <arg>`                           | Sätter vilka klubbar som poäng ska presenteras för och, för finalen, vilka poäng klubbarna har från tidigare tävlingar. Om detta inte anges kommer alla klubbar som deltar få poäng och dessa räknas från noll.                                                                                  | Sökväg till CSV-fil      |           |
+| `--pointscalc <arg>`                      | Väljer hur poängberäkningen ska ske. Det är olika regler för finalen och de övriga tävlingarna.                                                                                                                                                                                                      | Normal<br/>Final           | Final     |
+| `--maxpatrolinterval <arg>`               | Patrull detekteras automatisk när flera löpare i en klass är från samma klubb och har samma starttid. Vid startsstämpling kan inte löparna få exakt samma starttid. Denna parameter anger hur många sekunder tiderna får skilja och ändå räknas som patrull                                     | (Heltal)                   | 10        |
+| `--maxlatestart <arg>`                    | Om man har on-line check kopplat till TA-systemet kan man använda denna parameter för att räkna löpare som har status 'Ej aktiverade' som 'Ej start' om de inte har checkat angivet antal minuter efter sin lottade starttid. T.ex. 5 minuter. Detta gäller endast så länge status är ej aktiverad. | (Heltal)                   | 1000      |
 
 #### Simulator-alternativ
+
 Simulatorn startar automatiskt när applikationen startas. Följande inställningar finns för att modifiera simuleringen.
 
-| <div style="width:150px">Alternativ</div> | Beskrivning | Arg | Default |
-|-------------------------------------------| ----------- | --- | ------- |
-| `--speed <arg>`                           | Hastighet på simuleringen. Antal gånger snabbare. | (Heltal) | 10 |
-| `--numteams <arg>`                        | Antal klubbar som ska ingå i simuleringen. Max är 27. | (Heltal) |  27 |
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                             | Arg      | Default |
+| ----------------------------------------- | ------------------------------------------------------- | -------- | ------- |
+| `--speed <arg>`                           | Hastighet på simuleringen. Antal gånger snabbare.     | (Heltal) | 10      |
+| `--numteams <arg>`                        | Antal klubbar som ska ingå i simuleringen. Max är 27. | (Heltal) | 27      |
 
 #### MeOS-alternativ
 
@@ -88,14 +94,17 @@ För MeOS finns inga specifika alternativ, men `--listenerport <arg>` påverkar 
 
 När man använder OLA som datakälla läser applikationen direkt från MySQL-database. Fäjande alternativ anger var databasen finns och inloggning till denna.
 
-| <div style="width:150px">Alternativ</div> | Beskrivning | Arg | Default |
-|-------------------------------------------| ----------- | --- | ------- |
-| `--host <arg>` | IP-adress eller namn på servern som databasen finns på | (IP-adress)<br/>(namn) | localhost  |
-| `--port <arg>` | Port som databasen lyssnar på. Default är MySQLs standardport | (Heltal) | 3306 |
-| `--database <arg>` | Namn på MySQL databas | (Text) |  |
-| `--user <arg>` | MySQL användarnamn | (Text) |  |
-| `--password <arg>` | MySQL lösenord | (Text) |  |
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                     | Arg                    | Default   |
+| ----------------------------------------- | --------------------------------------------------------------- | ---------------------- | --------- |
+| `--host <arg>`                            | IP-adress eller namn på servern som databasen finns på        | (IP-adress)<br/>(namn) | localhost |
+| `--port <arg>`                            | Port som databasen lyssnar på. Default är MySQLs standardport | (Heltal)               | 3306      |
+| `--database <arg>`                        | Namn på MySQL databas                                          | (Text)                 |           |
+| `--user <arg>`                            | MySQL användarnamn                                             | (Text)                 |           |
+| `--password <arg>`                        | MySQL lösenord                                                 | (Text)                 |           |
 
 ### Webbsidan
+
 ```
 
+```
