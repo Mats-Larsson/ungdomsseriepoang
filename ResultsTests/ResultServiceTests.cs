@@ -35,7 +35,7 @@ public class ResultServiceTests
     private IResultService CreateResultService()
     {
         teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string,int>());
-        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object, classFilter);
+        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object, classFilter!);
         return resultService;
     }
 
