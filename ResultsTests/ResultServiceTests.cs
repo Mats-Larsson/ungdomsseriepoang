@@ -44,12 +44,12 @@ public class ResultServiceTests
     [DataRow(true)]
     public void AllNotActivated(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("9:30:00"), new[]
-        {
+        Result actual = Setup(isFinal, TS("9:30:00"),
+        [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
-        }).GetScoreBoard();
+        ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
         actual.TeamResults.Should().BeEquivalentTo(new[]
@@ -65,12 +65,12 @@ public class ResultServiceTests
     [DataRow(true)]
     public void OneActivated(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("9:30:00"), new[]
-        {
+        Result actual = Setup(isFinal, TS("9:30:00"),
+        [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
-        }).GetScoreBoard();
+        ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
         actual.TeamResults.Should().BeEquivalentTo(new[]
@@ -86,12 +86,12 @@ public class ResultServiceTests
     [DataRow(true)]
     public void OneActivatedAndOneStarted(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:01:30"), new[]
-        {
+        Result actual = Setup(isFinal, TS("10:01:30"),
+        [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
-        }).GetScoreBoard();
+        ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
         actual.TeamResults.Should().BeEquivalentTo(new[]
@@ -107,12 +107,12 @@ public class ResultServiceTests
     [DataRow(true)]
     public void OneStartedAndOneMissedStart(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:10:30"), new[]
-        {
+        Result actual = Setup(isFinal, TS("10:10:30"),
+        [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
-        }).GetScoreBoard();
+        ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
         actual.TeamResults.Should().BeEquivalentTo(new[]
@@ -128,12 +128,12 @@ public class ResultServiceTests
     [DataRow(true)]
     public void OneStartedAndOnePassed(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:10:30"), new[]
-        {
+        Result actual = Setup(isFinal, TS("10:10:30"),
+        [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
-        }).GetScoreBoard();
+        ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
         actual.TeamResults.Should().BeEquivalentTo(new[]
@@ -153,7 +153,7 @@ public class ResultServiceTests
         ParticipantResult pr1 = new("U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed);
         ParticipantResult pr2 = new("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed);
         ParticipantResult pr3 = new("U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed);
-        Result actual = Setup(isFinal, TS("10:10:30"), new[] { pr0, pr1, pr2, pr3 }).GetScoreBoard();
+        Result actual = Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numPassed: 4));
         actual.TeamResults.Should().BeEquivalentTo(new[]
