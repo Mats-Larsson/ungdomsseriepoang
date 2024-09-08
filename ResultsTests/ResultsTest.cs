@@ -12,6 +12,8 @@ namespace ResultsTests;
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class ResultsTest
 {
+    private readonly ClassFilter classFilter = new ClassFilter(new Configuration());
+
     [TestMethod]
     public void TestWithSimulatorTeamsAndBasePoints()
     {
@@ -19,12 +21,13 @@ public class ResultsTest
         {
             SpeedMultiplier = 10,
             NumTeams = 100,
-            TeamsFilePath = "Teams.csv"
+            TeamsFilePath = "Teams.csv",
+            RefreshInterval = TimeSpan.FromSeconds(10)
         };
         File.WriteAllText(configuration.TeamsFilePath, "Lag A,1000\r\nLag B, 600");
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>());
-        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
+        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>(), classFilter);
         var teamResults = resultService.GetScoreBoard();
         teamResults.TeamResults.Count.Should().Be(2);
         teamResults.TeamResults.Should().Contain(
@@ -42,12 +45,13 @@ public class ResultsTest
         {
             SpeedMultiplier = 10,
             NumTeams = 100,
-            TeamsFilePath = "Teams.csv"
+            TeamsFilePath = "Teams.csv",
+            RefreshInterval = TimeSpan.FromSeconds(10)
         };
         File.WriteAllText(configuration.TeamsFilePath, "Lag A\r\nLag B\r\nSnättringe SK");
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>());
-        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
+        using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>(), classFilter);
         Task.Delay(TimeSpan.FromMilliseconds(10)).Wait(); // Let simulator start
         var teamResults = resultService.GetScoreBoard();
         teamResults.TeamResults.Count.Should().Be(3);

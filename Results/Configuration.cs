@@ -10,6 +10,8 @@ public record Configuration
     public string? TeamsFilePath { get; init; }
     public bool IsFinal { get; init; }
     public TimeSpan MaxPatrolStartInterval { get; init; }
+    public ISet<string>? IncludeClasses { get; init; }
+    public ISet<string>? ExcludeClasses { get; init; }
 
     //Ola
     public string? OlaMySqlHost { get; init; }

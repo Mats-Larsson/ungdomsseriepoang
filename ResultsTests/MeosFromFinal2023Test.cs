@@ -32,19 +32,23 @@ public sealed class MeosFromFinal2023Test : IDisposable
     private readonly ILogger<MeosResultSource> meosResultSourceLoggerMock = Mock.Of<ILogger<MeosResultSource>>();
     private readonly ILogger<TeamService> teamServiceLoggerMock = Mock.Of<ILogger<TeamService>>();
     private readonly ILogger<ResultService> resultServiceLoggerMock = Mock.Of<ILogger<ResultService>>();
+    private readonly ClassFilter classFilter;
     private readonly ResultService results; 
     private readonly Configuration configuration = new()
     {
-        TimeUntilNotStated = TimeSpan.FromMinutes(10)
+        TimeUntilNotStated = TimeSpan.FromMinutes(10),
+        RefreshInterval = TimeSpan.FromSeconds(10)
     };
     private readonly MeosResultSource meosResultSource;
 
     public MeosFromFinal2023Test()
     {
         meosResultSource = new MeosResultSource(meosResultSourceLoggerMock);
+        classFilter = new(configuration);
+
         TeamService teamService = new(configuration, teamServiceLoggerMock);
         
-        results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock);
+        results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock, classFilter);
 
     }
 

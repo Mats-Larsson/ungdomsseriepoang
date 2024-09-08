@@ -1,22 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace Results.IofXml;
 
-public class FileListener : IDisposable
+public sealed class FileListener : IDisposable
 {
     private readonly FileSystemWatcher watcher;
     private readonly object lockObj = new();
     private readonly ILogger<FileListener> logger;
 
-    public DirectoryInfo? Directory { get; }
+    public DirectoryInfo Directory { get; }
 
     public FileListener(Configuration configuration, ILogger<FileListener> logger)
     {
         if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-        if (logger == null) throw new ArgumentNullException(nameof(logger));
-
-        this.logger = logger;
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         if (configuration.IofXmlInputFolder == null) throw new InvalidOperationException("IofXmlInputFolder nust not be null");
         Directory = new DirectoryInfo(configuration.IofXmlInputFolder);
         if (!Directory.Exists) throw new InvalidOperationException($"Directory not found: {Directory.FullName}");
@@ -55,7 +52,7 @@ public class FileListener : IDisposable
             {
                 if (IsFileFree(file))
                 {
-                    if (NewFile != null) NewFile(this, new NewFileEventArgs(file.FullName));
+                    NewFile?.Invoke(this, new NewFileEventArgs(file.FullName));
                 }
             }
         }
@@ -91,9 +88,9 @@ public class FileListener : IDisposable
 
 public class NewFileEventArgs : EventArgs
 {
-    public string? FullName { get; }
+    public string FullName { get; }
 
-    public NewFileEventArgs(string? fullName)
+    public NewFileEventArgs(string fullName)
     {
         FullName = fullName;
     }

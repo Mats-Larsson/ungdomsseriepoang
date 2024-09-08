@@ -29,9 +29,7 @@ public class LiveresultatFasadeTests
     {
         Debug.Assert(facade != null, nameof(facade) + " != null");
 
-        var competitionInfo = await facade.GetCompetitionInfoAsync(27215);
-        if (competitionInfo == null) throw new AssertFailedException();
-
+        var competitionInfo = await facade.GetCompetitionInfoAsync(27215) ?? throw new AssertFailedException();
         competitionInfo.Id.Should().Be(27215);
     }
 

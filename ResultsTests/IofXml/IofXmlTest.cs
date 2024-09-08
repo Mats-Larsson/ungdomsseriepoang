@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using Results;
 using Results.IofXml;
 using System.Diagnostics.CodeAnalysis;
@@ -11,6 +12,7 @@ public class IofXmlTest
 {
     private const string IOF_XML_INPUT_FOLDER = @".\IofXml";
     private readonly Mock<Configuration> configurationMock = new();
+    private readonly Mock<ILogger<FileListener>> loggerMock = new();
 
     [TestMethod]
     public Task TestMethod1()
@@ -19,8 +21,10 @@ public class IofXmlTest
         //        File.Delete(IOF_XML_INPUT_FOLDER + "\\*");
         configurationMock.Setup(m => m.IofXmlInputFolder).Returns(IOF_XML_INPUT_FOLDER);
 
-        using var resultSource = new IofXmlResultSource(configurationMock.Object);
-        IofXmlResultSource.LoadResultFile("IofResultat.Xml");
+        using var fileListener = new FileListener(configurationMock.Object, loggerMock.Object);
+        using var resultSource = new IofXmlResultSource(configurationMock.Object, fileListener);
+        
+        IofXmlResultSource.LoadResultFile(@".\IofXml\IofResultat.Xml");
         return Task.CompletedTask;
     }
 }

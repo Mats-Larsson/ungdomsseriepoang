@@ -9,15 +9,17 @@ public sealed class LiveresultatResultSource : IResultSource
 {
     private readonly LiveresultatFacade liveresultatFacade;
     private readonly ILogger<LiveresultatResultSource> logger;
+    private readonly ClassFilter classFilter;
     private readonly int competitionId;
     private TimeSpan lastCurrentTimeOfDay = TimeSpan.Zero;
     private bool competitionFound;
 
-    public LiveresultatResultSource(Configuration configuration, LiveresultatFacade liveresultatFacade, ILogger<LiveresultatResultSource> logger)
+    public LiveresultatResultSource(Configuration configuration, LiveresultatFacade liveresultatFacade, ILogger<LiveresultatResultSource> logger, ClassFilter classFilter)
     {
         if (configuration is null) throw new ArgumentNullException(nameof(configuration));
         this.liveresultatFacade = liveresultatFacade ?? throw new ArgumentNullException(nameof(liveresultatFacade));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.classFilter = classFilter ?? throw new ArgumentNullException(nameof(classFilter));
 
         if (!configuration.LiveresultatId.HasValue) throw new InvalidOperationException("LiveresultatId is missing");
         competitionId = configuration.LiveresultatId.Value;
@@ -32,13 +34,14 @@ public sealed class LiveresultatResultSource : IResultSource
 
     private async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        if (!(await CheckCompetitionInfo().ConfigureAwait(false))) return [];
+        if (!await CheckCompetitionInfo().ConfigureAwait(false)) return [];
 
         var classList = await liveresultatFacade.GetClassesAsync(competitionId).ConfigureAwait(false);
         if (classList?.Classes is null) return [];
 
+        // TODO: fråga inte vare gång
         var classNames = classList.Classes
-            .Where(c => !string.IsNullOrEmpty(c.ClassName))
+            .Where(c => !string.IsNullOrEmpty(c.ClassName) && classFilter.IsIncluded(c.ClassName))
             .Select(c => c.ClassName!);
 
         var results = new List<(string className, PersonResult personResult)>();
@@ -61,6 +64,10 @@ public sealed class LiveresultatResultSource : IResultSource
                     MapStatus(personResult.Status));
             })
             .ToList();
+        TimeSpan? maxTime = ret
+            .Where(r => r.Time.HasValue && r.Time > TimeSpan.Zero && r.Time.Value < TimeSpan.FromHours(3))
+            .Max(r => r.StartTime + r.Time);
+        if (maxTime.HasValue && maxTime.Value > lastCurrentTimeOfDay) lastCurrentTimeOfDay = maxTime.Value;
         return ret;
     }
 
@@ -105,7 +112,7 @@ public sealed class LiveresultatResultSource : IResultSource
             var currentTime = lastPassingList!.Passings!
                 .Select(p => p.PassTime)
                 .Max();
-            if (currentTime.HasValue) lastCurrentTimeOfDay = currentTime.Value;
+            if (currentTime.HasValue && currentTime > lastCurrentTimeOfDay ) lastCurrentTimeOfDay = currentTime.Value;
             return lastCurrentTimeOfDay;
         }
     }

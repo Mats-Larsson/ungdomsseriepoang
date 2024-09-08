@@ -39,6 +39,11 @@ public class Options
     public int MaxPatrolStartIntervalSeconds { get; private set; }
     public TimeSpan MaxPatrolStartInterval => TimeSpan.FromSeconds(MaxPatrolStartIntervalSeconds);
 
+    [Option("include", Group ="Points", Default = new string[0], HelpText =  "Include classes not include by the default rule")]
+    public IEnumerable<string>? IncludeClasses { get; set; }
+
+    [Option("exclude", Group = "Points", Default = new string[0], HelpText = "Exclude classes include by the default rule")]
+    public IEnumerable<string>? ExcludeClasses { get; set; }
 
     // Simulator options
     [Option("speed", Group = "Simulator", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
@@ -121,6 +126,8 @@ public class Options
             TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
             MaxPatrolStartInterval = value.MaxPatrolStartInterval,
+            IncludeClasses = new HashSet<string>(value.IncludeClasses ?? []),
+            ExcludeClasses = new HashSet<string>(value.ExcludeClasses ?? []),
 
             // Simulator
             SpeedMultiplier = value.Speed,
@@ -135,8 +142,7 @@ public class Options
             OlaEventId = value.EventId,
 
             // Liveresultat
-            LiveresultatId = value.LiveresultatId
-            OlaEventId = value.EventId,
+            LiveresultatId = value.LiveresultatId,
 
             // IofXml
             IofXmlInputFolder = value.InputFolder
@@ -158,7 +164,7 @@ public enum Source
     Simulator,
     Meos,
     Ola,
-    Liveresultat
+    Liveresultat,
     IofXml
 }
 

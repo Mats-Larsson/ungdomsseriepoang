@@ -19,18 +19,20 @@ public sealed class ResultService : IResultService, IDisposable
     private Statistics latestStatistics = new();
     private readonly Configuration configuration;
     private readonly ILogger<ResultService> logger;
+    private readonly ClassFilter classFilter;
     private readonly IPointsCalc pointsCalc;
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;
     private static readonly SemaphoreSlim NewResultPostSemaphore = new(1, 1);
 
-    public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
+    public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger, ClassFilter classFilter)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.resultSource = resultSource ?? throw new ArgumentNullException(nameof(resultSource));
         this.teamService = teamService ?? throw new ArgumentNullException(nameof(teamService));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.classFilter = classFilter ?? throw new ArgumentNullException(nameof(classFilter));
 
         pointsCalc = configuration.IsFinal
             ? new PointsCalcFinal(teamService, configuration)
@@ -53,7 +55,7 @@ public sealed class ResultService : IResultService, IDisposable
     {
         try
         {
-            var participantResults = FilterTeams(resultSource.GetParticipantResults());
+            var participantResults = FilterTeamsAndClasses(resultSource.GetParticipantResults());
 
             var notStartedCutOff = resultSource.CurrentTimeOfDay - configuration.TimeUntilNotStated;
 
@@ -91,7 +93,7 @@ public sealed class ResultService : IResultService, IDisposable
         }
     }
 
-    private IList<ParticipantResult> FilterTeams(IList<ParticipantResult> participantResults)
+    private IList<ParticipantResult> FilterTeamsAndClasses(IList<ParticipantResult> participantResults)
     {
         return teamService.Teams == null
             ? participantResults
