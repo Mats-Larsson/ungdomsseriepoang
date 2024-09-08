@@ -50,6 +50,7 @@ builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
 builder.Services.AddSingleton<LiveresultatResultSource>();
 builder.Services.AddSingleton<LiveresultatFacade>();
+builder.Services.AddSingleton<ClassFilter>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {

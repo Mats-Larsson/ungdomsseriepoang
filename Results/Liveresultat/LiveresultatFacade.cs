@@ -52,10 +52,10 @@ public class LiveresultatFacade : IDisposable
     public async Task<ClassResultList?> GetClassResultAsync(int competitionId, string className)
     {
         var found = classResultListsCache.TryGetValue(className, out var value);
-        if (found) return value!.Data;
 
         NameValueCollection parameters = new() { ["class"] = className, ["unformattedTimes"] = "true" };
         var list = await GetDataAsync<ClassResultList>(competitionId, Method.GetClassResults, value?.Hash, parameters).ConfigureAwait(false);
+        if (found && list is null) return value!.Data;
 
         classResultListsCache[className] = new Cached<ClassResultList>(list);
         return list;

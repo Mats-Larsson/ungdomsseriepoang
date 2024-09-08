@@ -41,11 +41,13 @@ public class Statistics
     {
         if (participantResults == null) throw new ArgumentNullException(nameof(participantResults));
 
-        var statistics = new Statistics();
+        var statistics = new Statistics
+        {
+            LastChangedTimeOfDay = currentTimeOfDay
+        };
 
         foreach (var pr in participantResults)
         {
-            statistics.LastChangedTimeOfDay = currentTimeOfDay;
             switch (pr.Status)
             {
                 case ParticipantStatus.Ignored: break;

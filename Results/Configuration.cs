@@ -4,12 +4,14 @@ public record Configuration
 {
     // General
     public TimeSpan RefreshInterval { get; init; }
-    
+
     // Points
     public TimeSpan TimeUntilNotStated { get; init; }
     public string? TeamsFilePath { get; init; }
     public bool IsFinal { get; init; }
     public TimeSpan MaxPatrolStartInterval { get; init; }
+    public ISet<string>? IncludeClasses { get; init; }
+    public ISet<string>? ExcludeClasses { get; init; }
 
     //Ola
     public string? OlaMySqlHost { get; init; }
@@ -25,4 +27,7 @@ public record Configuration
 
     //Liveresultat
     public int? LiveresultatId { get; init; }
+
+    // IofXml
+    public virtual string? IofXmlInputFolder { get; init; }
 }

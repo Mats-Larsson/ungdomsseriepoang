@@ -19,10 +19,12 @@ public class ResultServiceTests
     private readonly Mock<IResultSource> resultSourceMock = new();
     private readonly Mock<ITeamService> teamServiceMock = new();
     private readonly Mock<ILogger<ResultService>> loggerMock = new();
+    private ClassFilter? classFilter;
 
     private IResultService Setup(bool isFinal, TimeSpan currentTime, IList<ParticipantResult> partisipantResults)
     {
-        configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10") };
+        configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10"), RefreshInterval = TimeSpan.FromSeconds(10) };
+        classFilter = new ClassFilter(configuration);
         resultSourceMock.Setup(rs => rs.CurrentTimeOfDay).Returns(currentTime);
         resultSourceMock.Setup(rs => rs.GetParticipantResults()).Returns(partisipantResults);
 
@@ -33,7 +35,7 @@ public class ResultServiceTests
     private IResultService CreateResultService()
     {
         teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string,int>());
-        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object) ;
+        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object, classFilter);
         return resultService;
     }
 

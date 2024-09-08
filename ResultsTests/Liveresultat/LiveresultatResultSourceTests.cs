@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
+using Results;
 using Results.Liveresultat;
 using Results.Liveresultat.Model;
 using Configuration = Results.Configuration;
@@ -18,13 +19,14 @@ public class LiveresultatResultSourceTests
     private readonly Mock<ILogger<LiveresultatFacade>> liveresultatFacadeLoggerMock = new();
     private LiveresultatFacade? liveresultatFacade;
     private readonly Mock<ILogger<LiveresultatResultSource>> liveresultatResultSourceLoggerMock = new();
+    private readonly ClassFilter classFilter = new(new Configuration());
     private LiveresultatResultSource? liveresultatResultSource;
 
     [TestInitialize]
     public void Init()
     {
         liveresultatFacade = new LiveresultatFacadeMock(liveresultatFacadeLoggerMock.Object);
-        liveresultatResultSource = new LiveresultatResultSource(configuration, liveresultatFacade, liveresultatResultSourceLoggerMock.Object);
+        liveresultatResultSource = new LiveresultatResultSource(configuration, liveresultatFacade, liveresultatResultSourceLoggerMock.Object, classFilter);
     }
 
     [TestMethod]

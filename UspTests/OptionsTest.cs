@@ -16,6 +16,7 @@ namespace UspTests
 
             Console.WriteLine(Usp.Options.HelpText);
         }
+
         [TestMethod]
         public void Pointscalc()
         {
@@ -23,6 +24,14 @@ namespace UspTests
             Parse(["--pointscalc X"], true);
             Parse(["--pointscalc", "Final"]).PointsCalc.Should().Be(PointsCalcType.Final);
             Parse(["--pointscalc", "Normal"]).PointsCalc.Should().Be(PointsCalcType.Normal);
+        }
+
+        [TestMethod]
+        public void IncludeExclude()
+        {
+            Parse(["--include", "A", "B", "C"]).IncludeClasses.Should().HaveCount(3);
+            Parse(["--exclude", "A", "B", "C"]).ExcludeClasses.Should().HaveCount(3);
+            Parse(["--exclude", "--listenerport", "80"], true);
         }
 
         private static Options Parse(string[] args, bool shouldBeNull = false)

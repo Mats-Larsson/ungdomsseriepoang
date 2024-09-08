@@ -23,7 +23,7 @@ public class Options
     public int RefreshSeconds { get; set; }
     public TimeSpan RefreshInterval => TimeSpan.FromSeconds(RefreshSeconds);
 
-    
+
     // Points calculation
     [Option("pointscalc", Group = "Points", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
     public PointsCalcType PointsCalc { get; set; }
@@ -39,6 +39,11 @@ public class Options
     public int MaxPatrolStartIntervalSeconds { get; private set; }
     public TimeSpan MaxPatrolStartInterval => TimeSpan.FromSeconds(MaxPatrolStartIntervalSeconds);
 
+    [Option("include", Group ="Points", Default = new string[0], HelpText =  "Include classes not include by the default rule")]
+    public IEnumerable<string>? IncludeClasses { get; set; }
+
+    [Option("exclude", Group = "Points", Default = new string[0], HelpText = "Exclude classes include by the default rule")]
+    public IEnumerable<string>? ExcludeClasses { get; set; }
 
     // Simulator options
     [Option("speed", Group = "Simulator", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
@@ -68,9 +73,16 @@ public class Options
 
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
     public int EventId { get; set; }
-    
+
+    // Liveresultat
     [Option('L', "liveresultatid", Group = "Liveresultat", Default = 0, HelpText = "CompetitionId för tävlingen i Liveresultat. Se t.ex. https://liveresultat.orientering.se/adm/editComp.php?compid=27215")]
     public int? LiveresultatId { get; set; }
+
+    // IofXml options
+
+    [Option('d', "dir", Group = "IofXml", Default = ".", HelpText = "Directory to read IOF XML-files from")]
+    public string? InputFolder { get; set; }
+
 
 
     public static HelpText? HelpText { get; private set; }
@@ -81,14 +93,14 @@ public class Options
         using var parser = new Parser(with =>
         {
             with.CaseInsensitiveEnumValues = true;
-            with.CaseSensitive = true;  
+            with.CaseSensitive = true;
             with.AutoHelp = true;
         });
         ParserResult<Options>? parserResult = parser.ParseArguments<Options>(args);
         Errors  = parserResult.Errors;
         if (Errors.Any())
         {
-           
+
            HelpText = HelpText.AutoBuild(parserResult, h =>
             {
                 h.AddEnumValuesToHelpText = true;
@@ -114,6 +126,8 @@ public class Options
             TeamsFilePath = value.TeamsPath,
             IsFinal = value.PointsCalc == PointsCalcType.Final,
             MaxPatrolStartInterval = value.MaxPatrolStartInterval,
+            IncludeClasses = new HashSet<string>(value.IncludeClasses ?? []),
+            ExcludeClasses = new HashSet<string>(value.ExcludeClasses ?? []),
 
             // Simulator
             SpeedMultiplier = value.Speed,
@@ -126,9 +140,12 @@ public class Options
             OlaMySqlUser = value.User,
             OlaMySqlPassword = value.Password,
             OlaEventId = value.EventId,
-            
+
             // Liveresultat
-            LiveresultatId = value.LiveresultatId
+            LiveresultatId = value.LiveresultatId,
+
+            // IofXml
+            IofXmlInputFolder = value.InputFolder
         };
 
         return conf;
@@ -147,7 +164,8 @@ public enum Source
     Simulator,
     Meos,
     Ola,
-    Liveresultat
+    Liveresultat,
+    IofXml
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes
