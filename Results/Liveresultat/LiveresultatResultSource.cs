@@ -49,7 +49,7 @@ public sealed class LiveresultatResultSource : IResultSource
         {
             var classResult = await liveresultatFacade.GetClassResultAsync(competitionId, className).ConfigureAwait(false);
             if (classResult?.Results is null) continue;
-            results.AddRange(classResult!.Results!.Select(r => (className!, r)));
+            results.AddRange(classResult.Results!.Select(r => (className, r)));
         }
 
         var ret = results.Select(r =>
@@ -112,7 +112,7 @@ public sealed class LiveresultatResultSource : IResultSource
             var currentTime = lastPassingList!.Passings!
                 .Select(p => p.PassTime)
                 .Max();
-            if (currentTime.HasValue && currentTime > lastCurrentTimeOfDay ) lastCurrentTimeOfDay = currentTime.Value;
+            if (currentTime > lastCurrentTimeOfDay ) lastCurrentTimeOfDay = currentTime.Value;
             return lastCurrentTimeOfDay;
         }
     }

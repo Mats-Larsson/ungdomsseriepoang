@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Results.Liveresultat.Model;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;

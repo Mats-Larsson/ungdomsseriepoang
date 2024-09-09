@@ -1,27 +1,21 @@
 ﻿using FluentAssertions;
 using Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResultsTests;
 
 [TestClass]
 public class ClassFilterTests
 {
-    private readonly Configuration configuration;
     private readonly ClassFilter filter;
 
     public ClassFilterTests()
     {
-        configuration = new() 
+        Configuration configuration = new()
         { 
             IncludeClasses = new HashSet<string>(["H11"]),
             ExcludeClasses = new HashSet<string>(["U4X"])
         };
-        filter = new(configuration);
+        filter = new ClassFilter(configuration);
     }
 
     [TestMethod]

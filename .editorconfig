@@ -6,6 +6,8 @@
 # Code files
 
 
+[Results/IofXml/IOF.cs]
+generated_code = true
 
 [*.{cs,vb}]
 #### Naming styles ####

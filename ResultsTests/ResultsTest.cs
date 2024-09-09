@@ -12,7 +12,7 @@ namespace ResultsTests;
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class ResultsTest
 {
-    private readonly ClassFilter classFilter = new ClassFilter(new Configuration());
+    private readonly ClassFilter classFilter = new(new Configuration());
 
     [TestMethod]
     public void TestWithSimulatorTeamsAndBasePoints()

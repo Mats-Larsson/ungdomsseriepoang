@@ -36,16 +36,14 @@ namespace UspTests
 
         private static Options Parse(string[] args, bool shouldBeNull = false)
         {
-            Options? options = Usp.Options.Parse(args);
-            if (options == null)
-            {
-                if (!shouldBeNull) throw new AssertFailedException(Usp.Options.HelpText);
-                CommandLine.Text.HelpText? helpText = Usp.Options.HelpText;
+            var options = Usp.Options.Parse(args);
+            if (options != null) return options;
 
-                Console.WriteLine(Usp.Options.HelpText);
-                return default!;
-            }
-            return options;
+            var helpText = Usp.Options.HelpText;
+            if (!shouldBeNull) throw new AssertFailedException(helpText);
+
+            Console.WriteLine(Usp.Options.HelpText);
+            return default!;
         }
     }
 }

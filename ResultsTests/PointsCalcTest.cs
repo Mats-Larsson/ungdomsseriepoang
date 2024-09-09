@@ -203,22 +203,20 @@ public sealed class PointsCalcTest
 
         var normalScoreBoard = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
         normalScoreBoard.Should().HaveCount(3);
-        normalScoreBoard.Should().BeEquivalentTo(new[] 
-            {
+        normalScoreBoard.Should().BeEquivalentTo([
                 TeamResult(1, "Club C", 50 + 10 + 50, false, 0, numPassed: 3),
                 TeamResult(2, "Club B", 40 + 26, false, 44, numStarted: 1, numPassed: 2),
                 TeamResult(3, "Club A", 40, false, 26, numNotStarted: 1, numPassed: 1)
-            }
+            ]
         );
 
         var finalScoreBoard = new PointsCalcFinal(emptyTeamServiceMock.Object, finalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
         finalScoreBoard.Should().HaveCount(3);
-        finalScoreBoard.Should().BeEquivalentTo(new[]
-            {
+        finalScoreBoard.Should().BeEquivalentTo([
                 TeamResult(1, "Club C", 100 + 20 + 44, false, numPassed: 3),
                 TeamResult(2, "Club B", 64 + 20, false, 80, numStarted: 1, numPassed: 2),
-                TeamResult(3, "Club A", 72, false, 12, numNotStarted: 1, numPassed: 1),
-            }
+                TeamResult(3, "Club A", 72, false, 12, numNotStarted: 1, numPassed: 1)
+            ]
         );
     }
 

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Specialized;
-using System.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Newtonsoft.Json;
 using Results;
 using Results.Liveresultat;
 using Results.Liveresultat.Model;
@@ -64,23 +62,14 @@ class LiveresultatFacadeMock : LiveresultatFacade
 
     protected override Task<T> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
     {
-        DeserializationBase result = default!;
-
-        switch (typeof(T).Name)
+        DeserializationBase result = typeof(T).Name switch
         {
-            case "LastPassingList":
-                result = new LastPassingList { Passings = [new Passing { PassTimeRaw = "10:11:12" }] };
-                break;
-            case "CompetitionInfo":
-                result = GetFromFile<T>(@"Liveresultat\CompetitionInfo.json");
-                break;
-            case "ClassList":
-                result = GetFromFile<T>(@"Liveresultat\Classes.json");
-                break;
-            case "ClassResultList":
-                result = GetFromFile<T>(@"Liveresultat\H16.json");
-                break;
-        }
+            "LastPassingList" => new LastPassingList { Passings = [new Passing { PassTimeRaw = "10:11:12" }] },
+            "CompetitionInfo" => GetFromFile<T>(@"Liveresultat\CompetitionInfo.json"),
+            "ClassList" => GetFromFile<T>(@"Liveresultat\Classes.json"),
+            "ClassResultList" => GetFromFile<T>(@"Liveresultat\H16.json"),
+            _ => default!
+        };
         return Task.FromResult((T)Convert.ChangeType(result, typeof(T)));
     }
 

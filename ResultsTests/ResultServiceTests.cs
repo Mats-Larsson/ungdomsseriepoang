@@ -34,7 +34,7 @@ public class ResultServiceTests
 
     private IResultService CreateResultService()
     {
-        teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string,int>());
+        teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string, int>());
         resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object, classFilter!);
         return resultService;
     }
@@ -52,12 +52,12 @@ public class ResultServiceTests
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", 0, false, 0, 0, new Statistics(1)),
-                new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
-                new TeamResult(1, "C", 0, false, 0, 0, new Statistics(1)),
-            });
+        actual.TeamResults.Should().BeEquivalentTo(
+        [
+            new TeamResult(1, "A", 0, false, 0, 0, new Statistics(1)),
+            new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
+            new TeamResult(1, "C", 0, false, 0, 0, new Statistics(1))
+        ]);
     }
 
     [DataTestMethod]
@@ -73,12 +73,12 @@ public class ResultServiceTests
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", 0, false, 0, 0, new Statistics(0, 1)),
-                new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
-                new TeamResult(1, "C", 0, false, 0, 0, new Statistics(1)),
-            });
+        actual.TeamResults.Should().BeEquivalentTo(
+        [
+            new TeamResult(1, "A", 0, false, 0, 0, new Statistics(0, 1)),
+            new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
+            new TeamResult(1, "C", 0, false, 0, 0, new Statistics(1))
+        ]);
     }
 
     [DataTestMethod]
@@ -94,12 +94,12 @@ public class ResultServiceTests
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", 0, false, 0, 0, new Statistics(0, 0, 1)),
-                new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
-                new TeamResult(1, "C", 0, false, 0, 0, new Statistics(0, 1)),
-            });
+        actual.TeamResults.Should().BeEquivalentTo(
+        [
+            new TeamResult(1, "A", 0, false, 0, 0, new Statistics(0, 0, 1)),
+            new TeamResult(1, "B", 0, false, 0, 0, new Statistics(1)),
+            new TeamResult(1, "C", 0, false, 0, 0, new Statistics(0, 1))
+        ]);
     }
 
     [DataTestMethod]
@@ -115,12 +115,11 @@ public class ResultServiceTests
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", 0, false, 0, 0, new Statistics(numNotStarted: 1)),
-                new TeamResult(1, "B", 0, false, 0, 0, new Statistics(numNotActivated: 1)),
-                new TeamResult(1, "C", 0, false, 0, 0, new Statistics(numStarted: 1)),
-            });
+        actual.TeamResults.Should().BeEquivalentTo([
+            new TeamResult(1, "A", 0, false, 0, 0, new Statistics(numNotStarted: 1)),
+            new TeamResult(1, "B", 0, false, 0, 0, new Statistics(numNotActivated: 1)),
+            new TeamResult(1, "C", 0, false, 0, 0, new Statistics(numStarted: 1))
+        ]);
     }
 
     [DataTestMethod]
@@ -136,12 +135,11 @@ public class ResultServiceTests
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", isFinal ? 100-8 : 50, false, 0, 0, new Statistics(numPassed: 1)),
-                new TeamResult(2, "B", 0, false, isFinal ? 100-8 : 50, 0, new Statistics(numNotActivated: 1)),
-                new TeamResult(2, "C", 0, false, isFinal ? 100-8 : 50, 0, new Statistics(numStarted: 1)),
-            });
+        actual.TeamResults.Should().BeEquivalentTo([
+            new TeamResult(1, "A", isFinal ? 100 - 8 : 50, false, 0, 0, new Statistics(numPassed: 1)),
+            new TeamResult(2, "B", 0, false, isFinal ? 100 - 8 : 50, 0, new Statistics(numNotActivated: 1)),
+            new TeamResult(2, "C", 0, false, isFinal ? 100 - 8 : 50, 0, new Statistics(numStarted: 1))
+        ]);
     }
 
     [DataTestMethod]
@@ -156,17 +154,16 @@ public class ResultServiceTests
         Result actual = Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numPassed: 4));
-        actual.TeamResults.Should().BeEquivalentTo(new[]
-            {
-                new TeamResult(1, "A", isFinal ? 80-8+80-8+20+20 : 40+30+40+30, false, 0, 0, new Statistics(numPassed: 4))
-            });
+        actual.TeamResults.Should().BeEquivalentTo([
+            new TeamResult(1, "A", isFinal ? 80 - 8 + 80 - 8 + 20 + 20 : 40 + 30 + 40 + 30, false, 0, 0, new Statistics(numPassed: 4))
+        ]);
 
-        
+
         resultService!.GetParticipantPointsList().OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
         {
-            new(new PointsCalcParticipantResult(pr0), isFinal ? 80-8 : 40),
-            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30) ,
-            new(new PointsCalcParticipantResult(pr2), isFinal ? 80-8 : 40),
+            new(new PointsCalcParticipantResult(pr0), isFinal ? 80 - 8 : 40),
+            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
+            new(new PointsCalcParticipantResult(pr2), isFinal ? 80 - 8 : 40),
             new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
         });
     }

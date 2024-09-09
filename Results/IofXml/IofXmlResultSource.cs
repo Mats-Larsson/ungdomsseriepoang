@@ -1,6 +1,5 @@
 ﻿using Results.Contract;
 using Results.Model;
-using Results.Ola.IofXml;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -45,7 +44,7 @@ public sealed class IofXmlResultSource : IResultSource
     private static TimeSpan ToStartTime(PersonResult pr)
     {
         var startTime = pr.Result?[0]?.StartTime;
-        return startTime.HasValue ? startTime.Value.TimeOfDay : default;
+        return startTime?.TimeOfDay ?? default;
     }
 
     private static string ToName(PersonResult pr)
