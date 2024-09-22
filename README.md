@@ -7,8 +7,8 @@ För närvarande stöds koppling till:
 
 | <div style="width:100px">Datakälla</div> | Beskrivning |
 | - | - |
-| MeOS          | Automat i MeOS skickas till denna applikation men HTTP-POST |
-| OLA med MySQL | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbygda databasen. |
+| MeOS          | Automat i MeOS skickar data till denna applikation men HTTP-POST |
+| OLA med MySQL | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbyggda databasen. |
 | Liveresultat  | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Livresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet. |
 | XML-resultat | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
 
@@ -63,9 +63,9 @@ När applikationen startas konfigureras den från kommandoraden. För att se de 
 ```
 usp --help
 ```
+Det kan finnas fler än i detta dokument om jag slarvat med att uppdatera dokumentationen,
 
 #### Generella alternativ
-
 
 | <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                                                                                                                                 | Arg                        | Default   |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------- |
@@ -75,6 +75,16 @@ usp --help
 | `--pointscalc <arg>`                      | Väljer hur poängberäkningen ska ske. Det är olika regler för finalen och de övriga tävlingarna.                                                                                                                                                                                                      | Normal<br/>Final           | Final     |
 | `--maxpatrolinterval <arg>`               | Patrull detekteras automatisk när flera löpare i en klass är från samma klubb och har samma starttid. Vid startsstämpling kan inte löparna få exakt samma starttid. Denna parameter anger hur många sekunder tiderna får skilja och ändå räknas som patrull                                     | (Heltal)                   | 10        |
 | `--maxlatestart <arg>`                    | Om man har on-line check kopplat till TA-systemet kan man använda denna parameter för att räkna löpare som har status 'Ej aktiverade' som 'Ej start' om de inte har checkat angivet antal minuter efter sin lottade starttid. T.ex. 5 minuter. Detta gäller endast så länge status är ej aktiverad. | (Heltal)                   | 1000      |
+
+Med `--teams <filnamn>` gör man 2 inställningar. Dels begränsas de klubbar som ska ingå i poängberäkningen och dels
+anges de grund poäng som ska användas i finalen. Filen är en vanlig textfil. T.ex.:
+```
+OK Höjden,342
+Sänkan OK,123
+IFK Granen,92
+Sankmarkens IF,0
+```
+Klubbarna måste vara stavade exakt som i TA-systemet.
 
 #### Simulator-alternativ
 
@@ -94,7 +104,6 @@ För MeOS finns inga specifika alternativ, men `--listenerport <arg>` påverkar 
 
 När man använder OLA som datakälla läser applikationen direkt från MySQL-database. Fäjande alternativ anger var databasen finns och inloggning till denna.
 
-
 | <div style="width:150px">Alternativ</div> | Beskrivning                                                     | Arg                    | Default   |
 | ----------------------------------------- | --------------------------------------------------------------- | ---------------------- | --------- |
 | `--host <arg>`                            | IP-adress eller namn på servern som databasen finns på        | (IP-adress)<br/>(namn) | localhost |
@@ -105,6 +114,38 @@ När man använder OLA som datakälla läser applikationen direkt från MySQL-da
 
 ### Webbsidan
 
+Efter det att applikationen startat (usp), surfar man in på:
+```
+http://localhost:8880
+```
+Detta gäller för samma dator som applikationen kör på. Om man kör från annan dator för man ange ip-adressen. TT.ex.:
+Efter det att applikationen startat (usp), surfar man in på:
+```
+http://1.2.3.4:8880
+```
+Det finns inget gränssnitt för att styra utseendet utan det görs från URL-en. För att få större text och
+3 kolumner använd:
+```
+http://localhost:8880?TextSize=120&Columns=3
+```
+Följande parametrar kan användas:
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                      | Arg                  | Default |
+|-------------------------------------------|------------------------------------------------------------------|----------------------|---------|
+| `TextSize=nnn`                            | Ställer storleken på texten i resultatlistan                     | % av standardstorlek | 100     |
+| `Columns=nn`                              | Antalet kolumner i resultattabellen                              | antal                | 2       |
+| `Verbose=true`                            | Visar mer information i resultattabellen. Lämpligt för speakern. | true/false           | false   |
+
+#### Aktuell ställning till fil
+
+För att exportera aktuell ställning till CSV-fil, mata in nedanstående i webbläsaren och filen kommer att laddas ner till datorn.
+
+Ladda ner poäng per klubb:
+```
+http://localhost:8880/teams
 ```
 
+Ladda ner poäng per deltagare:
+```
+http://localhost:8880/participants
 ```
