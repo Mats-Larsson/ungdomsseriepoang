@@ -112,15 +112,18 @@ usp --source meos
 ```
 
 Surfa in på http://localhost:8880. En sida utan resultat visas.
-![img_1.png](img_1.png)
+![doc/img_1.png](doc/img_1.png)
 
 Enklast är att köra MeOS på samma dator. Koppla upp MeOS mot databasen och öppna tävlingen. Under automater skapa en
 "Resultat online" automat. URL ska vara http://localhost:8880/meos och `Packa stora filer (ZIP)` ska inte vara valt.
-![img.png](img.png)
+![doc/img.png](doc/img.png)
 Kontroller behöver inte markeras.
 
 Starta sedan automaten webbsidan kommer då att uppdateras
-![img_3.png](img_3.png)
+![doc/img_3.png](doc/img_3.png)
+
+OBS! Om man stannar och sedan startar om applikationen, måste automaten i MeOS startas om.
+MeOS skickar allt när den startar därefter endast förändringar.
 
 #### OLA-alternativ
 
