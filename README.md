@@ -5,12 +5,13 @@ orienteringsförbunds ungdomsserie. Applikationen hämtar data från det tävlin
 
 För närvarande stöds koppling till:
 
-| <div style="width:100px">Datakälla</div> | Beskrivning |
-| - | - |
-| MeOS          | Automat i MeOS skickar data till denna applikation men HTTP-POST |
-| OLA med MySQL | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbyggda databasen. |
-| Liveresultat  | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Livresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet. |
-| XML-resultat | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
+
+| <div style="width:100px">Datakälla</div> | Beskrivning                                                                                                                                                                                                                  |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MeOS                                      | Automat i MeOS skickar data till denna applikation men HTTP-POST                                                                                                                                                             |
+| OLA med MySQL                             | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbyggda databasen.                                                                                                                                    |
+| Liveresultat                              | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Livresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet.                            |
+| XML-resultat                              | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
 
 Poängen beräknas enligt instruktioner på:
 [https://www.orientering.se/stockholm/utvecklingsmiljon/ungdom/ungdomsserien/arrangorsanvisningar-for-ungdomsserien/]()
@@ -63,9 +64,11 @@ När applikationen startas konfigureras den från kommandoraden. För att se de 
 ```
 usp --help
 ```
+
 Det kan finnas fler än i detta dokument om jag slarvat med att uppdatera dokumentationen,
 
 #### Generella alternativ
+
 
 | <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                                                                                                                                 | Arg                        | Default   |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------- |
@@ -78,12 +81,14 @@ Det kan finnas fler än i detta dokument om jag slarvat med att uppdatera dokume
 
 Med `--teams <filnamn>` gör man 2 inställningar. Dels begränsas de klubbar som ska ingå i poängberäkningen och dels
 anges de grund poäng som ska användas i finalen. Filen är en vanlig textfil. T.ex.:
+
 ```
 OK Höjden,342
 Sänkan OK,123
 IFK Granen,92
 Sankmarkens IF,0
 ```
+
 Klubbarna måste vara stavade exakt som i TA-systemet.
 
 #### Simulator-alternativ
@@ -100,9 +105,27 @@ Simulatorn startar automatiskt när applikationen startas. Följande inställnin
 
 För MeOS finns inga specifika alternativ, men `--listenerport <arg>` påverkar även till vilken port MeOS ska skicka resultaten.
 
+Börja med att start applikationen. T.ex.;
+
+```
+usp --source meos
+```
+
+Surfa in på http://localhost:8880. En sida utan resultat visas.
+![img_1.png](img_1.png)
+
+Enklast är att köra MeOS på samma dator. Koppla upp MeOS mot databasen och öppna tävlingen. Under automater skapa en
+"Resultat online" automat. URL ska vara http://localhost:8880/meos och `Packa stora filer (ZIP)` ska inte vara valt.
+![img.png](img.png)
+Kontroller behöver inte markeras.
+
+Starta sedan automaten webbsidan kommer då att uppdateras
+![img_3.png](img_3.png)
+
 #### OLA-alternativ
 
-När man använder OLA som datakälla läser applikationen direkt från MySQL-database. Fäjande alternativ anger var databasen finns och inloggning till denna.
+När man använder OLA som datakälla läser applikationen direkt från MySQL-database. Följande alternativ anger var databasen finns och inloggning till denna.
+
 
 | <div style="width:150px">Alternativ</div> | Beskrivning                                                     | Arg                    | Default   |
 | ----------------------------------------- | --------------------------------------------------------------- | ---------------------- | --------- |
@@ -115,25 +138,32 @@ När man använder OLA som datakälla läser applikationen direkt från MySQL-da
 ### Webbsidan
 
 Efter det att applikationen startat (usp), surfar man in på:
+
 ```
 http://localhost:8880
 ```
+
 Detta gäller för samma dator som applikationen kör på. Om man kör från annan dator för man ange ip-adressen. TT.ex.:
 Efter det att applikationen startat (usp), surfar man in på:
+
 ```
 http://1.2.3.4:8880
 ```
+
 Det finns inget gränssnitt för att styra utseendet utan det görs från URL-en. För att få större text och
 3 kolumner använd:
+
 ```
 http://localhost:8880?TextSize=120&Columns=3
 ```
+
 Följande parametrar kan användas:
 
-| <div style="width:150px">Alternativ</div> | Beskrivning                                                      | Arg                  | Default |
-|-------------------------------------------|------------------------------------------------------------------|----------------------|---------|
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                        | Arg                  | Default |
+| ----------------------------------------- | ------------------------------------------------------------------ | -------------------- | ------- |
 | `TextSize=nnn`                            | Ställer storleken på texten i resultatlistan                     | % av standardstorlek | 100     |
-| `Columns=nn`                              | Antalet kolumner i resultattabellen                              | antal                | 2       |
+| `Columns=nn`                              | Antalet kolumner i resultattabellen                                | antal                | 2       |
 | `Verbose=true`                            | Visar mer information i resultattabellen. Lämpligt för speakern. | true/false           | false   |
 
 #### Aktuell ställning till fil
@@ -141,11 +171,13 @@ Följande parametrar kan användas:
 För att exportera aktuell ställning till CSV-fil, mata in nedanstående i webbläsaren och filen kommer att laddas ner till datorn.
 
 Ladda ner poäng per klubb:
+
 ```
 http://localhost:8880/teams
 ```
 
 Ladda ner poäng per deltagare:
+
 ```
 http://localhost:8880/participants
 ```
