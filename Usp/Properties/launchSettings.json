@@ -1,0 +1,30 @@
+{
+  "profiles": {
+    "Usp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
+    },
+    "Usp Liveresultat": {
+      "commandName": "Project",
+      "commandLineArgs": "-s Liveresultat -L \"-30823\" --pointscalc Normal",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
+    },
+    "usp meos": {
+      "commandName": "Project",
+      "commandLineArgs": "-s meos",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
+    }
+  }
+}
