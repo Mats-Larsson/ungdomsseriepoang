@@ -61,7 +61,16 @@ else
                         <td style="text-align: left">@teamResult.Team</td>
                         @if (isVerbose) { <td style="text-align: right">@(stats.NumNotActivated)/@(stats.NumActivated + stats.NumStarted)</td> }
                         @if (isVerbose) { <td style="text-align: right">@teamResult.DiffPointsUp</td> }
-                        @if (isVerbose) { <td style="text-align: right"><i>@teamResult.BasePoints</i>+@(teamResult.Points - teamResult.BasePoints)=<b>@teamResult.Points</b></td> }
+                        @if (isVerbose) {
+                            if (teamResult.BasePoints > 0)
+                            {
+                                <td style="text-align: right"><i>@teamResult.BasePoints</i>+@(teamResult.Points - teamResult.BasePoints)=<b>@teamResult.Points</b></td>
+                            }
+                            else
+                            {
+                                <td style="text-align: right"><b>@teamResult.Points</b></td>
+                            }
+                        }
                         @if (isVerbose) { <td style="text-align: center">@(teamResult.IsPreliminary ? "P" : "")</td> }
                         @if (!isVerbose) { <td style="text-align: right">@teamResult.Points</td> }
                     </tr>
