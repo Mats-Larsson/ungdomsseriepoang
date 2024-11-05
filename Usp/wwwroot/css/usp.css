@@ -1,0 +1,24 @@
+﻿.fetch-data-page { 
+    height: 98vh;
+
+    .text-left { text-align:left !important }
+
+    .text-right { text-align:right !important }
+
+
+    .arrow { font-family:Verdana; font-weight:900; }
+
+    .down { color:red  }
+    .up { color:green }
+    
+    .footer { bottom: 0; left: 0; right: 0; position: absolute; font-size: 1.5vw; }
+    
+    .w-5 { width: 5% }
+    .w-10 { width: 10% }
+    .w-15 { width: 15% }
+    .w-50 { width: 50% }
+    
+}
+    
+
+
