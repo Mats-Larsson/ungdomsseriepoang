@@ -24,6 +24,7 @@ public sealed class FileListener : IDisposable
         watcher.Renamed += Watcher_Renamed;
         watcher.Filter = "*.xml";
         watcher.EnableRaisingEvents = true;
+        Process();
     }
 
     public event EventHandler<NewFileEventArgs>? NewFile;
@@ -86,12 +87,7 @@ public sealed class FileListener : IDisposable
     }
 }
 
-public class NewFileEventArgs : EventArgs
+public class NewFileEventArgs(string fullName) : EventArgs
 {
-    public string FullName { get; }
-
-    public NewFileEventArgs(string fullName)
-    {
-        FullName = fullName;
-    }
+    public string FullName { get; } = fullName;
 }

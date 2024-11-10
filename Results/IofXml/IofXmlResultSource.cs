@@ -1,37 +1,54 @@
-﻿using Results.Contract;
+﻿using System.Diagnostics.CodeAnalysis;
+using Results.Contract;
 using Results.Model;
 using System.Xml;
 using System.Xml.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace Results.IofXml;
 
 public sealed class IofXmlResultSource : IResultSource
 {
     private ResultList? resultList;
+
+    [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     private readonly Configuration configuration;
+
     private readonly FileListener fileListener;
+    private readonly ILogger<IofXmlResultSource> logger;
+    private int lastFileNumber;
 
     public bool SupportsPreliminary => false;
 
     public TimeSpan CurrentTimeOfDay => resultList?.createTime.TimeOfDay ?? TimeSpan.Zero;
 
-    public IofXmlResultSource(Configuration configuration, FileListener fileListener)
+    public IofXmlResultSource(Configuration configuration, FileListener fileListener,
+        ILogger<IofXmlResultSource> logger)
     {
         this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this.fileListener = fileListener ?? throw new ArgumentNullException(nameof(fileListener));
+        this.logger = logger;
         fileListener.NewFile += FileListener_NewFile;
     }
 
     private void FileListener_NewFile(object? sender, NewFileEventArgs e)
     {
-        resultList = LoadResultFile(e.FullName);
+        try
+        {
+            resultList = LoadResultFile(e.FullName);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while loading result file");
+        }
     }
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return resultList?.ClassResult
-            .SelectMany(cr => cr.PersonResult
-            .Select(pr => new ParticipantResult(cr.Class.Name, ToName(pr), pr.Organisation.Name, ToStartTime(pr), ToTimeSpan(pr), MapStatus(pr.Result[0].Status))))
+        return resultList?.ClassResult?
+            .SelectMany(cr => (cr.PersonResult ?? [])
+                .Select(pr => new ParticipantResult(cr.Class.Name, ToName(pr), pr.Organisation.Name, ToStartTime(pr),
+                    ToTimeSpan(pr), MapStatus(pr.Result[0].Status))))
             .ToList() ?? [];
     }
 
@@ -84,17 +101,45 @@ public sealed class IofXmlResultSource : IResultSource
         throw new NotImplementedException();
     }
 
-    public static ResultList LoadResultFile(string path)
+    private ResultList LoadResultFile(string path)
     {
-        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-        using XmlTextReader xmlReader = new(stream);
-        XmlAttributeOverrides overrides = new();
-        XmlAttributes ignore = new() { XmlIgnore = true };
-        overrides.Add(typeof(PersonRaceResult), "SplitTime", ignore);
-        XmlSerializer xml = new(typeof(ResultList), overrides);
-        ResultList resultList = (ResultList)(xml.Deserialize(xmlReader)!);
+        try
+        {
+            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            using XmlTextReader xmlReader = new(stream);
+            XmlAttributeOverrides overrides = new();
+            XmlAttributes ignore = new() { XmlIgnore = true };
+            overrides.Add(typeof(PersonRaceResult), "SplitTime", ignore);
+            XmlSerializer xml = new(typeof(ResultList), overrides);
+            return (ResultList)(xml.Deserialize(xmlReader)!);
+        }
+        finally
+        {
+            RenameFile(path);
+        }
+    }
 
-        return resultList;
+    private void RenameFile(string path)
+    {
+        string folder = Path.GetDirectoryName(path)!;
+        string fileName = Path.GetFileName(path);
+
+        for (var i = lastFileNumber; i < 10000; i++)
+        {
+            string newPath = Path.Combine(folder, $"{fileName}.{i:0000}");
+            if (File.Exists(newPath)) continue;
+
+            try
+            {
+                File.Move(path, newPath);
+                lastFileNumber = (i + 1) % 10000;
+                return;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error while renameing file");
+            }
+        }
     }
 
     public void Dispose()

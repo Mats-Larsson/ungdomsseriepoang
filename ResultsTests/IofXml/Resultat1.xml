@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<ResultList xmlns="http://www.orienteering.org/datastandard/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" iofVersion="3.0" createTime="2024-11-10T13:01:06" creator="MeOS 4.0.1560 (Update 2)" status="Complete">
+<Event>
+<Id>47195</Id>
+<Name>Ungdomsserien, region SV</Name>
+<StartTime>
+<Date>2024-08-28</Date>
+<Time>16:00:00+02:00</Time>
+</StartTime>
+</Event>
+<ClassResult>
+<Class>
+<Id>30</Id>
+<Name>H14</Name>
+</Class>
+<Course>
+<Id>12</Id>
+<Name>Bana 10</Name>
+<Length>2510</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>168844</Id>
+<Name>
+<Family>Libérth</Family>
+<Given>Emil</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>130</Id>
+<Name>Haninge SOK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T18:35:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>2132156</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+<ClassResult>
+<Class>
+<Id>31</Id>
+<Name>H12</Name>
+</Class>
+<Course>
+<Id>9</Id>
+<Name>Bana 7</Name>
+<Length>1990</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>208941</Id>
+<Name>
+<Family>Känngård</Family>
+<Given>Cesar</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>348</Id>
+<Name>Snättringe SK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T18:19:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>2161527</ControlCard>
+<AssignedFee>
+<Fee type="Late">
+<Name>Entry fee</Name>
+<Amount>98</Amount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+<ClassResult>
+<Class>
+<Id>32</Id>
+<Name>H10</Name>
+</Class>
+<Course>
+<Id>5</Id>
+<Name>Bana 4</Name>
+<Length>1930</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>199546</Id>
+<Name>
+<Family>Tonring</Family>
+<Given>Matheo</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>410</Id>
+<Name>Tullinge SK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T17:49:00+02:00</StartTime>
+<FinishTime>2024-08-28T18:03:43+02:00</FinishTime>
+<Time>883</Time>
+<TimeBehind>0</TimeBehind>
+<Position>1</Position>
+<Status>OK</Status>
+<SplitTime>
+<ControlCode>58</ControlCode>
+<Time>103</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>57</ControlCode>
+<Time>180</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>54</ControlCode>
+<Time>295</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>37</ControlCode>
+<Time>395</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>56</ControlCode>
+<Time>465</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>51</ControlCode>
+<Time>567</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>34</ControlCode>
+<Time>652</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>50</ControlCode>
+<Time>741</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>35</ControlCode>
+<Time>822</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>100</ControlCode>
+<Time>849</Time>
+</SplitTime>
+<ControlCard>2443347</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+<PersonResult>
+<Person>
+<Id>163222</Id>
+<Name>
+<Family>Sundblad</Family>
+<Given>Alexander</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>348</Id>
+<Name>Snättringe SK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T17:47:00+02:00</StartTime>
+<FinishTime>2024-08-28T18:03:51+02:00</FinishTime>
+<Time>1011</Time>
+<TimeBehind>128</TimeBehind>
+<Position>2</Position>
+<Status>OK</Status>
+<SplitTime>
+<ControlCode>58</ControlCode>
+<Time>115</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>57</ControlCode>
+<Time>201</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>54</ControlCode>
+<Time>411</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>37</ControlCode>
+<Time>535</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>56</ControlCode>
+<Time>618</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>51</ControlCode>
+<Time>721</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>34</ControlCode>
+<Time>771</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>50</ControlCode>
+<Time>863</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>35</ControlCode>
+<Time>949</Time>
+</SplitTime>
+<SplitTime>
+<ControlCode>100</ControlCode>
+<Time>982</Time>
+</SplitTime>
+<ControlCard>2147842</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+<ClassResult>
+<Class>
+<Id>59</Id>
+<Name>U3</Name>
+</Class>
+<Course>
+<Id>10</Id>
+<Name>Bana 8</Name>
+<Length>1980</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>166753</Id>
+<Name>
+<Family>Hellberg</Family>
+<Given>Gustav</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>489</Id>
+<Name>OK Älvsjö-Örby</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T17:56:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>1200016</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+<PersonResult>
+<Person>
+<Id>206066</Id>
+<Name>
+<Family>Gårdman</Family>
+<Given>Meja</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>130</Id>
+<Name>Haninge SOK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T18:00:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>2132177</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+<ClassResult>
+<Class>
+<Id>60</Id>
+<Name>U2D</Name>
+</Class>
+<Course>
+<Id>7</Id>
+<Name>Bana 15</Name>
+<Length>1880</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>221522</Id>
+<Name>
+<Family>Lindberg</Family>
+<Given>Hulda</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>489</Id>
+<Name>OK Älvsjö-Örby</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T18:30:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>1200008</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+<ClassResult>
+<Class>
+<Id>61</Id>
+<Name>U1D</Name>
+</Class>
+<Course>
+<Id>3</Id>
+<Name>Bana 14</Name>
+<Length>2030</Length>
+</Course>
+<PersonResult>
+<Person>
+<Id>243207</Id>
+<Name>
+<Family>Mathlein</Family>
+<Given>Elin</Given>
+</Name>
+</Person>
+<Organisation>
+<Id>130</Id>
+<Name>Haninge SOK</Name>
+<Country code="SWE">Sweden</Country>
+</Organisation>
+<Result>
+<StartTime>2024-08-28T17:52:00+02:00</StartTime>
+<Status>DidNotStart</Status>
+<ControlCard>29138</ControlCard>
+<AssignedFee>
+<Fee type="Normal">
+<Name>Entry fee</Name>
+<Amount>65</Amount>
+<TaxableAmount>65</TaxableAmount>
+</Fee>
+</AssignedFee>
+</Result>
+</PersonResult>
+</ClassResult>
+</ResultList>

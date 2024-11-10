@@ -5,6 +5,7 @@ using Results.Simulator;
 using Results.Ola;
 using Usp;
 using Results;
+using Results.IofXml;
 using Results.Liveresultat;
 
 var options = Options.Parse(args);
@@ -49,8 +50,10 @@ builder.Services.AddSingleton<MeosResultSource>();
 builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
 builder.Services.AddSingleton<LiveresultatResultSource>();
+builder.Services.AddSingleton<IofXmlResultSource>();
 builder.Services.AddSingleton<LiveresultatFacade>();
 builder.Services.AddSingleton<ClassFilter>();
+builder.Services.AddSingleton<FileListener>();
 
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
@@ -60,6 +63,7 @@ builder.Services.AddSingleton<IResultSource>(provider =>
         Source.Meos => provider.GetService<MeosResultSource>()!,
         Source.Ola => provider.GetService<OlaResultSource>()!,
         Source.Liveresultat => provider.GetService<LiveresultatResultSource>()!,
+        Source.IofXml => provider.GetService<IofXmlResultSource>()!,
         _ => throw new InvalidOperationException()
     };
 });
