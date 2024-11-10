@@ -3598,9 +3598,11 @@ namespace Results.IofXml {
         
         private RaceClass[] raceClassField;
         
+#pragma warning disable CA5362
         private Class tooFewEntriesSubstituteClassField;
-        
+
         private Class tooManyEntriesSubstituteClassField;
+#pragma warning restore CA5362 
         
         private Extensions extensionsField;
         

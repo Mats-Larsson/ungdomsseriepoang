@@ -1,5 +1,8 @@
-﻿namespace Results;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Results;
+
+[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 public record Configuration
 {
     // General

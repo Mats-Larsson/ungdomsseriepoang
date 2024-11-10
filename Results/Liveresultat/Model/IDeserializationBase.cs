@@ -1,6 +1,4 @@
 namespace Results.Liveresultat.Model
 {
-    public abstract record DeserializationBase
-    {
-    }
+    public abstract record DeserializationBase;
 }

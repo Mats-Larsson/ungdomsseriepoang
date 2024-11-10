@@ -11,7 +11,7 @@ namespace Results.Liveresultat;
 [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 public class LiveresultatFacade : IDisposable
 {
-    private static readonly Uri ENDPOINT = new("http://liveresultat.orientering.se/api.php");
+    private static readonly Uri Endpoint = new("http://liveresultat.orientering.se/api.php");
     private readonly ILogger<LiveresultatFacade> logger;
     private readonly HttpClient client = new();
 
@@ -60,10 +60,11 @@ public class LiveresultatFacade : IDisposable
         return list;
     }
 
-    protected virtual async Task<T> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
+    protected virtual async Task<T?> GetDataAsync<T>(int competitionId, string method, string? hash,
+        NameValueCollection? parameters = null)
         where T : DeserializationBase
     {
-        UriBuilder uriBuilder = new(ENDPOINT);
+        UriBuilder uriBuilder = new(Endpoint);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
         query["comp"] = competitionId.ToString();
         query["method"] = method;
@@ -75,7 +76,7 @@ public class LiveresultatFacade : IDisposable
         if (!resp.IsSuccessStatusCode)
         {
             logger.LogError("Failed to get liveresultat: {StatusCode}; {Uri}", resp.StatusCode, uriBuilder.Uri);
-            return default!;
+            return default;
         }
 
         string body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -88,6 +89,7 @@ public class LiveresultatFacade : IDisposable
         return statusBase == null ? data : default!;
     }
 
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
     internal virtual T? DeserializeJson<T>(string body)
     {
         var data = JsonSerializer.Deserialize<T>(body);
@@ -100,6 +102,7 @@ public class LiveresultatFacade : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
     protected virtual void Dispose(bool disposing)
     {
         if (disposing)

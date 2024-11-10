@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Moq;
+﻿using Moq;
 using Results;
 using Results.IofXml;
 using System.Diagnostics.CodeAnalysis;
@@ -16,10 +15,9 @@ public class FileListenerTests
     public async Task FileListenerTestAsync()
     {
         Mock<Configuration> configurationMock = new();
-        Mock<ILogger<FileListener>> loggerMock = new();
         configurationMock.Setup(m => m.IofXmlInputFolder).Returns(".");
 
-        using var fileListener = new FileListener(configurationMock.Object, loggerMock.Object);
+        using var fileListener = new FileListener(configurationMock.Object);
 
         fileListener.NewFile += FileListener_NewFile;
 
@@ -34,6 +32,7 @@ public class FileListenerTests
         foundNewFile = true;
     }
 
+    [SuppressMessage("ReSharper", "UseAwaitUsing")]
     private static async Task WriteFileAsync(string path, int numLines, TimeSpan lineDelay)
     {
         using StreamWriter writer = File.CreateText(path);

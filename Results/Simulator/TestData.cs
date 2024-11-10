@@ -8,7 +8,7 @@ namespace Results.Simulator
         public TestData(int numTeams)
         {
             var maxTeams = Math.Min(numTeams, Clubs.Length);
-            foreach (var participantResult in _templateParticipantResults)
+            foreach (var participantResult in TemplateParticipantResults)
             {
                 participantResult.Club = Clubs[Random.Shared.Next(0, maxTeams)];
             }
@@ -45,7 +45,7 @@ namespace Results.Simulator
             "Nynäshamns OK"
         ];
 
-        internal readonly SimulatorParticipantResult[] _templateParticipantResults =
+        internal readonly SimulatorParticipantResult[] TemplateParticipantResults =
         [
             new("D16", "Sofia Lindhagen", "IFK Enskede", T("18:34:00.000"), T("00:00:00"), "notStarted"),
             new("D16K", "Lilly Christie", "Snättringe SK", T("18:32:00.000"), T("00:00:00"), "notValid"),
@@ -207,7 +207,7 @@ namespace Results.Simulator
             new("U4", "Hampus Glanshed", "Haninge SOK", T("18:28:41.000"), T("01:16:25.0000"), "notValid"),
             new("H14", "Alvin Forslin", "Snättringe SK", T("18:51:00.000"), T("01:18:08.0000"), "passed"),
             new("H16", "Albert Nord", "Snättringe SK", T("18:31:00.000"), T("01:23:57.0000"), "passed"),
-            new("D16", "Clara Höglind", "IFK Enskede", T("18:30:00.000"), T("01:26:05.0000"), "passed"),
+            new("D16", "Clara Höglind", "IFK Enskede", T("18:30:00.000"), T("01:26:05.0000"), "passed")
         ];
 
         private static TimeSpan T(string time) => TimeSpan.Parse(time);

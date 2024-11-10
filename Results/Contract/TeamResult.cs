@@ -1,25 +1,21 @@
 ﻿namespace Results.Contract;
 
-public class TeamResult
+public class TeamResult(
+    int pos,
+    string team,
+    int points,
+    bool isPreliminary,
+    int diffPointsUp,
+    int basePoints,
+    Statistics statistics)
 {
-    public int Pos { get; }
-    public string Team { get; }
-    public int Points { get; }
-    public bool IsPreliminary { get; }
-    public int DiffPointsUp { get; }
-    public int BasePoints { get; }
-    public Statistics Statistics { get; }
-
-    public TeamResult(int pos, string team, int points, bool isPreliminary, int diffPointsUp, int basePoints, Statistics statistics)
-    {
-        Pos = pos;
-        Team = team;
-        Points = points;
-        IsPreliminary = isPreliminary;
-        DiffPointsUp = diffPointsUp;
-        BasePoints = basePoints;
-        Statistics = statistics;
-    }
+    public int Pos { get; } = pos;
+    public string Team { get; } = team;
+    public int Points { get; } = points;
+    public bool IsPreliminary { get; } = isPreliminary;
+    public int DiffPointsUp { get; } = diffPointsUp;
+    public int BasePoints { get; } = basePoints;
+    public Statistics Statistics { get; } = statistics;
 
     public override string ToString()
     {

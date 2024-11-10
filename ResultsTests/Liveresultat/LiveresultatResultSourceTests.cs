@@ -60,7 +60,8 @@ class LiveresultatFacadeMock : LiveresultatFacade
     {
     }
 
-    protected override Task<T> GetDataAsync<T>(int competitionId, string method, string? hash, NameValueCollection? parameters = null)
+    protected override Task<T?> GetDataAsync<T>(int competitionId, string method, string? hash,
+        NameValueCollection? parameters = null) where T : class
     {
         DeserializationBase result = typeof(T).Name switch
         {
@@ -70,7 +71,7 @@ class LiveresultatFacadeMock : LiveresultatFacade
             "ClassResultList" => GetFromFile<T>(@"Liveresultat\H16.json"),
             _ => default!
         };
-        return Task.FromResult((T)Convert.ChangeType(result, typeof(T)));
+        return Task.FromResult((T?)Convert.ChangeType(result, typeof(T)));
     }
 
     private T GetFromFile<T>(string fileName)

@@ -26,15 +26,15 @@ public sealed class SimulatorResultSource : IResultSource
 
         SpeedMultiplier = configuration.SpeedMultiplier;
 
-        MinTime = testData._templateParticipantResults
+        MinTime = testData.TemplateParticipantResults
             .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)
             .Min(p => p.StartTime!.Value);
-        MaxTime = testData._templateParticipantResults
+        MaxTime = testData.TemplateParticipantResults
             .Where(p => p is { StartTime: not null, Time: not null, Status: not ParticipantStatus.Ignored })
             .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
         ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
 
-        simulatedParticipants = testData._templateParticipantResults
+        simulatedParticipants = testData.TemplateParticipantResults
             .Select(r => new SimulatedParticipant(this, r))
             .ToArray();
 

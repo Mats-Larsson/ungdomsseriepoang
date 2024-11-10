@@ -1,24 +1,18 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Diagnostics.CodeAnalysis;
+using MySql.Data.MySqlClient;
 using Results.Contract;
 using Results.Model;
 
 namespace Results.Ola;
 
-public sealed class OlaResultSource : IResultSource
+public sealed class OlaResultSource(Configuration configuration) : IResultSource
 {
-    private readonly Configuration configuration;
-    private readonly string connectionString;
-
-    public OlaResultSource(Configuration configuration)
-    {
-        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
-        connectionString = $"server={configuration.OlaMySqlHost};" +
-                           $"port={configuration.OlaMySqlPort};" +
-                           $"userid={configuration.OlaMySqlUser};" +
-                           $"password={configuration.OlaMySqlPassword};" +
-                           $"database={configuration.OlaMySqlDatabase}";
-    }
+    private readonly Configuration configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+    private readonly string connectionString = $"server={configuration.OlaMySqlHost};" +
+                                               $"port={configuration.OlaMySqlPort};" +
+                                               $"userid={configuration.OlaMySqlUser};" +
+                                               $"password={configuration.OlaMySqlPassword};" +
+                                               $"database={configuration.OlaMySqlDatabase}";
 
     public bool SupportsPreliminary => true;
 
@@ -93,25 +87,22 @@ public sealed class OlaResultSource : IResultSource
     }
 }
 
-internal class OlaParticipantResult
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+internal class OlaParticipantResult(
+    string @class,
+    string name,
+    string club,
+    TimeSpan? startTime,
+    TimeSpan? time,
+    ParticipantStatus status,
+    int id)
 {
-    public string Class { get; }
-    public string Name { get; }
-    public string Club { get; }
-    public TimeSpan? StartTime { get; }
-    public TimeSpan? Time { get; }
-    public ParticipantStatus Status { get; }
-    // ReSharper disable once UnusedAutoPropertyAccessor.Global
-    public int Id { get; }
+    public string Class { get; } = @class;
+    public string Name { get; } = name;
+    public string Club { get; } = club;
+    public TimeSpan? StartTime { get; } = startTime;
+    public TimeSpan? Time { get; } = time;
+    public ParticipantStatus Status { get; } = status;
 
-    public OlaParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status, int id)
-    {
-        Class = @class;
-        Name = name;
-        Club = club;
-        StartTime = startTime;
-        Time = time;
-        Status = status;
-        Id = id;
-    }
+    public int Id { get; } = id;
 }

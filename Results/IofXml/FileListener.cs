@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Results.IofXml;
 
@@ -6,14 +6,13 @@ public sealed class FileListener : IDisposable
 {
     private readonly FileSystemWatcher watcher;
     private readonly object lockObj = new();
-    private readonly ILogger<FileListener> logger;
-
+    
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")] 
     public DirectoryInfo Directory { get; }
 
-    public FileListener(Configuration configuration, ILogger<FileListener> logger)
+    public FileListener(Configuration configuration)
     {
         if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         if (configuration.IofXmlInputFolder == null) throw new InvalidOperationException("IofXmlInputFolder nust not be null");
         Directory = new DirectoryInfo(configuration.IofXmlInputFolder);
         if (!Directory.Exists) throw new InvalidOperationException($"Directory not found: {Directory.FullName}");
@@ -48,7 +47,7 @@ public sealed class FileListener : IDisposable
     {
         lock (lockObj)
         {
-            var files = Directory.GetFiles("*.xml", new EnumerationOptions() { RecurseSubdirectories = false, MatchType = MatchType.Simple });
+            var files = Directory.GetFiles("*.xml", new EnumerationOptions { RecurseSubdirectories = false, MatchType = MatchType.Simple });
             foreach (var file in files)
             {
                 if (IsFileFree(file))

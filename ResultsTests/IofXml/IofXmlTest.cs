@@ -15,7 +15,6 @@ public sealed class IofXmlTest : IDisposable
     private readonly string iofXmlInputFolder = Path.GetFullPath(@".\IofXml");
     private readonly string listenFolder = Path.GetFullPath(@".\listen");
     private readonly Mock<Configuration> configurationMock = new();
-    private readonly Mock<ILogger<FileListener>> fileListenerLoggerMock = new();
     private readonly Mock<ILogger<IofXmlResultSource>> resultSourceLoggerMock = new();
     private FileListener? fileListener;
     private IofXmlResultSource? resultSource;
@@ -47,7 +46,7 @@ public sealed class IofXmlTest : IDisposable
                 }
             });
 
-        fileListener = new FileListener(configurationMock.Object, fileListenerLoggerMock.Object);
+        fileListener = new FileListener(configurationMock.Object);
         resultSource = new IofXmlResultSource(configurationMock.Object, fileListener, resultSourceLoggerMock.Object);
         resultSource.GetParticipantResults().Should().BeEmpty();
     }

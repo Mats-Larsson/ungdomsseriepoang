@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
@@ -43,11 +44,10 @@ public sealed class MeosFromFinal2023Test : IDisposable
     public MeosFromFinal2023Test()
     {
         meosResultSource = new MeosResultSource(meosResultSourceLoggerMock);
-        ClassFilter classFilter = new(configuration);
 
         TeamService teamService = new(configuration, teamServiceLoggerMock);
         
-        results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock, classFilter);
+        results = new ResultService(configuration, meosResultSource, teamService, resultServiceLoggerMock);
 
     }
 
@@ -57,6 +57,7 @@ public sealed class MeosFromFinal2023Test : IDisposable
     }
     
     [TestMethod]
+    [SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task")]
     public async Task ReadAllFiles()
     {
 
@@ -64,7 +65,7 @@ public sealed class MeosFromFinal2023Test : IDisposable
 
         foreach (string file in MeosResultFiles())
         {
-            using var stream = File.OpenRead(file);
+            await using var stream = File.OpenRead(file);
             await results.NewResultPostAsync(stream, ResultDateTimes[Path.GetFileName(file)]).ConfigureAwait(true);
             Task.Delay(100).Wait();
         }

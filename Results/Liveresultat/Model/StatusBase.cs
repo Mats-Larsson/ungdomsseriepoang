@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Results.Liveresultat.Model;
 
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public abstract record StatusBase : DeserializationBase
 {
 

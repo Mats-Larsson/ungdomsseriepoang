@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Results.Liveresultat.Model;
 
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public record PersonResult
 {
     [JsonPropertyName("place")]

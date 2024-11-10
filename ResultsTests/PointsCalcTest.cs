@@ -76,7 +76,7 @@ public sealed class PointsCalcTest
         var participantResults = new List<ParticipantResult>
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
-            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted),
+            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(2, scoreBoard.Count);
@@ -108,7 +108,7 @@ public sealed class PointsCalcTest
         {
             new("H10", "Adam", "Club A", null, null, NotStarted),
             new("H10", "Rory", "Club B", null, null, NotStarted),
-            new("H10", "Hugo", "Club C", null, null, Started),
+            new("H10", "Hugo", "Club C", null, null, Started)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -177,7 +177,7 @@ public sealed class PointsCalcTest
             new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
             new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
             new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary),
-            new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed),
+            new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
@@ -198,7 +198,7 @@ public sealed class PointsCalcTest
             new("U4", "Rolf", "Club A", TimeSpan.Parse("18:01:00"), TimeSpan.FromMinutes(13), Passed),
             new("U4", "Bill", "Club B", TimeSpan.Parse("18:00:56"), TimeSpan.FromMinutes(14), Passed),
             new("U4", "Egon", "Club C", TimeSpan.Parse("18:02:00"), TimeSpan.FromMinutes(18), Passed),
-            new("U4", "Sune", "Club C", TimeSpan.Parse("18:02:11"), TimeSpan.FromMinutes(18), Passed),
+            new("U4", "Sune", "Club C", TimeSpan.Parse("18:02:11"), TimeSpan.FromMinutes(18), Passed)
         };
 
         var normalScoreBoard = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);

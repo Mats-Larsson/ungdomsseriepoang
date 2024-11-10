@@ -19,12 +19,10 @@ public class ResultServiceTests
     private readonly Mock<IResultSource> resultSourceMock = new();
     private readonly Mock<ITeamService> teamServiceMock = new();
     private readonly Mock<ILogger<ResultService>> loggerMock = new();
-    private ClassFilter? classFilter;
 
     private IResultService Setup(bool isFinal, TimeSpan currentTime, IList<ParticipantResult> partisipantResults)
     {
         configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10"), RefreshInterval = TimeSpan.FromSeconds(10) };
-        classFilter = new ClassFilter(configuration);
         resultSourceMock.Setup(rs => rs.CurrentTimeOfDay).Returns(currentTime);
         resultSourceMock.Setup(rs => rs.GetParticipantResults()).Returns(partisipantResults);
 
@@ -35,7 +33,7 @@ public class ResultServiceTests
     private IResultService CreateResultService()
     {
         teamServiceMock.Setup(ts => ts.TeamBasePoints).Returns(new Dictionary<string, int>());
-        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object, classFilter!);
+        resultService = new ResultService(configuration!, resultSourceMock.Object, teamServiceMock.Object, loggerMock.Object);
         return resultService;
     }
 
@@ -48,7 +46,7 @@ public class ResultServiceTests
         [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
@@ -69,7 +67,7 @@ public class ResultServiceTests
         [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
@@ -90,7 +88,7 @@ public class ResultServiceTests
         [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
@@ -111,7 +109,7 @@ public class ResultServiceTests
         [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
@@ -131,7 +129,7 @@ public class ResultServiceTests
         [
             new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
             new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated),
+            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
@@ -164,7 +162,7 @@ public class ResultServiceTests
             new(new PointsCalcParticipantResult(pr0), isFinal ? 80 - 8 : 40),
             new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
             new(new PointsCalcParticipantResult(pr2), isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30),
+            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 30)
         });
     }
 

@@ -5,21 +5,15 @@ using Results.Model;
 
 namespace Results.Meos;
 
-public sealed class MeosResultSource : IResultSource
+public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
 
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
-    private readonly ILogger<MeosResultSource> logger;
 
     public TimeSpan CurrentTimeOfDay { get; private set; } = DateTime.Now.TimeOfDay;
-
-    public MeosResultSource(ILogger<MeosResultSource> logger)
-    {
-        this.logger = logger;
-    }
 
     public bool SupportsPreliminary => false;
 
