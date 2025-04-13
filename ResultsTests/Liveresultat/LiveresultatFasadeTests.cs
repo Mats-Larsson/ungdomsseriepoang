@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Results.Liveresultat;
 using Results.Liveresultat.Model;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ResultsTests.Liveresultat;
@@ -26,9 +25,7 @@ public class LiveresultatFasadeTests
     [TestMethod]
     public async Task GetCompetitionInfoTest()
     {
-        Debug.Assert(facade != null, nameof(facade) + " != null");
-
-        var competitionInfo = await facade.GetCompetitionInfoAsync(27215) ?? throw new AssertFailedException();
+        var competitionInfo = await facade!.GetCompetitionInfoAsync(27215) ?? throw new AssertFailedException();
         competitionInfo.Id.Should().Be(27215);
     }
 
@@ -36,9 +33,8 @@ public class LiveresultatFasadeTests
     [TestMethod]
     public async Task GetClassesTest()
     {
-        Debug.Assert(facade != null, nameof(facade) + " != null");
 
-        var classes1 = await facade.GetClassesAsync(30823);
+        var classes1 = await facade!.GetClassesAsync(30823);
         var classes2 = await facade.GetClassesAsync(30823);
 
         classes1.Should().Be(classes2);
