@@ -154,6 +154,13 @@ internal abstract class PointsCalcBase : IPointsCalc
         var participantsWithExtras = participants.Select(pr => new PointsCalcParticipantResult(pr)).ToList();
 
         var patrols = FindPatrols(participantsWithExtras);
+        SetPatrolSpecifics(patrols);
+
+        return participantsWithExtras;
+    }
+
+    private void SetPatrolSpecifics(IEnumerable<IEnumerable<PointsCalcParticipantResult>> patrols)
+    {
         foreach (var patrol in patrols)
         {
             TimeSpan longestTime = TimeSpan.Zero;
@@ -162,16 +169,12 @@ internal abstract class PointsCalcBase : IPointsCalc
                 if (longestTime == TimeSpan.Zero)
                 {
                     longestTime = pr.Time ?? TimeSpan.MaxValue;
+                    continue;
                 }
-                else
-                {
-                    pr.Time = longestTime;
-                    pr.IsExtraParticipant = true;
-                }
+                if (Configuration.IsUsePatrolLongestTime && pr.Time.HasValue) pr.Time = longestTime;
+                pr.IsExtraParticipant = true;
             }
         }
-
-        return participantsWithExtras;
     }
 
     private IEnumerable<IEnumerable<PointsCalcParticipantResult>> FindPatrols(
@@ -207,7 +210,6 @@ internal abstract class PointsCalcBase : IPointsCalc
 
                     if (patrol.Any())
                     {
-                        SetLongestTimeForPatrol(patrol);
                         patrols.Add(patrol);
                         patrol = [];
                     }
@@ -219,16 +221,6 @@ internal abstract class PointsCalcBase : IPointsCalc
         }
 
         return patrols;
-    }
-
-    private static void SetLongestTimeForPatrol(List<PointsCalcParticipantResult> patrol)
-    {
-        var longestTime = patrol.Select(pr => pr.Time).Max();
-        if (!longestTime.HasValue) return;
-        foreach (PointsCalcParticipantResult participant in patrol)
-        {
-            if (participant.Time.HasValue) participant.Time = longestTime;
-        }
     }
 
     private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>
