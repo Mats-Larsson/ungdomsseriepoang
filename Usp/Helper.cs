@@ -14,12 +14,15 @@ public static class Helper
             Delimiter = "\t"
         };
         using var stream = new MemoryStream();
-        using var reader = new StreamReader(stream);
-        using var writer = new StreamWriter(stream);
-        using var csv = new CsvWriter(writer, configuration);
-        csv.WriteRecords((IEnumerable)participantPointsList);
-        writer.Flush();
+        using (var writer = new StreamWriter(stream, leaveOpen: true))
+        {
+            using var csv = new CsvWriter(writer, configuration);
+            csv.WriteRecords((IEnumerable)participantPointsList);
+            writer.Flush();
+        }
         stream.Position = 0;
-        return reader.ReadToEnd();
+        using var reader = new StreamReader(stream);
+        var text = reader.ReadToEnd();
+        return text;
     }
 }

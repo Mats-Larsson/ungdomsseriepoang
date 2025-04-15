@@ -142,7 +142,7 @@ public class ResultServiceTests
 
     [DataTestMethod]
     [DataRow(false, 40 + 40 + 40 + 40)]
-    [DataRow(true, 80 - 8 + 80 - 8 + 20 + 20)]
+    [DataRow(true, 4 * (80 - 8))]
     public void TwoPatrols(bool isFinal, int expectedPoints)
     {
         ParticipantResult pr0 = new("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 40
@@ -159,9 +159,9 @@ public class ResultServiceTests
         resultService!.GetParticipantPointsList().OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
         {
             new(new PointsCalcParticipantResult(pr0), isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 40),
+            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 80 - 8 : 40),
             new(new PointsCalcParticipantResult(pr2), isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 20 : 40)
+            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 80 - 8 : 40)
         });
     }
 

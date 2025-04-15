@@ -12,8 +12,6 @@ internal class PointsCalcFinal : PointsCalcBase
     {
         if (time <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
 
-        if (isExtraParticipant) return pointsTemplate.FinalMinPoints;
-
         var points = pointsTemplate.FinalFullPoints
                      - (int)Math.Ceiling((time.TotalMilliseconds - pointsTemplate.FinalFullPointsTime.TotalMilliseconds) / pointsTemplate.FinalReductionTime.TotalMilliseconds);
 
