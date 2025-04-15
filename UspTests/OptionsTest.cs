@@ -43,7 +43,7 @@ namespace UspTests
             if (!shouldBeNull) throw new AssertFailedException(helpText);
 
             Console.WriteLine(Usp.Options.HelpText);
-            return default!;
+            return null!;
         }
     }
 }

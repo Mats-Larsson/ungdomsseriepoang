@@ -5,14 +5,14 @@ namespace Results.IofXml;
 public sealed class FileListener : IDisposable
 {
     private readonly FileSystemWatcher watcher;
-    private readonly object lockObj = new();
+    private readonly Lock lockObj = new();
     
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")] 
     public DirectoryInfo Directory { get; }
 
     public FileListener(Configuration configuration)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
         if (configuration.IofXmlInputFolder == null) throw new InvalidOperationException("IofXmlInputFolder nust not be null");
         Directory = new DirectoryInfo(configuration.IofXmlInputFolder);
         if (!Directory.Exists) throw new InvalidOperationException($"Directory not found: {Directory.FullName}");

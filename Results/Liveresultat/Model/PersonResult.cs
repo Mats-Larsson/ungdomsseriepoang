@@ -33,14 +33,14 @@ public record PersonResult
 
     [JsonPropertyName("start")]
     public JsonElement? StartRaw { get; init; }
-    public TimeSpan? StartTime => !StartRaw.HasValue ? default : ToTimeSpan(StartRaw.Value.ToString());
+    public TimeSpan? StartTime => !StartRaw.HasValue ? null : ToTimeSpan(StartRaw.Value.ToString());
 
     private static TimeSpan? ToTimeSpan(string? val)
     {
-        if (val == null) return default;
+        if (val == null) return null;
 
         return !int.TryParse(val, out int intVal)
-            ? default(TimeSpan?)
+            ? null
             : TimeSpan.FromMilliseconds(10 * intVal);
     }
 }

@@ -23,17 +23,8 @@ namespace Results;
 
 // ReSharper restore CommentTypo
 
-internal abstract class PointsCalcBase : IPointsCalc
+internal abstract class PointsCalcBase(ITeamService teamService, Configuration configuration) : IPointsCalc
 {
-    private readonly ITeamService teamService;
-    private readonly Configuration configuration;
-
-    protected PointsCalcBase(ITeamService teamService, Configuration configuration)
-    {
-        this.teamService = teamService;
-        this.configuration = configuration;
-    }
-
     public IList<TeamResult> CalcScoreBoard(TimeSpan currentTimeOfDay, IEnumerable<ParticipantResult> participants)
     {
         var participantPoints = GetParticipantPoints(participants);
@@ -159,7 +150,7 @@ internal abstract class PointsCalcBase : IPointsCalc
         return participantsWithExtras;
     }
 
-    private void SetPatrolSpecifics(IEnumerable<IEnumerable<PointsCalcParticipantResult>> patrols)
+    private static void SetPatrolSpecifics(IEnumerable<IEnumerable<PointsCalcParticipantResult>> patrols)
     {
         foreach (var patrol in patrols)
         {

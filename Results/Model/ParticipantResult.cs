@@ -2,24 +2,11 @@
 
 namespace Results.Model;
 
-public record ParticipantResult
+public record ParticipantResult(string Class, string Name, string Club, TimeSpan? StartTime, TimeSpan? Time, ParticipantStatus Status)
 {
-    public string Class { get; }
-    public string Name { get; }
-    public string Club { get; internal set; }
-    public TimeSpan? StartTime { get; }
-    public TimeSpan? Time { get; internal set; }
-    public ParticipantStatus Status { get; internal set; }
-
-    public ParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status)
-    {
-        Class = @class;
-        Name = name;
-        Club = club;
-        StartTime = startTime;
-        Time = time;
-        Status = status;
-    }
+    public string Club { get; internal set; } = Club;
+    public TimeSpan? Time { get; internal set; } = Time;
+    public ParticipantStatus Status { get; internal set; } = Status;
 
     protected ParticipantResult(ParticipantResult pr)
     {
