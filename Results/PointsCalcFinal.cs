@@ -8,7 +8,7 @@ internal class PointsCalcFinal : PointsCalcBase
     {
     }
 
-    protected override int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, TimeSpan bestTime, bool isExtraParticipant)
+    protected override int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, int pos, TimeSpan bestTime, bool isExtraParticipant)
     {
         if (time <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
 

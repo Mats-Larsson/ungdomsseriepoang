@@ -5,7 +5,7 @@ using Results.Model;
 namespace Results.Simulator
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    internal class SimulatedParticipant : ParticipantResult
+    internal record SimulatedParticipant : ParticipantResult
     {
         private readonly TimeSpan? startTime;
         private readonly TimeSpan targetTime;

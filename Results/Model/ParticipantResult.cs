@@ -2,7 +2,7 @@
 
 namespace Results.Model;
 
-public class ParticipantResult
+public record ParticipantResult
 {
     public string Class { get; }
     public string Name { get; }
