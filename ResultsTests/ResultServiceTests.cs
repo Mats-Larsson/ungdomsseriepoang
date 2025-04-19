@@ -141,13 +141,13 @@ public class ResultServiceTests
     }
 
     [DataTestMethod]
-    [DataRow(false, 40 + 40 + 40 + 40)]
+    [DataRow(false, 40 + 36 + 40 + 36)]
     [DataRow(true, 4 * (80 - 8))]
     public void TwoPatrols(bool isFinal, int expectedPoints)
     {
-        ParticipantResult pr0 = new("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 40
+        ParticipantResult pr0 = new("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 36
         ParticipantResult pr1 = new("U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed); // 40
-        ParticipantResult pr2 = new("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed); // 40
+        ParticipantResult pr2 = new("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed); // 36
         ParticipantResult pr3 = new("U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed); // 40
 
         Result actual = Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoard();
@@ -158,10 +158,10 @@ public class ResultServiceTests
 
         resultService!.GetParticipantPointsList().OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
         {
-            new(new PointsCalcParticipantResult(pr0), isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr1) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr2), isFinal ? 80 - 8 : 40),
-            new(new PointsCalcParticipantResult(pr3) { IsExtraParticipant = true, Time = TS("00:13:00") }, isFinal ? 80 - 8 : 40)
+            new(new PointsCalcParticipantResult(pr0) { Pos = 3 }, isFinal ? 80 - 8 : 36),
+            new(new PointsCalcParticipantResult(pr1) { Pos = 1, IsExtraParticipant = true }, isFinal ? 80 - 8 : 40),
+            new(new PointsCalcParticipantResult(pr2) { Pos = 3 }, isFinal ? 80 - 8 : 36),
+            new(new PointsCalcParticipantResult(pr3) { Pos = 1, IsExtraParticipant = true }, isFinal ? 80 - 8 : 40)
         });
     }
 

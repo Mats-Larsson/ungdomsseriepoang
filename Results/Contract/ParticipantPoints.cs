@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Results.Contract;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public class ParticipantPoints
+public record ParticipantPoints
 {
     public string Class { get; }
     public string Name { get; }
@@ -13,6 +13,7 @@ public class ParticipantPoints
     public ParticipantStatus Status { get; }
     public bool IsExtraParticipant { get; }
     public int Points { get; }
+    public int Pos { get; }
 
     public ParticipantPoints(PointsCalcParticipantResult pr, int points)
     {
@@ -26,5 +27,7 @@ public class ParticipantPoints
         Status = pr.Status;
         IsExtraParticipant = pr.IsExtraParticipant;
         Points = points;
+        Pos = pr.Pos;
     }
+
 }

@@ -35,5 +35,5 @@ public record Configuration
     public virtual string? IofXmlInputFolder { get; init; }
     
     // Hardcoded config
-    public static bool IsUsePatrolLongestTime => true;
+    public static bool IsUsePatrolLongestTime => false;
 }

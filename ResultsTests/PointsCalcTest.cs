@@ -5,12 +5,15 @@ using Results;
 using Results.Contract;
 using Results.Model;
 using Results.Simulator;
+using static System.Math;
 using static Results.Contract.ParticipantStatus;
 
 namespace ResultsTests;
 
 [TestClass]
 [SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
+[SuppressMessage("ReSharper", "UselessBinaryOperation")]
+[SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
 public sealed class PointsCalcTest
 {
     private readonly Mock<ITeamService> emptyTeamServiceMock = new();
@@ -172,53 +175,60 @@ public sealed class PointsCalcTest
     public void TestWithCheckedPreliminaryAndPassed()
     {
         PointsCalcBase pointsCalc = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration);
-        var participantResults = new List<ParticipantResult>
-        {
-            new("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted),
-            new("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started),
-            new("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary),
-            new("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed)
-        };
+
+        int a = 0, b = 0, c = 0;
+        
+        var participantResults = new List<ParticipantResult>();
+        participantResults.Add(new ParticipantResult("H10", "Adam", "Club A", TimeSpan.FromHours(18), null, NotStarted)); a += 0;
+        participantResults.Add(new ParticipantResult("H10", "Rory", "Club B", TimeSpan.FromHours(18), null, Started)); b += 0;
+        participantResults.Add(new ParticipantResult("H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary)); c += 50;
+        participantResults.Add(new ParticipantResult("H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed)); b += 48;
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.AreEqual(3, scoreBoard.Count);
-        Assert.AreEqual(TeamResult(1, "Club C", 50, true, 0, numPreliminary: 1), scoreBoard[0]);
-        Assert.AreEqual(TeamResult(2, "Club B", 48, false, 2, numStarted: 1, numPassed: 1), scoreBoard[1]);
-        Assert.AreEqual(TeamResult(3, "Club A", 0, false, 48, numNotStarted: 1), scoreBoard[2]);
+        Assert.AreEqual(TeamResult(1, "Club C", c, true, 0, numPreliminary: 1), scoreBoard[0]);
+        Assert.AreEqual(TeamResult(2, "Club B", b, false, c - b, numStarted: 1, numPassed: 1), scoreBoard[1]);
+        Assert.AreEqual(TeamResult(3, "Club A", a, false, b - a, numNotStarted: 1), scoreBoard[2]);
     }
 
     [TestMethod]
     public void TestWithPatrol()
     {
-        var participantResults = new List<ParticipantResult>
-        {
-            new("H10", "Hugo", "Club C", TimeSpan.Parse("18:01:00"), TimeSpan.FromMinutes(10), Passed), // 50, 100
-            new("H10", "Adam", "Club A", TimeSpan.Parse("18:01:00"), null, NotStarted),
-            new("H10", "Rory", "Club B", TimeSpan.Parse("18:01:00"), null, Started),
-
-            new("U4", "Rolf", "Club A", TimeSpan.Parse("18:01:00"), TimeSpan.Parse("00:13:00"), Passed), // 40, 80 - 120/7.5
-            new("U4", "Mats", "Club B", TimeSpan.Parse("18:01:04"), TimeSpan.Parse("00:12:00"), Passed), // 38, 80 - 120/7.5
-            new("U4", "Bill", "Club B", TimeSpan.Parse("18:00:56"), TimeSpan.Parse("00:14:00"), Passed), // 38, 80 - 120/7.5
-            new("U4", "Egon", "Club C", TimeSpan.Parse("18:02:00"), TimeSpan.Parse("00:17:59"), Passed), // 34
-            new("U4", "Sune", "Club C", TimeSpan.Parse("18:02:09"), TimeSpan.Parse("00:18:00"), Passed) // 34
-        };
+        var participantResults = new List<ParticipantResult>();
+        int an = 0, bn = 0, cn = 0, af = 0, bf = 0, cf = 0;
+        participantResults.Add(new ParticipantResult("H10", "Hugo", "Club C", T("18:01:00"), TimeSpan.FromMinutes(10), Passed)); 
+        cn += 50; cf += 100;
+        participantResults.Add(new ParticipantResult("H10", "Adam", "Club A", T("18:01:00"), null, NotStarted));
+        an += 0; af += 0;
+        participantResults.Add(new ParticipantResult("H10", "Rory", "Club B", T("18:01:00"), null, Started));
+        bn += 0; bf += 0;
+        
+        participantResults.Add(new ParticipantResult("U4", "Mats", "Club B", T("18:01:04"), T("00:12:00"), Passed));
+        bn += 40 - 0; bf += 80 - (int)Ceiling((0/7.5));
+        participantResults.Add(new ParticipantResult("U4", "Rolf", "Club A", T("18:01:00"), T("00:13:00"), Passed));
+        an += 40 - 2; af += 80 - (int)Ceiling((60/7.5));
+        participantResults.Add(new ParticipantResult("U4", "Bill", "Club B", T("18:00:56"), T("00:14:00"), Passed));
+        bn += 40 - 4; bf += 80 - (int)Ceiling((120/7.5));
+        participantResults.Add(new ParticipantResult("U4", "Egon", "Club C", T("18:02:00"), T("00:17:59"), Passed));
+        cn += 40 - 6; cf += 80 - (int)Ceiling((359/7.5));
+        participantResults.Add(new ParticipantResult("U4", "Sune", "Club C", T("18:02:09"), T("00:18:00"), Passed));
+        cn += 40 - 8; cf += 80 - (int)Ceiling((360/7.5));
 
         var normalScoreBoard = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
         normalScoreBoard.Should().HaveCount(3);
-        normalScoreBoard.Should().BeEquivalentTo([
-                TeamResult(1, "Club C", 50 + 34 + 34, false, 0, numPassed: 3),
-                TeamResult(2, "Club B", 38 + 38, false, 50 + 34 + 34 - 38 - 38, numStarted: 1, numPassed: 2),
-                TeamResult(3, "Club A", 40, false, 38 + 38 - 40, numNotStarted: 1, numPassed: 1)
-            ]
-        );
+        normalScoreBoard[0].Should().BeEquivalentTo(TeamResult(1, "Club C", cn, false, 0, numPassed: 3));
+        normalScoreBoard[1].Should().BeEquivalentTo(TeamResult(2, "Club B", bn, false, cn - bn, numStarted: 1, numPassed: 2));
+        normalScoreBoard[2].Should().BeEquivalentTo(TeamResult(3, "Club A", an, false, bn - an, numNotStarted: 1, numPassed: 1));
 
         var finalScoreBoard = new PointsCalcFinal(emptyTeamServiceMock.Object, finalConfiguration).CalcScoreBoard(currentTimeOfDay, participantResults);
-        finalScoreBoard.Should().HaveCount(3);
-        finalScoreBoard.Should().BeEquivalentTo([
-                TeamResult(1, "Club C", 100 + 20 + 44, false, numPassed: 3),
-                TeamResult(2, "Club B", 64 + 64, false, 100 + 20 + 44 - 64 - 64, numStarted: 1, numPassed: 2),
-                TeamResult(3, "Club A", 72, false, 64+64-72, numNotStarted: 1, numPassed: 1)
-            ]
-        );
+
+        finalScoreBoard[0].Should().BeEquivalentTo(TeamResult(1, "Club C", cf, false, 0, numPassed: 3));
+        finalScoreBoard[1].Should().BeEquivalentTo(TeamResult(2, "Club B", bf, false, cf - bf, numStarted: 1, numPassed: 2));
+        finalScoreBoard[2].Should().BeEquivalentTo(TeamResult(3, "Club A", af, false, bf - af, numPassed: 1, numNotStarted: 1));
+    }
+
+    private static TimeSpan T(string text)
+    {
+        return TimeSpan.Parse(text);
     }
 
     [TestMethod]
@@ -253,14 +263,14 @@ public sealed class PointsCalcTest
     private int CalcNormalPoints(string @class, string club, string startTime, string time, int pos, string bestTime,
         bool isExtraParticipant = false)
     {
-        var participantResult = new PointsCalcParticipantResult(@class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
+        var participantResult = new PointsCalcParticipantResult(@class, "", club, T(startTime), T(time), Passed)
         {
             IsExtraParticipant = isExtraParticipant,
             Pos = pos
         };
 
         PointsCalcBase pointsCalc = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration);
-        return pointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
+        return pointsCalc.CalcPoints(participantResult, T(bestTime));
     }
 
     [TestMethod]
@@ -316,12 +326,12 @@ public sealed class PointsCalcTest
 
     private int CalcFinalPoints(string @class, string club, string startTime, string time, int pos, string bestTime, bool isExtraParticipant = false)
     {
-        var participantResult = new PointsCalcParticipantResult(@class, "", club, TimeSpan.Parse(startTime), TimeSpan.Parse(time), Passed)
+        var participantResult = new PointsCalcParticipantResult(@class, "", club, T(startTime), T(time), Passed)
         {
             IsExtraParticipant = isExtraParticipant,
             Pos = pos
         };
         PointsCalcBase pointsCalc = new PointsCalcFinal(emptyTeamServiceMock.Object, finalConfiguration);
-        return pointsCalc.CalcPoints(participantResult, TimeSpan.Parse(bestTime));
+        return pointsCalc.CalcPoints(participantResult, T(bestTime));
     }
 }

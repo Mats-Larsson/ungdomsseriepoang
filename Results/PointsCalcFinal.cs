@@ -2,12 +2,8 @@ using Results.Contract;
 
 namespace Results;
 
-internal class PointsCalcFinal : PointsCalcBase
+internal class PointsCalcFinal(ITeamService teamService, Configuration configuration) : PointsCalcBase(teamService, configuration)
 {
-    public PointsCalcFinal(ITeamService teamService, Configuration configuration) : base(teamService, configuration)
-    {
-    }
-
     protected override int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, int pos, TimeSpan bestTime, bool isExtraParticipant)
     {
         if (time <= pointsTemplate.FinalFullPointsTime) return pointsTemplate.FinalFullPoints;
