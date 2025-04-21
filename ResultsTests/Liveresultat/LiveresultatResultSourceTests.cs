@@ -69,7 +69,7 @@ class LiveresultatFacadeMock : LiveresultatFacade
             "CompetitionInfo" => GetFromFile<T>(@"Liveresultat\CompetitionInfo.json"),
             "ClassList" => GetFromFile<T>(@"Liveresultat\Classes.json"),
             "ClassResultList" => GetFromFile<T>(@"Liveresultat\H16.json"),
-            _ => default!
+            _ => null!
         };
         return Task.FromResult((T?)Convert.ChangeType(result, typeof(T)));
     }

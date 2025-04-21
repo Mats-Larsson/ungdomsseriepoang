@@ -9,25 +9,19 @@ namespace Results.Liveresultat;
 
 [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
 [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
-public class LiveresultatFacade : IDisposable
+public class LiveresultatFacade(ILogger<LiveresultatFacade> logger) : IDisposable
 {
     private static readonly Uri Endpoint = new("http://liveresultat.orientering.se/api.php");
-    private readonly ILogger<LiveresultatFacade> logger;
     private readonly HttpClient client = new();
 
-    private Cached<ClassList> classListCache = new(default);
+    private Cached<ClassList> classListCache = new(null);
     private readonly Dictionary<string, Cached<ClassResultList>> classResultListsCache = [];
 
-    private Cached<LastPassingList> lastPassingListCache = new(default);
-
-    public LiveresultatFacade(ILogger<LiveresultatFacade> logger)
-    {
-        this.logger = logger;
-    }
+    private Cached<LastPassingList> lastPassingListCache = new(null);
 
     public async Task<CompetitionInfo?> GetCompetitionInfoAsync(int competitionId)
     {
-        var competitionInfo = await GetDataAsync<CompetitionInfo>(competitionId, Method.GetCompetitionInfo, default).ConfigureAwait(false) ?? null;
+        var competitionInfo = await GetDataAsync<CompetitionInfo>(competitionId, Method.GetCompetitionInfo, null).ConfigureAwait(false) ?? null;
         return competitionInfo;
 
     }
@@ -76,17 +70,17 @@ public class LiveresultatFacade : IDisposable
         if (!resp.IsSuccessStatusCode)
         {
             logger.LogError("Failed to get liveresultat: {StatusCode}; {Uri}", resp.StatusCode, uriBuilder.Uri);
-            return default;
+            return null;
         }
 
         string body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         T? data = DeserializeJson<T>(body);
 
-        if (data == null) return default!;
+        if (data == null) return null!;
         var statusBase = data as StatusBase;
         if (statusBase is { Status: "OK" }) return data;
-        return statusBase == null ? data : default!;
+        return statusBase == null ? data : null!;
     }
 
     [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
@@ -112,15 +106,9 @@ public class LiveresultatFacade : IDisposable
     }
 }
 
-internal record Cached<T> where T : StatusBase
+internal record Cached<T>(T? Data)
+    where T : StatusBase
 {
-    public T? Data { get; }
-
-    public Cached(T? data)
-    {
-        Data = data;
-    }
-
     public string? Hash => Data?.Hash;
 }
 

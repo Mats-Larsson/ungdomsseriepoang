@@ -2,11 +2,12 @@
   "profiles": {
     "Usp": {
       "commandName": "Project",
+      "commandLineArgs": "--pointscalc Normal --numteams 4",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:8880"
+      "applicationUrl": "http://localhost:8880/?TextSize=150&Columns=1"
     },
     "Usp Liveresultat": {
       "commandName": "Project",

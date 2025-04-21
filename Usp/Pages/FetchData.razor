@@ -8,11 +8,9 @@
 @using Microsoft.AspNetCore.WebUtilities;
 @using Results.Contract
 @using System.Globalization
-@using Results
 @using ResultService = Usp.Data.ResultService
 @inject ResultService ResultService;
 @inject NavigationManager NavManager;
-@inject Configuration Configuration;
 
 @if (result?.TeamResults == null)
 {
@@ -179,7 +177,7 @@ else
         return true;
     }
 
-    private T GetQueryParamFirstOrDefault<T>(Uri uri, string name, T defaultValue)
+    private static T GetQueryParamFirstOrDefault<T>(Uri uri, string name, T defaultValue)
     {
         var stringValues = QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault(name);
         if (!stringValues.Any()) return defaultValue;

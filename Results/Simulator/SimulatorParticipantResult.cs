@@ -3,7 +3,7 @@ using Results.Model;
 
 namespace Results.Simulator;
 
-internal class SimulatorParticipantResult : ParticipantResult
+internal record SimulatorParticipantResult : ParticipantResult
 {
     public SimulatorParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, string olaStatus) 
         : base(@class, name, club, startTime, time, TranslateStatus(olaStatus, time))

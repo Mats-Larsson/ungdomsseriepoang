@@ -55,13 +55,13 @@ public sealed class IofXmlResultSource : IResultSource
     private static TimeSpan? ToTimeSpan(PersonResult pr)
     {
         double? seconds = pr.Result?[0]?.Time;
-        return seconds.HasValue ? TimeSpan.FromSeconds(seconds.Value) : default;
+        return seconds.HasValue ? TimeSpan.FromSeconds(seconds.Value) : TimeSpan.Zero;
     }
 
     private static TimeSpan ToStartTime(PersonResult pr)
     {
         var startTime = pr.Result?[0]?.StartTime;
-        return startTime?.TimeOfDay ?? default;
+        return startTime?.TimeOfDay ?? TimeSpan.Zero;
     }
 
     private static string ToName(PersonResult pr)

@@ -4,8 +4,8 @@ namespace Results;
 
 public partial class ClassFilter
 {
-    private readonly ISet<string> include;
-    private readonly ISet<string> exclude;
+    private readonly HashSet<string> include;
+    private readonly HashSet<string> exclude;
     private readonly Regex standardClassesRegex;
 
     [GeneratedRegex("^(H1[0246]|D1[0246]|U[1-4]|Insk)[A-ZÅÄÖ]*$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "sv-SE")]
@@ -13,7 +13,7 @@ public partial class ClassFilter
     
     public ClassFilter(Configuration configuration)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
 
         include = (configuration.IncludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();
         exclude = (configuration.ExcludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();

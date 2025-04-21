@@ -2,17 +2,14 @@ using Results.Contract;
 
 namespace Results;
 
-internal class PointsCalcNormal : PointsCalcBase
+internal class PointsCalcNormal(ITeamService teamService, Configuration configuration)
+    : PointsCalcBase(teamService, configuration)
 {
-    public PointsCalcNormal(ITeamService teamService, Configuration configuration) : base(teamService, configuration)
+    protected override int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, int pos, TimeSpan bestTime, bool isExtraParticipant)
     {
-    }
-
-    protected override int CalcPoints1(PointsTemplate pointsTemplate, TimeSpan time, TimeSpan bestTime, bool isExtraParticipant)
-    {
-
         var points = pointsTemplate.BasePoints
                      - pointsTemplate.MinuteReduction * MinutesAfter(bestTime, time)
+                     - pointsTemplate.PositionReduction * (pos - 1)
                      - (isExtraParticipant ? pointsTemplate.PatrolExtraParticipantsReduction : 0);
 
         return Math.Max(points, pointsTemplate.MinPoints);

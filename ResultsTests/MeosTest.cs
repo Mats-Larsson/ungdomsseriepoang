@@ -39,7 +39,7 @@ namespace ResultsTests
             var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
             Assert.IsNotNull(newResultPostAsync);
             IList<Results.Model.ParticipantResult> participantResults = meosResultSource.GetParticipantResults();
-            Assert.IsNotNull(participantResults);
+            Assert.HasCount(3, participantResults);
         }
     }
 }

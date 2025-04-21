@@ -13,7 +13,7 @@ public class TeamService : ITeamService
 
     public TeamService(Configuration configuration, ILogger<TeamService> logger)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
 
         var filePath = configuration.TeamsFilePath;
         if (File.Exists(filePath))
