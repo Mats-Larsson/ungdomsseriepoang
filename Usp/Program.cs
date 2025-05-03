@@ -5,6 +5,7 @@ using Results.Simulator;
 using Results.Ola;
 using Usp;
 using Results;
+using Results.Eventor;
 using Results.IofXml;
 using Results.Liveresultat;
 
@@ -51,7 +52,12 @@ builder.Services.AddSingleton<OlaResultSource>();
 builder.Services.AddSingleton<SimulatorResultSource>();
 builder.Services.AddSingleton<LiveresultatResultSource>();
 builder.Services.AddSingleton<IofXmlResultSource>();
+builder.Services.AddSingleton<EventorResultSource>();
+
 builder.Services.AddSingleton<LiveresultatFacade>();
+builder.Services.AddSingleton<EventorFacade>();
+builder.Services.AddSingleton<IIofXmlDeserializer,IofXmlDeserializer>();
+
 builder.Services.AddSingleton<ClassFilter>();
 builder.Services.AddSingleton<FileListener>();
 
@@ -64,6 +70,7 @@ builder.Services.AddSingleton<IResultSource>(provider =>
         Source.Ola => provider.GetService<OlaResultSource>()!,
         Source.Liveresultat => provider.GetService<LiveresultatResultSource>()!,
         Source.IofXml => provider.GetService<IofXmlResultSource>()!,
+        Source.Eventor => provider.GetService<EventorResultSource>()!,
         _ => throw new InvalidOperationException()
     };
 });

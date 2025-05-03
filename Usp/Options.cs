@@ -82,6 +82,13 @@ public class Options
 
     [Option('d', "dir", Group = "IofXml", Default = ".", HelpText = "Directory to read IOF XML-files from")]
     public string? InputFolder { get; set; }
+    
+    // Eventor options
+    [Option('a', "apikey", Group = "Eventor", HelpText = "ApiKey for organisation")]
+    public string? ApiKey { get; set; }
+
+    [Option('E', "eventoreventId", Group = "Eventor", Default = 0, HelpText = "EventId in eventor")]
+    public int EventorEventId { get; set; }
 
 
 
@@ -145,7 +152,11 @@ public class Options
             LiveresultatId = value.LiveresultatId,
 
             // IofXml
-            IofXmlInputFolder = value.InputFolder
+            IofXmlInputFolder = value.InputFolder,
+            
+            // Eventor
+            ApiKey = value.ApiKey,
+            EventorEventId = value.EventorEventId
         };
 
         return conf;
@@ -165,7 +176,8 @@ public enum Source
     Meos,
     Ola,
     Liveresultat,
-    IofXml
+    IofXml,
+    Eventor
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes

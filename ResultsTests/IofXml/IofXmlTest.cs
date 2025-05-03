@@ -47,7 +47,8 @@ public sealed class IofXmlTest : IDisposable
             });
 
         fileListener = new FileListener(configurationMock.Object);
-        resultSource = new IofXmlResultSource(configurationMock.Object, fileListener, resultSourceLoggerMock.Object);
+        var iofXmlDeserializer = new IofXmlDeserializer();
+        resultSource = new IofXmlResultSource(configurationMock.Object, fileListener, resultSourceLoggerMock.Object, iofXmlDeserializer);
         resultSource.GetParticipantResults().Should().BeEmpty();
     }
 
