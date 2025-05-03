@@ -35,6 +35,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:8880"
+    },
+    "Usp Eventor": {
+      "commandName": "Project",
+      "commandLineArgs": "-s Eventor -E 47195 -a fea0061a886b49469147ca6c87f8e37e",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
     }
   }
 }

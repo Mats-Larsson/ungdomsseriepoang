@@ -34,6 +34,10 @@ public record Configuration
     // IofXml
     public virtual string? IofXmlInputFolder { get; init; }
     
+    // Eventor
+    public string? ApiKey { get; init; }
+    public int EventorEventId { get; init; }
+
     // Hardcoded config
     public static bool IsUsePatrolLongestTime => false;
 }
