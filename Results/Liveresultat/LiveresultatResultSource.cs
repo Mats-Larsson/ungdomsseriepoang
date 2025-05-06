@@ -98,7 +98,7 @@ public sealed class LiveresultatResultSource : IResultSource
             Status.NotStartedYet1 or Status.NotStartedYet2 => 
                 ParticipantStatus.NotActivated,
             _ => 
-                throw new ArgumentOutOfRangeException(nameof(personResultStatus), personResultStatus, null)
+                ParticipantStatus.Ignored
         };
     }
 
