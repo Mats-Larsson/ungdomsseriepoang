@@ -12,6 +12,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
     private readonly IDictionary<int, MeosParticipantResult> participantResults = new Dictionary<int, MeosParticipantResult>();
     private readonly IDictionary<int, string> classes = new Dictionary<int, string>();
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
+    private string? comptitionName;
 
     public TimeSpan CurrentTimeOfDay { get; private set; } = DateTime.Now.TimeOfDay;
 
@@ -77,7 +78,10 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
     }
 
     private void UpdateParticipants(XDocument doc)
-    {// e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
+    {
+        var competitions = doc.Root!.Elements("competition");
+        comptitionName = competitions.FirstOrDefault()?.Value;
+        // e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
         var meosParticipants = doc.Root!
             .Elements(MopNs + "cmp")
             .ToDictionary(cmp => int.Parse(cmp.Attribute("id")!.Value), cmp =>
@@ -105,6 +109,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
                 continue;
             }
             var meosParticipantResult = new MeosParticipantResult(
+                comptitionName,
                 classes[value.ClsId],
                 value.Name,
                 clubs[value.OrgId],
@@ -115,7 +120,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
             participantResults[id] = meosParticipantResult;
         }
 
-        participantResults[0] = new MeosParticipantResult("???", "???", "???", null, null, ParticipantStatus.Ignored);
+        participantResults[0] = new MeosParticipantResult("", "???", "???", "???", null, null, ParticipantStatus.Ignored);
     }
 
     private static ParticipantStatus ToParticipantStatus(int stat, bool isActivated)

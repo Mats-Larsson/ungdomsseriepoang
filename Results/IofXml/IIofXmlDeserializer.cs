@@ -1,9 +1,14 @@
 using Results.Model;
 
-namespace Results.IofXml
+namespace Results.IofXml;
+
+public interface IIofXmlDeserializer
 {
-    public interface IIofXmlDeserializer
-    {
-        public IList<ParticipantResult> Deserialize(Stream xmlStream, out TimeSpan currentTimeOfDay);
-    }
+    public IofXmlResult Deserialize(Stream xmlStream);
 }
+
+public record IofXmlResult(
+    TimeSpan CurrentTimeOfDay,
+    string CompetitionName,
+    IList<ParticipantResult> ParticipantResults
+);

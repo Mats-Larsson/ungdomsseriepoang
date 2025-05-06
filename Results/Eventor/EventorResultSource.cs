@@ -9,23 +9,21 @@ namespace Results.Eventor
         EventorFacade eventorFacade,
         IIofXmlDeserializer deserializer) : IResultSource
     {
-        private TimeSpan currentTimeOfDay;
-        private IList<ParticipantResult> participantResults = [];
+        private IofXmlResult? iofXmlResult;
         public bool SupportsPreliminary => false;
-        public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+        public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
 
         public IList<ParticipantResult> GetParticipantResults()
         {
-            if (participantResults.Any())
+            if (iofXmlResult != null)
             {
-                return participantResults;
+                return iofXmlResult.ParticipantResults;
             }
 
             using var iofXmlStream = eventorFacade.GetIofXmlStream(configuration.EventorEventId);
-            participantResults = deserializer.Deserialize(
-                iofXmlStream.ConfigureAwait(false).GetAwaiter().GetResult(), 
-                out currentTimeOfDay);
-            return participantResults;
+            iofXmlResult = deserializer.Deserialize(
+                iofXmlStream.ConfigureAwait(false).GetAwaiter().GetResult());
+            return iofXmlResult.ParticipantResults;
         }
 
         public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)

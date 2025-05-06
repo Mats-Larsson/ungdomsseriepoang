@@ -7,7 +7,7 @@ namespace Results.IofXml;
 
 public class IofXmlDeserializer : IIofXmlDeserializer
 {
-    public IList<ParticipantResult> Deserialize(Stream xmlStream, out TimeSpan currentTimeOfDay)
+    public IofXmlResult Deserialize(Stream xmlStream)
     {
         using XmlTextReader xmlReader = new(xmlStream);
         XmlAttributeOverrides overrides = new();
@@ -15,13 +15,16 @@ public class IofXmlDeserializer : IIofXmlDeserializer
         overrides.Add(typeof(PersonRaceResult), "SplitTime", ignore);
         XmlSerializer xml = new(typeof(ResultList), overrides);
         var resultList = (ResultList)(xml.Deserialize(xmlReader)!);
-        
-        currentTimeOfDay = resultList.createTime.TimeOfDay;
-        return resultList.ClassResult?
+
+        var currentTimeOfDay = resultList.createTime.TimeOfDay;
+        var competitionName = resultList.Event.Name;
+        var participantResults =  resultList.ClassResult?
             .SelectMany(cr => (cr.PersonResult ?? [])
-                .Select(pr => new ParticipantResult(cr.Class.Name, ToName(pr), pr.Organisation.Name, ToStartTime(pr),
+                .Select(pr => new ParticipantResult(competitionName, cr.Class.Name, ToName(pr), pr.Organisation.Name, ToStartTime(pr),
                     ToTimeSpan(pr), MapStatus(pr.Result[0].Status))))
             .ToList() ?? [];
+        
+        return new IofXmlResult(currentTimeOfDay, competitionName, participantResults);
     }
     private static TimeSpan? ToTimeSpan(PersonResult pr)
     {

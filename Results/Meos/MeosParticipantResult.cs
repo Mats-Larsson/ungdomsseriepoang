@@ -1,13 +1,7 @@
 ﻿using Results.Contract;
 using Results.Model;
 
-namespace Results.Meos
-{
-    internal record MeosParticipantResult : ParticipantResult
-    {
-        public MeosParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, ParticipantStatus status) 
-            : base(@class, name, club, startTime, time, status)
-        {
-        }
-    }
-}
+namespace Results.Meos;
+
+internal record MeosParticipantResult(string CompititionName, string Class, string Name, string Club, TimeSpan? StartTime, TimeSpan? Time, ParticipantStatus Status)
+    : ParticipantResult(CompititionName, Class, Name, Club, StartTime, Time, Status);

@@ -6,7 +6,7 @@ namespace Results.IofXml;
 
 public sealed class IofXmlResultSource : IResultSource
 {
-    private IList<ParticipantResult> participantResults = [];
+    private IofXmlResult? iofXmlResult;
 
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     private readonly Configuration configuration;
@@ -15,11 +15,10 @@ public sealed class IofXmlResultSource : IResultSource
     private readonly ILogger<IofXmlResultSource> logger;
     private readonly IIofXmlDeserializer deserializer;
     private int lastFileNumber;
-    private TimeSpan currentTimeOfDay;
 
     public bool SupportsPreliminary => false;
 
-    public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+    public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
 
     public IofXmlResultSource(Configuration configuration, FileListener fileListener,
         ILogger<IofXmlResultSource> logger, IIofXmlDeserializer deserializer)
@@ -35,7 +34,7 @@ public sealed class IofXmlResultSource : IResultSource
     {
         try
         {
-            participantResults = LoadResultFile(e.FullName);
+            iofXmlResult = LoadResultFile(e.FullName);
         }
         catch (Exception ex)
         {
@@ -45,7 +44,7 @@ public sealed class IofXmlResultSource : IResultSource
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return participantResults;
+        return iofXmlResult?.ParticipantResults ?? [];
     }
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
@@ -53,12 +52,12 @@ public sealed class IofXmlResultSource : IResultSource
         throw new NotImplementedException();
     }
 
-    private IList<ParticipantResult> LoadResultFile(string path)
+    private IofXmlResult LoadResultFile(string path)
     {
         try
         {
             using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            return deserializer.Deserialize(stream, out currentTimeOfDay);
+            return deserializer.Deserialize(stream);
         }
         finally
         {
