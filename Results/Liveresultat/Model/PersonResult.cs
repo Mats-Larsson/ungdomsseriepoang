@@ -39,8 +39,9 @@ public record PersonResult
     {
         if (val == null) return null;
 
-        return !int.TryParse(val, out int intVal)
-            ? null
-            : TimeSpan.FromMilliseconds(10 * intVal);
+        if (!int.TryParse(val, out int intVal) && intVal <= 0)
+            return null;
+
+        return TimeSpan.FromMilliseconds(10 * intVal);
     }
 }
