@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Results.IofXml;
 using Results.Model;
 

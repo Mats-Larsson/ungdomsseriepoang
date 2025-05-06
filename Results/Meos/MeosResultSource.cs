@@ -80,7 +80,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
     private void UpdateParticipants(XDocument doc)
     {
         var competitions = doc.Root!.Elements("competition");
-        comptitionName = competitions.FirstOrDefault()?.Value;
+        comptitionName = competitions.FirstOrDefault()?.Value ?? "";
         // e => e.Attribute("delete")?.Value != "true" ? e.Value : null);
         var meosParticipants = doc.Root!
             .Elements(MopNs + "cmp")
