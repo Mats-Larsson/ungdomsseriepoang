@@ -6,7 +6,7 @@ namespace Results.Simulator;
 internal record SimulatorParticipantResult : ParticipantResult
 {
     public SimulatorParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time, string olaStatus) 
-        : base(@class, name, club, startTime, time, TranslateStatus(olaStatus, time))
+        : base("Simulator", @class, name, club, startTime, time, TranslateStatus(olaStatus, time))
     {
     }
 

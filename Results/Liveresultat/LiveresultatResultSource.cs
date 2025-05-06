@@ -12,7 +12,7 @@ public sealed class LiveresultatResultSource : IResultSource
     private readonly ClassFilter classFilter;
     private readonly int competitionId;
     private TimeSpan lastCurrentTimeOfDay = TimeSpan.Zero;
-    private bool competitionFound;
+    private string? competitionName;
 
     public LiveresultatResultSource(Configuration configuration, LiveresultatFacade liveresultatFacade, ILogger<LiveresultatResultSource> logger, ClassFilter classFilter)
     {
@@ -34,7 +34,8 @@ public sealed class LiveresultatResultSource : IResultSource
 
     private async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        if (!await CheckCompetitionInfo().ConfigureAwait(false)) return [];
+        await LoadCompetitionName().ConfigureAwait(false);
+        if (competitionName == null) return [];
 
         var classList = await liveresultatFacade.GetClassesAsync(competitionId).ConfigureAwait(false);
         if (classList?.Classes is null) return [];
@@ -56,6 +57,7 @@ public sealed class LiveresultatResultSource : IResultSource
             {
                 (string className, PersonResult personResult) = r;
                 return new ParticipantResult(
+                    competitionName,
                     className,
                     personResult.Name!,
                     personResult.Club ?? string.Empty,
@@ -71,17 +73,16 @@ public sealed class LiveresultatResultSource : IResultSource
         return ret;
     }
 
-    private async Task<bool> CheckCompetitionInfo()
+    private async Task LoadCompetitionName()
     {
-        if (competitionFound) return true;
+        if (competitionName != null) return;
         var competitionInfo = await liveresultatFacade.GetCompetitionInfoAsync(competitionId).ConfigureAwait(false);
         if (competitionInfo?.Name is null)
         {
             logger.LogError("Competition with LiveresultatId {LiveresultatId} not found in Liveresultat", competitionId);
-            return false;
+            return;
         }
-        competitionFound = true;
-        return true;
+        competitionName = competitionInfo.Name;
     }
 
     private static ParticipantStatus MapStatus(Status personResultStatus)

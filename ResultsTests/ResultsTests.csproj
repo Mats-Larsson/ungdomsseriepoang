@@ -67,4 +67,8 @@
     <None Remove="IofXml\IofResultat2.xml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>

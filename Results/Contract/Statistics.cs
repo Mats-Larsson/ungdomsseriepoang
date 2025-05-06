@@ -21,6 +21,7 @@ public class Statistics
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")] 
     public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
     public TimeSpan LastChangedTimeOfDay { get; private set; }
+    public string CompetitionName { get; internal set; } = "";
     public int NumNotActivated { get; private set; }
     public int NumActivated { get; private set; }
     public int NumStarted { get; private set; }
@@ -48,6 +49,7 @@ public class Statistics
 
         foreach (var pr in participantResults)
         {
+            if (string.IsNullOrEmpty(statistics.CompetitionName)) statistics.CompetitionName = pr.CompititionName;
             switch (pr.Status)
             {
                 case ParticipantStatus.Ignored: break;
