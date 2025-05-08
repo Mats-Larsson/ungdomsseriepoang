@@ -28,8 +28,8 @@ public class IofXmlDeserializer : IIofXmlDeserializer
     }
     private static TimeSpan? ToTimeSpan(PersonResult pr)
     {
-        double? seconds = pr.Result?[0]?.Time;
-        return seconds.HasValue ? TimeSpan.FromSeconds(seconds.Value) : TimeSpan.Zero;
+        double seconds = pr.Result?[0]?.Time ?? 3600 * 4;
+        return TimeSpan.FromSeconds(seconds);
     }
 
     private static TimeSpan ToStartTime(PersonResult pr)
