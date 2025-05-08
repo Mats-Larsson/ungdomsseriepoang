@@ -11,7 +11,7 @@
     },
     "Usp Liveresultat 33228": {
       "commandName": "Project",
-      "commandLineArgs": "-s Liveresultat -L \"33220\" --pointscalc Normal",
+      "commandLineArgs": "-s Liveresultat -L \"-30823\" --pointscalc Normal",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -38,7 +38,7 @@
     },
     "Usp Eventor": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 47195 -a fea0061a886b49469147ca6c87f8e37e",
+      "commandLineArgs": "-s Eventor -E 51668 --pointscalc Normal",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
