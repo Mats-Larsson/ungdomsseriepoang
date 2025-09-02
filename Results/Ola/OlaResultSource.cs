@@ -61,9 +61,7 @@ public sealed class OlaResultSource(Configuration configuration) : IResultSource
     {
         return olaStatus switch
         {
-            "walkOver" => ParticipantStatus.Ignored,
-            "movedUp" => ParticipantStatus.Ignored,
-            "notParticipating" => ParticipantStatus.Ignored,
+            "walkOver" or "movedUp" or "notParticipating" => ParticipantStatus.Ignored,
 
             "notActivated" => ParticipantStatus.NotActivated,
 
@@ -74,8 +72,7 @@ public sealed class OlaResultSource(Configuration configuration) : IResultSource
             "finishedPunchOk" => time.HasValue ? ParticipantStatus.Preliminary : ParticipantStatus.Started,
 
             "passed" => time.HasValue ? ParticipantStatus.Passed : ParticipantStatus.Started,
-            "disqualified" => ParticipantStatus.NotValid,
-            "notValid" => ParticipantStatus.NotValid,
+            "disqualified" or "notValid" => ParticipantStatus.NotValid,
             "notStarted" => ParticipantStatus.NotStarted,
 
             _ => throw new InvalidOperationException($"Unexpected status: {olaStatus}")

@@ -4,13 +4,13 @@ namespace Results.Eventor;
 
 public sealed class EventorFacade : IDisposable
 {
-    private readonly Configuration configuration;
     private static readonly Uri Endpoint = new("https://eventor.orientering.se/api/results/event/iofxml");
     private readonly HttpClient client = new();
 
     public EventorFacade(Configuration configuration)
     {
-        this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+
         client.DefaultRequestHeaders.Add("ApiKey", configuration.ApiKey);
     }
 

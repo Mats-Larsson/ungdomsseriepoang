@@ -38,7 +38,7 @@
     },
     "Usp Eventor": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 51668 --pointscalc Normal",
+      "commandLineArgs": "-s Eventor -E 51707 --pointscalc Normal -a fea0061a886b49469147ca6c87f8e37e",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

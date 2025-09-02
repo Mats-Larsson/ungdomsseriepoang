@@ -4,7 +4,7 @@ namespace Results.Model;
 
 public record ParticipantResult(string CompititionName, string Class, string Name, string Club, TimeSpan? StartTime, TimeSpan? Time, ParticipantStatus Status)
 {
-    public string CompititionName { get; internal set;  } = CompititionName; 
+    public string CompititionName { get; } = CompititionName; 
     public string Club { get; internal set; } = Club;
     public TimeSpan? Time { get; internal set; } = Time;
     public ParticipantStatus Status { get; internal set; } = Status;

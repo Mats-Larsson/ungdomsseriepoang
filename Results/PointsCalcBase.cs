@@ -300,8 +300,7 @@ internal class PointsTemplate
     {
         return @class[0] switch
         {
-            'D' => DhTemplate,
-            'H' => DhTemplate,
+            'D' or 'H' => DhTemplate,
             'U' => UTemplate,
             'I' => InskTemplate,
             // ReSharper disable once LocalizableElement
