@@ -31,13 +31,14 @@ internal abstract class PointsCalcBase(ITeamService teamService, Configuration c
 
         var teamResults = participantPoints
             .Where(pr => pr.Points >= 0)
-            .GroupBy(pr => pr.Club)
+            .GroupBy(pr =>new {pr.CompititionName, pr.Club})
             .Select(g => (
-                Club: g.Key,
+                CompetitionName: g.Key.CompititionName,
+                Club: g.Key.Club,
                 Points: g.Sum(d => d.Points),
                 IsPreliminary: g.Max(d => d.Status == Preliminary),
                 Statistics: Statistics.GetStatistics(
-                    g.Select(pr => new ParticipantResult(g.Key, "", pr.Club, pr.StartTime, pr.Time, pr.Status)),
+                    g.Select(pr => new ParticipantResult(g.Key.CompititionName, g.Key.Club, "", pr.Club, pr.StartTime, pr.Time, pr.Status)),
                     currentTimeOfDay)))
             .ToDictionary(pr => pr.Club, pr => pr);
 
@@ -214,21 +215,22 @@ internal abstract class PointsCalcBase(ITeamService teamService, Configuration c
         return patrols;
     }
 
-    private static IEnumerable<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>
+    private static IEnumerable<(string CompetitionName, string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>
         MergeWithBasePoints(
-            IDictionary<string, (string Club, int Points, bool IsPreliminary, Statistics Statistics)>
+            IDictionary<string, (string CompetitionName, string Club, int Points, bool IsPreliminary, Statistics Statistics)>
                 participantResults, IDictionary<string, int> basePointsDictionary)
     {
         var allClubs = participantResults.Keys.Union(basePointsDictionary.Keys);
+        var competitionName = participantResults.Values.FirstOrDefault().CompetitionName ?? "";
 
-        var merged = new List<(string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>();
+        var merged = new List<(string CompetitionName, string Club, int Points, bool IsPreliminary, int BasePoints, Statistics Statistics)>();
         foreach (string club in allClubs)
         {
             int points = 0;
             var isPreliminary = false;
             Statistics? statistics = null;
             if (participantResults.TryGetValue(club,
-                    out (string Club, int Points, bool IsPreliminary, Statistics Statistics) result))
+                    out (string CompetitionName, string Club, int Points, bool IsPreliminary, Statistics Statistics) result))
             {
                 points = result.Points;
                 isPreliminary = result.IsPreliminary;
@@ -237,7 +239,7 @@ internal abstract class PointsCalcBase(ITeamService teamService, Configuration c
 
             var basePoints = basePointsDictionary.TryGetValue(club, out int value) ? value : 0;
 
-            merged.Add((club, basePoints + points, isPreliminary, basePoints, statistics ?? new Statistics()));
+            merged.Add((competitionName, club, basePoints + points, isPreliminary, basePoints, statistics ?? new Statistics()));
         }
 
         return merged;
@@ -249,9 +251,9 @@ public record PointsCalcParticipantResult : ParticipantResult
     public bool IsExtraParticipant { get; internal set; }
     public int Pos { get; internal set; }
 
-    public PointsCalcParticipantResult(string @class, string name, string club, TimeSpan? startTime, TimeSpan? time,
+    public PointsCalcParticipantResult(string compititionName, string @class, string name, string club, TimeSpan? startTime, TimeSpan? time,
         ParticipantStatus status)
-        : base(@class, name, club, startTime, time, status)
+        : base(compititionName, @class, name, club, startTime, time, status)
     {
     }
 
@@ -298,8 +300,7 @@ internal class PointsTemplate
     {
         return @class[0] switch
         {
-            'D' => DhTemplate,
-            'H' => DhTemplate,
+            'D' or 'H' => DhTemplate,
             'U' => UTemplate,
             'I' => InskTemplate,
             // ReSharper disable once LocalizableElement

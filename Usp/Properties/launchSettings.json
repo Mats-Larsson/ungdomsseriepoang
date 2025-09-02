@@ -9,14 +9,14 @@
       },
       "applicationUrl": "http://localhost:8880/?TextSize=150&Columns=1"
     },
-    "Usp Liveresultat": {
+    "Usp Liveresultat 33228": {
       "commandName": "Project",
       "commandLineArgs": "-s Liveresultat -L \"-30823\" --pointscalc Normal",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:8880"
+      "applicationUrl": "http://localhost:8880?TextSize=200&Columns=1"
     },
     "usp meos": {
       "commandName": "Project",
@@ -30,6 +30,15 @@
     "Usp IofXml": {
       "commandName": "Project",
       "commandLineArgs": "-s IofXml -d c:\\Temp --pointscalc Normal",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
+    },
+    "Usp Eventor": {
+      "commandName": "Project",
+      "commandLineArgs": "-s Eventor -E 51707 --pointscalc Normal -a fea0061a886b49469147ca6c87f8e37e",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

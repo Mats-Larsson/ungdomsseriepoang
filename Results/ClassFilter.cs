@@ -8,7 +8,7 @@ public partial class ClassFilter
     private readonly HashSet<string> exclude;
     private readonly Regex standardClassesRegex;
 
-    [GeneratedRegex("^(H1[0246]|D1[0246]|U[1-4]|Insk)[A-ZÅÄÖ]*$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "sv-SE")]
+    [GeneratedRegex("^(H1[0246]|D1[0246]|U[1-4]|Insk)[0-9A-ZÅÄÖ ]*$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "sv-SE")]
     private static partial Regex StandardClassesRegex();
     
     public ClassFilter(Configuration configuration)

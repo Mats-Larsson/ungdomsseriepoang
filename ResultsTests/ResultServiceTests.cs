@@ -14,6 +14,7 @@ namespace ResultsTests;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class ResultServiceTests
 {
+    private const string Comp = "Comp";
     private IResultService? resultService;
     private Configuration? configuration;
     private readonly Mock<IResultSource> resultSourceMock = new();
@@ -44,9 +45,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("9:30:00"),
         [
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
+            new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
@@ -65,9 +66,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("9:30:00"),
         [
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
+            new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, Activated),
+            new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
@@ -86,9 +87,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:01:30"),
         [
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, Activated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
+            new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, Activated),
+            new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
@@ -107,9 +108,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:10:30"),
         [
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
+            new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
@@ -127,9 +128,9 @@ public class ResultServiceTests
     {
         Result actual = Setup(isFinal, TS("10:10:30"),
         [
-            new ParticipantResult("H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
-            new ParticipantResult("H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
-            new ParticipantResult("H10", "Curt", "C", TS("10:02:00"), null, Activated)
+            new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
+            new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
+            new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
         ]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
@@ -145,10 +146,10 @@ public class ResultServiceTests
     [DataRow(true, 4 * (80 - 8))]
     public void TwoPatrols(bool isFinal, int expectedPoints)
     {
-        ParticipantResult pr0 = new("U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 36
-        ParticipantResult pr1 = new("U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed); // 40
-        ParticipantResult pr2 = new("U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed); // 36
-        ParticipantResult pr3 = new("U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed); // 40
+        ParticipantResult pr0 = new(Comp, "U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 36
+        ParticipantResult pr1 = new(Comp, "U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed); // 40
+        ParticipantResult pr2 = new(Comp, "U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed); // 36
+        ParticipantResult pr3 = new(Comp, "U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed); // 40
 
         Result actual = Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoard();
         actual.Statistics.Should().BeEquivalentTo(
