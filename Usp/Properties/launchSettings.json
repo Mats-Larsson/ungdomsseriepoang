@@ -20,7 +20,7 @@
     },
     "usp meos": {
       "commandName": "Project",
-      "commandLineArgs": "-s meos",
+      "commandLineArgs": "-s meos --pointscalc Final",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -38,12 +38,21 @@
     },
     "Usp Eventor": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 51707 --pointscalc Normal -a fea0061a886b49469147ca6c87f8e37e",
+      "commandLineArgs": "-s Eventor -E 51718 --pointscalc Normal -a fea0061a886b49469147ca6c87f8e37e --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2025.csv",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:8880"
+    },
+    "usp meos final 2025": {
+      "commandName": "Project",
+      "commandLineArgs": "-s meos --pointscalc Final --maxlatestart 20 --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2025.csv",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880?verbose"
     }
   }
 }
