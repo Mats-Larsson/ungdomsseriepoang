@@ -13,7 +13,7 @@ public partial class ClassFilter
     
     public ClassFilter(Configuration configuration)
     {
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration);
 
         include = (configuration.IncludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();
         exclude = (configuration.ExcludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();

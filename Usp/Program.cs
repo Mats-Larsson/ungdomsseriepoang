@@ -61,6 +61,8 @@ builder.Services.AddSingleton<IIofXmlDeserializer,IofXmlDeserializer>();
 builder.Services.AddSingleton<ClassFilter>();
 builder.Services.AddSingleton<FileListener>();
 
+builder.Services.AddSingleton<Endpoints>();
+
 builder.Services.AddSingleton<IResultSource>(provider =>
 {
     return options.Source switch
@@ -89,27 +91,9 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.MapPost("/meos", async (HttpRequest request) =>
-{
-    var resultService = app.Services.GetService<IResultService>()!;
-    return await resultService.NewResultPostAsync(request.Body, DateTime.Now).ConfigureAwait(false);
-});
-app.MapGet("/teams", context =>
-{
-    var resultService = app.Services.GetService<IResultService>()!;
-    var teamResults = resultService.GetScoreBoard().TeamResults;
-
-    return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(teamResults), contentType: "text/csv")
-        .ExecuteAsync(context);
-});
-app.MapGet("/participants", context =>
-{
-    var resultService = app.Services.GetService<IResultService>()!;
-    var participantPointsList = resultService.GetParticipantPointsList();
-
-    return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(participantPointsList), contentType: "text/csv")
-        .ExecuteAsync(context);
-});
+app.MapPost("/meos", (Endpoints endpoints, HttpRequest request) => endpoints.NewResultPostAsync(request));
+app.MapGet("/teams", (Endpoints endpoints, HttpContext context) => endpoints.GetTeamsResultAsync(context));
+app.MapGet("/participants", (Endpoints endpoints, HttpContext context) => endpoints.GetParticipantsResultAsync(context));
 
 Configuration configuration = app.Services.GetService<Configuration>()!;
 app.Logger.LogInformation("{}", configuration.ToString());

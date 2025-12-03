@@ -12,7 +12,7 @@ public sealed class FileListener : IDisposable
 
     public FileListener(Configuration configuration)
     {
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration);
         if (configuration.IofXmlInputFolder == null) throw new InvalidOperationException("IofXmlInputFolder nust not be null");
         Directory = new DirectoryInfo(configuration.IofXmlInputFolder);
         if (!Directory.Exists) throw new InvalidOperationException($"Directory not found: {Directory.FullName}");
