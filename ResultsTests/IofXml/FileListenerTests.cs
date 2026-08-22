@@ -7,6 +7,7 @@ namespace ResultsTests.IofXml;
 
 [TestClass]
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
+[SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task")]
 public class FileListenerTests
 {
     private bool foundNewFile;
@@ -14,6 +15,7 @@ public class FileListenerTests
     [TestMethod]
     public async Task FileListenerTestAsync()
     {
+        var ct = CancellationToken.None;
         Mock<Configuration> configurationMock = new();
         configurationMock.Setup(m => m.IofXmlInputFolder).Returns(".");
 
@@ -23,7 +25,7 @@ public class FileListenerTests
 
         await WriteFileAsync(@".\Test.xml", 10, TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
 
-        Task.Delay(10).Wait();
+        await Task.Delay(10, ct).WaitAsync(ct);
         Assert.IsTrue(foundNewFile);
     }
 

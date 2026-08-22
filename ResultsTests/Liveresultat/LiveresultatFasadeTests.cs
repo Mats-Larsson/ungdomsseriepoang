@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CA1001
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results.Liveresultat;

@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using AwesomeAssertions;
 using Moq;
 using Results;
 using Results.Contract;
@@ -47,7 +47,7 @@ public sealed class PointsCalcTest
         using var simulatorResultSource = new SimulatorResultSource(configuration1);
         var participantResults = simulatorResultSource.GetParticipantResults();
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(28, scoreBoard.Count);
+        Assert.HasCount(28, scoreBoard);
     }
 
     [TestMethod]
@@ -55,7 +55,7 @@ public sealed class PointsCalcTest
     {
         IPointsCalc pointsCalc = new PointsCalcNormal(emptyTeamServiceMock.Object, normalConfiguration);
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, []);
-        Assert.AreEqual(0, scoreBoard.Count);
+        Assert.IsEmpty(scoreBoard);
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(2, scoreBoard.Count);
+        Assert.HasCount(2, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club A", 0, false, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(1, "Club B", 0, false, numNotStarted: 1), scoreBoard[1]);
     }
@@ -83,7 +83,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Rory", "Club B", TimeSpan.FromHours(18), null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(2, scoreBoard.Count);
+        Assert.HasCount(2, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club A", 10, false, numNotStarted: 1, basePoints: 10, diffPointsUp: 0), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 5, false, numNotStarted: 1, basePoints: 5, diffPointsUp: 5), scoreBoard[1]);
     }
@@ -99,7 +99,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Hugo", "Club C", null, null, Ignored)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(2, scoreBoard.Count);
+        Assert.HasCount(2, scoreBoard);
         Assert.AreEqual(0, scoreBoard[0].Points);
         Assert.AreEqual(0, scoreBoard[1].Points);
     }
@@ -115,7 +115,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Hugo", "Club C", null, null, Started)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.HasCount(3, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club A", 0, false, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(1, "Club B", 0, false, numNotStarted: 1), scoreBoard[1]);
         Assert.AreEqual(TeamResult(1, "Club C", 0, false, numStarted: 1), scoreBoard[2]);
@@ -132,7 +132,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Hugo", "Club C", null, null, NotStarted)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.HasCount(3, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club A", 3, false, 0, 3, numNotStarted: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", 2, false, 1, 2, numNotStarted: 1), scoreBoard[1]);
         Assert.AreEqual(TeamResult(3, "Club C", 1, false, 1, 1, numNotStarted: 1), scoreBoard[2]);
@@ -149,7 +149,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.HasCount(3, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club C", 50, true, 0, numPreliminary: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50, numNotStarted: 1), scoreBoard[1]);
         Assert.AreEqual(TeamResult(2, "Club B", 0, false, 50, numStarted: 1), scoreBoard[2]);
@@ -166,7 +166,7 @@ public sealed class PointsCalcTest
             new(Comp, "H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Passed)
         };
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.HasCount(3, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club C", 50, false, numPassed: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club A", 0, false, 50, numNotStarted: 1), scoreBoard[1]);
         Assert.AreEqual(TeamResult(2, "Club B", 0, false, 50, numStarted: 1), scoreBoard[2]);
@@ -185,7 +185,7 @@ public sealed class PointsCalcTest
         participantResults.Add(new ParticipantResult(Comp, "H10", "Hugo", "Club C", TimeSpan.FromHours(18), TimeSpan.FromMinutes(10), Preliminary)); c += 50;
         participantResults.Add(new ParticipantResult(Comp, "H10", "Hugo", "Club B", TimeSpan.FromHours(18), TimeSpan.FromMinutes(12), Passed)); b += 48;
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
-        Assert.AreEqual(3, scoreBoard.Count);
+        Assert.HasCount(3, scoreBoard);
         Assert.AreEqual(TeamResult(1, "Club C", c, true, 0, numPreliminary: 1), scoreBoard[0]);
         Assert.AreEqual(TeamResult(2, "Club B", b, false, c - b, numStarted: 1, numPassed: 1), scoreBoard[1]);
         Assert.AreEqual(TeamResult(3, "Club A", a, false, b - a, numNotStarted: 1), scoreBoard[2]);

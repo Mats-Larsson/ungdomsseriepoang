@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
@@ -38,7 +38,7 @@ public class ResultServiceTests
         return resultService;
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void AllNotActivated(bool isFinal)
@@ -59,7 +59,7 @@ public class ResultServiceTests
         ]);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void OneActivated(bool isFinal)
@@ -80,7 +80,7 @@ public class ResultServiceTests
         ]);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void OneActivatedAndOneStarted(bool isFinal)
@@ -101,7 +101,7 @@ public class ResultServiceTests
         ]);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void OneStartedAndOneMissedStart(bool isFinal)
@@ -121,7 +121,7 @@ public class ResultServiceTests
         ]);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void OneStartedAndOnePassed(bool isFinal)
@@ -141,7 +141,7 @@ public class ResultServiceTests
         ]);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(false, 40 + 36 + 40 + 36)]
     [DataRow(true, 4 * (80 - 8))]
     public void TwoPatrols(bool isFinal, int expectedPoints)

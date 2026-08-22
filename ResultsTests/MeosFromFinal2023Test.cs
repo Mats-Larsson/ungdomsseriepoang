@@ -60,6 +60,7 @@ public sealed class MeosFromFinal2023Test : IDisposable
     [SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task")]
     public async Task ReadAllFiles()
     {
+        var ct = CancellationToken.None;
 
         results.OnNewResults += OnNewResults;
 
@@ -67,7 +68,7 @@ public sealed class MeosFromFinal2023Test : IDisposable
         {
             await using var stream = File.OpenRead(file);
             await results.NewResultPostAsync(stream, ResultDateTimes[Path.GetFileName(file)]).ConfigureAwait(true);
-            Task.Delay(100).Wait();
+            await Task.Delay(100, ct).WaitAsync(ct);
         }
         return;
 

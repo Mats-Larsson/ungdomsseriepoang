@@ -3,7 +3,7 @@ using Moq;
 using Results;
 using Results.IofXml;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace ResultsTests.IofXml;
 

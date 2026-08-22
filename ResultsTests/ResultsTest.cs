@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
@@ -39,6 +39,7 @@ public class ResultsTest
     [TestMethod]
     public void TestWithSimulatorTeams()
     {
+        var ct = CancellationToken.None;
         var configuration = new Configuration
         {
             SpeedMultiplier = 10,
@@ -50,7 +51,7 @@ public class ResultsTest
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>());
         using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
-        Task.Delay(TimeSpan.FromMilliseconds(10)).Wait(); // Let simulator start
+        Task.Delay(TimeSpan.FromMilliseconds(10), ct).Wait(ct); // Let simulator start
         var teamResults = resultService.GetScoreBoard();
         teamResults.TeamResults.Count.Should().Be(3);
         teamResults.TeamResults.Should().Contain(

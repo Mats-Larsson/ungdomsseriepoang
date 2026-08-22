@@ -1,5 +1,5 @@
 ﻿using System.Collections.Specialized;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Results;
