@@ -29,7 +29,7 @@ public record PersonResult
     public string? Timeplus { get; init; }
 
     [JsonPropertyName("progress")]
-    public int Progress { get; init; }
+    public decimal Progress { get; init; }
 
     [JsonPropertyName("start")]
     public JsonElement? StartRaw { get; init; }

@@ -86,6 +86,7 @@ public class LiveresultatFacade(ILogger<LiveresultatFacade> logger) : IDisposabl
     [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
     internal virtual T? DeserializeJson<T>(string body)
     {
+        logger.LogDebug("{Body}", body);    
         var data = JsonSerializer.Deserialize<T>(body);
         return data;
     }
