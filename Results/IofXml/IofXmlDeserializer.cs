@@ -20,7 +20,7 @@ public class IofXmlDeserializer : IIofXmlDeserializer
         var competitionName = resultList.Event.Name;
         var participantResults =  resultList.ClassResult?
             .SelectMany(cr => (cr.PersonResult ?? [])
-                .Select(pr => new ParticipantResult(competitionName, cr.Class.Name, ToName(pr), pr.Organisation.Name, ToStartTime(pr),
+                .Select(pr => new ParticipantResult(competitionName, cr.Class.Name, ToName(pr), pr.Organisation?.Name ?? "Klubblös" , ToStartTime(pr),
                     ToTimeSpan(pr), MapStatus(pr.Result[0].Status))))
             .ToList() ?? [];
         

@@ -13,7 +13,7 @@ namespace Usp;
 public class Options
 {
     // General options
-    [Option("listenerport", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
+    [Option('l',"listenerport", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
     public int ListenerPort { get; set; }
 
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]

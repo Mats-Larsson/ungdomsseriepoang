@@ -9,14 +9,14 @@
       },
       "applicationUrl": "http://localhost:8880/?TextSize=150&Columns=1"
     },
-    "Usp Liveresultat 33228": {
+    "Usp Liveresultat": {
       "commandName": "Project",
       "commandLineArgs": "-s Liveresultat -L \"-30823\" --pointscalc Normal",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:8880?TextSize=200&Columns=1"
+      "applicationUrl": "http://localhost:9090?TextSize=200&Columns=1"
     },
     "usp meos": {
       "commandName": "Project",

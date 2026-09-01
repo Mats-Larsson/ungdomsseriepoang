@@ -56,7 +56,7 @@ builder.Services.AddSingleton<EventorResultSource>();
 
 builder.Services.AddSingleton<LiveresultatFacade>();
 builder.Services.AddSingleton<EventorFacade>();
-builder.Services.AddSingleton<IIofXmlDeserializer,IofXmlDeserializer>();
+builder.Services.AddSingleton<IIofXmlDeserializer, IofXmlDeserializer>();
 
 builder.Services.AddSingleton<ClassFilter>();
 builder.Services.AddSingleton<FileListener>();
@@ -85,6 +85,15 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
+app.Use(async (context, next) =>
+{
+    app.Logger.LogInformation(
+        "Port={Port}, Path={Path}",
+        options.ListenerPort,
+        context.Request.Path);
+
+    await next();
+});
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -97,5 +106,11 @@ app.MapGet("/participants", (Endpoints endpoints, HttpContext context) => endpoi
 
 Configuration configuration = app.Services.GetService<Configuration>()!;
 app.Logger.LogInformation("{}", configuration.ToString());
+
+app.MapGet("/debug-webroot", (IWebHostEnvironment env) => Microsoft.AspNetCore.Http.Results.Ok(new
+{
+    env.WebRootPath,
+    Exists = Directory.Exists(env.WebRootPath)
+}));
 
 app.Run();
