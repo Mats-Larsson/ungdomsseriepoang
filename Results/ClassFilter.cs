@@ -15,8 +15,8 @@ public partial class ClassFilter
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
-        include = (configuration.IncludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();
-        exclude = (configuration.ExcludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant()).ToHashSet();
+        include = [.. (configuration.IncludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant())];
+        exclude = [.. (configuration.ExcludeClasses ?? new HashSet<string>()).Select(c => c.ToUpperInvariant())];
 
         standardClassesRegex = StandardClassesRegex();
     }

@@ -95,7 +95,7 @@ public sealed class ResultService : IResultService, IDisposable
     {
         return teamService.Teams == null
             ? participantResults
-            : participantResults.Where(pr => teamService.Teams.Contains(pr.Club)).ToList();
+            : [.. participantResults.Where(pr => teamService.Teams.Contains(pr.Club))];
     }
 
     public bool SupportsPreliminary => resultSource.SupportsPreliminary;

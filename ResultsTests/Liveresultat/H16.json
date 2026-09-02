@@ -575,7 +575,7 @@
       "result": "99000",
       "status": 0,
       "timeplus": "17800",
-      "progress": 100,
+      "progress": 50.0,
       "splits": {
         "1046": 10800,
         "1048": 17500,

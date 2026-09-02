@@ -4,31 +4,26 @@ using Results.Model;
 namespace Results.Contract;
 
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-public class Statistics
+public class Statistics(
+    int numNotActivated = 0,
+    int numActivated = 0,
+    int numStarted = 0,
+    int numPreliminary = 0,
+    int numPassed = 0,
+    int numNotValid = 0,
+    int numNotStarted = 0)
 {
-    public Statistics(int numNotActivated = 0, int numActivated = 0, int numStarted = 0, int numPreliminary = 0, 
-        int numPassed = 0, int numNotValid = 0, int numNotStarted = 0)
-    {
-        NumNotActivated = numNotActivated;
-        NumActivated = numActivated;
-        NumStarted = numStarted;
-        NumPreliminary = numPreliminary;
-        NumPassed = numPassed;
-        NumNotValid = numNotValid;
-        NumNotStarted = numNotStarted;
-    }
-
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")] 
     public TimeSpan LastUpdatedTimeOfDay { get; internal set; }
     public TimeSpan LastChangedTimeOfDay { get; private set; }
     public string CompetitionName { get; internal set; } = "";
-    public int NumNotActivated { get; private set; }
-    public int NumActivated { get; private set; }
-    public int NumStarted { get; private set; }
-    public int NumPreliminary { get; private set; }
-    public int NumPassed { get; private set; }
-    public int NumNotValid { get; private set; }
-    public int NumNotStarted { get; private set; }
+    public int NumNotActivated { get; private set; } = numNotActivated;
+    public int NumActivated { get; private set; } = numActivated;
+    public int NumStarted { get; private set; } = numStarted;
+    public int NumPreliminary { get; private set; } = numPreliminary;
+    public int NumPassed { get; private set; } = numPassed;
+    public int NumNotValid { get; private set; } = numNotValid;
+    public int NumNotStarted { get; private set; } = numNotStarted;
 
     internal void IncNumNotActivated() { NumNotActivated++; }
     internal void IncNumActivated() { NumActivated++;}

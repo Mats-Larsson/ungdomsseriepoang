@@ -54,12 +54,8 @@ public class LiveresultatResultSourceTests
     }
 }
 
-class LiveresultatFacadeMock : LiveresultatFacade
+class LiveresultatFacadeMock(ILogger<LiveresultatFacade> logger) : LiveresultatFacade(logger)
 {
-    public LiveresultatFacadeMock(ILogger<LiveresultatFacade> logger) : base(logger)
-    {
-    }
-
     protected override Task<T?> GetDataAsync<T>(int competitionId, string method, string? hash,
         NameValueCollection? parameters = null) where T : class
     {

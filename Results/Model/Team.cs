@@ -4,17 +4,11 @@ namespace Results.Model;
 
 [Delimiter(",")]
 // ReSharper disable once ClassNeverInstantiated.Global
-class Team
+class Team(string name, int? basePoints)
 {
     [Name("Name")]
-    public string Name { get; }
+    public string Name { get; } = name;
 
     [Name("Points"), Optional]
-    public int? BasePoints { get; }
-
-    public Team(string name, int? basePoints)
-    {
-        Name = name;
-        BasePoints = basePoints ?? 0;
-    }
+    public int? BasePoints { get; } = basePoints ?? 0;
 }

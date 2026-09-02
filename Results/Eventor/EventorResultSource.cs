@@ -5,7 +5,7 @@ namespace Results.Eventor
 {
     public sealed class EventorResultSource(
         Configuration configuration, 
-        EventorFacade eventorFacade,
+        IEventorFacade eventorFacade,
         IIofXmlDeserializer deserializer) : IResultSource
     {
         private IofXmlResult? iofXmlResult;

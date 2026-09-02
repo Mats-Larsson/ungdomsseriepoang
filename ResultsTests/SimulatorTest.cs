@@ -1,21 +1,19 @@
 using Results;
 using Results.Model;
-using Results.Ola;
+using Results.Simulator;
 
 namespace ResultsTests
 {
     [TestClass]
-    public class UnitTest1
+    public class SimulatorTest
     {
         [TestMethod]
-        [Ignore]
-        public void TestMethod1()
+        public void GetParticipantResults()
         {
-            using IResultSource resultSource = new OlaResultSource(new Configuration());
+            using IResultSource resultSource = new SimulatorResultSource(new Configuration { SpeedMultiplier = 1});
 
             var participantResults = resultSource.GetParticipantResults();
             Assert.IsNotNull(participantResults);
         }
-
     }
 }

@@ -13,6 +13,7 @@ public sealed class SimulatorResultSource : IResultSource
     private TimeSpan MaxTime { get; }
     public TimeSpan ZeroTime { get; }
     public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         throw new NotImplementedException();
@@ -34,9 +35,8 @@ public sealed class SimulatorResultSource : IResultSource
             .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
         ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
 
-        simulatedParticipants = testData.TemplateParticipantResults
-            .Select(r => new SimulatedParticipant(this, r))
-            .ToArray();
+        simulatedParticipants =
+            [.. testData.TemplateParticipantResults.Select(r => new SimulatedParticipant(this, r))];
 
         _ = RunClockAsync();
         foreach (var pr in simulatedParticipants)
@@ -59,7 +59,7 @@ public sealed class SimulatorResultSource : IResultSource
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return simulatedParticipants.Cast<ParticipantResult>().ToList();
+        return [.. simulatedParticipants];
     }
 
     public void Dispose()

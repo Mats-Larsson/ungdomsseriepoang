@@ -21,9 +21,7 @@ public sealed class OlaResultSource(Configuration configuration) : IResultSource
         var list = GetFromOlaDb();
         const string competitionName = ""; // TODO: Get name from OLA
 
-        return list
-            .Select(o => new ParticipantResult(competitionName, o.Class, o.Name, o.Club, o.StartTime, o.Time, o.Status))
-            .ToList();
+        return [.. list.Select(o => new ParticipantResult(competitionName, o.Class, o.Name, o.Club, o.StartTime, o.Time, o.Status))];
     }
 
     // TODO: Hämta från OLA

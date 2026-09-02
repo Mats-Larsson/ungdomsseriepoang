@@ -20,11 +20,12 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
 
     public IList<ParticipantResult> GetParticipantResults()
     {
-        return participantResults
-            .Where(item => item.Key > 0)
-            .Select(item => item.Value)
-            .Cast<ParticipantResult>()
-            .ToList();
+        return
+        [
+            .. participantResults
+                .Where(item => item.Key > 0)
+                .Select(item => item.Value)
+        ];
     }
 
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
@@ -59,6 +60,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
             else
                 classes[id] = value;
         }
+
         classes[0] = "???";
     }
 
@@ -74,6 +76,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
             else
                 clubs[id] = value;
         }
+
         clubs[0] = "???";
     }
 
@@ -108,6 +111,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
                 participantResults.Remove(id);
                 continue;
             }
+
             var meosParticipantResult = new MeosParticipantResult(
                 comptitionName,
                 classes[value.ClsId],

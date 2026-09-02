@@ -65,6 +65,10 @@
     </Content>
     <None Remove="IofXml\IofResultat1.xml" />
     <None Remove="IofXml\IofResultat2.xml" />
+    <None Remove="Eventor\Resultat1.xml" />
+    <Content Include="Eventor\Resultat1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

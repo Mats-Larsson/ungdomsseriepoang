@@ -2,7 +2,12 @@ using System.Web;
 
 namespace Results.Eventor;
 
-public sealed class EventorFacade : IDisposable
+public interface IEventorFacade : IDisposable
+{
+    Task<Stream> GetIofXmlStream(int eventId);
+}
+
+public sealed class EventorFacade : IEventorFacade
 {
     private static readonly Uri Endpoint = new("https://eventor.orientering.se/api/results/event/iofxml");
     private readonly HttpClient client = new();
