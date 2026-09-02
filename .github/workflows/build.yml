@@ -1,0 +1,38 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore UspApp.sln
+
+      - name: Build
+        run: dotnet build UspApp.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test UspApp.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test results
+          path: '**/test-results.trx'
+          reporter: dotnet-trx
