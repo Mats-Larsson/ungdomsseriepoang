@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public abstract record StatusBase : DeserializationBase
+internal abstract record StatusBase : DeserializationBase
 {
 
     [JsonPropertyName("status")]

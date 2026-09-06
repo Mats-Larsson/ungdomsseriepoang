@@ -1,7 +1,7 @@
 ﻿using AwesomeAssertions;
-using Usp;
+using Common;
 
-namespace UspTests
+namespace CommonTest
 {
     [TestClass]
     public class OptionsTest
@@ -10,10 +10,10 @@ namespace UspTests
         public void Options()
         {
             string[] args = ["--version"];
-            var options = Usp.Options.Parse(args);
+            var options = Common.Options.Parse(args);
             Assert.IsNull(options);
 
-            Console.WriteLine(Usp.Options.HelpText);
+            Console.WriteLine(Common.Options.HelpText);
         }
 
         [TestMethod]
@@ -35,13 +35,13 @@ namespace UspTests
 
         private static Options Parse(string[] args, bool shouldBeNull = false)
         {
-            var options = Usp.Options.Parse(args);
+            var options = Common.Options.Parse(args);
             if (options != null) return options;
 
-            var helpText = Usp.Options.HelpText;
+            var helpText = Common.Options.HelpText;
             if (!shouldBeNull) throw new AssertFailedException(helpText);
 
-            Console.WriteLine(Usp.Options.HelpText);
+            Console.WriteLine(Common.Options.HelpText);
             return null!;
         }
     }

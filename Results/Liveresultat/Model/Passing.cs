@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-public record Passing
+internal record Passing
 {
     [JsonPropertyName("passtime")]
     public string? PassTimeRaw { get; init; }

@@ -9,7 +9,7 @@ namespace Results.Liveresultat;
 
 [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
 [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
-public class LiveresultatFacade(ILogger<LiveresultatFacade> logger) : IDisposable
+internal class LiveresultatFacade(ILogger<LiveresultatFacade> logger) : IDisposable
 {
     private static readonly Uri Endpoint = new("http://liveresultat.orientering.se/api.php");
     private readonly HttpClient client = new();

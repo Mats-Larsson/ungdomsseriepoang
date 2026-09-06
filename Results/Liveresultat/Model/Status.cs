@@ -4,7 +4,7 @@ namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public enum Status
+internal enum Status
 {
     OK = 0,
     /// <summary>(Did Not Start)</summary>

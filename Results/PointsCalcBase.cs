@@ -246,7 +246,7 @@ internal abstract class PointsCalcBase(ITeamService teamService, Configuration c
     }
 }
 
-public record PointsCalcParticipantResult : ParticipantResult
+internal record PointsCalcParticipantResult : ParticipantResult
 {
     public bool IsExtraParticipant { get; internal set; }
     public int Pos { get; internal set; }

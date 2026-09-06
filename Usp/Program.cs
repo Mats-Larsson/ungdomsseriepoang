@@ -1,13 +1,6 @@
-using Results.Contract;
-using Results.Meos;
-using Results.Model;
-using Results.Simulator;
-using Results.Ola;
+using Common;
 using Usp;
 using Results;
-using Results.Eventor;
-using Results.IofXml;
-using Results.Liveresultat;
 using Scalar.AspNetCore;
 
 var options = Options.Parse(args);
@@ -34,8 +27,12 @@ builder.Logging.ClearProviders().AddConsole();
 
 builder.WebHost.ConfigureKestrel(opt => opt.ListenAnyIP(options.ListenerPort));
 
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
 // Add services to the container.
-RegisterServices(builder, resultsConfiguration, options);
+builder.Services.AddResultsServices(resultsConfiguration, options.Source);
+builder.Services.AddUspServices();
 
 builder.Services.AddOpenApi();
 
@@ -83,48 +80,3 @@ app.MapGet("/debug-webroot", (IWebHostEnvironment env) => Microsoft.AspNetCore.H
 }));
 
 app.Run();
-return;
-
-void RegisterServices(WebApplicationBuilder webApplicationBuilder, Configuration resultsConfiguration1, Options options1)
-{
-    webApplicationBuilder.Services.AddRazorPages();
-    webApplicationBuilder.Services.AddServerSideBlazor();
-
-    webApplicationBuilder.Services.AddSingleton(resultsConfiguration1);
-    webApplicationBuilder.Services.AddSingleton<Usp.Data.ResultService>();
-    webApplicationBuilder.Services.AddSingleton<IResultService, ResultService>();
-    if (options1.Source == Source.Simulator)
-        webApplicationBuilder.Services.AddSingleton<ITeamService, SimulatorTeamService>();
-    else
-        webApplicationBuilder.Services.AddSingleton<ITeamService, TeamService>();
-
-    webApplicationBuilder.Services.AddSingleton<MeosResultSource>();
-    webApplicationBuilder.Services.AddSingleton<OlaResultSource>();
-    webApplicationBuilder.Services.AddSingleton<SimulatorResultSource>();
-    webApplicationBuilder.Services.AddSingleton<LiveresultatResultSource>();
-    webApplicationBuilder.Services.AddSingleton<IofXmlResultSource>();
-    webApplicationBuilder.Services.AddSingleton<EventorResultSource>();
-
-    webApplicationBuilder.Services.AddSingleton<LiveresultatFacade>();
-    webApplicationBuilder.Services.AddSingleton<IEventorFacade,EventorFacade>();
-    webApplicationBuilder.Services.AddSingleton<IIofXmlDeserializer, IofXmlDeserializer>();
-
-    webApplicationBuilder.Services.AddSingleton<ClassFilter>();
-    webApplicationBuilder.Services.AddSingleton<FileListener>();
-
-    webApplicationBuilder.Services.AddSingleton<Endpoints>();
-
-    webApplicationBuilder.Services.AddSingleton<IResultSource>(provider =>
-    {
-        return options1.Source switch
-        {
-            Source.Simulator => provider.GetRequiredService<SimulatorResultSource>(),
-            Source.Meos => provider.GetRequiredService<MeosResultSource>(),
-            Source.Ola => provider.GetRequiredService<OlaResultSource>(),
-            Source.Liveresultat => provider.GetRequiredService<LiveresultatResultSource>(),
-            Source.IofXml => provider.GetRequiredService<IofXmlResultSource>(),
-            Source.Eventor => provider.GetRequiredService<EventorResultSource>(),
-            _ => throw new InvalidOperationException()
-        };
-    });
-}

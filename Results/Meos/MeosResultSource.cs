@@ -5,7 +5,7 @@ using Results.Model;
 
 namespace Results.Meos;
 
-public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
+internal sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
 

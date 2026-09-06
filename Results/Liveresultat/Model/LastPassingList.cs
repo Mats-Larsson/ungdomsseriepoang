@@ -2,7 +2,7 @@
 
 namespace Results.Liveresultat.Model;
 
-public record LastPassingList : StatusBase
+internal record LastPassingList : StatusBase
 {
     [JsonPropertyName("passings")]
     public IList<Passing>? Passings { get; init; }

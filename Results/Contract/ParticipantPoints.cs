@@ -16,7 +16,7 @@ public record ParticipantPoints
     public int Points { get; }
     public int Pos { get; }
 
-    public ParticipantPoints(PointsCalcParticipantResult pr, int points)
+    internal ParticipantPoints(PointsCalcParticipantResult pr, int points)
     {
         if (pr is null) throw new ArgumentNullException(nameof(pr));
 

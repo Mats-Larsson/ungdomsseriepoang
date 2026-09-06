@@ -3,7 +3,7 @@ using CommandLine;
 using CommandLine.Text;
 using Results;
 
-namespace Usp;
+namespace Common;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
@@ -82,7 +82,7 @@ public class Options
 
     [Option('d', "dir", Group = "IofXml", Default = ".", HelpText = "Directory to read IOF XML-files from")]
     public string? InputFolder { get; set; }
-    
+
     // Eventor options
     [Option('a', "apikey", Group = "Eventor", HelpText = "ApiKey for organisation")]
     public string? ApiKey { get; set; }
@@ -139,7 +139,7 @@ public class Options
             // Simulator
             SpeedMultiplier = value.Speed,
             NumTeams = value.NumTeams,
-            
+
             // Ola
             OlaMySqlHost = value.Host,
             OlaMySqlPort = value.Port,
@@ -153,7 +153,7 @@ public class Options
 
             // IofXml
             IofXmlInputFolder = value.InputFolder,
-            
+
             // Eventor
             ApiKey = value.ApiKey,
             EventorEventId = value.EventorEventId
@@ -168,16 +168,6 @@ public enum PointsCalcType
 {
     Normal,
     Final
-}
-
-public enum Source
-{
-    Simulator,
-    Meos,
-    Ola,
-    Liveresultat,
-    IofXml,
-    Eventor
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes

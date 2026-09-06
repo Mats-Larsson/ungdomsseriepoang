@@ -7,7 +7,7 @@ namespace Results.Liveresultat.Model;
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public record PersonResult
+internal record PersonResult
 {
     [JsonPropertyName("place")]
     public string? Place { get; init; }

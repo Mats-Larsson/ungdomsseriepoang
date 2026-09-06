@@ -5,7 +5,7 @@ using Results.Model;
 
 namespace Results.IofXml;
 
-public class IofXmlDeserializer : IIofXmlDeserializer
+internal class IofXmlDeserializer : IIofXmlDeserializer
 {
     public IofXmlResult Deserialize(Stream xmlStream)
     {

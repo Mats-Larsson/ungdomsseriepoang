@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Results.IofXml;
 
-public sealed class IofXmlResultSource : IResultSource
+internal sealed class IofXmlResultSource : IResultSource
 {
     private IofXmlResult? iofXmlResult;
 

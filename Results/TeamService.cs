@@ -7,7 +7,7 @@ using Results.Model;
 
 namespace Results;
 
-public class TeamService : ITeamService
+internal class TeamService : ITeamService
 {
     public IDictionary<string, int> TeamBasePoints { get; protected init; } = new Dictionary<string, int>();
 

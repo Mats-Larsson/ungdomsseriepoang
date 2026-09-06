@@ -3,7 +3,7 @@ using Results.Model;
 
 namespace Results.Simulator;
 
-public sealed class SimulatorResultSource : IResultSource
+internal sealed class SimulatorResultSource : IResultSource
 {
     private readonly SimulatedParticipant[] simulatedParticipants;
     internal CancellationTokenSource TokenSource { get; } = new();

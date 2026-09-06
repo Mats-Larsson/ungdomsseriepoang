@@ -3,7 +3,7 @@ using Results.Model;
 
 namespace Results.Eventor
 {
-    public sealed class EventorResultSource(
+    internal sealed class EventorResultSource(
         Configuration configuration, 
         IEventorFacade eventorFacade,
         IIofXmlDeserializer deserializer) : IResultSource

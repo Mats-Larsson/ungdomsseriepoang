@@ -5,7 +5,7 @@ namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public record CompetitionInfo : DeserializationBase
+internal record CompetitionInfo : DeserializationBase
 {
 
     [JsonPropertyName("id")]

@@ -3,7 +3,7 @@ using Results.Simulator;
 
 namespace Results
 {
-    public class SimulatorTeamService : TeamService
+    internal class SimulatorTeamService : TeamService
     {
         public SimulatorTeamService(Configuration configuration, ILogger<TeamService> logger) : base(configuration, logger)
         {

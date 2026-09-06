@@ -2,7 +2,7 @@
 
 namespace Results.IofXml;
 
-public sealed class FileListener : IDisposable
+internal sealed class FileListener : IDisposable
 {
     private readonly FileSystemWatcher watcher;
     private readonly Lock lockObj = new();
@@ -86,7 +86,7 @@ public sealed class FileListener : IDisposable
     }
 }
 
-public class NewFileEventArgs(string fullName) : EventArgs
+internal class NewFileEventArgs(string fullName) : EventArgs
 {
     public string FullName { get; } = fullName;
 }

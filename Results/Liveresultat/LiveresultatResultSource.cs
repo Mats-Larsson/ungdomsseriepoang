@@ -5,7 +5,7 @@ using Results.Model;
 
 namespace Results.Liveresultat;
 
-public sealed class LiveresultatResultSource : IResultSource
+internal sealed class LiveresultatResultSource : IResultSource
 {
     private readonly LiveresultatFacade liveresultatFacade;
     private readonly ILogger<LiveresultatResultSource> logger;
