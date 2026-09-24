@@ -2,6 +2,7 @@ using Common;
 using Usp;
 using Results;
 using Scalar.AspNetCore;
+using Serilog;
 
 var options = Options.Parse(args);
 if (options == null)
@@ -22,8 +23,11 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 var resultsConfiguration = Options.CreateConfiguration(options);
 
-// Logging https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-7.0
-builder.Logging.ClearProviders().AddConsole();
+// Logging via Serilog, configured from the "Serilog" section in appsettings.json
+builder.Services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(builder.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 builder.WebHost.ConfigureKestrel(opt => opt.ListenAnyIP(options.ListenerPort));
 
@@ -71,7 +75,7 @@ app.MapGet("/teams", (Endpoints endpoints, HttpContext context) => endpoints.Get
 app.MapGet("/participants", (Endpoints endpoints, HttpContext context) => endpoints.GetParticipantsResultAsync(context));
 
 Configuration configuration = app.Services.GetRequiredService<Configuration>();
-app.Logger.LogInformation("{}", configuration.ToString());
+app.Logger.LogInformation("{Configuration}", configuration.ToString());
 
 app.MapGet("/debug-webroot", (IWebHostEnvironment env) => Microsoft.AspNetCore.Http.Results.Ok(new
 {
