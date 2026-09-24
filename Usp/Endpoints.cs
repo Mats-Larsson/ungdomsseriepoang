@@ -1,28 +1,44 @@
+using System.Xml;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Results.Contract;
 
 namespace Usp;
 
-internal class Endpoints(IResultService resultService)
+internal class Endpoints(IResultService resultService, ILogger<Endpoints> logger)
 {
-    public async Task NewResultPostAsync(HttpRequest httpRequest)
+    public async Task<IResult> NewResultPostAsync(HttpRequest httpRequest)
     {
-        await resultService.NewResultPostAsync(httpRequest.Body, DateTime.Now).ConfigureAwait(false);
+        try
+        {
+            string result = await resultService.NewResultPostAsync(httpRequest.Body, DateTime.Now).ConfigureAwait(false);
+            return TypedResults.Text(result, contentType: "application/xml");
+        }
+        catch (Exception ex) when (ex is XmlException or FormatException or BadHttpRequestException)
+        {
+            // The posted data could not be read or parsed
+            logger.LogWarning(ex, "Invalid result post from {RemoteIp}, ContentLength={ContentLength}",
+                httpRequest.HttpContext.Connection.RemoteIpAddress, httpRequest.ContentLength);
+            return TypedResults.BadRequest();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to handle result post from {RemoteIp}, ContentLength={ContentLength}",
+                httpRequest.HttpContext.Connection.RemoteIpAddress, httpRequest.ContentLength);
+            return TypedResults.StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 
-    public Task GetTeamsResultAsync(HttpContext context)
+    public ContentHttpResult GetTeamsResult()
     {
         var teamResults = resultService.GetScoreBoard().TeamResults;
 
-        return Microsoft.AspNetCore.Http.Results
-            .Content(Helper.ToCsvText(teamResults), contentType: "text/csv")
-            .ExecuteAsync(context);
+        return TypedResults.Text(Helper.ToCsvText(teamResults), contentType: "text/csv");
     }
-    
-    public Task GetParticipantsResultAsync(HttpContext context)
+
+    public ContentHttpResult GetParticipantsResult()
     {
         var participantPointsList = resultService.GetParticipantPointsList();
 
-        return Microsoft.AspNetCore.Http.Results.Content(Helper.ToCsvText(participantPointsList), contentType: "text/csv")
-            .ExecuteAsync(context);
+        return TypedResults.Text(Helper.ToCsvText(participantPointsList), contentType: "text/csv");
     }
 }

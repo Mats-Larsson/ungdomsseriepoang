@@ -31,7 +31,7 @@ internal sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResu
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         CurrentTimeOfDay = timestamp.TimeOfDay;
-
+        
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
         logger.LogInformation("{Name} {Count}", doc.Root?.Name.LocalName, doc.Root?.Elements().Count());
         if (doc.Root?.Name.LocalName == "MOPComplete")
