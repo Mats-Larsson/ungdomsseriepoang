@@ -25,7 +25,10 @@ else
 
     <div class="fetch-data-page">
 
-        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
+        <div class="result-columns" style="display: grid; align-items: start; grid-template-columns: repeat(@columns, minmax(0, 1fr));">
+            @foreach (var (columnResults, columnIndex) in result.TeamResults.Chunk(RowsPerColumn).Select((c, i) => (c, i)))
+            {
+            <div class="result-column" style="@(columnIndex > 0 ? "border-left: 1px solid lightgray; padding-left: 1em; margin-left: 1em;" : "")">
             <table class="table" style="font-size: @FontSize">
                 <thead>
                 <tr>
@@ -40,7 +43,7 @@ else
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var teamResult in result.TeamResults)
+                @foreach (var teamResult in columnResults)
                 {
                     var stats = teamResult.Statistics;
                     var trend = trends.TryGetValue(teamResult.Team, out var value) ? value : 0;
@@ -77,6 +80,8 @@ else
                 }
                 </tbody>
             </table>
+            </div>
+            }
         </div>
 
         <hr/>
@@ -150,6 +155,8 @@ else
     private int columns = 2;
     private double textSize = 100.0;
     private bool isVerbose;
+
+    private int RowsPerColumn => Math.Max(1, (int)Math.Ceiling((result?.TeamResults.Count ?? 0) / (double)columns));
 
     private string FontSize => string.Format(CultureInfo.InvariantCulture, "{0}vw", textSize / 100.0);
 
