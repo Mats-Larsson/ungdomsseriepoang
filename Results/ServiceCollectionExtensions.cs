@@ -12,8 +12,7 @@ namespace Results;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddResultsServices(
-        this IServiceCollection services, Configuration configuration, Source source)
+    public static void AddResultsServices(this IServiceCollection services, Configuration configuration, Source source)
     {
         services.AddSingleton(configuration);
         services.AddSingleton<IResultService, ResultService>();
@@ -46,7 +45,5 @@ public static class ServiceCollectionExtensions
             Source.Eventor => provider.GetRequiredService<EventorResultSource>(),
             _ => throw new InvalidOperationException()
         });
-
-        return services;
     }
 }
