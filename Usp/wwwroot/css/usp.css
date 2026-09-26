@@ -12,6 +12,8 @@
     .up { color:green }
     
     .footer { bottom: 0; left: 0; right: 0; position: absolute; font-size: 1.5vw; }
+    .footer .table { margin-bottom: 0; border-top: 3px solid #333; }
+    .footer .table > :not(caption) > * > * { background-color: lightgray; }
     
     .w-5 { width: 5% }
     .w-10 { width: 10% }
