@@ -23,50 +23,26 @@
 
 
 
-.settings-corner {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 3rem;
-    height: 3rem;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: default;
-    opacity: 0.15;
-    transition: opacity 0.2s;
-    user-select: none;
-}
-
-.settings-corner:hover { opacity: 0.8; }
-
-.settings-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 1001;
-    background: rgba(0, 0, 0, 0.4);
-    cursor: default;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .settings-dialog {
+    width: fit-content;
+    min-width: 22rem;
+    margin: 3rem auto;
+    padding: 2rem;
+    user-select: none;
     background: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    min-width: 18rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
 
-    label { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    input[type=number] { width: 6rem; cursor: text; user-select: text; }
-    select { width: 6rem; }
-    .settings-checkbox { justify-content: flex-start; gap: 0.5rem; }
-    .settings-buttons { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem; }
+    h5 { margin: 0 0 0.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #dee2e6; }
+    label { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; margin: 0; }
+    input[type=number] { width: 100%; cursor: text; user-select: text; }
+    select { width: 100%; }
+    .settings-checkbox { flex-direction: row; align-items: center; gap: 0.75rem; }
+    .settings-checkbox input { margin: 0; }
+    .settings-buttons { display: flex; justify-content: flex-end; gap: 0.75rem; }
+    .settings-export { flex-direction: column; align-items: stretch; padding-top: 1.25rem; border-top: 1px solid #dee2e6; }
 }

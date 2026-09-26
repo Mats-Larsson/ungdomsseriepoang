@@ -114,43 +114,36 @@ else
         </div>
     </div>
 
-    @* ReSharper restore MarkupTextTypo *@
-}
-
-<div class="settings-corner" title="Inställningar" @onclick="OpenSettings"><span class="oi oi-cog" aria-hidden="true"></span></div>
-
-@if (isSettingsOpen)
-{
-    <div class="settings-backdrop" @onclick="CloseSettings">
-        <div class="settings-dialog" @onclick:stopPropagation="true">
-            <h5>Inställningar</h5>
-            <label>
-                Kolumner
-                <select @bind="editColumns">
-                    @for (var i = 1; i <= MaxColumns; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-            </label>
-            <label>
-                Textstorlek (%)
-                <input type="number" min="10" max="1000" step="5" @bind="editTextSize"/>
-            </label>
-            <label class="settings-checkbox">
-                <input type="checkbox" @bind="editVerbose"/>
-                Detaljerad
-            </label>
-            <div class="settings-buttons">
-                <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
-                <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
-            </div>
-            <div class="settings-buttons">
-                <button class="btn btn-secondary" @onclick="CloseSettings">Avbryt</button>
-                <button class="btn btn-primary" @onclick="ApplySettings">OK</button>
-            </div>
+    <div class="settings-dialog">
+        <h5>Inställningar</h5>
+        <label>
+            Kolumner
+            <select class="form-select" @bind="editColumns">
+                @for (var i = 1; i <= MaxColumns; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </label>
+        <label>
+            Textstorlek (%)
+            <input class="form-control" type="number" min="10" max="1000" step="5" @bind="editTextSize"/>
+        </label>
+        <label class="settings-checkbox">
+            <input class="form-check-input" type="checkbox" @bind="editVerbose"/>
+            Detaljerad
+        </label>
+        <div class="settings-buttons settings-export">
+            <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
+            <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
+        </div>
+        <div class="settings-buttons">
+            <button class="btn btn-secondary" @onclick="ResetSettings">Avbryt</button>
+            <button class="btn btn-primary" @onclick="ApplySettings">OK</button>
         </div>
     </div>
+
+    @* ReSharper restore MarkupTextTypo *@
 }
 
 @code {
@@ -164,7 +157,6 @@ else
 
     private string FontSize => string.Format(CultureInfo.InvariantCulture, "{0}vw", textSize / 100.0);
 
-    private bool isSettingsOpen;
     private int editColumns;
     private double editTextSize;
     private bool editVerbose;
@@ -179,26 +171,24 @@ else
         columns = GetQueryParamFirstOrDefault(uri, "columns", 2);
         textSize = GetQueryParamFirstOrDefault(uri, "textsize", 100.0);
         isVerbose = GetQueryParamFirstOrDefault(uri, "verbose", "false") != "false";
+        ResetSettings();
         result = await ResultService.GetTeamResultsAsync();
         ResultService.OnNewResults += ResultService_OnNewResults;
     }
 
-    private void OpenSettings()
+    private void ResetSettings()
     {
         editColumns = Math.Clamp(columns, 1, MaxColumns);
         editTextSize = textSize;
         editVerbose = isVerbose;
-        isSettingsOpen = true;
     }
-
-    private void CloseSettings() => isSettingsOpen = false;
 
     private void ApplySettings()
     {
         columns = Math.Clamp(editColumns, 1, MaxColumns);
         textSize = editTextSize > 0 ? editTextSize : 100.0;
         isVerbose = editVerbose;
-        isSettingsOpen = false;
+        ResetSettings();
 
         // Keep the URL in sync so the settings survive a reload
         var uri = NavManager.GetUriWithQueryParameters(new Dictionary<string, object?>
