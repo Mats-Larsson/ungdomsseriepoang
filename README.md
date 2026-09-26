@@ -169,6 +169,11 @@ När man använder OLA som datakälla läser applikationen direkt från MySQL-da
 | `-a, --apikey <arg>`                      | API-nyckel för organisationen. | (Text)   |         |
 | `-E, --eventoreventId <arg>`              | Tävlingens EventId i Eventor.  | (Heltal) | 0       |
 
+API-nyckeln ska inte checkas in. Om `--apikey` inte anges läses den från konfigurationen `Eventor:ApiKey`:
+
+- Vid utveckling (Development) från User Secrets: `dotnet user-secrets set "Eventor:ApiKey" <nyckel> --project Usp`
+- Annars från miljövariabeln `Eventor__ApiKey`
+
 ### Webbsidan
 
 Efter det att applikationen startat (usp), surfar man in på:

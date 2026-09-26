@@ -38,7 +38,7 @@
     },
     "Usp Eventor": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 54100 --pointscalc Normal -a fea0061a886b49469147ca6c87f8e37e",
+      "commandLineArgs": "-s Eventor -E 54100 --pointscalc Normal",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -47,7 +47,7 @@
     },
     "Usp Eventor final": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 54276 --pointscalc Final --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2026.csv -a fea0061a886b49469147ca6c87f8e37e",
+      "commandLineArgs": "-s Eventor -E 54276 --pointscalc Final --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2026.csv",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

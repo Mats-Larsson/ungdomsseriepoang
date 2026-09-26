@@ -30,6 +30,11 @@ try
 
     var resultsConfiguration = Options.CreateConfiguration(options);
 
+    // Eventor api key: from -a/--apikey, otherwise from configuration "Eventor:ApiKey"
+    // (user secrets when running locally in Development, or environment variable Eventor__ApiKey). Never checked in.
+    if (string.IsNullOrEmpty(resultsConfiguration.ApiKey))
+        resultsConfiguration = resultsConfiguration with { ApiKey = builder.Configuration["Eventor:ApiKey"] };
+
     // Logging via Serilog, configured from the "Serilog" section in appsettings.json.
     // Also logs to usp-yyyy-MM-dd.log next to usp.exe. shared: several instances may run at the same time.
     var logFilePath = Path.Combine(AppContext.BaseDirectory, $"usp-{DateTime.Now:yyyy-MM-dd}.log");

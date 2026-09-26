@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AnalysisLevel>6.0-all</AnalysisLevel>
     <LangVersion>latest</LangVersion>
+    <UserSecretsId>ab19d3a2-ecf5-439f-887e-7208a89d4fc1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
