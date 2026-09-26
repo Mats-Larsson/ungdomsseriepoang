@@ -85,6 +85,7 @@ try
     app.MapGet("/participants", (Endpoints endpoints) => endpoints.GetParticipantsResult());
 
     Configuration configuration = app.Services.GetRequiredService<Configuration>();
+    app.Logger.LogInformation("Version {Version}", Helper.AppVersion);
     app.Logger.LogInformation("{Configuration}", configuration.ToString());
 
     app.MapGet("/debug-webroot", (IWebHostEnvironment env) => Microsoft.AspNetCore.Http.Results.Ok(new
