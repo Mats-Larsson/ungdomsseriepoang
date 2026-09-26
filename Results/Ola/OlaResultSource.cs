@@ -5,7 +5,7 @@ using Results.Model;
 
 namespace Results.Ola;
 
-public sealed class OlaResultSource(Configuration configuration) : IResultSource
+internal sealed class OlaResultSource(Configuration configuration) : IResultSource
 {
     private readonly Configuration configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     private readonly string connectionString = $"server={configuration.OlaMySqlHost};" +

@@ -12,7 +12,7 @@ namespace Results;
 // TODO: Lägg till export av resultat per klubb och per löpare
 // ReSharper restore CommentTypo
 
-public sealed class ResultService : IResultService, IDisposable
+internal sealed class ResultService : IResultService, IDisposable
 {
     private IList<TeamResult> latestTeamResults = ImmutableList<TeamResult>.Empty;
     private int latestResultsHash;

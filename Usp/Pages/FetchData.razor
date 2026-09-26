@@ -25,8 +25,11 @@ else
 
     <div class="fetch-data-page">
 
-        <div style="-webkit-column-count: @columns; column-count: @columns; column-rule: solid lightgray thin;">
-            <table class="table" style="font-size: @fontSize">
+        <div class="result-columns" style="display: grid; align-items: start; grid-template-columns: repeat(@columns, minmax(0, 1fr));">
+            @foreach (var (columnResults, columnIndex) in result.TeamResults.Chunk(RowsPerColumn).Select((c, i) => (c, i)))
+            {
+            <div class="result-column" style="@(columnIndex > 0 ? "border-left: 1px solid lightgray; padding-left: 1em; margin-left: 1em;" : "")">
+            <table class="table" style="font-size: @FontSize">
                 <thead>
                 <tr>
                     <th class="text-right w-5">Pos</th>
@@ -40,7 +43,7 @@ else
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var teamResult in result.TeamResults)
+                @foreach (var teamResult in columnResults)
                 {
                     var stats = teamResult.Statistics;
                     var trend = trends.TryGetValue(teamResult.Team, out var value) ? value : 0;
@@ -77,6 +80,8 @@ else
                 }
                 </tbody>
             </table>
+            </div>
+            }
         </div>
 
         <hr/>
@@ -109,14 +114,52 @@ else
         </div>
     </div>
 
+    <div class="settings-dialog">
+        <h5>Inställningar</h5>
+        <label>
+            Kolumner
+            <select class="form-select" @bind="editColumns">
+                @for (var i = 1; i <= MaxColumns; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </label>
+        <label>
+            Textstorlek (%)
+            <input class="form-control" type="number" min="10" max="1000" step="5" @bind="editTextSize"/>
+        </label>
+        <label class="settings-checkbox">
+            <input class="form-check-input" type="checkbox" @bind="editVerbose"/>
+            Detaljerad
+        </label>
+        <div class="settings-buttons settings-export">
+            <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
+            <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
+        </div>
+        <div class="settings-buttons">
+            <button class="btn btn-secondary" @onclick="ResetSettings">Avbryt</button>
+            <button class="btn btn-primary" @onclick="ApplySettings">OK</button>
+        </div>
+    </div>
+
     @* ReSharper restore MarkupTextTypo *@
 }
 
 @code {
     private Result? result;
+    private const int MaxColumns = 5;
     private int columns = 2;
-    private string fontSize = "1vw";
+    private double textSize = 100.0;
     private bool isVerbose;
+
+    private int RowsPerColumn => Math.Max(1, (int)Math.Ceiling((result?.TeamResults.Count ?? 0) / (double)columns));
+
+    private string FontSize => string.Format(CultureInfo.InvariantCulture, "{0}vw", textSize / 100.0);
+
+    private int editColumns;
+    private double editTextSize;
+    private bool editVerbose;
 
     private IDictionary<string, int>? prevPoss;
     private IDictionary<string, int>? poss;
@@ -126,10 +169,35 @@ else
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         columns = GetQueryParamFirstOrDefault(uri, "columns", 2);
-        fontSize = string.Format(CultureInfo.InvariantCulture, "{0}vw", GetQueryParamFirstOrDefault(uri, "textsize", 100.0) / 100.0);
+        textSize = GetQueryParamFirstOrDefault(uri, "textsize", 100.0);
         isVerbose = GetQueryParamFirstOrDefault(uri, "verbose", "false") != "false";
+        ResetSettings();
         result = await ResultService.GetTeamResultsAsync();
         ResultService.OnNewResults += ResultService_OnNewResults;
+    }
+
+    private void ResetSettings()
+    {
+        editColumns = Math.Clamp(columns, 1, MaxColumns);
+        editTextSize = textSize;
+        editVerbose = isVerbose;
+    }
+
+    private void ApplySettings()
+    {
+        columns = Math.Clamp(editColumns, 1, MaxColumns);
+        textSize = editTextSize > 0 ? editTextSize : 100.0;
+        isVerbose = editVerbose;
+        ResetSettings();
+
+        // Keep the URL in sync so the settings survive a reload
+        var uri = NavManager.GetUriWithQueryParameters(new Dictionary<string, object?>
+        {
+            ["columns"] = columns,
+            ["textsize"] = textSize,
+            ["verbose"] = isVerbose ? "true" : null
+        });
+        NavManager.NavigateTo(uri, replace: true);
     }
 
 

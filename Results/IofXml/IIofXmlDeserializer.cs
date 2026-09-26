@@ -3,13 +3,13 @@ using Results.Model;
 
 namespace Results.IofXml;
 
-public interface IIofXmlDeserializer
+internal interface IIofXmlDeserializer
 {
     public IofXmlResult Deserialize(Stream xmlStream);
 }
 
 [SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]
-public record IofXmlResult(
+internal record IofXmlResult(
     TimeSpan CurrentTimeOfDay,
     string CompetitionName,
     IList<ParticipantResult> ParticipantResults

@@ -1,6 +1,6 @@
 ﻿namespace Results.Model;
 
-public interface IResultSource : IDisposable
+internal interface IResultSource : IDisposable
 {
     bool SupportsPreliminary { get; }
     IList<ParticipantResult> GetParticipantResults();

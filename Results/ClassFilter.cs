@@ -2,7 +2,7 @@
 
 namespace Results;
 
-public partial class ClassFilter
+internal partial class ClassFilter
 {
     private readonly HashSet<string> include;
     private readonly HashSet<string> exclude;

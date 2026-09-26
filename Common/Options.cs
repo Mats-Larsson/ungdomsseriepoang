@@ -1,95 +1,91 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 using CommandLine.Text;
+using JetBrains.Annotations;
 using Results;
 
-namespace Usp;
+namespace Common;
 
-[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-[SuppressMessage("ReSharper", "StringLiteralTypo")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class Options
 {
     // General options
     [Option('l',"listenerport", Default = 8880, HelpText = "Port that the application listens to. Remember to open the firewall for this port if you ar using a browser on another")]
-    public int ListenerPort { get; set; }
+    public int ListenerPort { get; [UsedImplicitly] set; }
 
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
-    public Source Source { get; set; }
+    public Source Source { get; [UsedImplicitly] set; }
 
     [Option("refreshseconds", Default = 10, HelpText = "Number of seconds between data refresh.")]
-    public int RefreshSeconds { get; set; }
+    public int RefreshSeconds { get; [UsedImplicitly] set; }
     public TimeSpan RefreshInterval => TimeSpan.FromSeconds(RefreshSeconds);
 
 
     // Points calculation
     [Option("pointscalc", Group = "Points", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
-    public PointsCalcType PointsCalc { get; set; }
+    public PointsCalcType PointsCalc { get; [UsedImplicitly] set; }
 
     [Option("teams", Group = "Points", Default = "Teams.csv", HelpText = "Defines the teams for which points are calculated. If omitted all teams are included. Optionally base points can be entered. Base points is the number of points that the team starts with. Format is comma separated file in UTF-8 format with first team name then points.")]
-    public string? TeamsPath { get; set; }
+    public string? TeamsPath { get; [UsedImplicitly] set; }
 
     [Option("maxlatestart", Group = "Points", Default = 1000, HelpText = "Number of minutes to wait after scheduled start time for participant to get activated, until register as not started.")]
-    public int MinutesUntilNotStated { get; set; }
+    public int MinutesUntilNotStated { get; [UsedImplicitly] set; }
     private TimeSpan TimeUntilNotStated => TimeSpan.FromMinutes(MinutesUntilNotStated);
 
     [Option("maxpatrolinterval", Group = "Points", Default = 10, HelpText = "Number of seconds between start times to be detected as a patrol.")]
-    public int MaxPatrolStartIntervalSeconds { get; private set; }
+    public int MaxPatrolStartIntervalSeconds { get; [UsedImplicitly] private set; }
     public TimeSpan MaxPatrolStartInterval => TimeSpan.FromSeconds(MaxPatrolStartIntervalSeconds);
 
     [Option("include", Group ="Points", Default = new string[0], HelpText =  "Include classes not include by the default rule")]
-    public IEnumerable<string>? IncludeClasses { get; set; }
+    public IEnumerable<string>? IncludeClasses { get; [UsedImplicitly] set; }
 
     [Option("exclude", Group = "Points", Default = new string[0], HelpText = "Exclude classes include by the default rule")]
-    public IEnumerable<string>? ExcludeClasses { get; set; }
+    public IEnumerable<string>? ExcludeClasses { get; [UsedImplicitly] set; }
 
     // Simulator options
     [Option("speed", Group = "Simulator", Default = 10, HelpText = "Simulation speed. Times faster than normal time.")]
-    public int Speed { get; set; }
+    public int Speed { get; [UsedImplicitly] set; }
 
     [Option("numteams", Group = "Simulator", Default = 27, HelpText = "Number of teams to show in simulation.")]
-    public int NumTeams { get; set; }
+    public int NumTeams { get; [UsedImplicitly] set; }
 
     // MeOS options
     // Not yet
 
     // Ola options
     [Option('h', "host", Group = "Ola", Default = "localhost", HelpText = "MySQL database server host")]
-    public string? Host { get; set; }
+    public string? Host { get; [UsedImplicitly] set; }
 
     [Option('P', "port", Group = "Ola", Default = 3306, HelpText = "MySQL database server port")]
-    public int Port { get; set; }
+    public int Port { get; [UsedImplicitly] set; }
 
     [Option('D', "database", Group = "Ola", Required = true, HelpText = "MySQL database name")]
-    public string? Database { get; set; }
+    public string? Database { get; [UsedImplicitly] set; }
 
     [Option('u', "user", Group = "Ola", Required = true, HelpText = "MySQL database server user to run select on database to get results")]
-    public string? User { get; set; }
+    public string? User { get; [UsedImplicitly] set; }
 
     [Option('p', "password", Group = "Ola", Required = true, HelpText = "MySQL database server password associated with user")]
-    public string? Password { get; set; }
+    public string? Password { get; [UsedImplicitly] set; }
 
     [Option('e', "eventid", Group = "Ola", Default = 1, HelpText = "Event Id för tävlingen i OLA. Starta OLA, öppna tävlingen. Navigera till: Tävling -> Tävlingsuppgifter -> Etapper -> Välj Etapp till vänster och läs av Etapp-id till höger.")]
-    public int EventId { get; set; }
+    public int EventId { get; [UsedImplicitly] set; }
 
     // Liveresultat
     [Option('L', "liveresultatid", Group = "Liveresultat", Default = 0, HelpText = "CompetitionId för tävlingen i Liveresultat. Se t.ex. https://liveresultat.orientering.se/adm/editComp.php?compid=27215")]
-    public int? LiveresultatId { get; set; }
+    public int? LiveresultatId { get; [UsedImplicitly] set; }
 
     // IofXml options
 
     [Option('d', "dir", Group = "IofXml", Default = ".", HelpText = "Directory to read IOF XML-files from")]
-    public string? InputFolder { get; set; }
-    
+    public string? InputFolder { get; [UsedImplicitly] set; }
+
     // Eventor options
     [Option('a', "apikey", Group = "Eventor", HelpText = "ApiKey for organisation")]
-    public string? ApiKey { get; set; }
+    public string? ApiKey { get; [UsedImplicitly] set; }
 
     [Option('E', "eventoreventId", Group = "Eventor", Default = 0, HelpText = "EventId in eventor")]
-    public int EventorEventId { get; set; }
-
+    public int EventorEventId { get; [UsedImplicitly] set; }
 
 
     public static HelpText? HelpText { get; private set; }
@@ -139,7 +135,7 @@ public class Options
             // Simulator
             SpeedMultiplier = value.Speed,
             NumTeams = value.NumTeams,
-            
+
             // Ola
             OlaMySqlHost = value.Host,
             OlaMySqlPort = value.Port,
@@ -153,7 +149,7 @@ public class Options
 
             // IofXml
             IofXmlInputFolder = value.InputFolder,
-            
+
             // Eventor
             ApiKey = value.ApiKey,
             EventorEventId = value.EventorEventId
@@ -168,16 +164,6 @@ public enum PointsCalcType
 {
     Normal,
     Final
-}
-
-public enum Source
-{
-    Simulator,
-    Meos,
-    Ola,
-    Liveresultat,
-    IofXml,
-    Eventor
 }
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes

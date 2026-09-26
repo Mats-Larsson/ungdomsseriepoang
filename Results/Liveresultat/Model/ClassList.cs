@@ -5,7 +5,7 @@ namespace Results.Liveresultat.Model;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public record ClassList : StatusBase
+internal record ClassList : StatusBase
 {
 
     [JsonPropertyName("classes")]

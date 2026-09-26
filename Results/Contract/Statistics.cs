@@ -33,7 +33,7 @@ public class Statistics(
     internal void IncNumNotValid() { NumNotValid++; }
     internal void IncNumNotStarted() { NumNotStarted++; }
 
-    public static Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan currentTimeOfDay)
+    internal static Statistics GetStatistics(IEnumerable<ParticipantResult> participantResults, TimeSpan currentTimeOfDay)
     {
         if (participantResults == null) throw new ArgumentNullException(nameof(participantResults));
 

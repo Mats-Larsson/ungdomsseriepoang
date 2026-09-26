@@ -5,7 +5,7 @@ using Results.Model;
 
 namespace Results.Meos;
 
-public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
+internal sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
 
@@ -31,7 +31,7 @@ public sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResult
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         CurrentTimeOfDay = timestamp.TimeOfDay;
-
+        
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
         logger.LogInformation("{Name} {Count}", doc.Root?.Name.LocalName, doc.Root?.Elements().Count());
         if (doc.Root?.Name.LocalName == "MOPComplete")

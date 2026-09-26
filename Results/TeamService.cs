@@ -7,7 +7,7 @@ using Results.Model;
 
 namespace Results;
 
-public class TeamService : ITeamService
+internal class TeamService : ITeamService
 {
     public IDictionary<string, int> TeamBasePoints { get; protected init; } = new Dictionary<string, int>();
 
@@ -18,7 +18,7 @@ public class TeamService : ITeamService
         var filePath = configuration.TeamsFilePath;
         if (File.Exists(filePath))
         {
-            logger.LogInformation("Using base result file: {}", filePath);
+            logger.LogInformation("Using base result file: {FilePath}", filePath);
 
             try
             {
@@ -40,7 +40,7 @@ public class TeamService : ITeamService
             return;
         }
 
-        logger.LogInformation("Base result file: {} not found", filePath);
+        logger.LogInformation("Base result file: {FilePath} not found", filePath);
 
     }
 

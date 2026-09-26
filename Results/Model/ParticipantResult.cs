@@ -2,7 +2,7 @@
 
 namespace Results.Model;
 
-public record ParticipantResult(string CompititionName, string Class, string Name, string Club, TimeSpan? StartTime, TimeSpan? Time, ParticipantStatus Status)
+internal record ParticipantResult(string CompititionName, string Class, string Name, string Club, TimeSpan? StartTime, TimeSpan? Time, ParticipantStatus Status)
 {
     public string CompititionName { get; } = CompititionName; 
     public string Club { get; internal set; } = Club;
