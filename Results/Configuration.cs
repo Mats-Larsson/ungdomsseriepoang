@@ -1,4 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Reflection;
+using System.Text;
 
 namespace Results;
 
@@ -40,4 +44,34 @@ public record Configuration
 
     // Hardcoded config
     public static bool IsUsePatrolLongestTime => false;
+
+    /// <summary>
+    /// All properties, one per line, with collection values listed and password and api key hidden. Safe to write to logs.
+    /// </summary>
+    public string ToLogString()
+    {
+        var sb = new StringBuilder(nameof(Configuration));
+        foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            var value = property.Name switch
+            {
+                nameof(OlaMySqlPassword) => Mask(OlaMySqlPassword),
+                nameof(ApiKey) => Mask(ApiKey),
+                _ => FormatValue(property.GetValue(this))
+            };
+            sb.Append(CultureInfo.InvariantCulture, $"{Environment.NewLine}    {property.Name} = {value}");
+        }
+        return sb.ToString();
+    }
+
+    private static string? FormatValue(object? value) => value switch
+    {
+        null => null,
+        string s => s,
+        IEnumerable items => $"[{string.Join(", ", items.Cast<object?>())}]",
+        IFormattable f => f.ToString(null, CultureInfo.InvariantCulture),
+        _ => value.ToString()
+    };
+
+    private static string? Mask(string? secret) => string.IsNullOrEmpty(secret) ? secret : "***";
 }

@@ -30,11 +30,17 @@ try
 
     var resultsConfiguration = Options.CreateConfiguration(options);
 
-    // Logging via Serilog, configured from the "Serilog" section in appsettings.json
+    // Logging via Serilog, configured from the "Serilog" section in appsettings.json.
+    // Also logs to usp-yyyy-MM-dd.log next to usp.exe. shared: several instances may run at the same time.
+    var logFilePath = Path.Combine(AppContext.BaseDirectory, $"usp-{DateTime.Now:yyyy-MM-dd}.log");
     builder.Services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
         .ReadFrom.Configuration(builder.Configuration)
         .ReadFrom.Services(services)
-        .Enrich.FromLogContext());
+        .Enrich.FromLogContext()
+        .WriteTo.File(
+            logFilePath,
+            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}",
+            shared: true));
 
     builder.WebHost.ConfigureKestrel(opt => opt.ListenAnyIP(options.ListenerPort));
 
@@ -62,16 +68,20 @@ try
         app.UseExceptionHandler("/Error");
     }
 
-    app.Use(async (context, next) =>
-    {
-        app.Logger.LogInformation(
-            "Port={Port}, Path={Path}",
-            options.ListenerPort,
-            context.Request.Path);
-
-        await next().ConfigureAwait(false);
-    });
     app.UseStaticFiles();
+
+    // One log line per request: "HTTP GET /teams responded 200 in 12.3456 ms".
+    // Placed after UseStaticFiles so css/js requests are not logged; Blazor's own traffic is logged at Debug.
+#pragma warning disable CA1307
+    app.UseSerilogRequestLogging(o =>
+    {
+        o.GetLevel = (context, _, ex) =>
+            ex != null || context.Response.StatusCode >= 500 ? Serilog.Events.LogEventLevel.Error
+                : context.Request.Path.StartsWithSegments("/_blazor") || context.Request.Path.StartsWithSegments("/_framework") 
+                    ? Serilog.Events.LogEventLevel.Debug
+                : Serilog.Events.LogEventLevel.Information;
+    });
+#pragma warning restore CA1307
 
     app.UseRouting();
 
@@ -85,8 +95,8 @@ try
     app.MapGet("/participants", (Endpoints endpoints) => endpoints.GetParticipantsResult());
 
     Configuration configuration = app.Services.GetRequiredService<Configuration>();
-    app.Logger.LogInformation("Version {Version}", Helper.AppVersion);
-    app.Logger.LogInformation("{Configuration}", configuration.ToString());
+    app.Logger.LogInformation("Version {Version}, listening on port {Port}", Helper.AppVersion, options.ListenerPort);
+    app.Logger.LogInformation("{Configuration}", configuration.ToLogString());
 
     app.MapGet("/debug-webroot", (IWebHostEnvironment env) => Microsoft.AspNetCore.Http.Results.Ok(new
     {

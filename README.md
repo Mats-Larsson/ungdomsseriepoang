@@ -188,6 +188,8 @@ Välj antal kolumner, textstorlek och om detaljerad information ska visas, och t
 fälten till de inställningar som används. Inställningarna sparas i URL-en, så sidan ser likadan ut efter en
 omladdning och URL-en kan kopieras till andra webbläsare.
 
+![doc/img_4.png](doc/img_4.png)
+
 Inställningarna kan också anges direkt i URL-en. För att få större text och 3 kolumner använd:
 
 ```
