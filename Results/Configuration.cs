@@ -11,6 +11,8 @@ public record Configuration
 {
     // General
     public TimeSpan RefreshInterval { get; init; }
+    /// <summary>Folder to save posted bodies to, or null if posts should not be saved.</summary>
+    public string? PostLogFolder { get; init; }
 
     // Points
     public TimeSpan TimeUntilNotStated { get; init; }
