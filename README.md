@@ -6,13 +6,13 @@ orienteringsförbunds ungdomsserie. Applikationen hämtar data från det tävlin
 För närvarande stöds koppling till:
 
 
-| <div style="width:100px">Datakälla</div> | Beskrivning                                                                                                                                                                                                                  |
-| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| MeOS                                      | Automat i MeOS skickar data till denna applikation med HTTP-POST                                                                                                                                                             |
-| OLA med MySQL                             | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbyggda databasen.                                                                                                                                    |
-| Liveresultat                              | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Liveresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet.                            |
-| XML-resultat                              | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
-| Eventor                                   | Data hämtas från Eventor via API. Kräver API-nyckel för organisationen och tävlingens EventId i Eventor.                                                                                                              |
+| <div style="width:100px">Datakälla</div> | Beskrivning                                                                                                                                                                                                              |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| MeOS                                     | Automat i MeOS skickar data till denna applikation med HTTP-POST                                                                                                                                                         |
+| OLA med MySQL                            | Data hämtas direkt från MySQL-databasen. Ännu inget stöd för den inbyggda databasen.                                                                                                                                     |
+| Liveresultat                             | Data hämtas från http://liveresultat.orientering.se. Detta kräver att:<br/>- Resultat publiceras till Liveresultat<br/>- Datorn där denna applikation körs måste ha tillgång till internet.                              |
+| XML-resultat                             | IOF resultatfil i XML-format som sparas till katalog. Applikationen detekterar nya filer och läser in dessa. OLA och MeOS kan skapa dessa filer. Det är samma format som används för att publicera resultat till Eventor |
+| Eventor                                  | Data hämtas från Eventor via API. Kräver API-nyckel för organisationen och tävlingens EventId i Eventor.                                                                                                                 |
 
 Poängen beräknas enligt instruktioner på:
 [https://www.orientering.se/stockholm/utvecklingsmiljon/ungdom/ungdomsserien/arrangorsanvisningar-for-ungdomsserien/]()
@@ -71,17 +71,17 @@ Det kan finnas fler än i detta dokument om jag slarvat med att uppdatera dokume
 #### Generella alternativ
 
 
-| <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                                                                                                                                 | Arg                        | Default   |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------- |
-| `-s, --source <arg>`                      | Väljer från vilken källa data ska tas. Simulatorn är inbyggd, men för övriga krävs ytterligare konfiguration.                                                                                                                                                                                        | Simulator<br/>Meos<br/>Ola<br/>Liveresultat<br/>IofXml<br/>Eventor | Simulator |
-| `-l, --listenerport <arg>`                | Väljer vilken port webbservern ska lyssna på.                                                                                                                                                                                                                                                             | (Heltal)                   | 8880      |
-| `--refreshseconds <arg>`                  | Antal sekunder mellan uppdateringar av data. | (Heltal) | 10 |
-| `--teams <arg>`                           | Sätter vilka klubbar som poäng ska presenteras för och, för finalen, vilka poäng klubbarna har från tidigare tävlingar. Om filen inte finns kommer alla klubbar som deltar få poäng och dessa räknas från noll.                                                                                  | Sökväg till CSV-fil      | Teams.csv |
-| `--pointscalc <arg>`                      | Väljer hur poängberäkningen ska ske. Det är olika regler för finalen och de övriga tävlingarna.                                                                                                                                                                                                      | Normal<br/>Final           | Final     |
-| `--maxpatrolinterval <arg>`               | Patrull detekteras automatisk när flera löpare i en klass är från samma klubb och har samma starttid. Vid startsstämpling kan inte löparna få exakt samma starttid. Denna parameter anger hur många sekunder tiderna får skilja och ändå räknas som patrull                                     | (Heltal)                   | 10        |
-| `--maxlatestart <arg>`                    | Om man har on-line check kopplat till TA-systemet kan man använda denna parameter för att räkna löpare som har status 'Ej aktiverade' som 'Ej start' om de inte har checkat angivet antal minuter efter sin lottade starttid. T.ex. 5 minuter. Detta gäller endast så länge status är ej aktiverad. | (Heltal)                   | 1000      |
-| `--include <arg>`                         | Klasser som ska räknas trots att de inte ingår enligt standardregeln. Flera klasser separeras med mellanslag. | (Klassnamn) | |
-| `--exclude <arg>`                         | Klasser som inte ska räknas trots att de ingår enligt standardregeln. Flera klasser separeras med mellanslag. | (Klassnamn) | |
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                                                                                                                         | Arg                                                                | Default   |
+|-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|-----------|
+| `-s, --source <arg>`                      | Väljer från vilken källa data ska tas. Simulatorn är inbyggd, men för övriga krävs ytterligare konfiguration.                                                                                                                                                                                       | Simulator<br/>Meos<br/>Ola<br/>Liveresultat<br/>IofXml<br/>Eventor | Simulator |
+| `-l, --listenerport <arg>`                | Väljer vilken port webbservern ska lyssna på.                                                                                                                                                                                                                                                       | (Heltal)                                                           | 8880      |
+| `--refreshseconds <arg>`                  | Antal sekunder mellan uppdateringar av data.                                                                                                                                                                                                                                                        | (Heltal)                                                           | 10        |
+| `--teams <arg>`                           | Sätter vilka klubbar som poäng ska presenteras för och, för finalen, vilka poäng klubbarna har från tidigare tävlingar. Om filen inte finns kommer alla klubbar som deltar få poäng och dessa räknas från noll.                                                                                     | Sökväg till CSV-fil                                                | Teams.csv |
+| `--pointscalc <arg>`                      | Väljer hur poängberäkningen ska ske. Det är olika regler för finalen och de övriga tävlingarna.                                                                                                                                                                                                     | Normal<br/>Final                                                   | Final     |
+| `--maxpatrolinterval <arg>`               | Patrull detekteras automatisk när flera löpare i en klass är från samma klubb och har samma starttid. Vid startsstämpling kan inte löparna få exakt samma starttid. Denna parameter anger hur många sekunder tiderna får skilja och ändå räknas som patrull                                         | (Heltal)                                                           | 10        |
+| `--maxlatestart <arg>`                    | Om man har on-line check kopplat till TA-systemet kan man använda denna parameter för att räkna löpare som har status 'Ej aktiverade' som 'Ej start' om de inte har checkat angivet antal minuter efter sin lottade starttid. T.ex. 5 minuter. Detta gäller endast så länge status är ej aktiverad. | (Heltal)                                                           | 1000      |
+| `--include <arg>`                         | Klasser som ska räknas trots att de inte ingår enligt standardregeln. Flera klasser separeras med mellanslag.                                                                                                                                                                                       | (Klassnamn)                                                        |           |
+| `--exclude <arg>`                         | Klasser som inte ska räknas trots att de ingår enligt standardregeln. Flera klasser separeras med mellanslag.                                                                                                                                                                                       | (Klassnamn)                                                        |           |
 
 Standardregeln räknar klasserna H10, H12, H14, H16, D10, D12, D14, D16, U1–U4 och Insk (inklusive varianter som t.ex. "H12 Kort").
 
@@ -102,14 +102,18 @@ Klubbarna måste vara stavade exakt som i TA-systemet.
 Simulatorn startar automatiskt när applikationen startas. Följande inställningar finns för att modifiera simuleringen.
 
 
-| <div style="width:150px">Alternativ</div> | Beskrivning                                             | Arg      | Default |
-| ----------------------------------------- | ------------------------------------------------------- | -------- | ------- |
+| <div style="width:150px">Alternativ</div> | Beskrivning                                           | Arg      | Default |
+|-------------------------------------------|-------------------------------------------------------|----------|---------|
 | `--speed <arg>`                           | Hastighet på simuleringen. Antal gånger snabbare.     | (Heltal) | 10      |
 | `--numteams <arg>`                        | Antal klubbar som ska ingå i simuleringen. Max är 27. | (Heltal) | 27      |
 
 #### MeOS-alternativ
 
-För MeOS finns inga specifika alternativ, men `--listenerport <arg>` påverkar även till vilken port MeOS ska skicka resultaten.
+`--listenerport <arg>` påverkar även till vilken port MeOS ska skicka resultaten.
+
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                           | Arg | Default |
+|-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|---------|
+| `--logposts`                              | Sparar innehållet i varje inkommande POST till en fil i katalogen `posts` bredvid usp.exe. Filen namnges efter datum och tid då den kom, t.ex. `2026-09-27_14.05.09.123.xml`. Används för felsökning. |     | Av      |
 
 Börja med att start applikationen. T.ex.;
 
@@ -138,14 +142,14 @@ MeOS skickar allt när den startar därefter endast förändringar.
 När man använder OLA som datakälla läser applikationen direkt från MySQL-database. Följande alternativ anger var databasen finns och inloggning till denna.
 
 
-| <div style="width:150px">Alternativ</div> | Beskrivning                                                     | Arg                    | Default   |
-| ----------------------------------------- | --------------------------------------------------------------- | ---------------------- | --------- |
-| `-h, --host <arg>`                        | IP-adress eller namn på servern som databasen finns på        | (IP-adress)<br/>(namn) | localhost |
-| `-P, --port <arg>`                        | Port som databasen lyssnar på. Default är MySQLs standardport | (Heltal)               | 3306      |
-| `-D, --database <arg>`                    | Namn på MySQL databas                                          | (Text)                 |           |
-| `-u, --user <arg>`                        | MySQL användarnamn                                             | (Text)                 |           |
-| `-p, --password <arg>`                    | MySQL lösenord                                                 | (Text)                 |           |
-| `-e, --eventid <arg>`                     | Etapp-id för tävlingen i OLA. Öppna tävlingen i OLA och gå till Tävling -> Tävlingsuppgifter -> Etapper. Välj etapp till vänster och läs av Etapp-id till höger. | (Heltal) | 1 |
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                      | Arg                    | Default   |
+|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|-----------|
+| `-h, --host <arg>`                        | IP-adress eller namn på servern som databasen finns på                                                                                                           | (IP-adress)<br/>(namn) | localhost |
+| `-P, --port <arg>`                        | Port som databasen lyssnar på. Default är MySQLs standardport                                                                                                    | (Heltal)               | 3306      |
+| `-D, --database <arg>`                    | Namn på MySQL databas                                                                                                                                            | (Text)                 |           |
+| `-u, --user <arg>`                        | MySQL användarnamn                                                                                                                                               | (Text)                 |           |
+| `-p, --password <arg>`                    | MySQL lösenord                                                                                                                                                   | (Text)                 |           |
+| `-e, --eventid <arg>`                     | Etapp-id för tävlingen i OLA. Öppna tävlingen i OLA och gå till Tävling -> Tävlingsuppgifter -> Etapper. Välj etapp till vänster och läs av Etapp-id till höger. | (Heltal)               | 1         |
 
 #### Liveresultat-alternativ
 
@@ -204,10 +208,10 @@ http://localhost:8880?TextSize=120&Columns=3
 Följande parametrar kan användas:
 
 
-| <div style="width:150px">Alternativ</div> | Beskrivning                                                        | Arg                  | Default |
-| ----------------------------------------- | ------------------------------------------------------------------ | -------------------- | ------- |
+| <div style="width:150px">Alternativ</div> | Beskrivning                                                      | Arg                  | Default |
+|-------------------------------------------|------------------------------------------------------------------|----------------------|---------|
 | `TextSize=nnn`                            | Ställer storleken på texten i resultatlistan                     | % av standardstorlek | 100     |
-| `Columns=nn`                              | Antalet kolumner i resultattabellen                                | antal                | 2       |
+| `Columns=nn`                              | Antalet kolumner i resultattabellen                              | antal                | 2       |
 | `Verbose=true`                            | Visar mer information i resultattabellen. Lämpligt för speakern. | true/false           | false   |
 
 #### Aktuell ställning till fil

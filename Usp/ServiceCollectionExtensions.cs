@@ -1,3 +1,5 @@
+using System.IO.Abstractions;
+
 namespace Usp;
 
 public static class ServiceCollectionExtensions
@@ -10,6 +12,7 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddSingleton<Data.ResultService>();
+        services.AddSingleton<IFileSystem, FileSystem>();
         services.AddSingleton<Endpoints>();
     }
 }

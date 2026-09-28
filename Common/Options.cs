@@ -50,7 +50,8 @@ public class Options
     public int NumTeams { get; [UsedImplicitly] set; }
 
     // MeOS options
-    // Not yet
+    [Option("logposts", Group = "Meos", Default = false, HelpText = "Save the body of every POST (e.g. from MeOS) to a file in the folder 'posts' next to usp.exe. File name is date and time of arrival.")]
+    public bool LogPosts { get; [UsedImplicitly] set; }
 
     // Ola options
     [Option('h', "host", Group = "Ola", Default = "localhost", HelpText = "MySQL database server host")]
@@ -123,6 +124,7 @@ public class Options
         {
             // General
             RefreshInterval = value.RefreshInterval,
+            PostLogFolder = value.LogPosts ? Path.Combine(AppContext.BaseDirectory, "posts") : null,
 
             // Points
             TimeUntilNotStated = value.TimeUntilNotStated,
