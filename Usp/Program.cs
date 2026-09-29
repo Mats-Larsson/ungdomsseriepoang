@@ -36,8 +36,9 @@ try
         resultsConfiguration = resultsConfiguration with { ApiKey = builder.Configuration["Eventor:ApiKey"] };
 
     // Logging via Serilog, configured from the "Serilog" section in appsettings.json.
-    // Also logs to usp-yyyy-MM-dd.log next to usp.exe. shared: several instances may run at the same time.
-    var logFilePath = Path.Combine(AppContext.BaseDirectory, $"usp-{DateTime.Now:yyyy-MM-dd}.log");
+    // Also logs to usp-yyyy-MM-dd.log in --logdir, default next to usp.exe. shared: several instances may run at the same time.
+    var logDir = Path.GetFullPath(string.IsNullOrEmpty(options.LogDir) ? AppContext.BaseDirectory : options.LogDir);
+    var logFilePath = Path.Combine(logDir, $"usp-{DateTime.Now:yyyy-MM-dd}.log");
     builder.Services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
         .ReadFrom.Configuration(builder.Configuration)
         .ReadFrom.Services(services)

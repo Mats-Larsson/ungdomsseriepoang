@@ -20,6 +20,9 @@ public class Options
     public int RefreshSeconds { get; [UsedImplicitly] set; }
     public TimeSpan RefreshInterval => TimeSpan.FromSeconds(RefreshSeconds);
 
+    [Option("logdir", HelpText = "Directory to write the log file usp-yyyy-MM-dd.log to. Default is the directory of usp.exe.")]
+    public string? LogDir { get; [UsedImplicitly] set; }
+
 
     // Points calculation
     [Option("pointscalc", Group = "Points", Default = PointsCalcType.Final, HelpText = "How to calculate points.")]
