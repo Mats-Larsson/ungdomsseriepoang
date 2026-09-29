@@ -133,13 +133,14 @@ else
             <input class="form-check-input" type="checkbox" @bind="editVerbose"/>
             Detaljerad
         </label>
-        <div class="settings-buttons settings-export">
-            <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
-            <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
-        </div>
         <div class="settings-buttons">
             <button class="btn btn-secondary" @onclick="ResetSettings">Avbryt</button>
             <button class="btn btn-primary" @onclick="ApplySettings">OK</button>
+        </div>
+        <div class="settings-buttons settings-export">
+            <span>Exportera</span>
+            <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
+            <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
         </div>
         <div class="settings-version">Version @Helper.AppVersion</div>
     </div>

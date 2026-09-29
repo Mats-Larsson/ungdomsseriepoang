@@ -54,9 +54,9 @@
       },
       "applicationUrl": "http://localhost:8880"
     },
-    "usp meos final 2025": {
+    "usp meos final 2026": {
       "commandName": "Project",
-      "commandLineArgs": "-s meos --pointscalc Final --maxlatestart 20 --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2025.csv",
+      "commandLineArgs": "-s meos --pointscalc Final --maxlatestart 10000 --logposts --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2026.csv",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
