@@ -1,0 +1,35 @@
+using System.Diagnostics.CodeAnalysis;
+
+namespace ResultCalc.Contract;
+
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+public record ParticipantPoints
+{
+    public string CompititionName { get; }
+    public string Class { get; }
+    public string Name { get; }
+    public string Club { get; }
+    public TimeSpan? StartTime { get; }
+    public TimeSpan? Time { get; }
+    public ParticipantStatus Status { get; }
+    public bool IsExtraParticipant { get; }
+    public int Points { get; }
+    public int Pos { get; }
+
+    internal ParticipantPoints(PointsCalcParticipantResult pr, int points)
+    {
+        if (pr is null) throw new ArgumentNullException(nameof(pr));
+
+        CompititionName = pr.CompititionName;
+        Class = pr.Class;
+        Name = pr.Name;
+        Club = pr.Club;
+        StartTime = pr.StartTime;
+        Time = pr.Time;
+        Status = pr.Status;
+        IsExtraParticipant = pr.IsExtraParticipant;
+        Points = points;
+        Pos = pr.Pos;
+    }
+
+}

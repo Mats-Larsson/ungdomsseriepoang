@@ -1,4 +1,4 @@
-﻿using Results.Contract;
+﻿using ResultCalc.Contract;
 
 namespace Usp.Data;
 

@@ -1,0 +1,1 @@
+﻿&"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\xsd.exe" IOF.xsd /classes /namespace:ResultCalc.Ola.IofXml /language:CS

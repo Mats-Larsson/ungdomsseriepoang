@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Usp", "Usp\Usp.csproj", "{93359F55-FDC3-4115-8F06-9D773619CA29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Results", "Results\Results.csproj", "{A1341460-3601-46D3-A53B-2B03874DCE83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResultCalc", "ResultCalc\ResultCalc.csproj", "{A1341460-3601-46D3-A53B-2B03874DCE83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResultsTests", "ResultsTests\ResultsTests.csproj", "{F83B0D69-436B-4781-A014-2EE1D7A7FA67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResultCalcTests", "ResultCalcTests\ResultCalcTests.csproj", "{F83B0D69-436B-4781-A014-2EE1D7A7FA67}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62EAE239-9FE5-4E2B-AC07-E36A03F17270}"
 	ProjectSection(SolutionItems) = preProject

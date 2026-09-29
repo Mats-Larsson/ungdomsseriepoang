@@ -2,8 +2,8 @@ using System.Globalization;
 using System.IO.Abstractions;
 using System.Xml;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Results;
-using Results.Contract;
+using ResultCalc;
+using ResultCalc.Contract;
 
 namespace Usp;
 
