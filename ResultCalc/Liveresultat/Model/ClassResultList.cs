@@ -1,0 +1,16 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+
+namespace ResultCalc.Liveresultat.Model;
+
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+internal record ClassResultList : StatusBase
+{
+    [JsonPropertyName("className")]
+    public string? ClassName { get; init; }
+
+    [JsonPropertyName("results")]
+    public IList<PersonResult>? Results { get; init; }
+}

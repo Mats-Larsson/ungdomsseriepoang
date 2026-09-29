@@ -2,7 +2,7 @@
 using CommandLine;
 using CommandLine.Text;
 using JetBrains.Annotations;
-using Results;
+using ResultCalc;
 
 namespace Common;
 

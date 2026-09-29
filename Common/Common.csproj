@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Results\Results.csproj" />
+    <ProjectReference Include="..\ResultCalc\ResultCalc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

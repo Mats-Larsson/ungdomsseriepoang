@@ -1,0 +1,69 @@
+﻿using ResultCalc.Contract;
+using ResultCalc.Model;
+
+namespace ResultCalc.Simulator;
+
+internal sealed class SimulatorResultSource : IResultSource
+{
+    private readonly SimulatedParticipant[] simulatedParticipants;
+    internal CancellationTokenSource TokenSource { get; } = new();
+    private TimeSpan currentTimeOfDay = TimeSpan.Zero;
+    public int SpeedMultiplier { get; }
+    private TimeSpan MinTime { get; }
+    private TimeSpan MaxTime { get; }
+    public TimeSpan ZeroTime { get; }
+    public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+
+    public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
+    {
+        throw new NotImplementedException();
+    }
+
+    public SimulatorResultSource(Configuration configuration)
+    {
+        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+
+        TestData testData = new(configuration.NumTeams);
+
+        SpeedMultiplier = configuration.SpeedMultiplier;
+
+        MinTime = testData.TemplateParticipantResults
+            .Where(p => p.StartTime.HasValue && p.StartTime.Value != TimeSpan.Zero && p.Status != ParticipantStatus.Ignored)
+            .Min(p => p.StartTime!.Value);
+        MaxTime = testData.TemplateParticipantResults
+            .Where(p => p is { StartTime: not null, Time: not null, Status: not ParticipantStatus.Ignored })
+            .Max(p => p.StartTime!.Value.Add(p.Time!.Value));
+        ZeroTime = MinTime.Subtract(TimeSpan.FromMinutes(15));
+
+        simulatedParticipants =
+            [.. testData.TemplateParticipantResults.Select(r => new SimulatedParticipant(this, r))];
+
+        _ = RunClockAsync();
+        foreach (var pr in simulatedParticipants)
+        {
+            pr.Task = pr.RunAsync();
+        }
+    }
+
+    private async Task RunClockAsync()
+    {
+        currentTimeOfDay = ZeroTime;
+        while (currentTimeOfDay <= MaxTime)
+        {
+            currentTimeOfDay = currentTimeOfDay.Add(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(1).Divide(SpeedMultiplier), TokenSource.Token).ConfigureAwait(false);
+        }
+    }
+
+    public bool SupportsPreliminary => true;
+
+    public IList<ParticipantResult> GetParticipantResults()
+    {
+        return [.. simulatedParticipants];
+    }
+
+    public void Dispose()
+    {
+        TokenSource.Dispose();
+    }
+}

@@ -6,7 +6,7 @@
 
 @using System.Diagnostics.CodeAnalysis
 @using Microsoft.AspNetCore.WebUtilities;
-@using Results.Contract
+@using ResultCalc.Contract
 @using System.Globalization
 @using ResultService = Usp.Data.ResultService
 @inject ResultService ResultService;
@@ -139,8 +139,10 @@ else
         </div>
         <div class="settings-buttons settings-export">
             <span>Exportera</span>
+            @* ReSharper disable Html.PathError *@
             <a class="btn btn-outline-secondary" href="teams" target="_blank" download="teams.csv">Lag (CSV)</a>
             <a class="btn btn-outline-secondary" href="participants" target="_blank" download="participants.csv">Deltagare (CSV)</a>
+            @* ReSharper restore Html.PathError *@
         </div>
         <div class="settings-version">Version @Helper.AppVersion</div>
     </div>
