@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ResultCalc.Contract;
 using ResultCalc.Eventor;
 using ResultCalc.IofXml;
@@ -15,6 +16,7 @@ public static class ServiceCollectionExtensions
     public static void AddResultsServices(this IServiceCollection services, Configuration configuration, Source source)
     {
         services.AddSingleton(configuration);
+        services.TryAddSingleton(TimeProvider.System);
         services.AddSingleton<IResultService, ResultService>();
         if (source == Source.Simulator)
             services.AddSingleton<ITeamService, SimulatorTeamService>();

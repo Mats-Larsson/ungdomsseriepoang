@@ -56,6 +56,8 @@ try
     // Add services to the container.
     builder.Services.AddResultsServices(resultsConfiguration, options.Source);
     builder.Services.AddUspServices();
+    if (options is { MeosSim: true, Source: Source.Meos })
+        builder.Services.AddMeosSimulator(options.ListenerPort, options.MeosSimSpeed);
 
     builder.Services.AddOpenApi();
 

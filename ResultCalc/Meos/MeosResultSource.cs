@@ -5,7 +5,7 @@ using ResultCalc.Model;
 
 namespace ResultCalc.Meos;
 
-internal sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResultSource
+internal sealed class MeosResultSource(ILogger<MeosResultSource> logger, TimeProvider timeProvider) : IResultSource
 {
     internal static XNamespace MopNs => XNamespace.Get("http://www.melin.nu/mop");
 
@@ -14,7 +14,7 @@ internal sealed class MeosResultSource(ILogger<MeosResultSource> logger) : IResu
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
     private string? comptitionName;
 
-    public TimeSpan CurrentTimeOfDay { get; private set; } = DateTime.Now.TimeOfDay;
+    public TimeSpan CurrentTimeOfDay { get; private set; } = timeProvider.GetLocalNow().TimeOfDay;
 
     public bool SupportsPreliminary => false;
 

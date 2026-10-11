@@ -5,7 +5,7 @@ using ResultCalc.Model;
 
 namespace ResultCalc.Ola;
 
-internal sealed class OlaResultSource(Configuration configuration) : IResultSource
+internal sealed class OlaResultSource(Configuration configuration, TimeProvider timeProvider) : IResultSource
 {
     private readonly Configuration configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     private readonly string connectionString = $"server={configuration.OlaMySqlHost};" +
@@ -25,7 +25,7 @@ internal sealed class OlaResultSource(Configuration configuration) : IResultSour
     }
 
     // TODO: Hämta från OLA
-    public TimeSpan CurrentTimeOfDay => DateTime.Now - DateTime.Now.Date;
+    public TimeSpan CurrentTimeOfDay => timeProvider.GetLocalNow().TimeOfDay;
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         throw new InvalidOperationException();

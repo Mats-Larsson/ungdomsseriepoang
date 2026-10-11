@@ -115,6 +115,8 @@ Simulatorn startar automatiskt när applikationen startas. Följande inställnin
 | <div style="width:150px">Alternativ</div> | Beskrivning                                                                                                                                                                                           | Arg | Default |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|---------|
 | `--logposts`                              | Sparar innehållet i varje inkommande POST till en fil i katalogen `posts` bredvid usp.exe. Filen namnges efter datum och tid då den kom, t.ex. `2026-09-27_14.05.09.123.xml`. Används för felsökning. |     | Av      |
+| `--meossim`                               | Spelar upp de MeOS-poster som spelades in vid finalen 2026-10-04 genom att posta dem till `/meos`. Kräver `--source meos`. |     | Av      |
+| `--meossimspeed <arg>`                    | Hastighet på uppspelningen med `--meossim`. Antal gånger snabbare än originalet. | (Heltal) | 10      |
 
 Börja med att start applikationen. T.ex.;
 

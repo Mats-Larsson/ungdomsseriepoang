@@ -7,13 +7,13 @@ using ResultCalc.Contract;
 
 namespace Usp;
 
-internal class Endpoints(IResultService resultService, Configuration configuration, IFileSystem fileSystem, ILogger<Endpoints> logger)
+internal class Endpoints(IResultService resultService, Configuration configuration, IFileSystem fileSystem, TimeProvider timeProvider, ILogger<Endpoints> logger)
 {
     public async Task<IResult> NewResultPostAsync(HttpRequest httpRequest)
     {
         try
         {
-            var timestamp = DateTime.Now;
+            var timestamp = timeProvider.GetLocalNow().DateTime;
             var body = httpRequest.Body;
             if (configuration.PostLogFolder != null)
             {
@@ -53,7 +53,8 @@ internal class Endpoints(IResultService resultService, Configuration configurati
             fileSystem.Directory.CreateDirectory(folder);
             var fileName = timestamp.ToString("yyyy-MM-dd_HH.mm.ss.fff", CultureInfo.InvariantCulture) + ".xml";
             var path = fileSystem.Path.Combine(folder, fileName);
-            await using (var file = fileSystem.File.Create(path))
+            var file = fileSystem.File.Create(path);
+            await using (file.ConfigureAwait(false))
             {
                 await copy.CopyToAsync(file).ConfigureAwait(false);
             }
