@@ -43,7 +43,7 @@ public sealed class MeosFromFinal2023Test : IDisposable
 
     public MeosFromFinal2023Test()
     {
-        meosResultSource = new MeosResultSource(meosResultSourceLoggerMock);
+        meosResultSource = new MeosResultSource(meosResultSourceLoggerMock, TimeProvider.System);
 
         TeamService teamService = new(configuration, teamServiceLoggerMock);
         

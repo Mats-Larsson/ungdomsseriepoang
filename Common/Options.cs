@@ -56,6 +56,12 @@ public class Options
     [Option("logposts", Group = "Meos", Default = false, HelpText = "Save the body of every POST (e.g. from MeOS) to a file in the folder 'posts' next to usp.exe. File name is date and time of arrival.")]
     public bool LogPosts { get; [UsedImplicitly] set; }
 
+    [Option("meossim", Group = "Meos", Default = false, HelpText = "Together with --source meos: replay the MeOS posts recorded at the final 2026-10-04 by posting them to /meos.")]
+    public bool MeosSim { get; [UsedImplicitly] set; }
+
+    [Option("meossimspeed", Group = "Meos", Default = 10, HelpText = "Replay speed for --meossim. Times faster than the original posts.")]
+    public int MeosSimSpeed { get; [UsedImplicitly] set; }
+
     // Ola options
     [Option('h', "host", Group = "Ola", Default = "localhost", HelpText = "MySQL database server host")]
     public string? Host { get; [UsedImplicitly] set; }

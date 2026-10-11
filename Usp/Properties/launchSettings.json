@@ -2,7 +2,7 @@
   "profiles": {
     "Usp": {
       "commandName": "Project",
-      "commandLineArgs": "--pointscalc Normal --numteams 4",
+      "commandLineArgs": "--pointscalc Normal --numteams 16",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -21,6 +21,15 @@
     "usp meos": {
       "commandName": "Project",
       "commandLineArgs": "-s meos --pointscalc Final",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8880"
+    },
+    "usp meos simulator": {
+      "commandName": "Project",
+      "commandLineArgs": "-s meos --meossim --meossimspeed 100 --pointscalc Final",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

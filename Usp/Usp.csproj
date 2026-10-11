@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ResultCalc\ResultCalc.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\TestData\TestData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

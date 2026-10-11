@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.IO.Abstractions;
 
 namespace Usp;
@@ -14,5 +15,23 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<Data.ResultService>();
         services.AddSingleton<IFileSystem, FileSystem>();
         services.AddSingleton<Endpoints>();
+    }
+
+    public static void AddMeosSimulator(this IServiceCollection services, int listenerPort, int speed)
+    {
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
+
+        if (speed <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(speed), speed, "Speed must be greater than 0");
+        }
+
+        services.AddSingleton(new MeosSimTimeProvider(speed));
+        services.Replace(ServiceDescriptor.Singleton<TimeProvider>(sp => sp.GetRequiredService<MeosSimTimeProvider>()));
+        services.AddHttpClient();
+        services.AddHostedService(sp => ActivatorUtilities.CreateInstance<MeosSimulator>(sp, listenerPort, speed));
     }
 }

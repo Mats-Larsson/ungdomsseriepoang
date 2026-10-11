@@ -34,7 +34,7 @@ namespace ResultCalcTests
         [TestMethod]
         public async Task TestMethod1()
         {
-            using var meosResultSource = new MeosResultSource(loggerMock);
+            using var meosResultSource = new MeosResultSource(loggerMock, TimeProvider.System);
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(Message));
             var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
             Assert.IsNotNull(newResultPostAsync);
