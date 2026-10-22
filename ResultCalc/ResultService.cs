@@ -45,7 +45,16 @@ internal sealed class ResultService : IResultService, IDisposable
 
     private void OnTimedEvent(object? sender, ElapsedEventArgs e)
     {
-        GetResult();
+        // Don't read the result source while a POST is updating it
+        NewResultPostSemaphore.Wait();
+        try
+        {
+            GetResult();
+        }
+        finally
+        {
+            NewResultPostSemaphore.Release();
+        }
     }
 
     [SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
@@ -114,9 +123,8 @@ internal sealed class ResultService : IResultService, IDisposable
         await NewResultPostSemaphore.WaitAsync().ConfigureAwait(true);
         try
         {
-            string status = await resultSource.NewResultPostAsync(body, timestamp).ConfigureAwait(true);
-            GetResult();
-            return status;
+            // Results are picked up by the timer, so the web page is updated at RefreshInterval rate
+            return await resultSource.NewResultPostAsync(body, timestamp).ConfigureAwait(true);
         }
         finally
         {

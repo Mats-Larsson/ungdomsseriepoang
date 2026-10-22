@@ -16,7 +16,7 @@ public class Options
     [Option('s', "source", Default = Source.Simulator, HelpText = "Select datasource for results to process.")]
     public Source Source { get; [UsedImplicitly] set; }
 
-    [Option("refreshseconds", Default = 10, HelpText = "Number of seconds between data refresh.")]
+    [Option("refreshseconds", Default = 10, HelpText = "Number of seconds between data and web page refresh. With --source meos the web page is updated at this rate regardless of how often MeOS posts.")]
     public int RefreshSeconds { get; [UsedImplicitly] set; }
     public TimeSpan RefreshInterval => TimeSpan.FromSeconds(RefreshSeconds);
 
