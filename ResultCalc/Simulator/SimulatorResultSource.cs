@@ -57,9 +57,9 @@ internal sealed class SimulatorResultSource : IResultSource
 
     public bool SupportsPreliminary => true;
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return [.. simulatedParticipants];
+        return Task.FromResult<IList<ParticipantResult>>([.. simulatedParticipants]);
     }
 
     public void Dispose()

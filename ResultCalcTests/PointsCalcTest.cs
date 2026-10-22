@@ -34,7 +34,7 @@ public sealed class PointsCalcTest
     }
 
     [TestMethod]
-    public void TestWithSimulatorResults()
+    public async Task TestWithSimulatorResults()
     {
         var configuration1 = new Configuration
         {
@@ -45,7 +45,7 @@ public sealed class PointsCalcTest
 
         IPointsCalc pointsCalc = new PointsCalcNormal(oneTeamServiceMock.Object, configuration1);
         using var simulatorResultSource = new SimulatorResultSource(configuration1);
-        var participantResults = simulatorResultSource.GetParticipantResults();
+        var participantResults = await simulatorResultSource.GetParticipantResultsAsync().ConfigureAwait(true);
         var scoreBoard = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
         Assert.HasCount(28, scoreBoard);
     }

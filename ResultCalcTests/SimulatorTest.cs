@@ -8,11 +8,11 @@ namespace ResultCalcTests
     public class SimulatorTest
     {
         [TestMethod]
-        public void GetParticipantResults()
+        public async Task GetParticipantResultsAsync()
         {
             using IResultSource resultSource = new SimulatorResultSource(new Configuration { SpeedMultiplier = 1});
 
-            var participantResults = resultSource.GetParticipantResults();
+            var participantResults = await resultSource.GetParticipantResultsAsync().ConfigureAwait(true);
             Assert.IsNotNull(participantResults);
         }
     }

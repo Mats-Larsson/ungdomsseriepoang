@@ -40,9 +40,9 @@ public class LiveresultatResultSourceTests
     }
     
     [TestMethod]
-    public void GetParticipantResults()
+    public async Task GetParticipantResultsAsync()
     {
-        liveresultatResultSource!.GetParticipantResults().Count.Should().Be(945);
+        (await liveresultatResultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Count.Should().Be(945);
     }
 
 

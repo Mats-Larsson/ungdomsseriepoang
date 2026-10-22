@@ -99,8 +99,8 @@ try
         .Produces<string>(StatusCodes.Status200OK, "application/xml")
         .Produces(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status500InternalServerError);
-    app.MapGet("/teams", (Endpoints endpoints) => endpoints.GetTeamsResult());
-    app.MapGet("/participants", (Endpoints endpoints) => endpoints.GetParticipantsResult());
+    app.MapGet("/teams", (Endpoints endpoints) => endpoints.GetTeamsResultAsync());
+    app.MapGet("/participants", (Endpoints endpoints) => endpoints.GetParticipantsResultAsync());
 
     Configuration configuration = app.Services.GetRequiredService<Configuration>();
     app.Logger.LogInformation("Version {Version}, listening on port {Port}", Helper.AppVersion, options.ListenerPort);

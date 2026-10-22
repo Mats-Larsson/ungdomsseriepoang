@@ -70,16 +70,16 @@ internal class Endpoints(IResultService resultService, Configuration configurati
         return copy;
     }
 
-    public ContentHttpResult GetTeamsResult()
+    public async Task<ContentHttpResult> GetTeamsResultAsync()
     {
-        var teamResults = resultService.GetScoreBoard().TeamResults;
+        var teamResults = (await resultService.GetScoreBoardAsync().ConfigureAwait(false)).TeamResults;
 
         return TypedResults.Text(Helper.ToCsvText(teamResults), contentType: "text/csv");
     }
 
-    public ContentHttpResult GetParticipantsResult()
+    public async Task<ContentHttpResult> GetParticipantsResultAsync()
     {
-        var participantPointsList = resultService.GetParticipantPointsList();
+        var participantPointsList = await resultService.GetParticipantPointsListAsync().ConfigureAwait(false);
 
         return TypedResults.Text(Helper.ToCsvText(participantPointsList), contentType: "text/csv");
     }

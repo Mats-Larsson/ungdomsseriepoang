@@ -42,9 +42,9 @@ internal sealed class IofXmlResultSource : IResultSource
         }
     }
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return iofXmlResult?.ParticipantResults ?? [];
+        return Task.FromResult(iofXmlResult?.ParticipantResults ?? []);
     }
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)

@@ -25,7 +25,7 @@ public class ResultServiceTests
     {
         configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10"), RefreshInterval = TimeSpan.FromSeconds(10) };
         resultSourceMock.Setup(rs => rs.CurrentTimeOfDay).Returns(currentTime);
-        resultSourceMock.Setup(rs => rs.GetParticipantResults()).Returns(partisipantResults);
+        resultSourceMock.Setup(rs => rs.GetParticipantResultsAsync()).ReturnsAsync(partisipantResults);
 
         var actual = CreateResultService();
         return actual;
@@ -41,14 +41,14 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
-    public void AllNotActivated(bool isFinal)
+    public async Task AllNotActivated(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("9:30:00"),
+        Result actual = await Setup(isFinal, TS("9:30:00"),
         [
             new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
-        ]).GetScoreBoard();
+        ]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(3));
         actual.TeamResults.Should().BeEquivalentTo(
@@ -62,14 +62,14 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
-    public void OneActivated(bool isFinal)
+    public async Task OneActivated(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("9:30:00"),
+        Result actual = await Setup(isFinal, TS("9:30:00"),
         [
             new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, NotActivated)
-        ]).GetScoreBoard();
+        ]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(2, 1));
         actual.TeamResults.Should().BeEquivalentTo(
@@ -83,14 +83,14 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
-    public void OneActivatedAndOneStarted(bool isFinal)
+    public async Task OneActivatedAndOneStarted(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:01:30"),
+        Result actual = await Setup(isFinal, TS("10:01:30"),
         [
             new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, Activated),
             new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
-        ]).GetScoreBoard();
+        ]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(1, 1, 1));
         actual.TeamResults.Should().BeEquivalentTo(
@@ -104,14 +104,14 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
-    public void OneStartedAndOneMissedStart(bool isFinal)
+    public async Task OneStartedAndOneMissedStart(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:10:30"),
+        Result actual = await Setup(isFinal, TS("10:10:30"),
         [
             new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
-        ]).GetScoreBoard();
+        ]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numNotStarted: 1));
         actual.TeamResults.Should().BeEquivalentTo([
@@ -124,14 +124,14 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
-    public void OneStartedAndOnePassed(bool isFinal)
+    public async Task OneStartedAndOnePassed(bool isFinal)
     {
-        Result actual = Setup(isFinal, TS("10:10:30"),
+        Result actual = await Setup(isFinal, TS("10:10:30"),
         [
             new ParticipantResult(Comp, "H10", "Adam", "A", TS("10:00:00"), TS("00:13:00"), Passed),
             new ParticipantResult(Comp, "H10", "Bert", "B", TS("10:01:00"), null, NotActivated),
             new ParticipantResult(Comp, "H10", "Curt", "C", TS("10:02:00"), null, Activated)
-        ]).GetScoreBoard();
+        ]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numNotActivated: 1, numStarted: 1, numPassed: 1));
         actual.TeamResults.Should().BeEquivalentTo([
@@ -144,20 +144,20 @@ public class ResultServiceTests
     [TestMethod]
     [DataRow(false, 40 + 36 + 40 + 36)]
     [DataRow(true, 4 * (80 - 8))]
-    public void TwoPatrols(bool isFinal, int expectedPoints)
+    public async Task TwoPatrols(bool isFinal, int expectedPoints)
     {
         ParticipantResult pr0 = new(Comp, "U2", "Adam", "A", TS("10:01:07"), TS("00:13:00"), Passed); // 36
         ParticipantResult pr1 = new(Comp, "U2", "Bert", "A", TS("10:01:14"), TS("00:12:53"), Passed); // 40
         ParticipantResult pr2 = new(Comp, "U2", "Curt", "A", TS("10:01:21"), TS("00:13:00"), Passed); // 36
         ParticipantResult pr3 = new(Comp, "U2", "Dave", "A", TS("10:01:28"), TS("00:12:53"), Passed); // 40
 
-        Result actual = Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoard();
+        Result actual = await Setup(isFinal, TS("10:10:30"), [pr0, pr1, pr2, pr3]).GetScoreBoardAsync().ConfigureAwait(true);
         actual.Statistics.Should().BeEquivalentTo(
             new Statistics(numPassed: 4));
 
         actual.TeamResults.Should().BeEquivalentTo([new TeamResult(1, "A", expectedPoints, false, 0, 0, new Statistics(numPassed: 4))]);
 
-        resultService!.GetParticipantPointsList().OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
+        (await resultService!.GetParticipantPointsListAsync().ConfigureAwait(true)).OrderBy(pr => pr.Name).Should().BeEquivalentTo(new ParticipantPoints[]
         {
             new(new PointsCalcParticipantResult(pr0) { Pos = 3 }, isFinal ? 80 - 8 : 36),
             new(new PointsCalcParticipantResult(pr1) { Pos = 1, IsExtraParticipant = true }, isFinal ? 80 - 8 : 40),

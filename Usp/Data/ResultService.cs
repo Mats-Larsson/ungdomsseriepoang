@@ -18,7 +18,7 @@ public class ResultService
 
     public Task<Result> GetTeamResultsAsync()
     {
-        return Task.FromResult(resultService.GetScoreBoard());
+        return resultService.GetScoreBoardAsync();
     }
 
 

@@ -13,7 +13,7 @@ namespace ResultCalcTests;
 public class ResultsTest
 {
     [TestMethod]
-    public void TestWithSimulatorTeamsAndBasePoints()
+    public async Task TestWithSimulatorTeamsAndBasePoints()
     {
         var configuration = new Configuration
         {
@@ -26,7 +26,7 @@ public class ResultsTest
         using var simulatorResultSource = new SimulatorResultSource(configuration);
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>());
         using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
-        var teamResults = resultService.GetScoreBoard();
+        var teamResults = await resultService.GetScoreBoardAsync().ConfigureAwait(true);
         teamResults.TeamResults.Count.Should().Be(2);
         teamResults.TeamResults.Should().Contain(
             new TeamResult(1, "Lag A", 1000, false, 0, 1000, new Statistics())
@@ -37,7 +37,7 @@ public class ResultsTest
     }
     
     [TestMethod]
-    public void TestWithSimulatorTeams()
+    public async Task TestWithSimulatorTeams()
     {
         var ct = CancellationToken.None;
         var configuration = new Configuration
@@ -52,7 +52,7 @@ public class ResultsTest
         var teamService = new TeamService(configuration, Mock.Of<ILogger<TeamService>>());
         using var resultService = new ResultService(configuration, simulatorResultSource, teamService, Mock.Of<ILogger<ResultService>>());
         Task.Delay(TimeSpan.FromMilliseconds(10), ct).Wait(ct); // Let simulator start
-        var teamResults = resultService.GetScoreBoard();
+        var teamResults = await resultService.GetScoreBoardAsync().ConfigureAwait(true);
         teamResults.TeamResults.Count.Should().Be(3);
         teamResults.TeamResults.Should().Contain(
             new TeamResult(1, "Lag A", 0, false, 0, 0, new Statistics())

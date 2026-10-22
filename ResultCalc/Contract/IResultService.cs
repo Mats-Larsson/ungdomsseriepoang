@@ -3,8 +3,8 @@
 public interface IResultService
 {
     bool SupportsPreliminary { get; }
-    Result GetScoreBoard();
+    Task<Result> GetScoreBoardAsync();
     event EventHandler OnNewResults;
     Task<string> NewResultPostAsync(Stream body, DateTime timestamp);
-    IEnumerable<ParticipantPoints> GetParticipantPointsList();
+    Task<IEnumerable<ParticipantPoints>> GetParticipantPointsListAsync();
 }

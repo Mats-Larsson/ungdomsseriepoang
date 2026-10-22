@@ -25,7 +25,7 @@ public sealed class IofXmlTest : IDisposable
     }
 
     [TestInitialize]
-    public void Init()
+    public async Task Init()
     {
         if (!Directory.Exists(listenFolder)) Directory.CreateDirectory(listenFolder);
         Directory.EnumerateFiles(listenFolder, "*")
@@ -49,7 +49,7 @@ public sealed class IofXmlTest : IDisposable
         fileListener = new FileListener(configurationMock.Object);
         var iofXmlDeserializer = new IofXmlDeserializer();
         resultSource = new IofXmlResultSource(configurationMock.Object, fileListener, resultSourceLoggerMock.Object, iofXmlDeserializer);
-        resultSource.GetParticipantResults().Should().BeEmpty();
+        (await resultSource.GetParticipantResultsAsync().ConfigureAwait(true)).Should().BeEmpty();
     }
 
     [TestCleanup]
@@ -59,59 +59,59 @@ public sealed class IofXmlTest : IDisposable
     }
 
     [TestMethod]
-    public void TestReadEmptyFile()
+    public async Task TestReadEmptyFile()
     {
         Assert.IsNotNull(fileListener);
         Assert.IsNotNull(resultSource);
 
         ApplyFile("Resultat0.xml");
-        AssertHasResult(0);
+        await AssertHasResultAsync(0).ConfigureAwait(true);
     }
 
     [TestMethod]
-    public void TestRead4ResultFiles()
+    public async Task TestRead4ResultFiles()
     {
         Assert.IsNotNull(fileListener);
         Assert.IsNotNull(resultSource);
 
         ApplyFile("Resultat0.xml");
-        AssertHasResult(0);
+        await AssertHasResultAsync(0).ConfigureAwait(true);
 
         ApplyFile("Resultat1.xml");
-        AssertHasResult(8);
+        await AssertHasResultAsync(8).ConfigureAwait(true);
         
         ApplyFile("Resultat2.xml");
-        AssertHasResult(230);
+        await AssertHasResultAsync(230).ConfigureAwait(true);
         
         ApplyFile("Resultat3.xml");
-        AssertHasResult(231);
+        await AssertHasResultAsync(231).ConfigureAwait(true);
     }
 
     [TestMethod]
-    public void TestReadBadFile()
+    public async Task TestReadBadFile()
     {
         Assert.IsNotNull(fileListener);
         Assert.IsNotNull(resultSource);
 
         ApplyFile("Bad.xml");
-        AssertHasResult(0);
+        await AssertHasResultAsync(0).ConfigureAwait(true);
 
         ApplyFile("Resultat2.xml");
-        AssertHasResult(230);
+        await AssertHasResultAsync(230).ConfigureAwait(true);
         
         ApplyFile("Bad.xml");
-        AssertHasResult(230);
+        await AssertHasResultAsync(230).ConfigureAwait(true);
     }
 
-    private void AssertHasResult(int numResults)
+    private async Task AssertHasResultAsync(int numResults)
     {
         for (int i = 0; i < 50; i++)
         {
-            if (resultSource!.GetParticipantResults().Any()) break;
+            if ((await resultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Any()) break;
             Task.Delay(10).Wait();
         }
 
-        resultSource!.GetParticipantResults().Should().HaveCount(numResults);
+        (await resultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Should().HaveCount(numResults);
     }
 
     private void ApplyFile(string file)

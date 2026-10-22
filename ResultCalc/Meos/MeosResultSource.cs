@@ -18,14 +18,15 @@ internal sealed class MeosResultSource(ILogger<MeosResultSource> logger, TimePro
 
     public bool SupportsPreliminary => false;
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return
+        IList<ParticipantResult> list =
         [
             .. participantResults
                 .Where(item => item.Key > 0)
                 .Select(item => item.Value)
         ];
+        return Task.FromResult(list);
     }
 
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)

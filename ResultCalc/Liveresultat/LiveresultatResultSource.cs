@@ -27,12 +27,7 @@ internal sealed class LiveresultatResultSource : IResultSource
 
     public bool SupportsPreliminary => false;
 
-    public IList<ParticipantResult> GetParticipantResults()
-    {
-        return GetParticipantResultsAsync().GetAwaiter().GetResult();
-    }
-
-    private async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
+    public async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
         await LoadCompetitionName().ConfigureAwait(false);
         if (competitionName == null) return [];
