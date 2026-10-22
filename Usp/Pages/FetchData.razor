@@ -177,7 +177,7 @@ else
         isVerbose = GetQueryParamFirstOrDefault(uri, "verbose", "false") != "false";
         ResetSettings();
         result = await ResultService.GetTeamResultsAsync();
-        ResultService.OnNewResults += ResultService_OnNewResults;
+        ResultService.OnNewResults += async (_, _) => await ResultService_OnNewResults();
     }
 
     private void ResetSettings()
@@ -205,11 +205,11 @@ else
     }
 
 
-    private void ResultService_OnNewResults(object? sender, EventArgs e)
+    private async Task ResultService_OnNewResults()
     {
-        result = ResultService.GetTeamResultsAsync().Result;
+        result = await ResultService.GetTeamResultsAsync().ConfigureAwait(false);
         CalcTrend();
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 
     [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]

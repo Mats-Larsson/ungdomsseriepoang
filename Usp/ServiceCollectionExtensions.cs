@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.IO.Abstractions;
 
 namespace Usp;
 
+[SuppressMessage("ReSharper", "ConvertToExtensionBlock")]
 public static class ServiceCollectionExtensions
 {
     public static void AddUspServices(this IServiceCollection services)
