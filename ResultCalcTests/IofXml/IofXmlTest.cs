@@ -105,10 +105,11 @@ public sealed class IofXmlTest : IDisposable
 
     private async Task AssertHasResultAsync(int numResults)
     {
-        for (int i = 0; i < 50; i++)
+        // The file is renamed before the result is stored, so wait for the expected count rather than any result
+        for (int i = 0; i < 500; i++)
         {
-            if ((await resultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Any()) break;
-            Task.Delay(10).Wait();
+            if ((await resultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Count == numResults) break;
+            await Task.Delay(10).ConfigureAwait(true);
         }
 
         (await resultSource!.GetParticipantResultsAsync().ConfigureAwait(true)).Should().HaveCount(numResults);
