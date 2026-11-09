@@ -12,7 +12,7 @@ internal sealed class SimulatorResultSource : IResultSource
     private TimeSpan MinTime { get; }
     private TimeSpan MaxTime { get; }
     public TimeSpan ZeroTime { get; }
-    public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(currentTimeOfDay);
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {

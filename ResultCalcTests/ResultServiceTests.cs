@@ -24,7 +24,7 @@ public class ResultServiceTests
     private IResultService Setup(bool isFinal, TimeSpan currentTime, IList<ParticipantResult> partisipantResults)
     {
         configuration = new Configuration { TimeUntilNotStated = TS("00:10:00"), IsFinal = isFinal, MaxPatrolStartInterval = TS("00:00:10"), RefreshInterval = TimeSpan.FromSeconds(10) };
-        resultSourceMock.Setup(rs => rs.CurrentTimeOfDay).Returns(currentTime);
+        resultSourceMock.Setup(rs => rs.GetCurrentTimeOfDayAsync()).ReturnsAsync(currentTime);
         resultSourceMock.Setup(rs => rs.GetParticipantResultsAsync()).ReturnsAsync(partisipantResults);
 
         var actual = CreateResultService();

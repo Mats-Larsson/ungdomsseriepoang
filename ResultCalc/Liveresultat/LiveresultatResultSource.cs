@@ -98,19 +98,16 @@ internal sealed class LiveresultatResultSource : IResultSource
         };
     }
 
-    public TimeSpan CurrentTimeOfDay
+    public async Task<TimeSpan> GetCurrentTimeOfDayAsync()
     {
-        get
-        {
-            var lastPassingList = liveresultatFacade.GetLastPassingListAsync(competitionId).GetAwaiter().GetResult();
-            var hasData = lastPassingList?.Passings?.Any() ?? false;
-            if (!hasData) return lastCurrentTimeOfDay;
-            var currentTime = lastPassingList!.Passings!
-                .Select(p => p.PassTime)
-                .Max();
-            if (currentTime > lastCurrentTimeOfDay ) lastCurrentTimeOfDay = currentTime.Value;
-            return lastCurrentTimeOfDay;
-        }
+        var lastPassingList = await liveresultatFacade.GetLastPassingListAsync(competitionId).ConfigureAwait(false);
+        var hasData = lastPassingList?.Passings?.Any() ?? false;
+        if (!hasData) return lastCurrentTimeOfDay;
+        var currentTime = lastPassingList!.Passings!
+            .Select(p => p.PassTime)
+            .Max();
+        if (currentTime > lastCurrentTimeOfDay) lastCurrentTimeOfDay = currentTime.Value;
+        return lastCurrentTimeOfDay;
     }
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)

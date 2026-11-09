@@ -23,6 +23,8 @@ internal sealed class ResultService : IResultService, IDisposable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;
+    private readonly Task initialLoad;
+    private volatile bool isDisposed;
     private static readonly SemaphoreSlim NewResultPostSemaphore = new(1, 1);
 
     public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
@@ -36,12 +38,19 @@ internal sealed class ResultService : IResultService, IDisposable
             ? new PointsCalcFinal(teamService, configuration)
             : new PointsCalcNormal(teamService, configuration);
 
-        // Constructors can't be async. Wait for the first result so the score board is filled from the start
-        GetResultAsync().GetAwaiter().GetResult();
         timer = new System.Timers.Timer(this.configuration.RefreshInterval);
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
-        timer.Enabled = true;
+
+        // Constructors can't be async. Start the first load here; GetScoreBoardAsync awaits it
+        // so the score board is filled from the start, and the timer starts once it is done.
+        initialLoad = InitialLoadAsync();
+    }
+
+    private async Task InitialLoadAsync()
+    {
+        await GetResultAsync().ConfigureAwait(false);
+        if (!isDisposed) timer.Enabled = true;
     }
 
     private async void OnTimedEvent(object? sender, ElapsedEventArgs e)
@@ -64,8 +73,9 @@ internal sealed class ResultService : IResultService, IDisposable
         try
         {
             var participantResults = FilterTeamsAndClasses(await resultSource.GetParticipantResultsAsync().ConfigureAwait(false));
+            var currentTimeOfDay = await resultSource.GetCurrentTimeOfDayAsync().ConfigureAwait(false);
 
-            var notStartedCutOff = resultSource.CurrentTimeOfDay - configuration.TimeUntilNotStated;
+            var notStartedCutOff = currentTimeOfDay - configuration.TimeUntilNotStated;
 
             foreach (var pr in participantResults)
             {
@@ -77,14 +87,14 @@ internal sealed class ResultService : IResultService, IDisposable
                         break;
 
                     case ParticipantStatus.Activated:
-                        if (pr.StartTime < resultSource.CurrentTimeOfDay)
+                        if (pr.StartTime < currentTimeOfDay)
                             pr.Status = ParticipantStatus.Started;
                         break;
                 }
             }
 
-            var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
-            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay);
+            var teamResults = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
+            var statistics = Statistics.GetStatistics(participantResults, currentTimeOfDay);
             var resultsHash = CalcHashCode(teamResults, statistics);
 
             if (resultsHash == latestResultsHash) return;
@@ -110,11 +120,11 @@ internal sealed class ResultService : IResultService, IDisposable
 
     public bool SupportsPreliminary => resultSource.SupportsPreliminary;
 
-    public Task<Result> GetScoreBoardAsync()
+    public async Task<Result> GetScoreBoardAsync()
     {
-        latestStatistics.LastUpdatedTimeOfDay = resultSource.CurrentTimeOfDay;
-        var result = new Result(latestTeamResults, latestStatistics);
-        return Task.FromResult(result);
+        await initialLoad.ConfigureAwait(false);
+        latestStatistics.LastUpdatedTimeOfDay = await resultSource.GetCurrentTimeOfDayAsync().ConfigureAwait(false);
+        return new Result(latestTeamResults, latestStatistics);
     }
 
     public event EventHandler? OnNewResults;
@@ -155,6 +165,7 @@ internal sealed class ResultService : IResultService, IDisposable
 
     public void Dispose()
     {
+        isDisposed = true;
         timer.Dispose();
         resultSource.Dispose();
     }

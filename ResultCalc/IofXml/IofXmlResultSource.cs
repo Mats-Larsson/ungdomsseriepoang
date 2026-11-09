@@ -18,7 +18,7 @@ internal sealed class IofXmlResultSource : IResultSource
 
     public bool SupportsPreliminary => false;
 
-    public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero);
 
     public IofXmlResultSource(Configuration configuration, FileListener fileListener,
         ILogger<IofXmlResultSource> logger, IIofXmlDeserializer deserializer)

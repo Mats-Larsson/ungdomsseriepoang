@@ -28,9 +28,9 @@ public class LiveresultatResultSourceTests
     }
 
     [TestMethod]
-    public void CurrentTimeOfDay()
+    public async Task GetCurrentTimeOfDayAsync()
     {
-        liveresultatResultSource!.CurrentTimeOfDay.Should().BePositive();
+        (await liveresultatResultSource!.GetCurrentTimeOfDayAsync().ConfigureAwait(true)).Should().BePositive();
     }
 
     [TestMethod]

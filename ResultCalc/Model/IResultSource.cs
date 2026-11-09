@@ -4,6 +4,6 @@ internal interface IResultSource : IDisposable
 {
     bool SupportsPreliminary { get; }
     Task<IList<ParticipantResult>> GetParticipantResultsAsync();
-    TimeSpan CurrentTimeOfDay { get; }
+    Task<TimeSpan> GetCurrentTimeOfDayAsync();
     Task<string> NewResultPostAsync(Stream body, DateTime timestamp);
 }

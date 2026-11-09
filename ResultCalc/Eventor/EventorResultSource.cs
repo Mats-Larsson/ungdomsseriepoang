@@ -1,4 +1,4 @@
-using ResultCalc.IofXml;
+﻿using ResultCalc.IofXml;
 using ResultCalc.Model;
 
 namespace ResultCalc.Eventor
@@ -10,7 +10,7 @@ namespace ResultCalc.Eventor
     {
         private IofXmlResult? iofXmlResult;
         public bool SupportsPreliminary => false;
-        public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
+        public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero);
 
         public async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
         {

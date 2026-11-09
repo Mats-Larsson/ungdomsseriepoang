@@ -29,7 +29,7 @@
     },
     "usp meos simulator": {
       "commandName": "Project",
-      "commandLineArgs": "-s meos --meossim --meossimspeed 100 --pointscalc Final",
+      "commandLineArgs": "-s meos --meossim --meossimspeed 100 --pointscalc Final --maxlatestart 10 --refreshseconds 2",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

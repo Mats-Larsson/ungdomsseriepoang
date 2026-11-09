@@ -25,7 +25,7 @@ internal sealed class OlaResultSource(Configuration configuration, TimeProvider 
     }
 
     // TODO: Hämta från OLA
-    public TimeSpan CurrentTimeOfDay => timeProvider.GetLocalNow().TimeOfDay;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(timeProvider.GetLocalNow().TimeOfDay);
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         throw new InvalidOperationException();
