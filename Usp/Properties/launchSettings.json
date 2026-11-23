@@ -56,7 +56,7 @@
     },
     "Usp Eventor final": {
       "commandName": "Project",
-      "commandLineArgs": "-s Eventor -E 54276 --pointscalc Final --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2026.csv",
+      "commandLineArgs": "-s Eventor -E 54276 --pointscalc Normal --teams C:\\Users\\MLA\\source\\repos\\Mats-Larsson\\ungdomsseriepoang\\BasePoints2026.csv",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
