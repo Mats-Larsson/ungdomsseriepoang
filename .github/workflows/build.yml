@@ -27,7 +27,26 @@ jobs:
         run: dotnet build UspApp.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test UspApp.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+        run: >
+          dotnet test UspApp.sln --configuration Release --no-build
+          --logger "trx;LogFileName=test-results.trx"
+          --settings coverage.runsettings
+          --collect:"XPlat Code Coverage"
+
+      - name: Coverage report
+        if: always()
+        shell: pwsh
+        run: |
+          dotnet tool restore
+          dotnet reportgenerator "-reports:**/TestResults/*/coverage.cobertura.xml" "-targetdir:coverage-report" "-reporttypes:Html;MarkdownSummaryGithub"
+          Get-Content coverage-report/SummaryGithub.md >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report
 
       - name: Publish test results
         uses: dorny/test-reporter@v1
