@@ -72,9 +72,9 @@ public sealed class MeosFromFinal2023Test : IDisposable
         }
         return;
 
-        void OnNewResults(object? o, EventArgs eventArgs)
+        async void OnNewResults(object? o, EventArgs eventArgs)
         {
-            var s = results.GetScoreBoard().Statistics;
+            var s = (await results.GetScoreBoardAsync().ConfigureAwait(true)).Statistics;
             Console.Out.Write(s.NumNotActivated + s.NumActivated + s.NumStarted + s.NumPreliminary + s.NumPassed + s.NumNotValid + s.NumNotStarted + " ");
             Console.Out.WriteLine(s.ToString());
         }

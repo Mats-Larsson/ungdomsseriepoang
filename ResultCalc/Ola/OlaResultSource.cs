@@ -16,32 +16,35 @@ internal sealed class OlaResultSource(Configuration configuration, TimeProvider 
 
     public bool SupportsPreliminary => true;
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        var list = GetFromOlaDb();
+        var list = await GetFromOlaDbAsync().ConfigureAwait(false);
         const string competitionName = ""; // TODO: Get name from OLA
 
         return [.. list.Select(o => new ParticipantResult(competitionName, o.Class, o.Name, o.Club, o.StartTime, o.Time, o.Status))];
     }
 
     // TODO: Hämta från OLA
-    public TimeSpan CurrentTimeOfDay => timeProvider.GetLocalNow().TimeOfDay;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(timeProvider.GetLocalNow().TimeOfDay);
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
         throw new InvalidOperationException();
     }
 
-    private IEnumerable<OlaParticipantResult> GetFromOlaDb()
+    private async Task<IEnumerable<OlaParticipantResult>> GetFromOlaDbAsync()
     {
-        using var con = new MySqlConnection(connectionString);
-        con.Open();
+        var con = new MySqlConnection(connectionString);
+        await using var conAsyncDisposable = con.ConfigureAwait(false);
+        await con.OpenAsync().ConfigureAwait(false);
 
-        using var cmd = new MySqlCommand(Resource1.ParticipantResultSql, con);
+        var cmd = new MySqlCommand(Resource1.ParticipantResultSql, con);
+        await using var cmdAsyncDisposable = cmd.ConfigureAwait(false);
         cmd.Parameters.AddWithValue("@EventId", configuration.OlaEventId);
 
-        using var reader = cmd.ExecuteReader();
+        var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+        await using var readerAsyncDisposable = reader.ConfigureAwait(false);
         var list = new List<OlaParticipantResult>();
-        while (reader.Read())
+        while (await reader.ReadAsync().ConfigureAwait(false))
         {
             var @class = reader.GetFieldValue<string>(0);
             var name = reader.GetFieldValue<string>(1);

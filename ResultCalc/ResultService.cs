@@ -23,6 +23,8 @@ internal sealed class ResultService : IResultService, IDisposable
     private readonly System.Timers.Timer timer;
     private readonly IResultSource resultSource;
     private readonly ITeamService teamService;
+    private readonly Task initialLoad;
+    private volatile bool isDisposed;
     private static readonly SemaphoreSlim NewResultPostSemaphore = new(1, 1);
 
     public ResultService(Configuration configuration, IResultSource resultSource, ITeamService teamService, ILogger<ResultService> logger)
@@ -36,20 +38,28 @@ internal sealed class ResultService : IResultService, IDisposable
             ? new PointsCalcFinal(teamService, configuration)
             : new PointsCalcNormal(teamService, configuration);
 
-        GetResult();
         timer = new System.Timers.Timer(this.configuration.RefreshInterval);
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
-        timer.Enabled = true;
+
+        // Constructors can't be async. Start the first load here; GetScoreBoardAsync awaits it
+        // so the score board is filled from the start, and the timer starts once it is done.
+        initialLoad = InitialLoadAsync();
     }
 
-    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
+    private async Task InitialLoadAsync()
+    {
+        await GetResultAsync().ConfigureAwait(false);
+        if (!isDisposed) timer.Enabled = true;
+    }
+
+    private async void OnTimedEvent(object? sender, ElapsedEventArgs e)
     {
         // Don't read the result source while a POST is updating it
-        NewResultPostSemaphore.Wait();
+        await NewResultPostSemaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            GetResult();
+            await GetResultAsync().ConfigureAwait(false);
         }
         finally
         {
@@ -58,13 +68,14 @@ internal sealed class ResultService : IResultService, IDisposable
     }
 
     [SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
-    private void GetResult()
+    private async Task GetResultAsync()
     {
         try
         {
-            var participantResults = FilterTeamsAndClasses(resultSource.GetParticipantResults());
+            var participantResults = FilterTeamsAndClasses(await resultSource.GetParticipantResultsAsync().ConfigureAwait(false));
+            var currentTimeOfDay = await resultSource.GetCurrentTimeOfDayAsync().ConfigureAwait(false);
 
-            var notStartedCutOff = resultSource.CurrentTimeOfDay - configuration.TimeUntilNotStated;
+            var notStartedCutOff = currentTimeOfDay - configuration.TimeUntilNotStated;
 
             foreach (var pr in participantResults)
             {
@@ -76,14 +87,14 @@ internal sealed class ResultService : IResultService, IDisposable
                         break;
 
                     case ParticipantStatus.Activated:
-                        if (pr.StartTime < resultSource.CurrentTimeOfDay)
+                        if (pr.StartTime < currentTimeOfDay)
                             pr.Status = ParticipantStatus.Started;
                         break;
                 }
             }
 
-            var teamResults = pointsCalc.CalcScoreBoard(resultSource.CurrentTimeOfDay, participantResults);
-            var statistics = Statistics.GetStatistics(participantResults, resultSource.CurrentTimeOfDay);
+            var teamResults = pointsCalc.CalcScoreBoard(currentTimeOfDay, participantResults);
+            var statistics = Statistics.GetStatistics(participantResults, currentTimeOfDay);
             var resultsHash = CalcHashCode(teamResults, statistics);
 
             if (resultsHash == latestResultsHash) return;
@@ -109,11 +120,11 @@ internal sealed class ResultService : IResultService, IDisposable
 
     public bool SupportsPreliminary => resultSource.SupportsPreliminary;
 
-    public Result GetScoreBoard()
+    public async Task<Result> GetScoreBoardAsync()
     {
-        latestStatistics.LastUpdatedTimeOfDay = resultSource.CurrentTimeOfDay;
-        var result = new Result(latestTeamResults, latestStatistics);
-        return result;
+        await initialLoad.ConfigureAwait(false);
+        latestStatistics.LastUpdatedTimeOfDay = await resultSource.GetCurrentTimeOfDayAsync().ConfigureAwait(false);
+        return new Result(latestTeamResults, latestStatistics);
     }
 
     public event EventHandler? OnNewResults;
@@ -132,9 +143,9 @@ internal sealed class ResultService : IResultService, IDisposable
         }
     }
 
-    public IEnumerable<ParticipantPoints> GetParticipantPointsList()
+    public async Task<IEnumerable<ParticipantPoints>> GetParticipantPointsListAsync()
     {
-        return pointsCalc.GetParticipantPoints(resultSource.GetParticipantResults());
+        return pointsCalc.GetParticipantPoints(await resultSource.GetParticipantResultsAsync().ConfigureAwait(false));
     }
 
     private static int CalcHashCode(IEnumerable<TeamResult> results, Statistics statistics)
@@ -154,6 +165,7 @@ internal sealed class ResultService : IResultService, IDisposable
 
     public void Dispose()
     {
+        isDisposed = true;
         timer.Dispose();
         resultSource.Dispose();
     }

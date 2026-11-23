@@ -38,7 +38,7 @@ namespace ResultCalcTests
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(Message));
             var newResultPostAsync = await meosResultSource.NewResultPostAsync(stream, DateTime.Now).ConfigureAwait(false);
             Assert.IsNotNull(newResultPostAsync);
-            IList<ResultCalc.Model.ParticipantResult> participantResults = meosResultSource.GetParticipantResults();
+            IList<ResultCalc.Model.ParticipantResult> participantResults = await meosResultSource.GetParticipantResultsAsync().ConfigureAwait(false);
             Assert.HasCount(3, participantResults);
         }
     }

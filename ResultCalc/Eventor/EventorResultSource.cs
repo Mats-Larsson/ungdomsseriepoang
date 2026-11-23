@@ -1,4 +1,4 @@
-using ResultCalc.IofXml;
+﻿using ResultCalc.IofXml;
 using ResultCalc.Model;
 
 namespace ResultCalc.Eventor
@@ -10,18 +10,20 @@ namespace ResultCalc.Eventor
     {
         private IofXmlResult? iofXmlResult;
         public bool SupportsPreliminary => false;
-        public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
+        public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero);
 
-        public IList<ParticipantResult> GetParticipantResults()
+        public async Task<IList<ParticipantResult>> GetParticipantResultsAsync()
         {
             if (iofXmlResult != null)
             {
                 return iofXmlResult.ParticipantResults;
             }
 
-            using var iofXmlStream = eventorFacade.GetIofXmlStream(configuration.EventorEventId);
-            iofXmlResult = deserializer.Deserialize(
-                iofXmlStream.ConfigureAwait(false).GetAwaiter().GetResult());
+            var iofXmlStream = await eventorFacade.GetIofXmlStream(configuration.EventorEventId).ConfigureAwait(false);
+            await using (iofXmlStream.ConfigureAwait(false))
+            {
+                iofXmlResult = deserializer.Deserialize(iofXmlStream);
+            }
             return iofXmlResult.ParticipantResults;
         }
 

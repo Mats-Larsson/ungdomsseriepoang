@@ -18,7 +18,7 @@ internal sealed class IofXmlResultSource : IResultSource
 
     public bool SupportsPreliminary => false;
 
-    public TimeSpan CurrentTimeOfDay => iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(iofXmlResult?.CurrentTimeOfDay ?? TimeSpan.Zero);
 
     public IofXmlResultSource(Configuration configuration, FileListener fileListener,
         ILogger<IofXmlResultSource> logger, IIofXmlDeserializer deserializer)
@@ -42,9 +42,9 @@ internal sealed class IofXmlResultSource : IResultSource
         }
     }
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return iofXmlResult?.ParticipantResults ?? [];
+        return Task.FromResult(iofXmlResult?.ParticipantResults ?? []);
     }
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)

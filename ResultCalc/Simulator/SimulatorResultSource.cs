@@ -12,7 +12,7 @@ internal sealed class SimulatorResultSource : IResultSource
     private TimeSpan MinTime { get; }
     private TimeSpan MaxTime { get; }
     public TimeSpan ZeroTime { get; }
-    public TimeSpan CurrentTimeOfDay => currentTimeOfDay;
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(currentTimeOfDay);
 
     public Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
@@ -57,9 +57,9 @@ internal sealed class SimulatorResultSource : IResultSource
 
     public bool SupportsPreliminary => true;
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return [.. simulatedParticipants];
+        return Task.FromResult<IList<ParticipantResult>>([.. simulatedParticipants]);
     }
 
     public void Dispose()

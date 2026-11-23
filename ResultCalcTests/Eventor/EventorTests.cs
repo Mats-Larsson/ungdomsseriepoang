@@ -10,7 +10,7 @@ public class EventorTests
 {
 
     [TestMethod]
-    public void Test()
+    public async Task Test()
     {
         Configuration configuration = new();
         Mock<IEventorFacade> eventorFacadeMock = new();
@@ -18,7 +18,7 @@ public class EventorTests
             .ReturnsAsync((int _) => new FileStream(@".\Eventor\Resultat1.xml", FileMode.Open));
         using EventorResultSource eventorResultSource = new(configuration, eventorFacadeMock.Object, new IofXmlDeserializer());
 
-        var participantResults = eventorResultSource.GetParticipantResults();
+        var participantResults = await eventorResultSource.GetParticipantResultsAsync().ConfigureAwait(true);
         Assert.HasCount(8, participantResults);
     } 
 }

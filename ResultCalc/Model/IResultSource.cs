@@ -3,7 +3,7 @@
 internal interface IResultSource : IDisposable
 {
     bool SupportsPreliminary { get; }
-    IList<ParticipantResult> GetParticipantResults();
-    TimeSpan CurrentTimeOfDay { get; }
+    Task<IList<ParticipantResult>> GetParticipantResultsAsync();
+    Task<TimeSpan> GetCurrentTimeOfDayAsync();
     Task<string> NewResultPostAsync(Stream body, DateTime timestamp);
 }

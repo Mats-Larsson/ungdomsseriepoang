@@ -14,23 +14,26 @@ internal sealed class MeosResultSource(ILogger<MeosResultSource> logger, TimePro
     private readonly IDictionary<int, string> clubs = new Dictionary<int, string>();
     private string? comptitionName;
 
-    public TimeSpan CurrentTimeOfDay { get; private set; } = timeProvider.GetLocalNow().TimeOfDay;
+    private TimeSpan currentTimeOfDay = timeProvider.GetLocalNow().TimeOfDay;
+
+    public Task<TimeSpan> GetCurrentTimeOfDayAsync() => Task.FromResult(currentTimeOfDay);
 
     public bool SupportsPreliminary => false;
 
-    public IList<ParticipantResult> GetParticipantResults()
+    public Task<IList<ParticipantResult>> GetParticipantResultsAsync()
     {
-        return
+        IList<ParticipantResult> list =
         [
             .. participantResults
                 .Where(item => item.Key > 0)
                 .Select(item => item.Value)
         ];
+        return Task.FromResult(list);
     }
 
     public async Task<string> NewResultPostAsync(Stream body, DateTime timestamp)
     {
-        CurrentTimeOfDay = timestamp.TimeOfDay;
+        currentTimeOfDay = timestamp.TimeOfDay;
         
         var doc = await XDocument.LoadAsync(body, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
         logger.LogInformation("{Name} {Count}", doc.Root?.Name.LocalName, doc.Root?.Elements().Count());
